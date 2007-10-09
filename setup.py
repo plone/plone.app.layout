@@ -1,7 +1,6 @@
 from setuptools import setup, find_packages
-import sys, os
 
-version = '1.0.3'
+version = '1.0.2.1'
 
 setup(name='plone.app.layout',
       version=version,
