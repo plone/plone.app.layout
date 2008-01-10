@@ -3,7 +3,7 @@ Changelog for plone.app.layout
     (name of developer listed in brackets)
 
 
-plone.app.layout - 1.0.5 UNRELEASED
+plone.app.layout - 1.0.5 Released January 3rd, 2008
 
     - Do not create an empty <ul> in the personal actions bar if there are
       no items in it. This fixes an XHTML syntax error.
