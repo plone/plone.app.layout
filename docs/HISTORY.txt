@@ -3,6 +3,13 @@ Changelog for plone.app.layout
     (name of developer listed in brackets)
 
 
+plone.app.layout - 1.0.6 UNRELEASED
+
+    - Catch KeyError for presentation or tableContents when document
+      has an out-of-date schema.  Can happen when migrating from Plone
+      2.5 to 3.0.  Fall back to False for those attributes then.
+      [maurits]
+
 plone.app.layout - 1.0.5 Released January 3rd, 2008
 
     - Do not create an empty <ul> in the personal actions bar if there are
