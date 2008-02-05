@@ -22,7 +22,7 @@
                 <span i18n:translate="label_previous_item"
                       tal:omit-tag="">
                     Previous:
-                    <span i18n:name="title" tal:replace="previous/title" />
+                    <span i18n:name="itemtitle" tal:replace="previous/title" />
                 </span>
             </a>
           </tal:previous>
@@ -36,7 +36,7 @@
                <span i18n:translate="label_next_item"
                      tal:omit-tag="">
                  Next:
-                 <span i18n:name="title" tal:replace="next/title" />
+                 <span i18n:name="itemtitle" tal:replace="next/title" />
                </span>
 
                <img src="" alt="Right arrow" 
