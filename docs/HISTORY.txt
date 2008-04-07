@@ -5,6 +5,10 @@ Changelog for plone.app.layout
 
 plone.app.layout - 1.0.6 UNRELEASED
 
+    - Displaying 'Anonymous User' also when the comment creator is an empty
+      string. This fixes http://dev.plone.org/plone/ticket/7712.
+      [rsantos]
+
     - Added i18n markup to nextprevious.pt.
       This closes http://dev.plone.org/plone/ticket/7537.
       [hannosch]
