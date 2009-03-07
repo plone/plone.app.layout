@@ -209,9 +209,9 @@
 
     <!-- Render the workflow history -->
     <browser:viewlet
-        name="plone.belowcontentbody.contenthistory"
+        name="plone.belowcontentbody.workflowhistory"
         manager=".interfaces.IBelowContentBody"
-        class=".content.ContentHistoryViewlet"
+        class=".content.WorkflowHistoryViewlet"
         permission="zope2.View" 
         />
 
