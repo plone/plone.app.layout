@@ -1,10 +1,11 @@
 Changelog
 =========
 
-1.2.5 - unreleased
+1.2.5 - 2009-08-01
 ------------------
 
-- In the history viewlet, moved again the arrows inside a span, it's really needed to apply a style.
+- In the history viewlet, moved again the arrows inside a span. This is 
+  needed to allow CSS style.
   [vincentfretin]
 
 1.2.4 - 2009-07-04
