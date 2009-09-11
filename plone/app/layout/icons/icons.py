@@ -50,7 +50,12 @@ class CatalogBrainContentIcon(BaseIcon):
     def description(self):
         context = aq_inner(self.context)
         tt = getToolByName(context, 'portal_types')
-        return tt.get(self.brain['portal_type']).Title()
+        ttinfo = tt.get(self.brain['portal_type'], None)
+        #Fix problem with non existing portal_type #9401
+        if ttinfo: 
+            return ttinfo.Title()
+        else:
+            return None
 
     @property
     def title(self):
