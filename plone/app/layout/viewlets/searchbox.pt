@@ -1,6 +1,6 @@
 <div id="portal-searchbox"
      i18n:domain="plone">
-    <form id="searchform"
+    <form id="searchbox"
           action="search"
           tal:attributes="action string:${view/navigation_root_url}/search">
 

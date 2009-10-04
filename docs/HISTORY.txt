@@ -4,6 +4,9 @@ Changelog
 1.2.6 - unreleased
 ------------------
 
+- XHTML minor fixes to be also XHTML Strict compliant.
+  http://dev.plone.org/plone/ticket/4379
+  [keul]
 
 1.2.5 - 2009-08-01
 ------------------
