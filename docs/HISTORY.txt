@@ -8,6 +8,10 @@ Changelog
   http://dev.plone.org/plone/ticket/4379
   [keul]
 
+- Fixed time_only argument of comments viewlet. Fixes #9467
+  [naro]
+
+
 1.2.5 - 2009-08-01
 ------------------
 
