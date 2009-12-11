@@ -11,6 +11,10 @@ Changelog
 - Fixed time_only argument of comments viewlet. Fixes #9467
   [naro]
 
+- Fixed document_byline so it will display copyrights
+  when Allow anyone to view 'about' information is turned off
+  This fix http://dev.plone.org/plone/ticket/9344
+  [amleczko]
 
 1.2.5 - 2009-08-01
 ------------------
