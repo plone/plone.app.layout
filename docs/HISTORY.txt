@@ -4,6 +4,11 @@ Changelog
 1.2.6 - unreleased
 ------------------
 
+- Do not let the homelink in the personal bar viewlet point to the
+  author page but to the personalize_form (or dashboard).
+  Fixes http://dev.plone.org/plone/ticket/8707
+  [maurits]
+
 - XHTML minor fixes to be also XHTML Strict compliant.
   http://dev.plone.org/plone/ticket/4379
   [keul]
