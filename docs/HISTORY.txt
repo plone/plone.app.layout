@@ -4,6 +4,10 @@ Changelog
 1.2.6 - unreleased
 ------------------
 
+- Make icon descriptions' lookup of portal_type title less brittle for
+  missing portal_types (fall back to the portal_type id).
+  [davisagli]
+
 - Do not let the homelink in the personal bar viewlet point to the
   author page but to the personalize_form (or dashboard).
   Fixes http://dev.plone.org/plone/ticket/8707

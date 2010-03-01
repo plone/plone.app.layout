@@ -14,7 +14,7 @@ class TestIconsView(IconsTestCase):
         icon = getMultiAdapter((self.folder.d1, self.app.REQUEST, brain))        
         self.loginAsPortalOwner()
         self.portal.portal_types.manage_renameObject('Document','FakeDocument')
-        self.assertEqual(icon.description, None)
+        self.assertEqual(icon.description, 'Document')
         self.portal.portal_types.manage_renameObject('FakeDocument','Document')
 
 def test_suite():
