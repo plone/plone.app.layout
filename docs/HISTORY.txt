@@ -18,6 +18,13 @@ plone.app.layout - 1.0.6 UNRELEASED
       2.5 to 3.0. Fall back to False for those attributes then.
       [maurits]
 
+    - Fixed @@plone_context_state.view_template_id handling of content that
+      does not implement IBrowserDefault (Products.CMFDynamicViewFTI). It was
+      possible for this code to raise Unauthorized even when the user had
+      permission to access the default view of the current context.
+      [mj]
+
+
 plone.app.layout - 1.0.5 Released January 3rd, 2008
 
     - Do not create an empty <ul> in the personal actions bar if there are
