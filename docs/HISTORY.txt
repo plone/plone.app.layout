@@ -3,7 +3,7 @@ Changelog for plone.app.layout
     (name of developer listed in brackets)
 
 
-plone.app.layout - 1.0.6 UNRELEASED
+plone.app.layout - 1.0.6 Released September 23rd, 2010
 
     - Displaying 'Anonymous User' also when the comment creator is an empty
       string. This fixes http://dev.plone.org/plone/ticket/7712.
