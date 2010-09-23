@@ -3,6 +3,8 @@ from plone.app.layout.globals.tests.base import GlobalsTestCase
 
 from zope.interface import directlyProvides
 from Products.CMFPlone.interfaces import INonStructuralFolder
+from Products.CMFPlone.utils import _createObjectByType
+from Products.PloneTestCase import PloneTestCase
 
 from plone.locking.interfaces import ILockable
 
@@ -57,6 +59,52 @@ class TestContextStateView(GlobalsTestCase):
         self.folder.setLayout('foo_view')
         self.assertEquals(self.fview.view_template_id(), 'foo_view')
                             
+    def test_view_template_id_nonbrowserdefault(self):
+        # The view template id is taken from the FTI for non-browserdefault
+        # (non ATContentTypes) content
+        tf = _createObjectByType('TempFolder', self.folder, 'tf')
+        tfview = tf.restrictedTraverse('@@plone_context_state')
+        self.assertEquals(tfview.view_template_id(), 'index_html')
+
+    def test_view_template_id_nonbrowserdefault_nonempty(self):
+        # The view template id is taken from the FTI for non-browserdefault
+        # (non ATContentTypes) content. In this case the default view action
+        # includes an actual template name
+        
+        # Set the expression to include a view name.
+        fti = self.portal.portal_types.TempFolder
+        view_action = fti.getActionObject('object/view')
+        view_expression = view_action.getActionExpression()
+        view_action.setActionExpression('foobar')
+
+        tf = _createObjectByType('TempFolder', self.folder, 'tf')
+        tf.manage_addLocalRoles(PloneTestCase.default_user, ('Manager',))
+        tfview = tf.restrictedTraverse('@@plone_context_state')
+        self.assertEquals(tfview.view_template_id(), 'foobar')
+
+        # Reset the FTI action expression
+        view_action.setActionExpression(view_expression)
+
+    def test_view_template_id_nonbrowserdefault_restricted(self):
+        # The view template id is taken from the FTI for non-browserdefault
+        # (non ATContentTypes) content. If the view action is protected by
+        # a non-default permission, this should still work if the current
+        # user has the right permission, locally.
+
+        # Set access to something the default user does not have, normally
+        fti = self.portal.portal_types.TempFolder
+        view_action = fti.getActionObject('object/view')
+        view_perms = view_action.getPermissions()
+        view_action.edit(permissions=(u'Modify Portal Content',))
+
+        tf = _createObjectByType('TempFolder', self.folder, 'tf')
+        tf.manage_addLocalRoles(PloneTestCase.default_user, ('Manager',))
+        tfview = tf.restrictedTraverse('@@plone_context_state')
+        self.assertEquals(tfview.view_template_id(), 'index_html')
+
+        # Reset the FTI permissions
+        view_action.edit(permissions=view_perms)
+
     def test_is_view_template_default_page(self):
         self.app.REQUEST['ACTUAL_URL'] = self.folder.absolute_url()
         # Whether you're viewing the folder or its default page ...
@@ -90,8 +138,8 @@ class TestContextStateView(GlobalsTestCase):
         self.folder.setLayout('foo_view')
         self.app.REQUEST['ACTUAL_URL'] = self.folder.absolute_url() + '/bar_view'
         self.assertEquals(self.fview.is_view_template(), False)
-        self.assertEquals(self.dview.is_view_template(), False)                            
-                            
+        self.assertEquals(self.dview.is_view_template(), False)   
+
     def test_object_url(self):
         self.assertEquals(self.fview.object_url(), self.folder.absolute_url())
         self.assertEquals(self.dview.object_url(), self.folder.d1.absolute_url())
