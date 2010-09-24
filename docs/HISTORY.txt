@@ -5,6 +5,10 @@ Changelog for plone.app.layout
 
 plone.app.layout - 1.0.7 UNRELEASED
 
+    - Prevent @@plone_context_state.view_template_id from breaking when used on
+      tools or other non-content-items.
+      [mj]
+
 
 plone.app.layout - 1.0.6 Released September 23rd, 2010
 
