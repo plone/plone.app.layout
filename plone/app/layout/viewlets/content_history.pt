@@ -10,7 +10,7 @@
         <dt class="collapsibleHeader" i18n:translate="label_history">History</dt>
         <dd class="collapsibleContent">
             <tal:block repeat="item history">
-                <div class="historyRecord" 
+                <div class="historyRecord"
                        tal:define="rhComments item/comments|nothing;
                                         state item/review_state|nothing;
                                         actor item/actor;
@@ -37,14 +37,14 @@
                     </div>
                     <div class="historyByLine">
                         <tal:action i18n:translate="history_action">
-                            <span class="historyAction" tal:content="action" i18n:translate="" i18n:name="action"/>  
-                            by 
+                            <span class="historyAction" tal:content="action" i18n:translate="" i18n:name="action"/>
+                            by
                             <tal:actor i18n:name="actor">
                                 <a href=""
                                    tal:condition="actor_home"
                                    tal:attributes="href actor_home"
                                    tal:content="actor_name"> runyaga </a>
-                                <span tal:condition="not: actor_home" 
+                                <span tal:condition="not: actor_home"
                                       tal:replace="actor_name"/>
                             </tal:actor>
                             on
@@ -58,10 +58,11 @@
                     </div>
                     <div tal:content="rhComments" tal:condition="rhComments" class="historyComment" />
                     <div tal:condition="isVersion" class="historyComment">
-                        <a href="" 
+                        <a href=""
                            tal:attributes="href item/preview_url"
                            i18n:translate="title_view_revision">View this revision</a> &middot;
-                        <a href="" tal:attributes="href item/diff_current_url" 
+                        <a tal:condition="exists:item/diff_current_url"
+                           href="" tal:attributes="href item/diff_current_url"
                            i18n:translate="title_compare_revision">Compare with current revision</a>
 
                     </div>
