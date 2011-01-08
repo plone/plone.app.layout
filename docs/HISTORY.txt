@@ -8,12 +8,14 @@ Changelog
   not implement IBrowserDefault (Products.CMFDynamicViewFTI). It was possible
   for this code to raise Unauthorized even when the user had permission to
   access the default view of the current context.
+  Backported from 2.0.4.
   [mj]
 
 - 'Compare' link is not available
   if content type is not registered in portal_diff.
   Fixes http://dev.plone.org/plone/ticket/11107.
-  [tdesvenain]
+  Backported from 2.0.3.
+  [thomasdesvenain]
 
 1.2.6 - 2010-03-01
 ------------------
