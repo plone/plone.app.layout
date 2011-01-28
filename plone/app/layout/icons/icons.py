@@ -20,11 +20,11 @@ class BaseIcon(object):
         if not self.url:
             return None
         
-        tag = '<img width="%s" height="%s" src="%s"' % (self.width, self.height, self.url,)
+        tag = '<img alt="" width="%s" height="%s" src="%s"' % (self.width, self.height, self.url,)
         if self.title:
             tag += ' title="%s"' % self.title
         if self.description:
-            tag += ' alt="%s"' % self.description
+            tag += ' class="icon-%s"' % self.description
         tag += ' />'
         return tag
 

@@ -4,6 +4,13 @@ Changelog
 1.2.7 - unreleased
 ------------------
 
+- Implemented null contents of alt tag for icons
+  for improved accessibility.
+  Added css hook for convenience of theme developers.
+  Refs http://www.w3.org/TR/2010/NOTE-WCAG20-TECHS-20101014/F39
+  Fixes https://dev.plone.org/plone/ticket/10387
+  [msmith64]
+    
 - Fixed @@plone_context_state.view_template_id handling of content that does
   not implement IBrowserDefault (Products.CMFDynamicViewFTI). It was possible
   for this code to raise Unauthorized even when the user had permission to
