@@ -4,9 +4,9 @@ Changelog
 2.0.7 - Unreleased
 ------------------
 
-- Do not show personaltools if there aren't any user actions.
-  This fixes https://dev.plone.org/plone/ticket/11460
-  [fRiSi]
+- Fixed i18n of the "Log in to add comments" button. It was a regression
+  since 2.0. This fixes http://dev.plone.org/plone/ticket/11525
+  [vincentfretin]
 
 2.0.6 - 2011-01-03
 ------------------
