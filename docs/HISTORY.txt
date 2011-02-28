@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.2.7 - unreleased
+1.2.7 - 2011-02-28
 ------------------
 
 - Implemented null contents of alt tag for icons
