@@ -4,6 +4,10 @@ Changelog
 2.0.8 - Unreleased
 ------------------
 
+- Enable managing portlets of default pages.
+  This fixes http://dev.plone.org/plone/ticket/10672
+  [fRiSi]
+  
 2.0.7 - 2011-02-25
 ------------------
 
