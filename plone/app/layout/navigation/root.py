@@ -5,6 +5,7 @@ from plone.app.layout.navigation.interfaces import INavigationRoot
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone import utils
 
+
 def getNavigationRoot(context, relativeRoot=None):
     """Get the path to the root of the navigation tree. If context or one of
     its parents until (but not including) the portal root implements
@@ -16,7 +17,7 @@ def getNavigationRoot(context, relativeRoot=None):
     """
 
     portal_url = getToolByName(context, 'portal_url')
-    
+
     if not relativeRoot:
         portal_properties = getToolByName(context, 'portal_properties')
         navtree_properties = getattr(portal_properties, 'navtree_properties')
@@ -24,6 +25,14 @@ def getNavigationRoot(context, relativeRoot=None):
 
     portal = portal_url.getPortalObject()
     obj = getNavigationRootObject(context, portal)
+
+    if relativeRoot and relativeRoot != '/':
+        if portal == obj:
+            path = '/'.join(obj.absolute_url_path().split('/') + relativeRoot.split('/')[1:])
+        else:
+            path = '/'.join(obj.absolute_url_path().split('/') + relativeRoot.split('/')[2:])
+        return path
+
     if INavigationRoot.providedBy(obj) and aq_base(obj) is not aq_base(portal):
         return '/'.join(obj.getPhysicalPath())
 
@@ -61,6 +70,7 @@ def getNavigationRoot(context, relativeRoot=None):
     # Fall back on the portal root
     if not rootPath:
         return portalPath
+
 
 def getNavigationRootObject(context, portal):
     obj = context
