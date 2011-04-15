@@ -202,7 +202,7 @@ class ContentHistoryViewlet(WorkflowHistoryViewlet):
                       time=meta["timestamp"],
                       comments=meta['comment'],
                       version_id=version_id,
-                      review_state=meta["review_state"],
+                      review_state=meta.get("review_state", ''),
                       preview_url="%s/versions_history_form?version_id=%s#version_preview" %
                                   (context_url, version_id),
                       revert_url="%s/revertversion" % context_url,

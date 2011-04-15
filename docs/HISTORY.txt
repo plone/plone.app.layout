@@ -4,7 +4,9 @@ Changelog
 1.2.8 - Unreleased
 ------------------
 
-- No changes yet
+- Handle possibility of content not having a "review_state" in the content
+  history viewlet.
+  [dunlapm]
 
 
 1.2.7 - 2011-02-28
