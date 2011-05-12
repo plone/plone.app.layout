@@ -2,12 +2,12 @@ Changelog
 =========
 
 
-2.0.9 - Unreleased
+2.0.9 - 2011-05-12
 ------------------
 
 - Make ``getNavigationRoot`` behave correctly in ``INavigationRoot``-folders
   where a ``relativeRoot`` is specified.
-  This fixes https://dev.plone.org/plone/ticket/8787
+  This fixes http://dev.plone.org/plone/ticket/8787
   [WouterVH]
 
 
@@ -23,7 +23,7 @@ Changelog
 ------------------
 
 - Do not show personaltools if there aren't any user actions.
-  This fixes https://dev.plone.org/plone/ticket/11460
+  This fixes http://dev.plone.org/plone/ticket/11460
   [fRiSi]
 
 - Fixed i18n of the "Log in to add comments" button. It was a regression
