@@ -12,7 +12,7 @@ def getNavigationRoot(context, relativeRoot=None):
     INavigationRoot, return this.
 
     Otherwise, if an explicit root is set in navtree_properties or given as
-    relativeRoot, use this. If the property is not set or is set to '/', use 
+    relativeRoot, use this. If the property is not set or is set to '/', use
     the portal root.
     """
 
@@ -28,9 +28,10 @@ def getNavigationRoot(context, relativeRoot=None):
 
     if relativeRoot and relativeRoot != '/':
         if portal == obj:
-            path = '/'.join(obj.absolute_url_path().split('/') + relativeRoot.split('/')[1:])
+            path = '/'.join(obj.getPhysicalPath() + tuple(relativeRoot.split('/')[1:]))
         else:
-            path = '/'.join(obj.absolute_url_path().split('/') + relativeRoot.split('/')[2:])
+            path = '/'.join(obj.getPhysicalPath() + tuple(relativeRoot.split('/')[2:]))
+
         return path
 
     if INavigationRoot.providedBy(obj) and aq_base(obj) is not aq_base(portal):
@@ -38,7 +39,6 @@ def getNavigationRoot(context, relativeRoot=None):
 
     rootPath = relativeRoot
     portalPath = portal_url.getPortalPath()
-    contextPath = '/'.join(context.getPhysicalPath())
 
     if rootPath:
         if rootPath == '/':
