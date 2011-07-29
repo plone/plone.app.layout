@@ -4,6 +4,9 @@ Changelog
 2.1.9 - unreleased
 ------------------
 
+- Refactor getNavigationRoot to make it simpler, fixing issues when
+  relativeRoot is specified.
+  [gotcha]
 
 2.1.8 - 2011-07-04
 ------------------

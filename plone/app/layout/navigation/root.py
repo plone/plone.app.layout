@@ -34,14 +34,16 @@ def getNavigationRoot(context, relativeRoot=None):
     # if relativeRoot has a meaningful value,
     if relativeRoot and relativeRoot != '/':
         # use it
-        #
-        # while taking care of cases where relativeRoot is not starting with a '/'
+
+        # while taking care of case where
+        # relativeRoot is not starting with a '/'
         if relativeRoot[0] != '/':
             relativeRoot = '/' + relativeRoot
+
         portalPath = portal_url.getPortalPath()
         return portalPath + relativeRoot
     else:
-        # compute a root
+        # compute the root
         portal = portal_url.getPortalObject()
         root = getNavigationRootObject(context, portal)
         return '/'.join(root.getPhysicalPath())
