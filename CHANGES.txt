@@ -4,6 +4,10 @@ Changelog
 2.1.9 - unreleased
 ------------------
 
+- Accessibility: Added a title and alt tag to the logo.
+  This fixes http://dev.plone.org/plone/ticket/11689
+  [fulv]
+
 - Switching 'Skip to navigation' to be linked to the global navigation instead
   of the navigation portlet.
   This fixes http://dev.plone.org/plone/ticket/11728
