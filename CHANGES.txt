@@ -4,6 +4,11 @@ Changelog
 2.1.9 - unreleased
 ------------------
 
+- Switching 'Skip to navigation' to be linked to the global navigation instead
+  of the navigation portlet.
+  This fixes http://dev.plone.org/plone/ticket/11728
+  [spliter]
+
 - Refactor getNavigationRoot to make it simpler, fixing issues when
   relativeRoot is specified.
   [gotcha]
