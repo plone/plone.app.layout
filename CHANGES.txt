@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.1.9 - unreleased
+2.1.9 (2011-08-31)
 ------------------
 
 - Accessibility: Added a title and alt tag to the logo.
