@@ -4,8 +4,8 @@ Changelog
 2.1.10 (unreleased)
 -------------------
 
-- Nothing changed yet.
-
+- Fix #12186 getNavigationRootObject goes into infinite loop if context is None
+  [anthonygerrard]
 
 2.1.9 (2011-08-31)
 ------------------
