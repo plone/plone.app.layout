@@ -4,7 +4,10 @@ Changelog
 2.1.11 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Treat aliases to the ``(Default)`` view of a content type also as a
+  view template (providing IViewView).
+  Fixes http://dev.plone.org/plone/ticket/8198
+  [maurits]
 
 
 2.1.10 (2011-09-19)
