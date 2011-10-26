@@ -4,6 +4,10 @@ Changelog
 2.1.11 (unreleased)
 -------------------
 
+- Added on body a class related to subsite.
+  The class is named site-x where x is navigation root object id.
+  [thomasdesvenain]
+
 - Treat aliases to the ``(Default)`` view of a content type also as a
   view template (providing IViewView).
   Fixes http://dev.plone.org/plone/ticket/8198
