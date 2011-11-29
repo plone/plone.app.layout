@@ -1,10 +1,11 @@
 Changelog
 =========
 
-2.1.12 (unreleased)
+2.1.12 (2011-11-28)
 -------------------
 
-- Nothing changed yet.
+- Fix for a release issue.
+  [esteele]
 
 
 2.1.11 (2011-11-28)
