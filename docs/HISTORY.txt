@@ -8,6 +8,11 @@ Changelog
   history viewlet.
   [dunlapm]
 
+- Applyed the old patch discussed in `#8787`__, to close a bug for
+  navigation portlet with root node and INavigationRoot folders
+  [keul]
+
+__ http://dev.plone.org/ticket/8787
 
 1.2.7 - 2011-02-28
 ------------------
