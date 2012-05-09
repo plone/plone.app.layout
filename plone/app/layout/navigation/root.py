@@ -24,8 +24,9 @@ def getNavigationRoot(context, relativeRoot=None):
 
     portal = portal_url.getPortalObject()
     obj = getNavigationRootObject(context, portal)
-    if INavigationRoot.providedBy(obj) and aq_base(obj) is not aq_base(portal):
-        return '/'.join(obj.getPhysicalPath())
+    if not relativeRoot or relativeRoot=='/':
+        if INavigationRoot.providedBy(obj) and aq_base(obj) is not aq_base(portal):
+            return '/'.join(obj.getPhysicalPath())
 
     rootPath = relativeRoot
     portalPath = portal_url.getPortalPath()
