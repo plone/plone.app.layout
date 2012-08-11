@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.2.7 (unreleased)
+2.2.7 (2012-08-11)
 ------------------
 
 - Change breadcrumb separator to / (slash character) for accessibility, and added SEO benefits. 
