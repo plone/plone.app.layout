@@ -4,7 +4,9 @@ Changelog
 2.2.8 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Changed the behaviour of the title viewlet for items in the portal_factory.
+  See https://dev.plone.org/ticket/12117
+  [alert]
 
 
 2.2.7 (2012-08-11)
