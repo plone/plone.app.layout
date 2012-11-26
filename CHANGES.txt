@@ -4,7 +4,8 @@ Changelog
 2.2.8 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix an edge case where getNavigationRootObject could loop infinitely.
+  [davisagli]
 
 
 2.2.7 (2012-08-11)
