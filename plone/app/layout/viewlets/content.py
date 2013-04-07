@@ -12,6 +12,7 @@ from Products.CMFPlone.utils import log
 from plone.app.layout.globals.interfaces import IViewView
 from plone.app.layout.viewlets import ViewletBase
 from plone.app.content.browser.interfaces import IFolderContentsView
+<<<<<<< HEAD
 from plone.memoize.instance import memoize
 from zope.component import getMultiAdapter, queryMultiAdapter
 
@@ -19,12 +20,10 @@ import logging
 import pkg_resources
 
 try:
-    pkg_resources.get_distribution('plone.app.relationfield.behavior')
     from plone.app.relationfield.behavior import IRelatedItems
-except pkg_resources.DistributionNotFound:
-    HAS_PLONE_APP_RELATIONFIELD = False
-else:
-    HAS_PLONE_APP_RELATIONFIELD = True
+    has_relationfield_installed = True
+except:
+    pass
 
 
 class DocumentActionsViewlet(ViewletBase):
@@ -156,7 +155,11 @@ class ContentRelatedItems(ViewletBase):
                 res.sort(key=_key)
 
         # Dexterity
+<<<<<<< HEAD
         if HAS_PLONE_APP_RELATIONFIELD:
+=======
+        if has_relationfield_installed:
+>>>>>>> 0ec25d0... Removed hard dependency on plone.app.relationfield.
             if IRelatedItems.providedBy(context):
                 related = context.relatedItems
                 if not related:

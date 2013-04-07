@@ -4,7 +4,9 @@ Changelog
 2.3.9 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Removed hard dependency on plone.app.relationfield. [marcosfromero] via 
+  [pabo] 
+  https://github.com/plone/plone.app.layout/commit/0ec25d03eda1a681e4d777fc828354a4add03306
 
 
 2.3.8 (2013-09-16)
