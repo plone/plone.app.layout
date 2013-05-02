@@ -4,7 +4,9 @@ Changelog
 2.2.10 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Fixed AttributeError for FilesystemResourceDirectory
+  See https://dev.plone.org/ticket/13506
+  [kroman0]
 
 
 2.2.9 (2013-03-05)
