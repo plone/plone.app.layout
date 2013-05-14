@@ -8,6 +8,9 @@ Changelog
   See https://dev.plone.org/ticket/13506
   [kroman0]
 
+- Check appropriate permission for 'Revert to this revision' button.
+  [danjacka]
+
 
 2.3.4 (2013-03-05)
 ------------------
