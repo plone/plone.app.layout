@@ -12,7 +12,7 @@ from zope.interface import implements
 from zope.publisher.browser import BrowserView
 
 from AccessControl import Unauthorized
-from Acquisition import aq_base
+from Acquisition import aq_base, aq_parent
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope.browserpage.viewpagetemplatefile import (
@@ -116,6 +116,13 @@ class LayoutPolicy(BrowserView):
         """Returns the current URL to be used in the base tag.
         """
         context = self.context
+        # if it is the default page of a folder, try to get the folder url
+        try:
+            if getattr(aq_base(context), 'isDefaultPage', True):
+                context = aq_parent(context)
+                return context.absolute_url()
+        except Unauthorized:
+            pass
         # when accessing via WEBDAV you're not allowed to access aq_base
         try:
             if getattr(aq_base(context), 'isPrincipiaFolderish', False):
