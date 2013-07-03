@@ -117,10 +117,11 @@ class LayoutPolicy(BrowserView):
         """
         context = self.context
         # if it is the default page of a folder, try to get the folder url
+        # if it is the default page of a folder, try to get the folder url
         try:
-            if getattr(aq_base(context), 'isDefaultPage', True):
-                context = aq_parent(context)
-                return context.absolute_url()
+            parent = aq_parent(context)
+            if (parent.getDefaultPage() == context.id):
+                return parent.absolute_url()
         except Unauthorized:
             pass
         # when accessing via WEBDAV you're not allowed to access aq_base
