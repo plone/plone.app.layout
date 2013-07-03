@@ -117,7 +117,6 @@ class LayoutPolicy(BrowserView):
         """
         context = self.context
         # if it is the default page of a folder, try to get the folder url
-        # if it is the default page of a folder, try to get the folder url
         try:
             parent = aq_parent(context)
             if (parent.getDefaultPage() == context.id):
