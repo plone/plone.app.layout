@@ -231,7 +231,6 @@ class PersonalBarViewlet(ViewletBase):
         context_state = getMultiAdapter((context, self.request),
                                         name=u'plone_context_state')
 
-        sm = getSecurityManager()
         self.user_actions = context_state.actions('user')
         self.anonymous = self.portal_state.anonymous()
 
@@ -239,11 +238,7 @@ class PersonalBarViewlet(ViewletBase):
             member = self.portal_state.member()
             userid = member.getId()
 
-            if sm.checkPermission('Portlets: View dashboard', context):
-                self.homelink_url = "%s/useractions" % self.navigation_root_url
-            else:
-                self.homelink_url = "%s/personalize_form" % (
-                                        self.navigation_root_url)
+            self.homelink_url = "%s/useractions" % self.navigation_root_url
 
             membership = getToolByName(context, 'portal_membership')
             member_info = membership.getMemberInfo(userid)
