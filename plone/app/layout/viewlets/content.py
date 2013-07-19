@@ -19,12 +19,6 @@ from plone.app.layout.globals.interfaces import IViewView
 from plone.app.layout.viewlets import ViewletBase
 from plone.app.content.browser.interfaces import IFolderContentsView
 
-try:
-    from plone.app.relationfield.behavior import IRelatedItems
-    has_relationfield_installed = True
-except:
-    pass
-
 
 class DocumentActionsViewlet(ViewletBase):
 
@@ -111,7 +105,7 @@ class DocumentBylineViewlet(ViewletBase):
 
     def pub_date(self):
         """Return object effective date.
-
+        
         Return None if publication date is switched off in global site settings
         or if Effective Date is not set on object.
         """
@@ -121,7 +115,7 @@ class DocumentBylineViewlet(ViewletBase):
         if not site_properties.getProperty('displayPublicationDateInByline',
            False):
             return None
-
+        
         # check if we have Effective Date set
         date = self.context.EffectiveDate()
         if not date or date == 'None':
@@ -136,8 +130,6 @@ class ContentRelatedItems(ViewletBase):
     def related_items(self):
         context = aq_inner(self.context)
         res = ()
-
-        # Archetypes
         if base_hasattr(context, 'getRawRelatedItems'):
             catalog = getToolByName(context, 'portal_catalog')
             related = context.getRawRelatedItems()
@@ -149,25 +141,10 @@ class ContentRelatedItems(ViewletBase):
                 positions = dict([(v, i) for (i, v) in enumerate(related)])
                 # We need to keep the ordering intact
                 res = list(brains)
-
                 def _key(brain):
                     return positions.get(brain.UID, -1)
                 res.sort(key=_key)
-
-        # Dexterity
-        if has_relationfield_installed:
-            if IRelatedItems.providedBy(context):
-                related = context.relatedItems
-                if not related:
-                    return ()
-                res = [self.rel2brain(rel) for rel in related]
-
         return res
-
-    def rel2brain(self, rel):
-        catalog = getToolByName(self.context, 'portal_catalog')
-        path = rel.to_path
-        return catalog(path={'query': path})[0]
 
 
 class WorkflowHistoryViewlet(ViewletBase):
