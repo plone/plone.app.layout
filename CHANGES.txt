@@ -4,6 +4,10 @@ Changelog
 2.3.6 (unreleased)
 ------------------
 
+- Add Dexterity support for the related items viewlet. Backported from master
+  branch.
+  [pabo]
+
 - Personal bar viewlet home link simply links to the user actions list.
   [danjacka]
 
