@@ -1,8 +1,3 @@
-import logging
-
-from plone.memoize.instance import memoize
-from zope.component import getMultiAdapter, queryMultiAdapter
-
 from AccessControl import getSecurityManager
 from Acquisition import aq_inner
 from DateTime import DateTime
@@ -14,16 +9,22 @@ from Products.CMFEditions.Permissions import AccessPreviousVersions
 from Products.CMFPlone import PloneMessageFactory as _
 from Products.CMFPlone.utils import base_hasattr
 from Products.CMFPlone.utils import log
-
 from plone.app.layout.globals.interfaces import IViewView
 from plone.app.layout.viewlets import ViewletBase
 from plone.app.content.browser.interfaces import IFolderContentsView
+from plone.memoize.instance import memoize
+from zope.component import getMultiAdapter, queryMultiAdapter
+
+import logging
+import pkg_resources
 
 try:
+    pkg_resources.get_distribution('plone.app.relationfield.behavior')
     from plone.app.relationfield.behavior import IRelatedItems
-    has_relationfield_installed = True
-except:
-    has_relationfield_installed = False
+except pkg_resources.DistributionNotFound:
+    HAS_PLONE_APP_RELATIONFIELD = False
+else:
+    HAS_PLONE_APP_RELATIONFIELD = True
 
 
 class DocumentActionsViewlet(ViewletBase):
@@ -155,7 +156,7 @@ class ContentRelatedItems(ViewletBase):
                 res.sort(key=_key)
 
         # Dexterity
-        if has_relationfield_installed:
+        if HAS_PLONE_APP_RELATIONFIELD:
             if IRelatedItems.providedBy(context):
                 related = context.relatedItems
                 if not related:
