@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.3.6 (unreleased)
+2.3.6 (2013-08-13)
 ------------------
 
 - Fix conflict with <body> class attribute improvement in TinyMCE.
