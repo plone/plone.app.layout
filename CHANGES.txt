@@ -4,7 +4,9 @@ Changelog
 2.3.7 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Don't try to getId() for the template-name body when there is no 
+  template. Corrects an issue with the Dexterity schema editor.
+  [esteele]
 
 
 2.3.6 (2013-08-13)
