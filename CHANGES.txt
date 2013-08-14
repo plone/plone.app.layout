@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.3.7 (unreleased)
+2.3.7 (2013-08-14)
 ------------------
 
 - Don't try to getId() for the template-name body when there is no 
