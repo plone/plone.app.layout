@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.2.10 (unreleased)
+2.2.10 (2013-08-14)
 -------------------
 
 - Fixed AttributeError for FilesystemResourceDirectory
