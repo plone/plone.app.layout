@@ -92,7 +92,7 @@ class RSSViewlet(ViewletBase):
                 continue
             urls.append({
                 'title': '%s - %s' % (
-                    obj.Title(), term.title),
+                    obj.Title(), term.title.encode("utf-8", "replace")),
                 'url': obj.absolute_url() + '/' + term.value})
         return urls
 
