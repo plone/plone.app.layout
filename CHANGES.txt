@@ -4,8 +4,9 @@ Changelog
 2.3.8 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
+- Use safe_unicode to decode the title of the object when retrieving the 
+  rss links from the RSSViewlet
+  [ichim-david]
 
 2.3.7 (2013-08-14)
 ------------------

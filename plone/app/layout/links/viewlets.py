@@ -15,6 +15,7 @@ from zope.component import getUtility
 from plone.registry.interfaces import IRegistry
 from Products.CMFPlone.interfaces.syndication import IFeedSettings
 from Products.CMFPlone.interfaces.syndication import ISiteSyndicationSettings
+from Products.CMFPlone.utils import safe_unicode
 
 
 def get_language(context, request):
@@ -91,7 +92,7 @@ class RSSViewlet(ViewletBase):
                 continue
             urls.append({
                 'title': '%s - %s' % (
-                    obj.Title(), term.title),
+                    safe_unicode(obj.Title()), term.title),
                 'url': obj.absolute_url() + '/' + term.value})
         return urls
 
