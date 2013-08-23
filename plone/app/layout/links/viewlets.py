@@ -90,9 +90,12 @@ class RSSViewlet(ViewletBase):
                 term = vocabulary.getTerm(typ)
             except LookupError:
                 continue
+            title = obj.Title()
+            if type(title) is not unicode:
+                title = safe_unicode(title)
             urls.append({
                 'title': '%s - %s' % (
-                    safe_unicode(obj.Title()), term.title),
+                    title, term.title),
                 'url': obj.absolute_url() + '/' + term.value})
         return urls
 
