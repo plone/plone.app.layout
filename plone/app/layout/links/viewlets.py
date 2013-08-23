@@ -91,7 +91,7 @@ class RSSViewlet(ViewletBase):
             except LookupError:
                 continue
             title = obj.Title()
-            if type(title) is not unicode:
+            if not isinstance(title, unicode):
                 title = safe_unicode(title)
             urls.append({
                 'title': '%s - %s' % (
