@@ -16,12 +16,10 @@ from plone.memoize.instance import memoize
 from zope.component import getMultiAdapter, queryMultiAdapter
 
 import logging
-import pkg_resources
 
 try:
-    pkg_resources.get_distribution('plone.app.relationfield.behavior')
     from plone.app.relationfield.behavior import IRelatedItems
-except pkg_resources.DistributionNotFound:
+except ImportError:
     HAS_PLONE_APP_RELATIONFIELD = False
 else:
     HAS_PLONE_APP_RELATIONFIELD = True
