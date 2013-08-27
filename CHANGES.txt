@@ -8,6 +8,9 @@ Changelog
   rss links from the RSSViewlet
   [ichim-david]
 
+- added tests for dexterity relationfield behavior
+  [gweis]
+
 2.3.7 (2013-08-14)
 ------------------
 

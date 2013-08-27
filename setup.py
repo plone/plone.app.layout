@@ -29,6 +29,7 @@ setup(name='plone.app.layout',
           'Products.PloneTestCase',
           'unittest2',
           'plone.app.testing',
+          'plone.app.relationfield',
       ]),
       install_requires=[
         'setuptools',
