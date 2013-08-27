@@ -159,7 +159,7 @@ class ContentRelatedItems(ViewletBase):
                 related = context.relatedItems
                 if not related:
                     return ()
-                res = [self.rel2brain(rel) for rel in related]
+                res = [self.rel2brain(rel) for rel in related if not rel.isBroken()]
 
         return res
 
