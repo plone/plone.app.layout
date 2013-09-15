@@ -4,14 +4,18 @@ Changelog
 2.3.8 (unreleased)
 ------------------
 
-- Use safe_unicode to decode the title of the object when retrieving the 
+- Fix 'table of contents' for Dexterity types.
+  [pabo, pbauer, timo]
+
+- Use safe_unicode to decode the title of the object when retrieving the
   rss links from the RSSViewlet
   [ichim-david]
+
 
 2.3.7 (2013-08-14)
 ------------------
 
-- Don't try to getId() for the template-name body when there is no 
+- Don't try to getId() for the template-name body when there is no
   template. Corrects an issue with the Dexterity schema editor.
   [esteele]
 
