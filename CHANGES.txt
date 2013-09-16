@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.3.8 (unreleased)
+2.3.8 (2013-09-16)
 ------------------
 
 - Fix 'table of contents' for Dexterity types.
