@@ -12,18 +12,16 @@ from Products.CMFPlone.utils import log
 from plone.app.layout.globals.interfaces import IViewView
 from plone.app.layout.viewlets import ViewletBase
 from plone.app.content.browser.interfaces import IFolderContentsView
-<<<<<<< HEAD
 from plone.memoize.instance import memoize
 from zope.component import getMultiAdapter, queryMultiAdapter
 
 import logging
-import pkg_resources
 
 try:
     from plone.app.relationfield.behavior import IRelatedItems
     has_relationfield_installed = True
 except:
-    pass
+    has_relationfield_installed = False
 
 
 class DocumentActionsViewlet(ViewletBase):
