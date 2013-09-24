@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from plone.app.testing import applyProfile
 from plone.app.testing import FunctionalTesting
 from plone.app.testing import IntegrationTesting
 from plone.app.testing import PLONE_FIXTURE
@@ -14,6 +15,16 @@ class Fixture(PloneSandboxLayer):
         # Load ZCML
         import plone.app.layout
         self.loadZCML(package=plone.app.layout)
+        # we need behaviors setup
+        import plone.app.dexterity
+        self.loadZCML(package=plone.app.dexterity)
+        # and the behavior we want to test
+        import plone.app.relationfield
+        self.loadZCML(package=plone.app.relationfield)
+
+    def setUpPloneSite(self, portal):
+        applyProfile(portal, 'plone.app.relationfield:default')
+
 
 FIXTURE = Fixture()
 INTEGRATION_TESTING = IntegrationTesting(

@@ -4,7 +4,8 @@ Changelog
 2.3.9 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- added tests for dexterity relationfield behavior
+  [gweis]
 
 
 2.3.8 (2013-09-16)
