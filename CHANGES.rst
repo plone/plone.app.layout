@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.3.9 (unreleased)
+2.3.9 (2013-09-25)
 ------------------
 
 - Removed hard dependency on plone.app.relationfield. [pabo, marcosfromero] 
