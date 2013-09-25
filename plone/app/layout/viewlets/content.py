@@ -47,7 +47,7 @@ class DocumentBylineViewlet(ViewletBase):
         self.anonymous = self.portal_state.anonymous()
 
     def show(self):
-        properties = getToolByName(self.context, 'portal_properties')h
+        properties = getToolByName(self.context, 'portal_properties')
         site_properties = getattr(properties, 'site_properties')
         allowAnonymousViewAbout = site_properties.getProperty(
             'allowAnonymousViewAbout', True)
