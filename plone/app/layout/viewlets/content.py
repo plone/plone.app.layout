@@ -47,7 +47,7 @@ class DocumentBylineViewlet(ViewletBase):
         self.anonymous = self.portal_state.anonymous()
 
     def show(self):
-        properties = getToolByName(self.context, 'portal_properties')
+        properties = getToolByName(self.context, 'portal_properties')h
         site_properties = getattr(properties, 'site_properties')
         allowAnonymousViewAbout = site_properties.getProperty(
             'allowAnonymousViewAbout', True)
@@ -153,11 +153,7 @@ class ContentRelatedItems(ViewletBase):
                 res.sort(key=_key)
 
         # Dexterity
-<<<<<<< HEAD
-        if HAS_PLONE_APP_RELATIONFIELD:
-=======
         if has_relationfield_installed:
->>>>>>> 0ec25d0... Removed hard dependency on plone.app.relationfield.
             if IRelatedItems.providedBy(context):
                 related = context.relatedItems
                 if not related:
