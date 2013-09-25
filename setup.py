@@ -3,8 +3,8 @@ from setuptools import setup
 
 version = '2.3.9.dev0'
 long_description = (
-    open('README.txt').read() + '\n' +
-    open('CHANGES.txt').read()
+    open('README.rst').read() + '\n' +
+    open('CHANGES.rst').read()
 )
 
 setup(name='plone.app.layout',
