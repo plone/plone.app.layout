@@ -4,7 +4,11 @@ Changelog
 2.2.11 (unreleased)
 -------------------
 
-- Removed hard dependency on plone.app.relationfield. [pabo, marcosfromero]
+- Removed hard dependency on plone.app.relationfield.
+  [pabo, marcosfromero]
+
+- Add Dexterity support for the related items viewlet.
+  [pabo, marcosfromero]
 
 
 2.2.10 (2013-08-14)
