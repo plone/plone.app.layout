@@ -4,7 +4,7 @@ Changelog
 2.2.11 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Removed hard dependency on plone.app.relationfield. [pabo, marcosfromero]
 
 
 2.2.10 (2013-08-14)

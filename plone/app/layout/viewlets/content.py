@@ -17,6 +17,12 @@ from Products.CMFPlone.utils import log
 from plone.app.layout.globals.interfaces import IViewView
 from plone.app.layout.viewlets import ViewletBase
 
+try:
+    from plone.app.relationfield.behavior import IRelatedItems
+    has_relationfield_installed = True
+except:
+    has_relationfield_installed = False
+
 
 class DocumentActionsViewlet(ViewletBase):
 
@@ -107,6 +113,8 @@ class ContentRelatedItems(ViewletBase):
     def related_items(self):
         context = aq_inner(self.context)
         res = ()
+
+        # Archetypes
         if base_hasattr(context, 'getRawRelatedItems'):
             catalog = getToolByName(context, 'portal_catalog')
             related = context.getRawRelatedItems()
@@ -118,10 +126,25 @@ class ContentRelatedItems(ViewletBase):
                 positions = dict([(v, i) for (i, v) in enumerate(related)])
                 # We need to keep the ordering intact
                 res = list(brains)
+
                 def _key(brain):
                     return positions.get(brain.UID, -1)
                 res.sort(key=_key)
+
+        # Dexterity
+        if has_relationfield_installed:
+            if IRelatedItems.providedBy(context):
+                related = context.relatedItems
+                if not related:
+                    return ()
+                res = [self.rel2brain(rel) for rel in related]
+
         return res
+
+    def rel2brain(self, rel):
+        catalog = getToolByName(self.context, 'portal_catalog')
+        path = rel.to_path
+        return catalog(path={'query': path})[0]
 
 
 class WorkflowHistoryViewlet(ViewletBase):
