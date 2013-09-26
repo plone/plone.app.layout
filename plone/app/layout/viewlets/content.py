@@ -20,7 +20,7 @@ import logging
 try:
     from plone.app.relationfield.behavior import IRelatedItems
     has_relationfield_installed = True
-except:
+except ImportError:
     has_relationfield_installed = False
 
 
