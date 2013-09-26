@@ -5,8 +5,8 @@ version = '2.2.11.dev0'
 setup(name='plone.app.layout',
       version=version,
       description="Layout mechanisms for Plone",
-      long_description=open("README.txt").read() + "\n" +
-                       open("CHANGES.txt").read(),
+      long_description=open("README.rst").read() + "\n" +
+                       open("CHANGES.rst").read(),
       classifiers=[
           "Environment :: Web Environment",
           "Framework :: Plone",
