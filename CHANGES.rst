@@ -4,7 +4,11 @@ Changelog
 2.2.12 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Fix Dexterity support when accessing relatedItems
+  for the first time. [jpgimenez]
+
+- Add plone.app.relationfield to test dependencies,
+  needed to test dexterity support. [jpgimenez]
 
 
 2.2.11 (2013-09-26)
