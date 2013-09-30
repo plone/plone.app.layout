@@ -4,7 +4,8 @@ Changelog
 2.3.10 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Add plone.app.relationfield to test dependencies,
+  needed to test dexterity support. [jpgimenez]
 
 
 2.3.9 (2013-09-25)
