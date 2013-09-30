@@ -132,12 +132,12 @@ class ContentRelatedItems(ViewletBase):
                 res.sort(key=_key)
 
         # Dexterity
-        if has_relationfield_installed:
-            if IRelatedItems.providedBy(context):
-                related = context.relatedItems
-                if not related:
-                    return ()
-                res = [self.rel2brain(rel) for rel in related]
+        if has_relationfield_installed and \
+           hasattr(context, 'relatedItems'):
+            related = context.relatedItems
+            if not related:
+                return ()
+            res = [self.rel2brain(rel) for rel in related]
 
         return res
 
