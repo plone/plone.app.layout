@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.2.12 (unreleased)
+2.2.12 (2013-10-01)
 -------------------
 
 - Fix Dexterity support when accessing relatedItems
