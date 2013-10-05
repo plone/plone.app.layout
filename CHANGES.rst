@@ -4,7 +4,8 @@ Changelog
 2.2.13 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Remove hard depenedency on plone.app.relationfield.
+  [esteele]
 
 
 2.2.12 (2013-10-01)

@@ -29,7 +29,6 @@ setup(name='plone.app.layout',
           'Products.PloneTestCase',
           'unittest2',
           'plone.app.intid',
-          'plone.app.relationfield',
           'plone.app.testing',
       ]),
       install_requires=[
