@@ -4,6 +4,11 @@ Changelog
 2.3.10 (unreleased)
 -------------------
 
+- modified sections.pt for adding link target.
+  Fixed that portal_actions: 'Link Target' on
+  portal_actions/portal_tabs doesn't work.
+  [terapyon]
+
 - Add plone.app.relationfield to test dependencies,
   needed to test dexterity support. [jpgimenez]
 
