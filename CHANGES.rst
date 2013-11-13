@@ -4,6 +4,11 @@ Changelog
 2.3.10 (unreleased)
 -------------------
 
+- Fix 'plone.belowcontentbody.relateditems' viewlet to avoid trying to display
+  items if the user has no permission to view them (like content in Private
+  state).
+  [hvelarde]
+
 - modified sections.pt for adding link target.
   Fixed that portal_actions: 'Link Target' on
   portal_actions/portal_tabs doesn't work.
