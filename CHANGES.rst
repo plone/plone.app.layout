@@ -4,6 +4,11 @@ Changelog
 2.2.13 (unreleased)
 -------------------
 
+- Fix 'plone.belowcontentbody.relateditems' viewlet to avoid trying to display
+  items if the user has no permission to view them (like content in Private
+  state).
+  [hvelarde]
+
 - Remove hard depenedency on plone.app.relationfield.
   [esteele]
 

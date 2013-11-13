@@ -17,11 +17,14 @@ from Products.CMFPlone.utils import log
 from plone.app.layout.globals.interfaces import IViewView
 from plone.app.layout.viewlets import ViewletBase
 
+import pkg_resources
+
 try:
-    from plone.app.relationfield.behavior import IRelatedItems
-    has_relationfield_installed = True
-except ImportError:
-    has_relationfield_installed = False
+    pkg_resources.get_distribution('plone.app.relationfield')
+except pkg_resources.DistributionNotFound:
+    HAS_RELATIONFIELD = False
+else:
+    HAS_RELATIONFIELD = True
 
 
 class DocumentActionsViewlet(ViewletBase):
@@ -132,19 +135,30 @@ class ContentRelatedItems(ViewletBase):
                 res.sort(key=_key)
 
         # Dexterity
-        if has_relationfield_installed and \
-           hasattr(context, 'relatedItems'):
+        if HAS_RELATIONFIELD and hasattr(context, 'relatedItems'):
             related = context.relatedItems
             if not related:
                 return ()
-            res = [self.rel2brain(rel) for rel in related]
+            res = self.related2brains(related)
 
         return res
 
-    def rel2brain(self, rel):
+    def related2brains(self, related):
+        """Return a list of brains based on a list of relations. Will filter
+        relations if the user has no permission to access the content.
+
+        :param related: related items
+        :type related: list of relations
+        :return: list of catalog brains
+        """
         catalog = getToolByName(self.context, 'portal_catalog')
-        path = rel.to_path
-        return catalog(path={'query': path})[0]
+        brains = []
+        for r in related:
+            path = r.to_path
+            # the query will return an empty list if the user has no
+            # permission to see the target object
+            brains.extend(catalog(path={'query': path}))
+        return brains
 
 
 class WorkflowHistoryViewlet(ViewletBase):
