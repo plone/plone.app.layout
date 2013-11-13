@@ -29,7 +29,10 @@ Changelog
 - Removed hard dependency on plone.app.relationfield.
   [pabo, marcosfromero]
 
-- Add Dexterity support for the related items viewlet.
+- Add Dexterity support for the related items viewlet. Note this could be
+  potentially dangerous: if your Dexterity-based content type has a related
+  items widget hardcoded in the template, you will end with a duplicated
+  listing.
   [pabo, marcosfromero]
 
 
