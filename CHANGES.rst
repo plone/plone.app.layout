@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.2.13 (unreleased)
+2.2.13 (2013-11-13)
 -------------------
 
 - Fix 'plone.belowcontentbody.relateditems' viewlet to avoid trying to display
