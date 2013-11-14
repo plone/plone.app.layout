@@ -4,7 +4,9 @@ Changelog
 2.3.11 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Update package dependencies and clearly specify this branch is for
+  Plone 4.3 only.
+  [hvelarde]
 
 
 2.3.10 (2013-11-13)
