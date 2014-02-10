@@ -5,8 +5,7 @@
         tal:attributes="class string:portalMessage ${mtype};">
         <strong
             i18n:translate="" tal:content="python:mtype.capitalize()">Info</strong>
-        <span class="content"
-            tal:replace="message/message | nothing" i18n:translate="">
+        <span tal:replace="message/message | nothing" i18n:translate="">
             The status message.
         </span>
     </div>
