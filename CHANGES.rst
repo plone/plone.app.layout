@@ -4,6 +4,10 @@ Changelog
 2.4a1 (unreleased)
 ------------------
 
+- Remove DL, DT and DD elements
+  https://github.com/plone/Products.CMFPlone/issues/153
+  [khink, mrtango]
+
 - Make the link to plone.org open in a new tab/window.
   [Toni Mueller]
 
