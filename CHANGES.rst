@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.3.11 (unreleased)
+2.3.11 (2014-02-19)
 -------------------
 
 - Update package dependencies and clearly specify this branch is for
