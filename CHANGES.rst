@@ -4,7 +4,8 @@ Changelog
 2.3.13 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Fix: in test passing portal to addMember, not testcase class.
+  [jensens]
 
 
 2.3.12 (2014-09-07)
