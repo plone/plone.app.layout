@@ -24,6 +24,12 @@ from plone.portlets.interfaces import ILocalPortletAssignable
 BLACKLISTED_PROVIDERS = ('portal_workflow', )
 BLACKLISTED_CATEGORIES = ('folder_buttons', 'object_buttons', )
 
+try:
+    from plone.app.contenttypes.interfaces import ICollection
+    HAS_PAC = True
+except ImportError:
+    HAS_PAC = False
+
 
 class ContextState(BrowserView):
     """Information about the state of the current context
@@ -163,7 +169,14 @@ class ContextState(BrowserView):
 
     @memoize
     def is_folderish(self):
-        return bool(getattr(aq_base(aq_inner(self.context)), 'isPrincipiaFolderish', False))
+        cond1 = bool(
+            getattr(aq_base(aq_inner(self.context)),
+                    'isPrincipiaFolderish', False))
+        cond2 = False
+        if HAS_PAC:
+            if ICollection.providedBy(self.context):
+                cond2 = True
+        return cond1 or cond2
 
     @memoize
     def is_structural_folder(self):

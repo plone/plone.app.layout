@@ -7,6 +7,10 @@ Changelog
 - Fix: in test passing portal to addMember, not testcase class.
   [jensens]
 
+- Fix: make ICollection from p.a.contenttypes considered as folderish
+  [kiorky]
+
+
 
 2.3.12 (2014-09-07)
 -------------------
