@@ -4,6 +4,12 @@ Changelog
 2.5.5 (unreleased)
 ------------------
 
+- Add ``_authenticator`` param to contenthistory URLs.
+  This will prevent CSRF warnings. See `#330`__
+  [keul]
+  
+  __ https://github.com/plone/Products.CMFPlone/issues/330
+
 - Fix info_empty_dashboard i18n default message.
   [vincentfretin]
 
@@ -12,7 +18,6 @@ Changelog
 
 - pat-modal pattern has been renamed to pat-plone-modal
   [jcbrand]
-
 
 2.5.4 (2015-03-13)
 ------------------

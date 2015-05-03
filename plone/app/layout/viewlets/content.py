@@ -21,6 +21,7 @@ from zope.component import getUtility
 from plone.app.layout.globals.interfaces import IViewView
 from plone.app.layout.viewlets import ViewletBase
 from plone.app.content.browser.interfaces import IFolderContentsView
+from plone.protect.authenticator import createToken
 
 import pkg_resources
 
@@ -286,6 +287,10 @@ class ContentHistoryViewlet(WorkflowHistoryViewlet):
     index = ViewPageTemplateFile("content_history.pt")
 
     @memoize
+    def csrf_token(self):
+         return createToken()  
+
+    @memoize
     def getUserInfo(self, userid):
         mt = getToolByName(self.context, 'portal_membership')
         info = mt.getMemberInfo(userid)
@@ -319,9 +324,10 @@ class ContentHistoryViewlet(WorkflowHistoryViewlet):
             meta = vdata["metadata"]["sys_metadata"]
             userid = meta["principal"]
             preview_url = \
-                "%s/versions_history_form?version_id=%s#version_preview" % (
+                "%s/versions_history_form?version_id=%s&_authenticator=%s#version_preview" % (
                     context_url,
-                    version_id
+                    version_id,
+                    self.csrf_token()
                 )
             info = dict(
                 type='versioning',
@@ -336,13 +342,13 @@ class ContentHistoryViewlet(WorkflowHistoryViewlet):
             if can_diff:
                 if version_id > 0:
                     info["diff_previous_url"] = (
-                        "%s/@@history?one=%s&two=%s" %
-                        (context_url, version_id, version_id - 1)
+                        "%s/@@history?one=%s&two=%s&_authenticator=%s" %
+                        (context_url, version_id, version_id - 1, self.csrf_token())
                     )
                 if not rt.isUpToDate(context, version_id):
                     info["diff_current_url"] = (
-                        "%s/@@history?one=current&two=%s" %
-                        (context_url, version_id)
+                        "%s/@@history?one=current&two=%s&_authenticator=%s" %
+                        (context_url, version_id, self.csrf_token())
                     )
             if can_revert:
                 info["revert_url"] = "%s/revertversion" % context_url
