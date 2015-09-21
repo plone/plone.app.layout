@@ -144,9 +144,12 @@ class DocumentBylineViewlet(ViewletBase):
         """
         # check if we are allowed to display publication date
         registry = getUtility(IRegistry)
-        settings = registry.forInterface(
-            ISiteSchema,
-            prefix='plone')
+        try:
+            settings = registry.forInterface(
+                ISiteSchema,
+                prefix='plone')
+        except KeyError:
+            return None
 
         if not settings.display_publication_date_in_byline:
             return None

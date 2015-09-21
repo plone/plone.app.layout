@@ -4,7 +4,8 @@ Changelog
 2.5.16 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Fix @@manage-viewlets with document_byline implementation (closes `#1054`_).
+  [rodfersou]
 
 
 2.5.15 (2015-09-20)
@@ -1612,3 +1613,4 @@ Changelog
 .. _`#741`: https://github.com/plone/Products.CMFPlone/issues/741
 .. _`#1000`: https://github.com/plone/Products.CMFPlone/issues/1000
 .. _`#1037`: https://github.com/plone/Products.CMFPlone/issues/1037
+.. _`#1054`: https://github.com/plone/Products.CMFPlone/issues/1054
