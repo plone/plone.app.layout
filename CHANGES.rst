@@ -4,13 +4,14 @@ Changelog
 2.5.16 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Test for GlobalSectionsViewlet
+  [erral]
 
 
 2.5.15 (2015-09-20)
 -------------------
 
-- Pull mark_special_links, external_links_open_new_window, 
+- Pull mark_special_links, external_links_open_new_window,
   types_view_action_in_listings values
   from configuration registry.
   [esteele]
