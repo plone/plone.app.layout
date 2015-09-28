@@ -16,6 +16,8 @@ from zope.interface import alsoProvides
 from zope.interface import directlyProvides
 from zope.interface import noLongerProvides
 
+from StringIO import StringIO
+
 
 # Red pixel with filename pixel.png
 SITE_LOGO_BASE64 = 'filenameb64:cGl4ZWwucG5n;datab64:iVBORw0KGgoAAAANSUhEUgAA'\
@@ -168,6 +170,21 @@ class TestGlobalSectionsViewlet(ViewletsTestCase):
 
         self.assertTrue(
             viewlet.selected_portal_tab == self.portal.testdocument.getId()
+            )
+
+    def testSelectedTabImage(self):
+        self.loginAsPortalOwner()
+        self.portal.invokeFactory('Image', 'testimage',
+                                  title='Test image')
+        self.portal.testimage.setImage(StringIO(SITE_LOGO_BASE64))
+        self.portal.testimage.image = 1
+        self.app.REQUEST['URL'] = self.portal.testimage.absolute_url()
+        viewlet = GlobalSectionsViewlet(
+            self.portal.testimage, self.app.REQUEST, None)
+        viewlet.update()
+
+        self.assertTrue(
+            viewlet.selected_portal_tab == self.portal.testimage.getId()
             )
 
     def testSelectedTabFolderishNavigationRoot1(self):
