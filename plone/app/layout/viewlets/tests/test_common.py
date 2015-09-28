@@ -6,6 +6,8 @@ from plone.app.layout.viewlets.common import ContentViewsViewlet
 from plone.app.layout.viewlets.common import LogoViewlet
 from plone.app.layout.viewlets.common import TitleViewlet
 from plone.app.layout.viewlets.common import ViewletBase
+from plone.app.layout.viewlets.common import GlobalSectionsViewlet
+
 from plone.app.layout.viewlets.tests.base import ViewletsTestCase
 from plone.protect import authenticator as auth
 from plone.registry.interfaces import IRegistry
@@ -139,3 +141,93 @@ class TestContentViewsViewlet(ViewletsTestCase):
         self.assertTrue(
             'http://nohost/plone/@@site-logo/pixel.png'
             in viewlet.img_src)
+
+
+class TestGlobalSectionsViewlet(ViewletsTestCase):
+    """Test the global sections viewlet.
+    """
+
+    def testSelectedTabFolderish(self):
+        self.app.REQUEST['URL'] = self.portal.news.absolute_url()
+        viewlet = GlobalSectionsViewlet(
+            self.portal.news, self.app.REQUEST, None)
+        viewlet.update()
+
+        self.assertTrue(
+            viewlet.selected_portal_tab == self.portal.news.getId()
+            )
+
+    def testSelectedTabNotFolderish(self):
+        self.loginAsPortalOwner()
+        self.portal.invokeFactory('Document', 'testdocument',
+                                  title='Test document')
+        self.app.REQUEST['URL'] = self.portal.testdocument.absolute_url()
+        viewlet = GlobalSectionsViewlet(
+            self.portal.testdocument, self.app.REQUEST, None)
+        viewlet.update()
+
+        self.assertTrue(
+            viewlet.selected_portal_tab == self.portal.testdocument.getId()
+            )
+
+    def testSelectedTabFolderishNavigationRoot1(self):
+        self.loginAsPortalOwner()
+        self.portal.invokeFactory('Folder', 'testfolder',
+                                  title='Test folder level 1')
+
+        for i in range(2):
+            self.portal.testfolder.invokeFactory(
+                'Folder',
+                'dummy1-{}'.format(i),
+                title='dummy folder')
+        self.portal.testfolder.invokeFactory(
+            'Folder',
+            'testfoldersecond',
+            title='Test folder level 2')
+
+        for i in range(2):
+            self.portal.testfolder.invokeFactory(
+                'Folder',
+                'dummy2-{}'.format(i),
+                title='dummy folder')
+
+        directlyProvides(self.portal.testfolder, INavigationRoot)
+        self.app.REQUEST['URL'] = self.portal.testfolder.testfoldersecond.absolute_url()
+        viewlet = GlobalSectionsViewlet(
+            self.portal.testfolder.testfoldersecond, self.app.REQUEST, None)
+        viewlet.update()
+
+        self.assertTrue(
+            viewlet.selected_portal_tab == self.portal.testfolder.testfoldersecond.getId()
+            )
+
+    def testSelectedTabFolderishNavigationRoot2(self):
+        self.loginAsPortalOwner()
+        self.portal.invokeFactory('Folder', 'testfolder',
+                                  title='Test folder level 1')
+
+        for i in range(2):
+            self.portal.testfolder.invokeFactory(
+                'Folder',
+                'dummy1-{}'.format(i),
+                title='dummy folder')
+        self.portal.testfolder.invokeFactory(
+            'Folder',
+            'testfoldersecond',
+            title='Test folder level 2')
+
+        for i in range(2):
+            self.portal.testfolder.invokeFactory(
+                'Folder',
+                'zummy1-{}'.format(i),
+                title='dummy folder')
+
+        directlyProvides(self.portal.testfolder, INavigationRoot)
+        self.app.REQUEST['URL'] = self.portal.testfolder.testfoldersecond.absolute_url()
+        viewlet = GlobalSectionsViewlet(
+            self.portal.testfolder.testfoldersecond, self.app.REQUEST, None)
+        viewlet.update()
+
+        self.assertTrue(
+            viewlet.selected_portal_tab == self.portal.testfolder.testfoldersecond.getId()
+            )
