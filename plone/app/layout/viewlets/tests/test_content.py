@@ -83,12 +83,12 @@ class TestDocumentBylineViewletView(ViewletsTestCase):
         # now set effective date for our document
         effective = DateTime()
         self.context.setEffectiveDate(effective)
+        from Products.Archetypes.ExtensibleMetadata import _zone
+        self.assertEqual(_zone, effective.timezone())
         self.assertEqual(viewlet.pub_date(), DateTime(effective.ISO8601()))
 
         # now switch off publication date globally on the site and see if
         # viewlet returns None for publication date
-        from Products.Archetypes.ExtensibleMetadata import _zone
-        self.assertEqual(_zone, effectie.timezone())
         settings.display_publication_date_in_byline = False
         self.assertEqual(viewlet.pub_date(), None)
 
