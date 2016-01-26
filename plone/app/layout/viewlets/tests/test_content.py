@@ -87,6 +87,8 @@ class TestDocumentBylineViewletView(ViewletsTestCase):
 
         # now switch off publication date globally on the site and see if
         # viewlet returns None for publication date
+        from Products.Archetypes.ExtensibleMetadata import _zone
+        self.assertEqual(_zone, effectie.timezone())
         settings.display_publication_date_in_byline = False
         self.assertEqual(viewlet.pub_date(), None)
 
