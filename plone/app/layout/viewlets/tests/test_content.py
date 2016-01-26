@@ -83,7 +83,9 @@ class TestDocumentBylineViewletView(ViewletsTestCase):
         # now set effective date for our document
         effective = DateTime()
         self.context.setEffectiveDate(effective)
+        import time
         from Products.Archetypes.ExtensibleMetadata import _zone
+        self.assertEqual(time.localtime(time.time()).tm_hour, effective.hour())
         self.assertEqual(_zone, effective.timezone())
         self.assertEqual(viewlet.pub_date(), DateTime(effective.ISO8601()))
 
