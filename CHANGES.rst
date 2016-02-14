@@ -4,7 +4,8 @@ Changelog
 2.3.14 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Fixed possible test failure by not comparing member objects, but
+  member ids and user names.  [maurits]
 
 
 2.3.13 (2015-04-30)
@@ -49,7 +50,7 @@ Changelog
 2.3.9 (2013-09-25)
 ------------------
 
-- Removed hard dependency on plone.app.relationfield. [pabo, marcosfromero] 
+- Removed hard dependency on plone.app.relationfield. [pabo, marcosfromero]
 
 
 2.3.8 (2013-09-16)

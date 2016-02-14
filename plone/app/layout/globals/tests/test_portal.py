@@ -96,7 +96,16 @@ class TestPortalStateView(GlobalsTestCase):
         self.assertEquals(self.view.is_rtl(), True)
 
     def test_member(self):
-        self.assertEquals(self.view.member(), self.portal.portal_membership.getAuthenticatedMember())
+        # self.view.member() and
+        # self.portal.portal_membership.getAuthenticatedMember() used to be the
+        # same.  But now when I ask if
+        # self.portal.portal_membership.getAuthenticatedMember() is the same as
+        # self.portal.portal_membership.getAuthenticatedMember() the answer
+        # strangely is no.  So we check details.
+        view_member = self.view.member()
+        auth_member = self.portal.portal_membership.getAuthenticatedMember()
+        self.assertEquals(view_member.getId(), auth_member.getId())
+        self.assertEquals(view_member.getUserName(), auth_member.getUserName())
 
     def test_anonymous(self):
         self.assertEquals(self.view.anonymous(), False)
