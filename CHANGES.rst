@@ -4,6 +4,8 @@ Changelog
 2.3.14 (unreleased)
 -------------------
 
+Fixes:
+
 - Fixed possible test failure by not comparing member objects, but
   member ids and user names.  [maurits]
 
