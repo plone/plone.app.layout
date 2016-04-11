@@ -12,6 +12,9 @@ Changelog
 
 Fixes:
 
+- Fix base tag differs from actual URL (fixes `#86`_).
+  [rodfersou]
+
 - Fix body class attribute errors when the user role contains space.
   [Jian Aijun]
 
@@ -1278,3 +1281,5 @@ Fixes:
 - Show the authors full name in presentation view. This fixes
   http://dev.plone.org/plone/ticket/6810
   [wichert]
+
+.. _`#86`: https://github.com/plone/plone.app.layout/issues/86
