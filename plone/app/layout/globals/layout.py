@@ -161,6 +161,8 @@ class LayoutPolicy(BrowserView):
            isinstance(template, ViewMixinForTemplates):
             # Browser view
             name = view.__name__
+        elif isinstance(template, str):
+            name = template
         elif template is not None:
             name = template.getId()
         if name:
