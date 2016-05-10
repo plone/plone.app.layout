@@ -4,14 +4,6 @@ Changelog
 2.5.20 (unreleased)
 -------------------
 
-Incompatibilities:
-
-- *add item here*
-
-New:
-
-- *add item here*
-
 Fixes:
 
 - Fix body class ``pat-markspeciallinks`` not set.
