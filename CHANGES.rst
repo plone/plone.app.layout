@@ -79,6 +79,11 @@ Fixes:
 
 - Fixed html validation: element nav does not need a role attribute.
   [maurits]
+Fixes:
+
+- Rework sitemap.xml.gz to allow filtering of sitemap elements; and supply such
+  a filter if LinguaPlone is installed.
+  [djowett]
 
 - Fixed invalid html of social viewlet by moving the schema.org tags
   to the body in a new viewlet ``plone.abovecontenttitle.socialtags``
