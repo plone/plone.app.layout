@@ -138,4 +138,4 @@ class LinguaPloneSiteMapView(SiteMapView):
     def extra_search_parameters(self):
         """Work around LinguaPlone's catalog patch."""
         # see https://github.com/plone/Products.LinguaPlone/blob/master/Products/LinguaPlone/catalog.py
-        return {Language:'all'}
+        return {'Language':'all'}
