@@ -10,7 +10,8 @@ New:
 
 Fixes:
 
-- *add item here*
+- Fix body class attribute errors when the user role contains space.
+  [Jian Aijun]
 
 
 2.3.14 (2016-02-15)
