@@ -1,7 +1,7 @@
 from setuptools import find_packages
 from setuptools import setup
 
-version = '2.3.15.dev0'
+version = '2.3.15'
 long_description = (
     open('README.rst').read() + '\n' +
     open('CHANGES.rst').read()
