@@ -16,6 +16,9 @@ Bug fixes:
 
 - *add item here*
 
+- Move calendar portlet code to a mixin for easy reuse.
+  [rodfersou]
+
 
 2.6.1 (2016-06-07)
 ------------------
