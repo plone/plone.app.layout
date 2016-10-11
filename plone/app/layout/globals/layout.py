@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from plone.app.layout.globals.interfaces import ILayoutPolicy
 from plone.app.layout.globals.interfaces import IViewView
-from plone.app.layout.icons.interfaces import IContentIcon
 from plone.i18n.normalizer.interfaces import IIDNormalizer
 from plone.memoize.view import memoize
 from plone.portlets.interfaces import IPortletManager
@@ -115,20 +114,6 @@ class LayoutPolicy(BrowserView):
             return True
         else:
             return False
-
-    def getIcon(self, item):
-        """Returns an object which implements the IContentIcon interface and
-        provides the informations necessary to render an icon. The item
-        parameter needs to be adaptable to IContentIcon. Icons can be disabled
-        globally or just for anonymous users with the icon_visibility property
-        in site_properties.
-        """
-        context = self.context
-        if not self.icons_visible():
-            icon = getMultiAdapter((context, self.request, None), IContentIcon)
-        else:
-            icon = getMultiAdapter((context, self.request, item), IContentIcon)
-        return icon
 
     def bodyClass(self, template, view):
         """
