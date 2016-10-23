@@ -10,6 +10,7 @@ from plone.memoize.view import memoize
 from plone.protect.utils import addTokenToUrl
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone import PloneMessageFactory as _
 from Products.CMFPlone.interfaces import IPloneSiteRoot
 from Products.CMFPlone.interfaces import ISearchSchema
 from Products.CMFPlone.interfaces import ISiteSchema
@@ -312,10 +313,25 @@ class ContentViewsViewlet(ViewletBase):
         context_url = context.absolute_url()
         context_fti = context.getTypeInfo()
 
+        ploneview = getMultiAdapter((
+            self.context, self.request), name=u'plone')
         context_state = getMultiAdapter(
             (context, self.request), name=u'plone_context_state'
         )
         actions = context_state.actions
+
+        if not ploneview.showToolbar():
+            object_actions = actions('object')
+            object_actions = filter(
+                lambda o: o['id'] == 'view',
+                object_actions
+            )
+            if not object_actions:
+                return [], []
+            view = object_actions[0]
+            view['title'] = _('label_back_to_site', default="Back to site")
+            view['id'] = 'parent'
+            return [view], []
 
         action_list = []
         if context_state.is_structural_folder():

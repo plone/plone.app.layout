@@ -10,7 +10,9 @@ Breaking changes:
 
 New features:
 
-- *add item here*
+- Add back to site button to contexts where the toolbar was previously
+  empty.
+  [MatthewWilkes]
 
 Bug fixes:
 
