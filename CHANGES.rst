@@ -4,14 +4,6 @@ Changelog
 2.5.21 (unreleased)
 -------------------
 
-Breaking changes:
-
-- *add item here*
-
-New features:
-
-- *add item here*
-
 Bug fixes:
 
 - Add default icon for top-level contentview toolbar entries
