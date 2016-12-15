@@ -1,26 +1,25 @@
-from zope.component import getUtility
-from plone.registry.interfaces import IRegistry
+from AccessControl import Unauthorized
+from Acquisition import aq_base
+from Acquisition import aq_parent
+from plone.app.layout.globals.interfaces import ILayoutPolicy
+from plone.app.layout.globals.interfaces import IViewView
+from plone.app.layout.icons.interfaces import IContentIcon
 from plone.i18n.normalizer.interfaces import IIDNormalizer
 from plone.memoize.view import memoize
 from plone.portlets.interfaces import IPortletManager
 from plone.portlets.interfaces import IPortletManagerRenderer
+from plone.registry.interfaces import IRegistry
+from Products.CMFCore.utils import getToolByName
+from Products.Five.browser.metaconfigure import ViewMixinForTemplates
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from zope.browserpage.viewpagetemplatefile import ViewPageTemplateFile as ZopeViewPageTemplateFile
 from zope.component import getMultiAdapter
-from zope.component import queryUtility
+from zope.component import getUtility
 from zope.component import queryMultiAdapter
+from zope.component import queryUtility
 from zope.interface import alsoProvides
 from zope.interface import implements
 from zope.publisher.browser import BrowserView
-
-from AccessControl import Unauthorized
-from Acquisition import aq_base
-from Products.CMFCore.utils import getToolByName
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from zope.browserpage.viewpagetemplatefile import ViewPageTemplateFile as ZopeViewPageTemplateFile
-from Products.Five.browser.metaconfigure import ViewMixinForTemplates
-
-from plone.app.layout.globals.interfaces import ILayoutPolicy
-from plone.app.layout.globals.interfaces import IViewView
-from plone.app.layout.icons.interfaces import IContentIcon
 
 
 class LayoutPolicy(BrowserView):
@@ -117,6 +116,10 @@ class LayoutPolicy(BrowserView):
                 return context.absolute_url() + '/'
         except Unauthorized:
             pass
+        # if actual url is the object referenced from default page
+        actual_url = self.request.get('ACTUAL_URL', False)
+        if actual_url:
+            return actual_url
         return context.absolute_url()
 
     def bodyClass(self, template, view):

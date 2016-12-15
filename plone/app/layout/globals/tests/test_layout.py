@@ -1,10 +1,11 @@
-from plone.registry.interfaces import IRegistry
-from plone.portlets.interfaces import IPortletType
-from zope.component import getUtility
-import zope.interface
-
 from plone.app.layout.globals.tests.base import GlobalsTestCase
 from plone.app.layout.navigation.interfaces import INavigationRoot
+from plone.portlets.interfaces import IPortletType
+from plone.registry.interfaces import IRegistry
+from zope.component import getMultiAdapter
+from zope.component import getUtility
+
+import zope.interface
 
 
 class TestLayoutView(GlobalsTestCase):
@@ -48,6 +49,29 @@ class TestLayoutView(GlobalsTestCase):
         self.assertEqual(True, self.view.have_portlets('plone.rightcolumn'))
         self.app.REQUEST.set('disable_plone.rightcolumn', 1)
         self.assertEqual(False, self.view.have_portlets('plone.rightcolumn'))
+
+    def testRenderBase(self):
+        # folderish item with no default page defined: base tag and URL are the same
+        self.portal.setDefaultPage(None)
+        view = self.portal.restrictedTraverse('@@plone_layout')
+        self.assertEqual(view.renderBase(), 'http://nohost/plone/')
+
+        # folderish item with default page defined: base tag and URL must be the same
+        self.portal.setDefaultPage('front-page')
+        self.assertEqual(view.renderBase(), 'http://nohost/plone/')
+
+        # default page object: base tag should be object URL
+        view = self.portal['front-page'].restrictedTraverse('@@plone_layout')
+        self.app.REQUEST.set('ACTUAL_URL', 'http://nohost/plone/front-page')
+        self.assertEqual(view.renderBase(), 'http://nohost/plone/front-page')
+
+        # any other item: base tag and URL are the same
+        view = self.folder.restrictedTraverse('@@plone_layout')
+        self.assertEqual(view.renderBase(), 'http://nohost/plone/Members/test_user_1_/')
+        self.folder.invokeFactory('Document', 'page')
+        self.app.REQUEST.set('ACTUAL_URL', 'http://nohost/plone/Members/test_user_1_/page')
+        view = self.folder.page.restrictedTraverse('@@plone_layout')
+        self.assertEqual(view.renderBase(), 'http://nohost/plone/Members/test_user_1_/page')
 
     def testBodyClass(self):
         context = self.portal['front-page']
