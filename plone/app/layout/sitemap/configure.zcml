@@ -1,6 +1,7 @@
 <configure
     xmlns="http://namespaces.zope.org/zope"
-    xmlns:browser="http://namespaces.zope.org/browser">
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:zcml="http://namespaces.zope.org/zcml">
 
   <browser:page
       name="sitemap.xml.gz"
@@ -8,5 +9,15 @@
       class=".sitemap.SiteMapView"
       permission="zope2.Public"
      />
+
+  <configure zcml:condition="installed Products.LinguaPlone">
+      <browser:page
+          name="sitemap.xml.gz"
+          for="plone.app.layout.navigation.interfaces.INavigationRoot"
+          class=".sitemap.LinguaPloneSiteMapView"
+          permission="zope2.Public"
+          layer="Products.LinguaPlone.interfaces.ILinguaPloneProductLayer"
+         />
+  </configure>
 
 </configure>

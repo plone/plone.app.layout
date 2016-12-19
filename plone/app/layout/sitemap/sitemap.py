@@ -54,7 +54,10 @@ class SiteMapView(BrowserView):
 
         query['is_default_page'] = True
         default_page_modified = OOBTree()
-        for item in catalog.searchResults(query, Language='all'):
+
+        keywords = self.extra_search_parameters()
+        
+        for item in catalog.searchResults(query, **keywords):
             key = item.getURL().rsplit('/', 1)[0]
             value = (item.modified.micros(), item.modified.ISO8601())
             default_page_modified[key] = value
@@ -77,7 +80,8 @@ class SiteMapView(BrowserView):
             }
 
         query['is_default_page'] = False
-        for item in catalog.searchResults(query, Language='all'):
+
+        for item in catalog.searchResults(query, **keywords):
             loc = item.getURL()
             date = item.modified
             # Comparison must be on GMT value
@@ -116,3 +120,22 @@ class SiteMapView(BrowserView):
         self.request.response.setHeader('Content-Type',
                                         'application/octet-stream')
         return self.generate()
+        
+    def extra_search_parameters(self):
+        """Allows extra filtering of the sitemap 
+        for use (in particular) by LinguaPlone
+        
+        :returns: a dictionary of keyword parameters to pass into 
+        catalog.searchResults()
+        """
+        return {}
+
+
+class LinguaPloneSiteMapView(SiteMapView):
+    """Overrides SiteMapView with patch for LinguaPlone
+    """
+
+    def extra_search_parameters(self):
+        """Work around LinguaPlone's catalog patch."""
+        # see https://github.com/plone/Products.LinguaPlone/blob/master/Products/LinguaPlone/catalog.py
+        return {'Language':'all'}

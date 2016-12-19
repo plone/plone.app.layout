@@ -4,7 +4,11 @@ Changelog
 2.3.16 (unreleased)
 -------------------
 
-- Nothing changed yet.
+Fixes:
+
+- Rework sitemap.xml.gz to allow filtering of sitemap elements; and supply such
+  a filter if LinguaPlone is installed.
+  [djowett]
 
 
 2.3.15 (2016-06-28)
