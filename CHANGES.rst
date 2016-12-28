@@ -4,17 +4,11 @@ Changelog
 2.5.22 (unreleased)
 -------------------
 
-Breaking changes:
-
-- *add item here*
-
-New features:
-
-- *add item here*
-
 Bug fixes:
 
-- *add item here*
+- Rework sitemap.xml.gz to allow filtering of sitemap elements; and supply such
+  a filter if LinguaPlone is installed.
+  [djowett]
 
 
 2.5.21 (2016-11-09)
@@ -35,6 +29,7 @@ Fixes:
   Fixes #84.
   [thet]
 
+
 2.5.19 (2016-03-31)
 -------------------
 
@@ -50,11 +45,6 @@ Fixes:
 
 - Fixed html validation: element nav does not need a role attribute.
   [maurits]
-Fixes:
-
-- Rework sitemap.xml.gz to allow filtering of sitemap elements; and supply such
-  a filter if LinguaPlone is installed.
-  [djowett]
 
 - Fixed invalid html of social viewlet by moving the schema.org tags
   to the body in a new viewlet ``plone.abovecontenttitle.socialtags``
