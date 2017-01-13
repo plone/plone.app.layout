@@ -14,7 +14,8 @@ New features:
 
 Bug fixes:
 
-- *add item here*
+- Fix error in viewlet when related dexterity item has been deleted.
+  [maurits]
 
 
 2.3.16 (2016-12-19)
