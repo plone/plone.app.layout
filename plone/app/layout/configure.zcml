@@ -7,7 +7,6 @@
     <include package=".navigation" />
     <include package=".viewlets" />
     <include package=".nextprevious" />
-    <include package=".icons" />
     <include package=".links" />
     <include package=".sitemap" />
     <include package=".dashboard" />
