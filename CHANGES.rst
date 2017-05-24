@@ -35,14 +35,14 @@ Fixes:
   a filter if LinguaPlone is installed.
   [djowett]
 
+- Fix base tag differs from actual URL (fixes `#86`_).
+  [rodfersou]
+
 
 2.3.15 (2016-06-28)
 -------------------
 
 Fixes:
-
-- Fix base tag differs from actual URL (fixes `#86`_).
-  [rodfersou]
 
 - Fix body class attribute errors when the user role contains space.
   [Jian Aijun]
