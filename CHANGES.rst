@@ -10,6 +10,9 @@ Breaking changes:
 
 New features:
 
+- Allow addition of extra body classes via multiple IBodyClassAdapter adapter registrations without the need to overload the ILayoutPolicy view.
+  [thet, jensens, agitator]
+
 - Make it easier to override seperator in title viewlet
   [tomgross]
 
@@ -17,6 +20,11 @@ Bug fixes:
 
 - *add item here*
 
+- More py3 fixes.
+  [pbauer]
+
+- Use ``get_installer`` in tests.
+  [maurits]
 
 2.7.5 (2017-11-26)
 ------------------
@@ -26,6 +34,13 @@ New features:
 - Toolbar: Use pattern variables to configure the toolbar and submenu widths from plone.lessvariables.
   [thet]
 
+- Imports are Python3 compatible
+  [ale-rt, jensens]
+
+Bug fixes:
+
+- Fix for situations where pathbar viewlet variables were undefined in toolbar context
+  [tomgross]
 
 2.7.4 (2017-09-03)
 ------------------
@@ -59,6 +74,9 @@ New features:
 
 - Added membertools viewlet. If user is not anonymous and toolbar is not visible according to ``is_toolbar_visible`` the viewlet will show at the location of anontools.
   [agitator]
+- Allow addition of extra body classes via multiple ``IBodyClassAdapter`` adapter registrations without the need to overload the ILayoutPolicy view.
+  RFC / DRAFT / WORK IN PROGRESS
+  [thet]
 
 Bug fixes:
 
