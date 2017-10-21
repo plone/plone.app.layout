@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from BTrees.OOBTree import OOBTree
-from cStringIO import StringIO
 from gzip import GzipFile
+from plone.app.layout._compat import StringIO
 from plone.memoize import ram
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName

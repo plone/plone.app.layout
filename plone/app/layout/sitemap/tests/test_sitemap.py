@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 from DateTime import DateTime
 from gzip import GzipFile
+from plone.app.layout._compat import StringIO
 from plone.app.layout.navigation.interfaces import INavigationRoot
 from plone.app.testing.bbb import PloneTestCase
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import ISearchSchema
 from Products.CMFPlone.interfaces import ISiteSchema
-from StringIO import StringIO
 from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.interface import alsoProvides

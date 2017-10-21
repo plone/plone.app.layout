@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from Acquisition import aq_inner
+from plone.app.layout._compat import StringIO
 from plone.app.layout.viewlets import ViewletBase
 from plone.app.uuid.utils import uuidToObject
 from plone.memoize import ram
@@ -10,7 +11,6 @@ from Products.CMFPlone.interfaces import ISecuritySchema
 from Products.CMFPlone.interfaces.syndication import IFeedSettings
 from Products.CMFPlone.interfaces.syndication import ISiteSyndicationSettings
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from StringIO import StringIO
 from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.schema.interfaces import IVocabularyFactory
