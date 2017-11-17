@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from BTrees.OOBTree import OOBTree
 from gzip import GzipFile
-from plone.app.layout._compat import StringIO
 from plone.memoize import ram
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
@@ -9,6 +8,7 @@ from Products.CMFPlone.interfaces import IPloneSiteRoot
 from Products.CMFPlone.interfaces import ISiteSchema
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from six import StringIO
 from zope.component import getUtility
 from zope.publisher.interfaces import NotFound
 
