@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from BTrees.OOBTree import OOBTree
-from cStringIO import StringIO
 from gzip import GzipFile
 from plone.memoize import ram
 from plone.registry.interfaces import IRegistry
@@ -9,6 +8,7 @@ from Products.CMFPlone.interfaces import IPloneSiteRoot
 from Products.CMFPlone.interfaces import ISiteSchema
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from six import StringIO
 from zope.component import getUtility
 from zope.publisher.interfaces import NotFound
 
@@ -54,7 +54,7 @@ class SiteMapView(BrowserView):
 
         query['is_default_page'] = True
         default_page_modified = OOBTree()
-        for item in catalog.searchResults(query, Language='all'):
+        for item in catalog.searchResults(query):
             key = item.getURL().rsplit('/', 1)[0]
             value = (item.modified.micros(), item.modified.ISO8601())
             default_page_modified[key] = value
@@ -78,7 +78,7 @@ class SiteMapView(BrowserView):
             }
 
         query['is_default_page'] = False
-        for item in catalog.searchResults(query, Language='all'):
+        for item in catalog.searchResults(query):
             loc = item.getURL()
             date = item.modified
             # Comparison must be on GMT value

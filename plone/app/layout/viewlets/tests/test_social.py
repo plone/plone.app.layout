@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 from plone.app.layout.viewlets.social import SocialTagsViewlet
 from plone.app.layout.viewlets.tests.base import ViewletsTestCase
+from plone.app.testing import logout
 from plone.registry.interfaces import IRegistry
 from Products.CMFPlone.interfaces import ISocialMediaSchema
+from zope.annotation.interfaces import IAnnotations
 from zope.component import getUtility
 
 
@@ -15,6 +17,7 @@ class TestSocialViewlet(ViewletsTestCase):
         self.folder.invokeFactory('News Item', 'news-item',
                                   title='News Item')
         self.news = self.folder['news-item']
+        logout()
 
     def _tagFound(self, tags, attr, name=None, value=None):
         for meta in tags:
@@ -43,15 +46,11 @@ class TestSocialViewlet(ViewletsTestCase):
         # Twitter
         self.assertTrue(self.tagFound(
             viewlet, 'name', 'twitter:card', "summary"))
-        self.assertTrue(self.tagFound(
-            viewlet, 'name', 'twitter:title', viewlet.page_title))
-        self.assertTrue(self.tagFound(
-            viewlet, 'name', 'twitter:description', description))
-        self.assertTrue(self.tagFound(
-            viewlet, 'name', 'twitter:url', folder_url))
         # OpenGraph/Facebook
         self.assertTrue(self.tagFound(
             viewlet, 'property', 'og:site_name', viewlet.site_title_setting))
+        self.assertTrue(self.tagFound(
+            viewlet, 'property', 'og:title', viewlet.page_title))
         self.assertTrue(self.tagFound(
             viewlet, 'property', 'og:description', description))
         self.assertTrue(self.tagFound(
@@ -85,18 +84,30 @@ class TestSocialViewlet(ViewletsTestCase):
         viewlet.update()
         self.assertEquals(len(viewlet.tags), 0)
 
+    def testDisabledForLoggedUser(self):
+        self.loginAsPortalOwner()
+        viewlet = SocialTagsViewlet(self.folder, self.app.REQUEST, None)
+        viewlet.update()
+        self.assertEquals(len(viewlet.tags), 0)
+        # clear cache to prevent memoize
+        cache = IAnnotations(self.app.REQUEST)
+        key = 'plone.memoize'
+        cache[key] = {}
+        logout()
+        viewlet.update()
+        self.assertTrue(len(viewlet.tags) > 1)
+
     def testIncludeSocialSettings(self):
         registry = getUtility(IRegistry)
         settings = registry.forInterface(
             ISocialMediaSchema, prefix='plone', check=False)
-        settings.twitter_username = u'foobar'
-        settings.facebook_app_id = u'foobar'
-        settings.facebook_username = u'foobar'
-
+        settings.twitter_username = 'foobar'
+        settings.facebook_app_id = 'foobar'
+        settings.facebook_username = 'foobar'
         viewlet = SocialTagsViewlet(self.folder, self.app.REQUEST, None)
         viewlet.update()
         self.assertTrue(self.tagFound(
-            viewlet, 'name', 'twitter:site', "@foobar"))
+            viewlet, 'name', 'twitter:site', '@foobar'))
         self.assertTrue(self.tagFound(
             viewlet, 'property', 'fb:app_id', 'foobar'))
         self.assertTrue(self.tagFound(
@@ -108,8 +119,6 @@ class TestSocialViewlet(ViewletsTestCase):
         viewlet.update()
         self.assertTrue(self.tagFound(
             viewlet, 'property', 'og:image', 'http://nohost/plone/logo.png'))
-        self.assertTrue(self.tagFound(
-            viewlet, 'name', 'twitter:image', 'http://nohost/plone/logo.png'))
         self.assertFalse(self.tagFound(viewlet, 'itemprop'))
         self.assertTrue(self.bodyTagFound(
             viewlet, 'itemprop', 'image', 'http://nohost/plone/logo.png'))

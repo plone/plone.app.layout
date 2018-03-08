@@ -201,7 +201,7 @@ class ContextState(BrowserView):
 
     @memoize
     def is_editable(self):
-        tool = getToolByName(self.context, "portal_membership")
+        tool = getToolByName(self.context, 'portal_membership')
         return bool(tool.checkPermission(
             'Modify portal content',
             aq_inner(self.context)
@@ -220,6 +220,14 @@ class ContextState(BrowserView):
             lockable = getattr(
                 context.aq_explicit, 'wl_isLocked', None) is not None
             return lockable and context.wl_isLocked()
+
+    @memoize
+    def is_toolbar_visible(self):
+        tool = getToolByName(self.context, 'portal_membership')
+        return bool(tool.checkPermission(
+            'Show Toolbar',
+            aq_inner(self.context)
+        ))
 
     @memoize
     def actions(self, category=None, max=-1):

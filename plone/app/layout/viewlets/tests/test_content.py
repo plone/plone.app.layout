@@ -187,11 +187,21 @@ class TestRelatedItemsViewlet(ViewletsTestCase):
         self.assertEqual([x.Title for x in related], [
                          'Document 2', 'Document 3'])
 
+    def testDeletedRelatedItems(self):
+        # Deleted related items should not cause problems.
+        self.folder._delObject('doc2')
+        request = self.app.REQUEST
+        viewlet = ContentRelatedItems(self.folder.doc1, request, None, None)
+        viewlet.update()
+        related = viewlet.related_items()
+        self.assertEqual([x.Title for x in related], ['Document 3'])
+
 
 class TestDexterityRelatedItemsViewlet(ViewletsTestCase):
 
     def afterSetUp(self):
         """ create some sample content to test with """
+        from Products.CMFPlone.utils import get_installer
         if not HAS_DEXTERITY:
             return
         self.setRoles(('Manager',))
@@ -215,7 +225,8 @@ class TestDexterityRelatedItemsViewlet(ViewletsTestCase):
             'Dexterity Item with relatedItems behavior', 'dex2')
         self.folder.invokeFactory(
             'Dexterity Item without relatedItems behavior', 'dex3')
-        self.portal.portal_quickinstaller.installProduct('plone.app.intid')
+        qi = get_installer(self.portal)
+        qi.install_product('plone.app.intid')
         intids = getUtility(IIntIds)
         self.folder.dex1.relatedItems = [
             RelationValue(intids.getId(self.folder.doc1)),
@@ -263,3 +274,12 @@ class TestDexterityRelatedItemsViewlet(ViewletsTestCase):
         viewlet.update()
         related = viewlet.related_items()
         self.assertEqual(len(related), 1)
+
+    def testDexterityDeletedRelatedItems(self):
+        # Deleted related items should not cause problems.
+        self.folder._delObject('doc1')
+        request = self.app.REQUEST
+        viewlet = ContentRelatedItems(self.folder.dex1, request, None, None)
+        viewlet.update()
+        related = viewlet.related_items()
+        self.assertEqual([x.id for x in related], ['doc2'])

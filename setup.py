@@ -1,6 +1,8 @@
-from setuptools import setup, find_packages
+from setuptools import find_packages
+from setuptools import setup
 
-version = '2.6.2.dev0'
+
+version = '2.8.0.dev0'
 
 long_description = \
     open("README.rst").read() + "\n" + open("CHANGES.rst").read()
@@ -15,7 +17,7 @@ setup(name='plone.app.layout',
           "Framework :: Plone :: 5.0",
           "Framework :: Plone :: 5.1",
           "Framework :: Zope2",
-          "License :: OSI Approved :: GNU General Public License (GPL)",
+          "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
           "Operating System :: OS Independent",
           "Programming Language :: Python",
           "Programming Language :: Python :: 2.7",
@@ -45,6 +47,7 @@ setup(name='plone.app.layout',
           'Products.CMFEditions >=1.2.2',
           'Products.CMFPlone >=5.0b3.dev0',
           'setuptools',
+          'six',
           'zope.component',
           'zope.deferredimport',
           'zope.deprecation',

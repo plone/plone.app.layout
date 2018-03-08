@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.6.2 (unreleased)
+2.7.5 (unreleased)
 ------------------
 
 Breaking changes:
@@ -14,10 +14,156 @@ New features:
   empty.
   [MatthewWilkes]
 
+- Toolbar: Use pattern variavbles to configure the toolbar and submenu widths from plone.lessvariables.
+  [thet]
+
 Bug fixes:
+
+- Use ``get_installer`` in tests.  [maurits]
+
+- Imports are Python3 compatible
+  [ale-rt, jensens]
+
+- Fix for situations where pathbar viewlet variables were undefined in toolbar context
+  [tomgross]
+
+2.7.4 (2017-09-03)
+------------------
+
+Bug fixes:
+
+- Use the site-title in the meta-attribute title unless the navigation_root is not the portal.
+  Fixes https://github.com/plone/Products.CMFPlone/issues/2117
+  [pbauer]
+
+
+2.7.3 (2017-08-27)
+------------------
+
+New features:
+
+- Added ``Show Toolbar`` permission.
+  [agitator]
+
+Bug fixes:
+
+- Put "search in this section" checkbox where assistive tech users have a fair chance of finding and using it
+  https://github.com/plone/Products.CMFPlone/issues/1619
+  [polyester]
+
+
+2.7.2 (2017-07-04)
+------------------
+
+New features:
+
+- Added membertools viewlet. If user is not anonymous and toolbar is not visible according to ``is_toolbar_visible`` the viewlet will show at the location of anontools.
+  [agitator]
+
+Bug fixes:
+
+- show 'in current section only' before seach input field for a11y reasons. https://github.com/plone/Products.CMFPlone/issues/1619 [polyester]
+
+
+2.7.1 (2017-07-03)
+------------------
+
+Bug fixes:
+
+- Fix issue preventing disabling icons and/or thumbs globally.
+  [fgrcon]
+
+
+2.7.0 (2017-05-24)
+------------------
+
+New features:
+
+- Do not render social metadata if you are a logged user.
+  [bsuttor]
+
+- Add method ``is_toolbar_visible`` to context state.
+  It uses a whitelist and defaults to authenticated users.
+  Use new method it in toolbar viewlet manager and layout body classes.
+  [jensens]
+
+Bug fixes:
+
+- fixed css-classes for thumb scales ...
+  https://github.com/plone/Products.CMFPlone/issues/2077
+  [fgrcon]
+
+- Deprecating getIcon() in @@plone_layout
+  see https://github.com/plone/Products.CMFPlone/issues/1734
+  [fgrcon]
+
+- Factor toolbar classes out to own method.
+  Includes minor cleanup.
+  [jensens]
+
+
+2.6.5 (2017-03-29)
+------------------
+
+Bug fixes:
+
+- Fix tests for social media viewlet.
+  [hvelarde]
+
+- Fix import location for Products.ATContentTypes.interfaces.
+  [thet]
+
+- Remove redundant Twitter card tags. If og:title, og:description, og:image and
+  og:url are defined Twitter will recognise and use those on the card.
+  See: `Twitter getting started <https://dev.twitter.com/cards/getting-started>`_ section on
+  Twitter Cards and Open Graph. Fixes `issue 119 <https://github.com/plone/plone.app.layout/issues/119>`_.
+  [jladage]
+
+
+2.6.4 (2017-01-17)
+------------------
+
+Bug fixes:
+
+- Fix error in viewlet when related dexterity item has been deleted.
+  [maurits]
+
+
+2.6.3 (2016-12-30)
+-----------------
+
+Bug fixes:
+
+- Fix sitemap.xml.gz for plone.app.multilingual (>= 2.x) but breaks it for
+  LinguaPlone and plone.app.multilingual 1.x
+  If this is a problem then please see bedbfeb67 on 2.5.x branch for how to
+  maintain compatibility with these products.
+  [djowett]
+
+- Include the ``template`` body class also, when a view but no template is passed.
+  Fixes missing template class with plone.app.blocks based layouts in Mosaic.
+  [thet]
+
+- prevent extra '@' in twitter:site meta tag
+  [tkimnguyen]
+
+
+2.6.2 (2016-11-18)
+------------------
+
+Bug fixes:
+
+- Removed ZopeTestCase from the tests.
+  [ivanteoh, maurits]
 
 - Add default icon for top-level contentview toolbar entries
   [alecm]
+
+- Remove commented out viewlet (meant for Plone 3) and its related template.
+  [gforcada]
+
+- Adapt code to some deprecated methods getting finally removed.
+  [gforcada]
 
 
 2.6.1 (2016-06-07)

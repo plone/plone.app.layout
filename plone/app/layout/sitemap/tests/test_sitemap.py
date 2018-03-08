@@ -7,7 +7,7 @@ from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import ISearchSchema
 from Products.CMFPlone.interfaces import ISiteSchema
-from StringIO import StringIO
+from six import StringIO
 from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.interface import alsoProvides
@@ -74,7 +74,7 @@ class SiteMapTestCase(PloneTestCase):
         self.site_settings.enable_sitemap = False
         try:
             self.sitemap()
-        except Exception, e:
+        except Exception as e:
             # zope2 and repoze.zope2 use different publishers and raise
             # different exceptions. but both implement INotFound.
             self.assertTrue(INotFound.providedBy(e))

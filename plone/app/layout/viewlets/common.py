@@ -18,7 +18,7 @@ from Products.CMFPlone.utils import getSiteLogo
 from Products.CMFPlone.utils import safe_unicode
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from urllib import unquote
+from six.moves.urllib.parse import unquote
 from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.component import queryMultiAdapter
@@ -114,8 +114,11 @@ class TitleViewlet(ViewletBase):
             return
         portal_state = getMultiAdapter((self.context, self.request),
                                        name=u'plone_portal_state')
-        portal_title = escape(safe_unicode(portal_state
-                                           .navigation_root_title()))
+        if IPloneSiteRoot.providedBy(portal_state.navigation_root()):
+            portal_title = self.site_title_setting
+        else:
+            portal_title = escape(
+                safe_unicode(portal_state.navigation_root_title()))
         if self.page_title == portal_title:
             self.site_title = portal_title
         else:
@@ -244,6 +247,9 @@ class GlobalSectionsViewlet(ViewletBase):
 
 
 class PersonalBarViewlet(ViewletBase):
+
+    homelink_url = ''
+    user_name = ''
 
     def update(self):
         super(PersonalBarViewlet, self).update()
@@ -436,12 +442,14 @@ class ManagePortletsFallbackViewlet(ViewletBase):
     def update(self):
         ploneview = getMultiAdapter((
             self.context, self.request), name=u'plone')
+        plonelayout = getMultiAdapter((
+            self.context, self.request), name=u'plone_layout')
         context_state = getMultiAdapter((self.context, self.request),
                                         name=u'plone_context_state')
 
         self.portlet_assignable = context_state.portlet_assignable()
-        self.sl = ploneview.have_portlets('plone.leftcolumn', self.context)
-        self.sr = ploneview.have_portlets('plone.rightcolumn', self.context)
+        self.sl = plonelayout.have_portlets('plone.leftcolumn', self.context)
+        self.sr = plonelayout.have_portlets('plone.rightcolumn', self.context)
         self.object_url = context_state.object_url()
 
     def available(self):

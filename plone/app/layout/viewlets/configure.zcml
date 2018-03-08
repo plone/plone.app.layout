@@ -177,6 +177,15 @@
         template="anontools.pt"
         />
 
+    <!-- The member panel (logout, user actions) -->
+    <browser:viewlet
+        name="plone.membertools"
+        manager=".interfaces.IPortalHeader"
+        class=".common.PersonalBarViewlet"
+        permission="zope2.View"
+        template="membertools.pt"
+        />
+
     <!-- The logo -->
     <browser:viewlet
         name="plone.logo"
@@ -251,17 +260,6 @@
         view="plone.app.layout.globals.interfaces.IViewView"
         permission="zope2.View"
         />
-
-    <!-- Render the workflow history viewlet;
-         BBB: this is the Plone < 4 viewlet
-    <browser:viewlet
-        name="plone.belowcontentbody.inlinecontenthistory"
-        manager=".interfaces.IBelowContentBody"
-        class=".content.ContentHistoryViewlet"
-        template="inline_content_history.pt"
-        permission="zope2.View"
-        />
-     -->
 
     <!-- Render the workflow history as a view -->
     <browser:view
@@ -350,7 +348,7 @@
     <browser:viewlet
         zcml:condition="installed Products.ATContentTypes"
         name="plone.tableofcontents"
-        for="Products.ATContentTypes.interface.IATDocument"
+        for="Products.ATContentTypes.interfaces.IATDocument"
         manager=".interfaces.IAboveContentBody"
         class=".common.TableOfContentsViewlet"
         permission="zope2.View"
