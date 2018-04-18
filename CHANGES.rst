@@ -10,6 +10,9 @@ Breaking changes:
 
 New features:
 
+- Allow addition of extra body classes via multiple IBodyClassAdapter adapter registrations without the need to overload the ILayoutPolicy view.
+  [thet, jensens, agitator]
+
 - Make it easier to override seperator in title viewlet
   [tomgross]
 
