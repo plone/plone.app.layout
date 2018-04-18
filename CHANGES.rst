@@ -14,7 +14,9 @@ New features:
 
 Bug fixes:
 
-- *add item here*
+- Do not use ``rel="tag"`` attribute on the keywords viewlet as the referenced document is not a tag definition but a search result;
+  use ``rel="nofollow"`` instead to avoid search crawlers hammering our sites backend.
+  [hvelarde]
 
 
 2.3.17 (2017-01-17)
