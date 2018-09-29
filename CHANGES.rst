@@ -4,10 +4,6 @@ Changelog
 2.8.2 (unreleased)
 ------------------
 
-Breaking changes:
-
-- *add item here*
-
 New features:
 
 - Add test for Revert to Revision action in History Viewlet
