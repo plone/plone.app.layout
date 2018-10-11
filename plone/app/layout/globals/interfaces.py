@@ -249,3 +249,8 @@ class IViewView(Interface):
     """Marker interface which specifies that the current view is, in fact,
     a canonical "view" of the object, e.g. what may go on the "view" tab.
     """
+
+class IBodyClassAdapter(Interface):
+    """Adapter interface for retrieving extra body classes.
+    """
+
