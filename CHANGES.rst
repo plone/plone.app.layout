@@ -15,7 +15,8 @@ New features:
 
 Bug fixes:
 
-- *add item here*
+- Add template and view arguments support to IBodyClassAdapters (fixes `#158 <https://github.com/plone/plone.app.layout/issues/158>`_).
+  [rodfersou]
 
 
 2.3.18 (2018-04-24)
