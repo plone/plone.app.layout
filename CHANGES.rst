@@ -14,7 +14,8 @@ New features:
 
 Bug fixes:
 
-- *add item here*
+- Add template and view arguments support to IBodyClassAdapters (fixes `#158 <https://github.com/plone/plone.app.layout/issues/158>`_).
+  [rodfersou]
 
 
 2.8.2 (2018-09-28)
@@ -25,6 +26,9 @@ New features:
 - Add test for Revert to Revision action in History Viewlet
   [davilima6]
 
+- Remove ``enable_compression`` method that isn't used in Plone. #1801
+  [tlotze]
+
 Bug fixes:
 
 - Show document byline for logged-in users. Fixes #160
@@ -33,6 +37,14 @@ Bug fixes:
 - Get rid of obsolete ``X-UA-Compatible`` header.
   [hvelarde]
 
+- Implement viewlet dummy ordering needed for Python 3 sorting.
+  [ale-rt]
+
+- Fix sitemap in py3.
+  [pbauer]
+
+- Fix tests for py3 and drop use of PloneTestCase.
+  [pbauer, fgrcon]
 
 
 2.8.1 (2018-06-18)
