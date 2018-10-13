@@ -223,7 +223,8 @@ class DefaultBodyClasses(object):
     def __init__(self, context, request):
         self.context = context
         self.request = request
-    def get_classes(self):
+
+    def get_classes(self, template, view):
         """Default body classes adapter.
         """
         return []
