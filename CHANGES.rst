@@ -10,11 +10,13 @@ Breaking changes:
 
 New features:
 
-- *add item here*
+- *add item here*- Allow addition of extra body classes via multiple IBodyClassAdapter adapter registrations without the need to overload the ILayoutPolicy view.
+  [thet, jensens, agitator]
 
 Bug fixes:
 
-- *add item here*
+- Add template and view arguments support to IBodyClassAdapters (fixes `#158 <https://github.com/plone/plone.app.layout/issues/158>`_).
+  [rodfersou]
 
 
 2.3.18 (2018-04-24)

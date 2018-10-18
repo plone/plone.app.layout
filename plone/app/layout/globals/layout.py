@@ -1,5 +1,6 @@
 from AccessControl import Unauthorized
 from Acquisition import aq_base
+from plone.app.layout.globals.interfaces import IBodyClassAdapter
 from Acquisition import aq_parent
 from plone.app.layout.globals.interfaces import ILayoutPolicy
 from plone.app.layout.globals.interfaces import IViewView
@@ -13,12 +14,15 @@ from Products.CMFCore.utils import getToolByName
 from Products.Five.browser.metaconfigure import ViewMixinForTemplates
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope.browserpage.viewpagetemplatefile import ViewPageTemplateFile as ZopeViewPageTemplateFile
+from zope.component import adapter
+from zope.component import getAdapters
 from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.component import queryMultiAdapter
 from zope.component import queryUtility
 from zope.interface import alsoProvides
 from zope.interface import implements
+from zope.interface import Interface
 from zope.publisher.browser import BrowserView
 
 
@@ -194,4 +198,33 @@ class LayoutPolicy(BrowserView):
             for role in user.getRolesInContext(self.context):
                 body_class += ' userrole-' + role.lower().replace(' ', '-')
 
+        # Add externally defined extra body classes
+        body_class_adapters = getAdapters(
+            (self.context, self.request),
+            IBodyClassAdapter
+        )
+        for name, body_class_adapter in body_class_adapters:
+            try:
+                extra_classes = body_class_adapter.get_classes(template, view) or []
+            except TypeError:  # This adapter is implemented without arguments
+                extra_classes = body_class_adapter.get_classes() or []
+            if isinstance(extra_classes, basestring):
+                extra_classes = extra_classes.split(' ')
+            body_class += ' ' + ' '.join(extra_classes)
+
         return body_class
+
+
+@adapter(Interface)
+class DefaultBodyClasses(object):
+
+    implements(IBodyClassAdapter)
+
+    def __init__(self, context, request):
+        self.context = context
+        self.request = request
+
+    def get_classes(self, template, view):
+        """Default body classes adapter.
+        """
+        return []
