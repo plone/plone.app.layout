@@ -5,6 +5,7 @@ from Products.CMFPlone.interfaces.controlpanel import ILinkSchema
 from Products.CMFPlone.interfaces.controlpanel import ISiteSchema
 from Products.Five.browser.metaconfigure import ViewMixinForTemplates
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from plone.app.layout.globals.interfaces import IBodyClassAdapter
 from plone.app.layout.globals.interfaces import ILayoutPolicy
 from plone.app.layout.globals.interfaces import IViewView
 from plone.app.layout.icons.interfaces import IContentIcon
@@ -16,12 +17,15 @@ from plone.registry.interfaces import IRegistry
 from zope.browserpage.viewpagetemplatefile import (
     ViewPageTemplateFile as ZopeViewPageTemplateFile
 )
+from zope.component import adapter
+from zope.component import getAdapters
 from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.component import queryMultiAdapter
 from zope.component import queryUtility
 from zope.interface import alsoProvides
 from zope.interface import implements
+from zope.interface import Interface
 from zope.publisher.browser import BrowserView
 
 
@@ -268,4 +272,33 @@ class LayoutPolicy(BrowserView):
         if msl or elonw:
             body_classes.append('pat-markspeciallinks')
 
+        # Add externally defined extra body classes
+        body_class_adapters = getAdapters(
+            (self.context, self.request),
+            IBodyClassAdapter
+        )
+        for name, body_class_adapter in body_class_adapters:
+            try:
+                extra_classes = body_class_adapter.get_classes(template, view) or []
+            except TypeError:  # This adapter is implemented without arguments
+                extra_classes = body_class_adapter.get_classes() or []
+            if isinstance(extra_classes, basestring):
+                extra_classes = extra_classes.split(' ')
+            body_classes.extend(extra_classes)
+
         return ' '.join(body_classes)
+
+
+@adapter(Interface)
+class DefaultBodyClasses(object):
+
+    implements(IBodyClassAdapter)
+
+    def __init__(self, context, request):
+        self.context = context
+        self.request = request
+
+    def get_classes(self, template, view):
+        """Default body classes adapter.
+        """
+        return []
