@@ -4,14 +4,6 @@ Changelog
 2.8.3 (unreleased)
 ------------------
 
-Breaking changes:
-
-- *add item here*
-
-New features:
-
-- *add item here*
-
 Bug fixes:
 
 - Add template and view arguments support to IBodyClassAdapters (fixes `#158 <https://github.com/plone/plone.app.layout/issues/158>`_).
