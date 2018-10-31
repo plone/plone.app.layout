@@ -4,13 +4,9 @@ Changelog
 2.3.19 (unreleased)
 -------------------
 
-Breaking changes:
-
-- *add item here*
-
 New features:
 
-- *add item here*- Allow addition of extra body classes via multiple IBodyClassAdapter adapter registrations without the need to overload the ILayoutPolicy view.
+- Allow addition of extra body classes via multiple IBodyClassAdapter adapter registrations without the need to overload the ILayoutPolicy view.
   [thet, jensens, agitator]
 
 Bug fixes:
