@@ -415,6 +415,12 @@ class NavTreeProvider(ContentProviderBase):
 
         ret = {}
 
+        # Get current object path for later determine if it's current
+        context_physical_path = self.context.getPhysicalPath()
+        if utils.isDefaultPage(self.context, self.request):
+            context_physical_path = context_physical_path[:-1]
+        context_path = '/'.join(context_physical_path)
+
         if generate_tabs:
             query = {
                 'path': {'query': self.navtree_path,
@@ -429,6 +435,9 @@ class NavTreeProvider(ContentProviderBase):
             res = portal_catalog.searchResults(**query)
 
             for it in res:
+                if context_path is not None:
+                    # Determine if it's current object
+                    is_current = context_path == it.getPath()
                 pathkey = '/'.join(it.getPath().split('/')[:-1])
                 entry = {
                     'id': it.id,
@@ -436,6 +445,7 @@ class NavTreeProvider(ContentProviderBase):
                     'url': it.getURL(),
                     'title': it.Title,
                     'review_state': it.review_state,
+                    'is_current': is_current,
                 }
                 if pathkey in ret:
                     ret[pathkey].append(entry)
@@ -450,6 +460,9 @@ class NavTreeProvider(ContentProviderBase):
             res = self.portal_tabs
 
             for it in res:
+                if context_path is not None:
+                    # Determine if it's current object
+                    is_current = context_path == it.getPath()
                 pathkey = self.navtree_path
                 entry = {
                     'id': it['id'],
@@ -457,6 +470,7 @@ class NavTreeProvider(ContentProviderBase):
                     'url': it['url'],
                     'title': it['title'],
                     'review_state': None,
+                    'is_current': is_current,
                 }
                 if pathkey in ret:
                     ret[pathkey].append(entry)
@@ -480,9 +494,10 @@ class NavTreeProvider(ContentProviderBase):
                          </input><label for="navitem-{uid}"></label>""".format(
                 uid=it['uid']
             ) if sub else ''
-            out += u'<li class="{id}{has_sub_class}">'.format(
+            out += u'<li class="{id}{has_sub_class}{is_current}">'.format(
                 id=normalizer.normalize(it['id']),
                 has_sub_class=' has_subtree' if sub else '',
+                is_current=' current' if it['is_current'] else ''
             )
             out += u'<a href="{url}" class="state-{review_state}">{title}</a>{opener}'.format(  # noqa
                 url=it['url'],
