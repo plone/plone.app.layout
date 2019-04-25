@@ -345,8 +345,15 @@ class GlobalSectionsViewlet(ViewletBase):
                 'title': safe_unicode(brain.Title),
                 'review_state': brain.review_state,
             }
+            self.customize_entry(entry, brain)
             ret[brain_parent_path].append(entry)
         return ret
+
+    def customize_entry(self, entry, brain):
+        """Little Helper to customize entry keys/values.
+           entry.update({key:value})
+        """
+        pass
 
     def render_item(self, item, path):
         sub = self.build_tree(item['path'], first_run=False)
