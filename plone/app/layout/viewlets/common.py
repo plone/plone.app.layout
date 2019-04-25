@@ -334,24 +334,24 @@ class GlobalSectionsViewlet(ViewletBase):
             if brain.exclude_from_nav and not context_path.startswith(brain_path):  # noqa: E501
                 # skip excluded items if they're not in our context path
                 continue
-            ret[brain_parent_path].append(
-                self._create_entry(brain, types_using_view),
-            )
+
+            url = brain.getURL()
+            if brain.portal_type in types_using_view:
+                url += '/view'
+            entry = {
+                'id': brain.getId,
+                'path': brain_path,
+                'uid': brain.UID,
+                'url': url,
+                'title': safe_unicode(brain.Title),
+                'review_state': brain.review_state,
+            }
+            entry = self.customize_entry(entry, brain)
+            ret[brain_parent_path].append(entry)
         return ret
 
-    def _create_entry(self, brain, types_using_view):
-        """a little helper to enlarge customizability."""
-        url = brain.getURL()
-        if brain.portal_type in types_using_view:
-            url += '/view'
-        entry = {
-            'id': brain.getId,
-            'path': brain_path,
-            'uid': brain.UID,
-            'url': url,
-            'title': safe_unicode(brain.Title),
-            'review_state': brain.review_state,
-        }
+    def customize_entry(self, entry, brain):
+        """a little helper to add custom entry keys/values."""
         return entry
 
     def render_item(self, item, path):
