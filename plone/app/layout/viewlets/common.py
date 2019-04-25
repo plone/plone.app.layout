@@ -335,11 +335,11 @@ class GlobalSectionsViewlet(ViewletBase):
                 # skip excluded items if they're not in our context path
                 continue
             ret[brain_parent_path].append(
-                self._create_entry(brain),
+                self._create_entry(brain, types_using_view),
             )
         return ret
 
-    def _create_entry(self, brain):
+    def _create_entry(self, brain, types_using_view):
         """a little helper to enlarge customizability."""
         url = brain.getURL()
         if brain.portal_type in types_using_view:
