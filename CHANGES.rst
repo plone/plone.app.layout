@@ -4,7 +4,9 @@ Changelog
 2.2.14 (unreleased)
 -------------------
 
-- Nothing changed yet.
+Bug fixes:
+
+- Memory leak on getUserInfo [avoinea] (#204)
 
 
 2.2.13 (2013-11-13)
@@ -71,11 +73,11 @@ Changelog
 2.2.7 (2012-08-11)
 ------------------
 
-- Change breadcrumb separator to / (slash character) for accessibility, and added SEO benefits. 
+- Change breadcrumb separator to / (slash character) for accessibility, and added SEO benefits.
   see https://dev.plone.org/ticket/12904
   [polyester]
 
-- Add language atribute to presentation.pt for WCAG 2.0 compliance. 
+- Add language atribute to presentation.pt for WCAG 2.0 compliance.
   See https://dev.plone.org/ticket/12902
   [rmatt, polyester]
 
@@ -139,7 +141,7 @@ Changelog
   Fixes http://dev.plone.org/plone/ticket/11869
   [davisagli]
 
-- Fix bug where getNavigationRootObject goes into infinite loop if context is 
+- Fix bug where getNavigationRootObject goes into infinite loop if context is
   None.
   Fixes http://dev.plone.org/plone/ticket/12186
   [anthonygerrard]
@@ -182,7 +184,7 @@ Changelog
 
 - Set the search form to submit to @@search in order to use the new
   search results page.
-  [elvix] 
+  [elvix]
 
 - Updated the BaseIcon to return its html tag when called.
   [elvix]
@@ -201,7 +203,7 @@ Changelog
 - Switching 'Skip to navigation' to be linked to the global navigation instead
   of the navigation portlet.
   This fixes http://dev.plone.org/plone/ticket/11728
-  [spliter]  
+  [spliter]
 
 
 2.1.8 - 2011-07-04
