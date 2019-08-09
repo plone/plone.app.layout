@@ -14,7 +14,7 @@ New features:
 
 Bug fixes:
 
-- *add item here*
+- Memory leak on getUserInfo [avoinea] (#204)
 
 
 2.5.24 (2018-10-31)
