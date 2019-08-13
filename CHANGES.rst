@@ -18,9 +18,10 @@ New features:
 
 Bug fixes:
 
+- Memory leak on getUserInfo [avoinea] (#204)
+
 - Show document byline for logged-in users. Fixes #160
   [erral]
-
 
 - Do not use ``rel="tag"`` attribute on the keywords viewlet as the referenced document is not a tag definition but a search result;
   use ``rel="nofollow"`` instead to avoid search crawlers hammering our sites.
