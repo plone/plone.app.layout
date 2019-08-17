@@ -14,6 +14,8 @@ New features:
 
 Bug fixes:
 
+- Fixed test in combination with newer CMFCore.  [maurits]
+
 - Memory leak on getUserInfo [avoinea] (#204)
 
 

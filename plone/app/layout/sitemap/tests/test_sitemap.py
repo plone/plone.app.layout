@@ -234,10 +234,15 @@ class SiteMapTestCase(PloneTestCase):
             default, 'review_state'))
         self.assertTrue(self.portal.plone_utils.isDefaultPage(default))
 
-        default.modification_date = DateTime("2001-01-01")
-        folder.modification_date = DateTime("2000-01-01")
         self.portal.portal_catalog.reindexObject(folder)
         self.portal.portal_catalog.reindexObject(default)
+        default.modification_date = DateTime("2001-01-01")
+        folder.modification_date = DateTime("2000-01-01")
+        # Note: the modification date is overwritten when you call reindexObject,
+        # which is totally not what we want.  So call it with the relevant index.
+        # This avoids the overwriting.
+        self.portal.portal_catalog.reindexObject(folder, idxs=['modified'])
+        self.portal.portal_catalog.reindexObject(default, idxs=['modified'])
         self.portal.default_page = "published"
         self.portal.portal_catalog.reindexObject(self.portal.published)
         self.logout()
@@ -247,5 +252,6 @@ class SiteMapTestCase(PloneTestCase):
             '<loc>http://nohost/plone/folder/default</loc>' in xml)
         self.assertTrue('<loc>http://nohost/plone/folder</loc>' in xml)
         self.assertTrue('<lastmod>2001-01-01T' in xml)
+        self.assertFalse('<lastmod>2000-01-01T' in xml)
         self.assertTrue('<loc>http://nohost/plone</loc>' in xml)
         self.assertFalse('<loc>http://nohost/plone/published</loc>' in xml)
