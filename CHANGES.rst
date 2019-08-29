@@ -4,14 +4,6 @@ Changelog
 2.3.20 (unreleased)
 -------------------
 
-Breaking changes:
-
-- *add item here*
-
-New features:
-
-- *add item here*
-
 Bug fixes:
 
 - Memory leak on getUserInfo [avoinea] (#204)
