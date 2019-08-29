@@ -4,14 +4,6 @@ Changelog
 2.8.4 (unreleased)
 ------------------
 
-Breaking changes:
-
-- *add item here*
-
-New features:
-
-- *add item here*
-
 Bug fixes:
 
 - Fixed test in combination with newer CMFCore.  [maurits]
