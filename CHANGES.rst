@@ -14,7 +14,7 @@ New features:
 
 Bug fixes:
 
-- *add item here*
+- Fix Unicode Error in folders with special chars. See #215
 
 
 2.8.4 (2019-08-29)

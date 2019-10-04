@@ -9,6 +9,7 @@ from plone.registry.interfaces import IRegistry
 from Products.CMFPlone.interfaces import ISecuritySchema
 from Products.CMFPlone.interfaces.syndication import IFeedSettings
 from Products.CMFPlone.interfaces.syndication import ISiteSyndicationSettings
+from Products.CMFPlone.utils import safe_encode
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope.component import getMultiAdapter
 from zope.component import getUtility
@@ -90,7 +91,7 @@ class RSSViewlet(ViewletBase):
                 continue
             urls.append({
                 'title': '%s - %s' % (
-                    obj.Title(), term.title),
+                    obj.Title(), safe_encode(term.title)),
                 'url': obj.absolute_url() + '/' + term.value})
         return urls
 
