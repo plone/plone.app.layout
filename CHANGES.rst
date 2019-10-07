@@ -10,7 +10,8 @@ Breaking changes:
 
 New features:
 
-- *add item here*
+- Add a sorrounding div to the webstats js. Fixes #157
+  [erral]
 
 Bug fixes:
 
