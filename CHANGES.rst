@@ -4,14 +4,6 @@ Changelog
 2.8.5 (unreleased)
 ------------------
 
-Breaking changes:
-
-- *add item here*
-
-New features:
-
-- *add item here*
-
 Bug fixes:
 
 - Fix Unicode Error in folders with special chars. See #215
