@@ -1,31 +1,15 @@
-<nav id="portal-breadcrumbs" class="plone-breadcrumb"
-         i18n:domain="plone"
-         tal:define="breadcrumbs view/breadcrumbs">
-  <div class="container">
-    <span id="breadcrumbs-you-are-here" class="hiddenStructure"
-            i18n:translate="you_are_here">You are here:</span>
-    <ol aria-labelledby="breadcrumbs-you-are-here">
-      <li id="breadcrumbs-home">
-        <a i18n:translate="tabs_home"
-            tal:attributes="href view/navigation_root_url">Home</a>
-      </li>
-      <li tal:repeat="crumb breadcrumbs"
-          tal:attributes="id string:breadcrumbs-${repeat/crumb/number};">
-        <tal:item tal:define="is_last repeat/crumb/end;
-                                url crumb/absolute_url;
-                                title crumb/Title">
-          <a href="#"
-              tal:omit-tag="not: url"
-              tal:condition="python:not is_last"
-              tal:attributes="href url"
-              tal:content="title">
-                  crumb
-          </a>
-          <span id="breadcrumbs-current"
-                tal:condition="is_last"
-                tal:content="title">crumb</span>
-        </tal:item>
-      </li>
-    </ol>
-  </div>
+<nav aria-label="breadcrumb" i18n:domain="plone" tal:define="breadcrumbs view/breadcrumbs">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a i18n:translate="tabs_home" tal:attributes="href view/navigation_root_url">Home</a>
+    </li>
+    <tal:repeat tal:repeat="crumb breadcrumbs">
+    <li class="breadcrumb-item" tal:condition="not: repeat/crumb/end">
+      <a href="" tal:attributes="href crumb/absolute_url" tal:content="crumb/Title">crumb</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page" tal:condition="repeat/crumb/end">
+      <span tal:content="crumb/Title">crumb</span>
+    </li>
+    </tal:repeat>
+  </ol>
 </nav>
