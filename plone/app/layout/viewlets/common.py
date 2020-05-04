@@ -416,6 +416,7 @@ class PersonalBarViewlet(ViewletBase):
                 "href": action["url"],
                 "id": "personaltools-{}".format(action["id"]),
                 "target": action.get("link_target", None),
+                "icon": action.get("icon", None),
             }
             modal = action.get("modal")
             if modal:
