@@ -1,0 +1,15 @@
+<section id="section-rights" i18n:domain="plone" tal:define="rights context/Rights" tal:condition="rights">
+
+  <div class="card">
+    <div class="card-body">
+
+      <header class="card-title section-heading" i18n:translate="section_rights_heading">
+        Rights
+      </header>
+      
+      <small tal:content="rights">Copyleft NiceCorp Inc.</small>
+
+    </div>
+  </div>
+
+</section>
