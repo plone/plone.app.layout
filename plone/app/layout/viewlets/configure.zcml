@@ -332,14 +332,6 @@
         permission="zope2.View"
         />
 
-    <browser:viewlet
-        name="plone.leadimage"
-        for="plone.app.contenttypes.behaviors.leadimage.ILeadImage"
-        manager=".interfaces.IBelowContentDescription"
-        class=".leadimage.LeadImageViewlet"
-        permission="zope2.View"
-        />
-
     <!-- Render the rights section -->
     <browser:viewlet
         name="plone.rights"
