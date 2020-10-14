@@ -236,7 +236,7 @@
 
     <!-- Render the social media body tags -->
     <browser:viewlet
-        name="plone.abovecontenttitle.socialtags"
+        name="plone.socialtags"
         manager=".interfaces.IAboveContentTitle"
         class=".social.SocialTagsViewlet"
         template="social_tags_body.pt"
@@ -253,7 +253,7 @@
 
     <!-- The related items -->
     <browser:viewlet
-        name="plone.belowcontentbody.relateditems"
+        name="plone.relateditems"
         manager=".interfaces.IBelowContentBody"
         class=".content.ContentRelatedItems"
         view="plone.app.layout.globals.interfaces.IViewView"
@@ -286,7 +286,7 @@
 
     <!-- Render the document actions -->
     <browser:viewlet
-        name="plone.abovecontenttitle.documentactions"
+        name="plone.documentactions"
         manager=".interfaces.IBelowContentBody"
         class=".content.DocumentActionsViewlet"
         permission="zope2.View"
@@ -319,7 +319,7 @@
 
     <!-- Render the document byline -->
     <browser:viewlet
-        name="plone.belowcontenttitle.documentbyline"
+        name="plone.documentbyline"
         manager=".interfaces.IBelowContentTitle"
         class=".content.DocumentBylineViewlet"
         permission="zope2.View"
