@@ -85,13 +85,6 @@
         />
 
     <browser:viewletManager
-        name="plone.documentactions"
-        provides=".interfaces.IDocumentActions"
-        permission="zope2.View"
-        class="plone.app.viewletmanager.manager.OrderedViewletManager"
-        />
-
-    <browser:viewletManager
         name="plone.belowcontenttitle"
         provides=".interfaces.IBelowContentTitle"
         permission="zope2.View"
@@ -260,6 +253,15 @@
         permission="zope2.View"
         />
 
+    <!-- Render the document actions -->
+    <browser:viewlet
+        name="plone.documentactions"
+        manager="plone.app.layout.viewlets.interfaces.IBelowContent"
+        class=".content.DocumentActionsViewlet"
+        permission="zope2.View"
+        />
+
+
     <!-- Render the workflow history as a view -->
     <browser:view
         for="*"
@@ -281,14 +283,6 @@
         for="*"
         name="historyview"
         class=".content.HistoryByLineView"
-        permission="zope2.View"
-        />
-
-    <!-- Render the document actions -->
-    <browser:viewlet
-        name="plone.documentactions"
-        manager=".interfaces.IBelowContentBody"
-        class=".content.DocumentActionsViewlet"
         permission="zope2.View"
         />
 
