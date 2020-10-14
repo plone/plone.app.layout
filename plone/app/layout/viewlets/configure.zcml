@@ -326,15 +326,6 @@
         permission="zope2.View"
         />
 
-    <!-- Render the keywords -->
-    <browser:viewlet
-        name="plone.keywords"
-        manager=".interfaces.IBelowContentBody"
-        view="plone.app.layout.globals.interfaces.IViewView"
-        template="keywords.pt"
-        permission="zope2.View"
-        />
-
     <!-- Render the contributors section -->
     <browser:viewlet
         name="plone.contributors"
@@ -348,6 +339,15 @@
         name="plone.rights"
         manager=".interfaces.IBelowContentBody"
         template="document_rights.pt"
+        permission="zope2.View"
+        />
+
+    <!-- Render the keywords -->
+    <browser:viewlet
+        name="plone.keywords"
+        manager=".interfaces.IBelowContentBody"
+        view="plone.app.layout.globals.interfaces.IViewView"
+        template="keywords.pt"
         permission="zope2.View"
         />
 
