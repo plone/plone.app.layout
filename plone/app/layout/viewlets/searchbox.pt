@@ -7,16 +7,16 @@
           role="search"
           tal:attributes="action string:${navigation_root_url}/@@search;
                           data-pat-livesearch string:ajaxUrl:${navigation_root_url}/@@ajax-search;
-                          class python: view.livesearch and 'pat-livesearch' or ''">
+                          class python: view.livesearch and 'pat-livesearch form-inline' or 'form-inline'">
 
         <div class="LSBox">
         <label class="hiddenStructure"
                for="searchGadget"
                i18n:translate="text_search">Search Site</label>
-             
+
         <div class="searchSection">
             <input id="searchbox_currentfolder_only"
-                   class="noborder"
+                   class="noborder form-check-input"
                    type="checkbox"
                    name="path"
                    tal:attributes="value view/folder_path;
@@ -24,11 +24,12 @@
                    />
             <label for="searchbox_currentfolder_only"
                    i18n:translate="label_searchbox_currentfolder_only"
+                   class="form-check-label"
                    style="cursor: pointer">
                 only in current section
             </label>
         </div>
-             
+
         <input name="SearchableText"
                type="text"
                size="18"
@@ -39,9 +40,9 @@
                i18n:attributes="title title_search_site;
                                 placeholder title_search_site"
                tal:attributes="value request/form/SearchableText|nothing;"
-               class="searchField" />
+               class="searchField form-control" />
 
-        <input class="searchButton"
+        <input class="searchButton btn btn-secondary"
                type="submit"
                value="Search"
                i18n:attributes="value label_search;" />
