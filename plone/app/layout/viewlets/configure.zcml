@@ -325,11 +325,12 @@
         permission="zope2.View"
         />
 
-    <!-- Render the rights section -->
+    <!-- Render the keywords -->
     <browser:viewlet
-        name="plone.rights"
+        name="plone.keywords"
         manager=".interfaces.IBelowContentBody"
-        template="document_rights.pt"
+        view="plone.app.layout.globals.interfaces.IViewView"
+        template="keywords.pt"
         permission="zope2.View"
         />
 
@@ -341,12 +342,11 @@
         permission="zope2.View"
         />
 
-    <!-- Render the keywords -->
+    <!-- Render the rights section -->
     <browser:viewlet
-        name="plone.belowcontenttitle.keywords"
+        name="plone.rights"
         manager=".interfaces.IBelowContentBody"
-        view="plone.app.layout.globals.interfaces.IViewView"
-        template="keywords.pt"
+        template="document_rights.pt"
         permission="zope2.View"
         />
 
