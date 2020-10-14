@@ -85,13 +85,6 @@
         />
 
     <browser:viewletManager
-        name="plone.documentactions"
-        provides=".interfaces.IDocumentActions"
-        permission="zope2.View"
-        class="plone.app.viewletmanager.manager.OrderedViewletManager"
-        />
-
-    <browser:viewletManager
         name="plone.belowcontenttitle"
         provides=".interfaces.IBelowContentTitle"
         permission="zope2.View"
