@@ -55,14 +55,14 @@
                 </td>
                 <td>
                     <span class="historyLinks" tal:condition="isVersion">
-                        <a class="context" href=""
+                        <a class="btn btn-primary" href=""
                             tal:attributes="href item/preview_url"
                             i18n:translate="title_view_revision">View</a>
                     </span>
                 </td>
                 <td>
                     <span class="historyLinks" tal:condition="isVersion">
-                        <a class="standalone" href="" tal:attributes="href item/diff_current_url"
+                        <a class="btn btn-secondary" href="" tal:attributes="href item/diff_current_url"
                             tal:condition="exists:item/diff_current_url">
                             <span>&#x2912; <span i18n:translate="title_compare_revision">Compare to current</span></span>
                         </a>
