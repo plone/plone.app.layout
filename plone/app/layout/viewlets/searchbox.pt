@@ -29,25 +29,25 @@
                 only in current section
             </label>
         </div>
+        <div class="row row-cols-lg-auto g-0 align-items-center">
+          <input name="SearchableText"
+                type="text"
+                size="18"
+                value=""
+                id="searchGadget"
+                title="Search Site"
+                placeholder="Search Site"
+                i18n:attributes="title title_search_site;
+                                  placeholder title_search_site"
+                tal:attributes="value request/form/SearchableText|nothing;"
+                class="searchField form-control" />
+          <input class="searchButton btn btn-secondary"
+                type="submit"
+                value="Search"
+                i18n:attributes="value label_search;" />
+       </div>
 
-        <input name="SearchableText"
-               type="text"
-               size="18"
-               value=""
-               id="searchGadget"
-               title="Search Site"
-               placeholder="Search Site"
-               i18n:attributes="title title_search_site;
-                                placeholder title_search_site"
-               tal:attributes="value request/form/SearchableText|nothing;"
-               class="searchField form-control" />
-
-        <input class="searchButton btn btn-secondary"
-               type="submit"
-               value="Search"
-               i18n:attributes="value label_search;" />
-
-         </div>
+      </div>
     </form>
 
     <div id="portal-advanced-search"
