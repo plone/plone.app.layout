@@ -2,7 +2,7 @@
      xmlns:tal="http://xml.zope.org/namespaces/tal"
      xmlns:metal="http://xml.zope.org/namespaces/metal"
      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-     tal:define="portal_tabs view/portal_tabs"
+     tal:define="portal_tabs python:view.portal_tabs"
      tal:condition="portal_tabs"
      i18n:domain="plone">
 
@@ -14,7 +14,7 @@
 
       <div class="collapse navbar-collapse" id="portal-globalnav-collapse">
         <ul class="navbar-nav" id="portal-globalnav">
-          <navtree tal:replace="structure view/render_globalnav" />
+          <navtree tal:replace="structure python:view.render_globalnav()" />
         </ul>
       </div>
     </div>
