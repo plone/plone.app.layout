@@ -29,7 +29,7 @@
                 only in current section
             </label>
         </div>
-        <div class="row row-cols-lg-auto g-0 align-items-center">
+        <div class="row row-cols-lg-auto g-0 align-items-center flex-nowrap">
           <input name="SearchableText"
                 type="text"
                 size="18"
