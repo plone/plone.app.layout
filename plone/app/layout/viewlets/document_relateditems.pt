@@ -19,7 +19,7 @@
         <small>${item/Description}</small>
       </div>
 
-      <img src="" class="ml-3" tal:define="getIcon python:item.getURL() +'/@@images/image/thumb'" tal:condition="item_has_image" tal:attributes="src string:$getIcon; alt item/Description">
+      <img src="" class="ms-3" tal:define="getIcon python:item.getURL() +'/@@images/image/thumb'" tal:condition="item_has_image" tal:attributes="src string:$getIcon; alt item/Description">
 
     </div>
     </tal:items>

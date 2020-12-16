@@ -9,7 +9,7 @@
   <div class="dropdown float-right" id="portal-membertools"
       tal:condition="python:view.user_actions and not view.anonymous">
       <a id="user-name"
-         class="dropdown-toggle" data-toggle="dropdown"
+         class="dropdown-toggle" data-bs-toggle="dropdown"
          tal:attributes="href view/homelink_url">
          <span tal:replace="view/user_name">John</span>
          <span class="caret"></span>
