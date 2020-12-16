@@ -6,7 +6,7 @@
 
   <p class="hiddenStructure" i18n:translate="heading_member_tools">Member tools</p>
 
-  <div class="dropdown float-right" id="portal-membertools"
+  <div class="dropdown float-end" id="portal-membertools"
       tal:condition="python:view.user_actions and not view.anonymous">
       <a id="user-name"
          class="dropdown-toggle" data-bs-toggle="dropdown"
