@@ -1,15 +1,15 @@
-<tal:statusmsg tal:define="messages view/messages"
-    tal:repeat="message messages">
+<tal:statusmsg tal:define="icons nocall: context/@@iconresolver"
+               tal:repeat="message python:view.messages">
 
-    <div tal:define="mtype message/type | nothing;"
+    <div tal:define="mtype message/type | nothing;
+                     display_info python:view.display_info_for_mtype(mtype);"
          tal:condition="mtype"
-         class="statusmessage alert alert-${python:'danger' if mtype == 'error' else mtype}"
+         class="${python:display_info['cssclass']}"
          role="alert">
-        <strong
-            i18n:domain="plone"
-            i18n:translate="" tal:content="python:mtype.capitalize()">Info</strong>
+        <tal:icon tal:replace="structure python:icons.tag(display_info['icon'], tag_alt=display_info['msg'], tag_class='statusmessage-icon mb-1 me-2')" />
+        <strong>${python:display_info['msg']}</strong>
         <span class="content"
-            tal:replace="structure message/message | nothing" i18n:translate="">
+              tal:replace="structure message/message | nothing" i18n:translate="">
             The status message.
         </span>
     </div>
