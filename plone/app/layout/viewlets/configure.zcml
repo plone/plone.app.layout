@@ -99,13 +99,6 @@
         />
 
     <browser:viewletManager
-        name="plone.belowcontentdescription"
-        provides=".interfaces.IBelowContentDescription"
-        permission="zope2.View"
-        class="plone.app.viewletmanager.manager.OrderedViewletManager"
-        />
-
-    <browser:viewletManager
         name="plone.abovecontentbody"
         provides=".interfaces.IAboveContentBody"
         permission="zope2.View"
