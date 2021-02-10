@@ -80,4 +80,4 @@ After action success, user is redirected to Document, reverted to chosen revisio
     >>> browser.url in urldoc2
     True
     >>> browser.contents
-    '...<div class="documentDescription description">First revision</div>...'
+    '...<p class="lead">First revision</p>...'
