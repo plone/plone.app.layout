@@ -23,7 +23,7 @@ MTYPES_DISPLAY = {
         "cssclass": 'statusmessage alert alert-danger',
     },
     'danger': {
-        "msg": _("statusmessage_mtype_error", default="Danger:"),
+        "msg": _("statusmessage_mtype_danger", default="Danger:"),
         "icon": "plone-statusmessage-danger",
         "cssclass": 'statusmessage alert alert-danger',
     },
