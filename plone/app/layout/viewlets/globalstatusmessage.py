@@ -10,22 +10,22 @@ MTYPES_DISPLAY = {
     'info': {
         "msg": _("statusmessage_mtype_info", default="Info:"),
         "icon": "plone-statusmessage-info",
-        "cssclass": 'statusmessage alert alert-info',
+        "cssclass": 'statusmessage statusmessage-info alert alert-info',
     },
     'warning': {
         "msg": _("statusmessage_mtype_warning", default="Warning:"),
         "icon": "plone-statusmessage-warning",
-        "cssclass": 'statusmessage alert alert-warning',
+        "cssclass": 'statusmessage statusmessage-warning alert alert-warning',
     },
     'error': {
         "msg": _("statusmessage_mtype_error", default="Error:"),
         "icon": "plone-statusmessage-error",
-        "cssclass": 'statusmessage alert alert-danger',
+        "cssclass": 'statusmessage statusmessage-error alert alert-danger',
     },
     'danger': {
         "msg": _("statusmessage_mtype_danger", default="Danger:"),
         "icon": "plone-statusmessage-danger",
-        "cssclass": 'statusmessage alert alert-danger',
+        "cssclass": 'statusmessage statusmessage-danger alert alert-danger',
     },
 }
 
