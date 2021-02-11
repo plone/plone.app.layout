@@ -3,19 +3,15 @@
      tal:omit-tag="">
      <div tal:condition="not: history">—</div>
 
-    <table class="listing" id="history-list" tal:condition="history"
-        summary="Content listing"
+    <table class="table" id="history-list" tal:condition="history"
+        summary="Content history"
         i18n:attributes="summary summary_content_listing;">
         <tbody>
             <tr class="odd">
-                <th class="nosort"
-                    i18n:translate="">What</th>
-                <th class="nosort"
-                    i18n:translate="">View</th>
-                <th class="nosort" colspan="2"
-                    i18n:translate="">Compare</th>
-                <th class="nosort"
-                    i18n:translate="">Revert</th>
+                <th i18n:translate="">What</th>
+                <th i18n:translate="">View</th>
+                <th colspan="2" i18n:translate="">Compare</th>
+                <th i18n:translate="">Revert</th>
             </tr>
             <tr tal:repeat="item history" class="historyRecord">
              <tal:historyItem
@@ -27,7 +23,8 @@
                         action_id python:item['action'] or item['review_state'];
                         effective item/effective_date|nothing;
                         effectiveDate python:effective and view.toLocalizedTime(item['effective_date'],long_format=True);
-                        isVersion python:item['type']=='versioning'">
+                        isVersion python:item['type']=='versioning';
+                        icons python:context.restrictedTraverse('@@iconresolver')">
                 <td>
                     <span class="historyByLine">
                         <tal:action i18n:translate="history_action">
@@ -64,25 +61,27 @@
                     <span class="historyLinks" tal:condition="isVersion">
                         <a class="btn btn-secondary" href="" tal:attributes="href item/diff_current_url"
                             tal:condition="exists:item/diff_current_url">
-                            <span>&#x2912; <span i18n:translate="title_compare_revision">Compare to current</span></span>
+                            <tal:icon replace="structure python:icons.tag('arrow-up')" />
+                            <span i18n:translate="title_compare_revision">Compare to current</span>
                         </a>
                     </span>
                 </td>
                 <td>
-                    <a class="historyComparePrevious standalone" tal:condition="exists:item/diff_previous_url"
+                    <a class="btn btn-secondary" tal:condition="exists:item/diff_previous_url"
                         tal:attributes="href item/diff_previous_url"
                         title="Compare with previous revision"
                         i18n:attributes="title title_compare_previous_revision">
-                        <span>&#x2193; <span i18n:translate="label_compare" tal:omit-tag="">Compare</span></span>
+                        <tal:icon replace="structure python:icons.tag('arrow-down')" />
+                        <span i18n:translate="label_compare" tal:omit-tag="">Compare</span>
                     </a>
                 </td>
                 <td>
                     <span class="historyTools" tal:condition="isVersion">
                     <form action="" method="post" tal:condition="item/revert_url" tal:attributes="action item/revert_url">
                         <input type="hidden" name="version_id" value="" tal:attributes="value item/version_id" />
-                        <input class="destructive" type="submit" i18n:attributes="value title_revert_revision"
+                        <button class="btn btn-warning" type="submit"
                                 tal:condition="exists:item/diff_current_url"
-                                value="Revert to this revision" />
+                                i18n:translate="title_revert_revision">Revert to this revision</button>
                     </form>
                     </span>
                 </td>
