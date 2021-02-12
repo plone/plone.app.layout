@@ -13,8 +13,8 @@
                 <th colspan="2" i18n:translate="">Compare</th>
                 <th i18n:translate="">Revert</th>
             </tr>
-            <tr tal:repeat="item history" class="historyRecord">
-             <tal:historyItem
+            <tal:block repeat="item history">
+            <tal:historyItem
                 define="rhComments item/comments|nothing;
                         actor item/actor;
                         actor_name python:actor and actor.get('fullname','username') or item['actorid'];
@@ -25,6 +25,7 @@
                         effectiveDate python:effective and view.toLocalizedTime(item['effective_date'],long_format=True);
                         isVersion python:item['type']=='versioning';
                         icons python:context.restrictedTraverse('@@iconresolver')">
+            <tr class="historyRecord ${python:'table-secondary' if not isVersion else ''}">
                 <td>
                     <span class="historyByLine">
                         <tal:action i18n:translate="history_action">
@@ -48,7 +49,10 @@
                         </tal:effective>
 
                     </span>
-                    <p i18n:translate="" tal:content="rhComments" tal:condition="rhComments" class="historyComment discreet" />
+                    <p class="text-muted" tal:condition="rhComments">
+                        <span i18n:translate="label_change_note">Change Note</span>:
+                        <span i18n:translate="" tal:content="rhComments" />
+                    </p>
                 </td>
                 <td>
                     <span class="historyLinks" tal:condition="isVersion">
@@ -85,8 +89,9 @@
                     </form>
                     </span>
                 </td>
-                </tal:historyItem>
             </tr>
+            </tal:historyItem>
+            </tal:block>
         </tbody>
     </table>
 
