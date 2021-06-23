@@ -6,7 +6,7 @@ from plone.memoize import ram
 from plone.memoize import view
 from plone.memoize.compress import xhtml_compress
 from plone.registry.interfaces import IRegistry
-from Products.CMFPlone.interfaces import ISecuritySchema
+from Products.CMFPlone.interfaces import ISecuritySchema, ISiteSchema
 from Products.CMFPlone.interfaces.syndication import IFeedSettings
 from Products.CMFPlone.interfaces.syndication import ISiteSyndicationSettings
 from Products.CMFPlone.utils import safe_bytes
@@ -14,6 +14,8 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.schema.interfaces import IVocabularyFactory
+from plone.formwidget.namedfile.converter import b64decode_file
+import mimetypes
 
 
 def get_language(context, request):
@@ -36,9 +38,19 @@ def render_cachekey(fun, self):
 class FaviconViewlet(ViewletBase):
 
     _template = ViewPageTemplateFile("favicon.pt")
+    mimetype = None
 
-    @ram.cache(render_cachekey)
+    def get_mimetype(self):
+        registry = getUtility(IRegistry)
+        settings = registry.forInterface(ISiteSchema, prefix="plone")
+        mime_type = self.mimetype
+        if getattr(settings, 'site_favicon', False):
+            filename, data = b64decode_file(settings.site_favicon)
+            mime_type = mimetypes.guess_type(filename)[0]
+        return mime_type
+
     def render(self):
+        self.mimetype = self.get_mimetype()
         return xhtml_compress(self._template())
 
 
