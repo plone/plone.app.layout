@@ -1,4 +1,10 @@
 <tal:favicon define="portal_url view/site_url">
-    <link rel="shortcut icon" type="image/x-icon" tal:attributes="href string:$portal_url/favicon.ico" />
-    <link rel="apple-touch-icon" tal:attributes="href string:$portal_url/touch_icon.png" />
+    <tal:costum_favicon_setted tal:condition="view/mimetype">
+        <link rel="shortcut icon" type="${python: view.mimetype}"
+          tal:attributes="href string:$portal_url/site-favicon" />
+    </tal:costum_favicon_setted>
+    <tal:costum_favicon_not_setted tal:condition="not: view/mimetype">
+        <link rel="shortcut icon" type="image/x-icon"
+              href="/++resource++plone-favicon.ico" />
+    </tal:costum_favicon_not_setted>
 </tal:favicon>
