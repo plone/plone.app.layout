@@ -14,7 +14,6 @@ from plone.app.layout.links.viewlets import FaviconViewlet
 from plone.formwidget.namedfile.converter import b64encode_file
 
 
-
 class TestFaviconViewletView(ViewletsTestCase, FaviconViewlet):
     layer = FUNCTIONAL_TESTING
 
