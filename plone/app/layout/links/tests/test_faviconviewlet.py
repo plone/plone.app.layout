@@ -20,6 +20,7 @@ class TestFaviconViewletView(ViewletsTestCase, FaviconViewlet):
     def setUp(self):
         self.portal = self.layer["portal"]
         self.request = ''
+        self.site_url = ''
 
     def test_FaviconViewlet_get_mimetype_svg(self):
         registry = getUtility(IRegistry)
@@ -28,7 +29,7 @@ class TestFaviconViewletView(ViewletsTestCase, FaviconViewlet):
         file_data = 'Hello World'.encode()
         encoded_data = b64encode_file(filename=filename, data=file_data)
         settings.site_favicon = encoded_data
-        mimetype = FaviconViewlet.get_mimetype(self)
+        mimetype = FaviconViewlet.get_mimetype(filename)
         self.assertEqual(mimetype, 'image/svg+xml')
 
     def test_FaviconViewlet_get_mimetype_jpg(self):
@@ -38,7 +39,7 @@ class TestFaviconViewletView(ViewletsTestCase, FaviconViewlet):
         file_data = 'Hello World'.encode()
         encoded_data = b64encode_file(filename=filename, data=file_data)
         settings.site_favicon = encoded_data
-        mimetype = FaviconViewlet.get_mimetype(self)
+        mimetype = FaviconViewlet.get_mimetype(filename)
         self.assertEqual(mimetype, 'image/jpeg')
 
     def test_FaviconViewlet_get_mimetype_png(self):
@@ -48,7 +49,7 @@ class TestFaviconViewletView(ViewletsTestCase, FaviconViewlet):
         file_data = 'Hello World'.encode()
         encoded_data = b64encode_file(filename=filename, data=file_data)
         settings.site_favicon = encoded_data
-        mimetype = FaviconViewlet.get_mimetype(self)
+        mimetype = FaviconViewlet.get_mimetype(filename)
         self.assertEqual(mimetype, 'image/png')
 
     def test_FaviconViewlet_get_mimetype_ico(self):
@@ -58,13 +59,31 @@ class TestFaviconViewletView(ViewletsTestCase, FaviconViewlet):
         file_data = 'Hello World'.encode()
         encoded_data = b64encode_file(filename=filename, data=file_data)
         settings.site_favicon = encoded_data
-        mimetype = FaviconViewlet.get_mimetype(self)
+        mimetype = FaviconViewlet.get_mimetype(filename)
         self.assertEqual(mimetype, 'image/x-icon')
 
     def test_FaviconViewlet_get_mimetype_none(self):
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ISiteSchema, prefix="plone")
+        filename = None
         settings.site_favicon = None
-        mimetype = FaviconViewlet.get_mimetype(self)
+        mimetype = FaviconViewlet.get_mimetype(filename)
+        self.assertEqual(mimetype, 'image/x-icon')
+
+    def test_FaviconViewlet_get_favicon_none(self):
+        registry = getUtility(IRegistry)
+        settings = registry.forInterface(ISiteSchema, prefix="plone")
+        settings.site_favicon = None
+        mimetype = FaviconViewlet.get_favicon()
         self.assertEqual(mimetype, None)
+
+    def test_FaviconViewlet_get_favicon(self):
+        registry = getUtility(IRegistry)
+        settings = registry.forInterface(ISiteSchema, prefix="plone")
+        filename = 'test.ico'
+        file_data = 'Hello World'.encode()
+        encoded_data = b64encode_file(filename=filename, data=file_data)
+        settings.site_favicon = encoded_data
+        favicon = FaviconViewlet.get_favicon()
+        self.assertEqual(favicon, 'test.ico')
 

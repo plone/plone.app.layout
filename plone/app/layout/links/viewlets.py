@@ -38,19 +38,33 @@ def render_cachekey(fun, self):
 class FaviconViewlet(ViewletBase):
 
     _template = ViewPageTemplateFile("favicon.pt")
-    mimetype = None
+    mimetype: str
+    favicon_path: str
 
-    def get_mimetype(self):
+    def init_favicon(self):
+        filename = self.get_favicon()
+        self.favicon_path = str(self.portal_url) + '/favicon'
+        if not filename:
+            # self.favicon_path = str(self.portal_url) + '/favicon.ico'
+            self.favicon_path += '.ico'
+        self.mimetype = self.get_mimetype(filename)
+
+    @staticmethod
+    def get_favicon():
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ISiteSchema, prefix="plone")
-        mime_type = self.mimetype
+
         if getattr(settings, 'site_favicon', False):
             filename, data = b64decode_file(settings.site_favicon)
-            mime_type = mimetypes.guess_type(filename)[0]
-        return mime_type
+            return filename
+        return None
+
+    @staticmethod
+    def get_mimetype(filename=None) -> str:
+        return mimetypes.guess_type(filename)[0] if filename else 'image/x-icon'
 
     def render(self):
-        self.mimetype = self.get_mimetype()
+        self.init_favicon()
         return xhtml_compress(self._template())
 
 

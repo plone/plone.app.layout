@@ -1,10 +1,6 @@
 <tal:favicon define="portal_url view/site_url">
-    <tal:costum_favicon_setted tal:condition="view/mimetype">
-        <link rel="shortcut icon" type="${python: view.mimetype}"
-          tal:attributes="href string:$portal_url/site-favicon" />
-    </tal:costum_favicon_setted>
-    <tal:costum_favicon_not_setted tal:condition="not: view/mimetype">
-        <link rel="shortcut icon" type="image/x-icon"
-              href="/++resource++favicon.ico" />
-    </tal:costum_favicon_not_setted>
+    <link rel="preload icon" type="${python: view.mimetype}"
+          tal:attributes="href python: view.favicon_path" />
+    <link rel="alternate icon" type="image/x-icon">
+    <link rel="mask-icon" tal:attributes="href python: view.favicon_path" />
 </tal:favicon>
