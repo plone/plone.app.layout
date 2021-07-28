@@ -5,6 +5,6 @@
     </tal:costum_favicon_setted>
     <tal:costum_favicon_not_setted tal:condition="not: view/mimetype">
         <link rel="shortcut icon" type="image/x-icon"
-              href="/++resource++plone-favicon.ico" />
+              href="/++resource++favicon.ico" />
     </tal:costum_favicon_not_setted>
 </tal:favicon>
