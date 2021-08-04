@@ -1,0 +1,2 @@
+add favicon viewlet
+[talarias]
