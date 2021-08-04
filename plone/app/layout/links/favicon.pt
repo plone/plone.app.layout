@@ -4,3 +4,4 @@
     <link rel="alternate icon" type="image/x-icon">
     <link rel="mask-icon" tal:attributes="href python: view.favicon_path" />
 </tal:favicon>
+test commit settings
