@@ -43,7 +43,7 @@ class FaviconViewlet(ViewletBase):
 
     def init_favicon(self):
         filename = self.get_favicon()
-        self.favicon_path = str(self.portal_url) + '/favicon'
+        self.favicon_path = str(self.site_url) + '/favicon'
         if not filename:
             self.favicon_path += '.ico'
         self.mimetype = self.get_mimetype(filename)
