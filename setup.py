@@ -2,7 +2,7 @@ from setuptools import find_packages
 from setuptools import setup
 
 
-version = "4.0.0a3.dev0"
+version = "4.0.0a4.dev0"
 
 long_description = open("README.rst").read() + "\n" + open("CHANGES.rst").read()
 
@@ -23,6 +23,7 @@ setup(
         "Programming Language :: Python",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
     ],
     keywords="plone layout viewlet",
     author="Plone Foundation",
@@ -47,7 +48,6 @@ setup(
         "Products.CMFCore",
         "Products.CMFDynamicViewFTI",
         "Products.CMFEditions >=1.2.2",
-        "Products.CMFPlone >=5.0b3.dev0",
         "setuptools",
         "six",
         "zope.component",
