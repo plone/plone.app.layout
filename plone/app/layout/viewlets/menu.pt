@@ -14,9 +14,9 @@
                            class action/cssClass|nothing;">
           <span tal:attributes="class string:icon-${action/id}${action/cssClass|nothing}  toolbar-menu-icon;"
                 class="icon-folderContents" aria-hidden="true">
+            <tal:icon tal:condition="python:action['icon']"
+              tal:replace="structure python:icons.tag(action['icon'] and action['icon'] or 'toolbar-action', tag_alt=action['id'], tag_class='toolbarIcon')" />
           </span>
-          <tal:icon tal:condition="python:action['icon']"
-            tal:replace="structure python:icons.tag(action['icon'] and action['icon'] or 'toolbar-action', tag_alt=action['id'], tag_class='toolbarIcon')" />
           <span tal:content="action/title" i18n:translate="">View name</span>
         </a>
       </tal:var>
