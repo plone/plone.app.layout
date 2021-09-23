@@ -1,5 +1,6 @@
 <section id="edit-bar" role="toolbar"
          tal:define="context_state view/context_state;
+                     icons python:context.restrictedTraverse('@@iconresolver');
                      personal_bar python: view.get_personal_bar()"
          tal:condition="context_state/is_toolbar_visible"
          i18n:domain="plone">
@@ -19,7 +20,9 @@
               tal:condition="personal_bar/user_actions">
             <a href="#"
                tal:attributes="href personal_bar/homelink_url">
-              <span class="icon-user" aria-hidden="true"></span>
+              <span class="icon-user" aria-hidden="true">
+                <tal:icon tal:replace="structure python:icons.tag('toolbar-action/personaltools', tag_alt='portal-personaltools', tag_class='toolbarIcon')" />
+              </span>
               <span tal:content="personal_bar/user_name">User</span>
               <span class="plone-toolbar-caret"></span>
             </a>
