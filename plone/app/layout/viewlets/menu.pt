@@ -35,9 +35,12 @@
                 class="icon-folderContents toolbar-menu-icon" aria-hidden="true">
             <tal:icon tal:condition="python:action['icon']"
               tal:replace="structure python:icons.tag(action['icon'] and action['icon'] or 'toolbar-action', tag_alt=action['id'], tag_class='toolbarIcon')" />
-            </span>
-          <span class="pat-moment" data-pat-moment="format:relative;"
-                tal:content="context/ModificationDate">Modified</span>
+          </span>
+          <time
+              class="pat-display-time"
+              data-pat-display-time="from-now: true"
+              datetime="${context/ModificationDate}"
+              tal:content="">${context/ModificationDate}</time>
         </a>
       </tal:var>
     </li>
