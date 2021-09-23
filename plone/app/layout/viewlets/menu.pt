@@ -33,7 +33,9 @@
                            class action/cssClass|nothing">
           <span tal:attributes="class python:locked and 'icon-lock' or 'icon-history'"
                 class="icon-folderContents toolbar-menu-icon" aria-hidden="true">
-          </span>
+            <tal:icon tal:condition="python:action['icon']"
+              tal:replace="structure python:icons.tag(action['icon'] and action['icon'] or 'toolbar-action', tag_alt=action['id'], tag_class='toolbarIcon')" />
+            </span>
           <span class="pat-moment" data-pat-moment="format:relative;"
                 tal:content="context/ModificationDate">Modified</span>
         </a>
