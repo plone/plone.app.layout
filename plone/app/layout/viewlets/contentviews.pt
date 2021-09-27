@@ -5,9 +5,11 @@
   <tal:block define="actions view/tabSet1;">
     <div tal:replace="structure python: view.menu_template(actions=actions)" />
   </tal:block>
+  <hr />
   <tal:contentmenus>
     <div tal:replace="structure provider:plone.contentmenu" />
   </tal:contentmenus>
+  <hr />
   <tal:block define="actions view/tabSet2;">
     <div tal:replace="structure python: view.menu_template(actions=actions)" />
   </tal:block>
