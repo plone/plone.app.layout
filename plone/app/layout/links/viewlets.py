@@ -42,14 +42,14 @@ class FaviconViewlet(ViewletBase):
     favicon_path: str
 
     def init_favicon(self):
-        filename = self.get_favicon()
+        filename = self.get_filename()
         self.favicon_path = str(self.site_url) + '/favicon'
         if not filename:
             self.favicon_path += '.ico'
         self.mimetype = self.get_mimetype(filename)
 
     @staticmethod
-    def get_favicon():
+    def get_filename():
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ISiteSchema, prefix="plone")
 
