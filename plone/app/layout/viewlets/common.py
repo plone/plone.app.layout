@@ -34,7 +34,14 @@ from zope.viewlet.interfaces import IViewlet
 from html import escape
 
 import json
+import zope.deferredimport
 
+zope.deferredimport.initialize()
+zope.deferredimport.deprecated(
+    "Import from plone.app.portlets.browser.viewlets instead",
+    ManagePortletsFallbackViewlet='plone.app.portlets.browser.viewlets:baaz.ManagePortletsFallbackViewlet',
+    FooterViewlet='plone.app.portlets.browser.viewlets:baaz.FooterViewlet',
+)
 
 
 @implementer(IViewlet)
