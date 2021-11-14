@@ -38,7 +38,6 @@ setup(
         "Acquisition",
         "DateTime",
         "plone.app.content",
-        "plone.app.portlets",
         "plone.app.viewletmanager >=1.2",
         "plone.batching >1.0.999",
         "plone.i18n",
