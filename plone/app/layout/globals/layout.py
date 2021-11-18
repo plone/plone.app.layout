@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from AccessControl import getSecurityManager
 from plone.app.layout.globals.interfaces import IBodyClassAdapter
 from plone.app.layout.globals.interfaces import ILayoutPolicy
 from plone.app.layout.globals.interfaces import IViewView
@@ -37,7 +38,6 @@ TEMPLATE_CLASSES = (
     ZopeViewPageTemplateFile,
     ViewMixinForTemplates,
 )
-
 
 @implementer(ILayoutPolicy)
 class LayoutPolicy(BrowserView):
@@ -93,40 +93,27 @@ class LayoutPolicy(BrowserView):
 
         return renderer.visible
 
+    def _image_visibility(self, name):
+        """check if image {name} is visible with current settings and user"""
+        registry = getUtility(IRegistry)
+        settings = registry.forInterface(ISiteSchema, prefix="plone", check=False)
+        visibility = getattr(settings, f"{name}_visibility")
+        if visibility == "enabled":
+            return True
+        if visibility != "authenticated":
+            return False
+        user = getSecurityManager().getUser()
+        return user is not None and user.getUserName() != 'Anonymous User'
+
     @memoize
     def icons_visible(self):
         """Returns True if icons should be shown or False otherwise."""
-        context = self.context
-        membership = getToolByName(context, "portal_membership")
-        anon = membership.isAnonymousUser()
-
-        registry = getUtility(IRegistry)
-        settings = registry.forInterface(ISiteSchema, prefix="plone", check=False)
-        icon_visibility = settings.icon_visibility
-
-        if icon_visibility == "enabled":
-            return True
-        elif icon_visibility == "authenticated" and not anon:
-            return True
-        else:
-            return False
+        return self._image_visibility("icon")
 
     @memoize
     def thumb_visible(self):
         """Returns True if thumbs should be shown or False otherwise."""
-        context = self.context
-        membership = getToolByName(context, "portal_membership")
-        anon = membership.isAnonymousUser()
-        registry = getUtility(IRegistry)
-        settings = registry.forInterface(ISiteSchema, prefix="plone", check=False)
-        thumb_visibility = settings.thumb_visibility
-
-        if thumb_visibility == "enabled":
-            return True
-        elif thumb_visibility == "authenticated" and not anon:
-            return True
-        else:
-            return False
+        return self._image_visibility("thumb")
 
     @deprecate(
         "deprecated since Plone 4, ContentIcons are rendered as Fonts now see"
