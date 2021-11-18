@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
 from plone.app.layout.globals.interfaces import IBodyClassAdapter
 from plone.app.layout.globals.interfaces import ILayoutPolicy
 from plone.app.layout.globals.interfaces import IViewView
-from plone.app.layout.icons.interfaces import IContentIcon
 from plone.i18n.normalizer.interfaces import IIDNormalizer
 from plone.memoize.view import memoize
 from plone.portlets.interfaces import IPortletManager
@@ -22,7 +20,6 @@ from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.component import queryMultiAdapter
 from zope.component import queryUtility
-from zope.deprecation import deprecate
 from zope.interface import alsoProvides
 from zope.interface import implementer
 from zope.interface import Interface
@@ -127,25 +124,6 @@ class LayoutPolicy(BrowserView):
             return True
         else:
             return False
-
-    @deprecate(
-        "deprecated since Plone 4, ContentIcons are rendered as Fonts now see"
-        "https://docs.plone.org/develop/addons/index.html"
-        "#upgrading-to-plone-5-1."
-    )
-    def getIcon(self, item):
-        """Returns an object which implements the IContentIcon interface and
-        provides the informations necessary to render an icon. The item
-        parameter needs to be adaptable to IContentIcon. Icons can be disabled
-        globally or just for anonymous users with the icon_visibility property
-        in site_properties.
-        """
-        context = self.context
-        if not self.icons_visible():
-            icon = getMultiAdapter((context, self.request, None), IContentIcon)
-        else:
-            icon = getMultiAdapter((context, self.request, item), IContentIcon)
-        return icon
 
     def _toolbar_classes(self):
         """current toolbar controlling classes"""
