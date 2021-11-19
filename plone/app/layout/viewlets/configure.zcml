@@ -286,16 +286,6 @@
         permission="cmf.ModifyPortalContent"
         />
 
-    <!-- Manage portlets Fallback link -->
-    <browser:viewlet
-        name="plone.manage_portlets_fallback"
-        for="plone.portlets.interfaces.ILocalPortletAssignable"
-        view="plone.app.layout.globals.interfaces.IViewView"
-        manager=".interfaces.IBelowContent"
-        class=".common.ManagePortletsFallbackViewlet"
-        permission="zope2.View"
-        />
-
     <!-- The breadcrumbs -->
     <browser:viewlet
         name="plone.path_bar"
@@ -360,15 +350,6 @@
         manager=".interfaces.IAboveContentBody"
         class=".common.TableOfContentsViewlet"
         permission="zope2.View"
-        />
-
-    <!-- Footer -->
-    <browser:viewlet
-        name="plone.footer"
-        for="*"
-        manager=".interfaces.IPortalFooter"
-        class=".common.FooterViewlet"
-        permission="zope.Public"
         />
 
     <!-- Colophon -->

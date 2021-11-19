@@ -3,7 +3,6 @@ from AccessControl import getSecurityManager
 from Acquisition import aq_base
 from Acquisition import aq_inner
 from collections import defaultdict
-from datetime import date
 from functools import total_ordering
 from plone.app.layout.globals.interfaces import IViewView
 from plone.app.layout.navigation.root import getNavigationRoot
@@ -23,7 +22,7 @@ from Products.CMFPlone.utils import getSiteLogo
 from Products.CMFPlone.utils import safe_unicode
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from six.moves.urllib.parse import unquote
+from urllib.parse import unquote
 from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.component import queryMultiAdapter
@@ -32,14 +31,17 @@ from zope.i18n import translate
 from zope.interface import alsoProvides
 from zope.interface import implementer
 from zope.viewlet.interfaces import IViewlet
+from html import escape
 
 import json
+import zope.deferredimport
 
-
-try:
-    from html import escape
-except ImportError:
-    from cgi import escape
+zope.deferredimport.initialize()
+zope.deferredimport.deprecated(
+    "Import from plone.app.portlets.browser.viewlets instead",
+    ManagePortletsFallbackViewlet='plone.app.portlets.browser.viewlets:ManagePortletsFallbackViewlet',
+    FooterViewlet='plone.app.portlets.browser.viewlets:FooterViewlet',
+)
 
 
 @implementer(IViewlet)
@@ -634,35 +636,6 @@ class ContentViewsViewlet(ViewletBase):
         return icon.tag(title="Locked")
 
 
-class ManagePortletsFallbackViewlet(ViewletBase):
-    """Manage portlets fallback link that sits below content"""
-
-    index = ViewPageTemplateFile("manage_portlets_fallback.pt")
-
-    def update(self):
-        plonelayout = getMultiAdapter(
-            (self.context, self.request), name=u"plone_layout"
-        )
-        context_state = getMultiAdapter(
-            (self.context, self.request), name=u"plone_context_state"
-        )
-
-        self.portlet_assignable = context_state.portlet_assignable()
-        self.sl = plonelayout.have_portlets("plone.leftcolumn", self.context)
-        self.sr = plonelayout.have_portlets("plone.rightcolumn", self.context)
-        self.object_url = context_state.object_url()
-
-    def available(self):
-        secman = getSecurityManager()
-        has_manage_portlets_permission = secman.checkPermission(
-            "Portlets: Manage portlets", self.context
-        )
-        if not has_manage_portlets_permission:
-            return False
-        elif not self.sl and not self.sr and self.portlet_assignable:
-            return True
-
-
 class PathBarViewlet(ViewletBase):
     index = ViewPageTemplateFile("path_bar.pt")
 
@@ -681,37 +654,3 @@ class TinyLogoViewlet(ViewletBase):
     index = ViewPageTemplateFile("tiny_logo.pt")
 
 
-class FooterViewlet(ViewletBase):
-    index = ViewPageTemplateFile("footer.pt")
-
-    def update(self):
-        super(FooterViewlet, self).update()
-        self.year = date.today().year
-
-    def render_footer_portlets(self):
-        """
-        You might ask, why is this necessary. Well, let me tell you a story...
-
-        plone.app.portlets, in order to provide @@manage-portlets on a context,
-        overrides the IPortletRenderer for the IManageContextualPortletsView
-        view.
-        See plone.portlets and plone.app.portlets
-
-        Seems fine right? Well, most of the time it is. Except, here.
-        Previously, we were just using the syntax like
-        `provider:plone.footerportlets` to render the footer portlets.
-        Since this tal expression was inside a viewlet,
-        the view is no longer IManageContextualPortletsView when
-        visiting @@manage-portlets. Instead, it was IViewlet.
-        See zope.contentprovider
-
-        In to fix this short coming, we render the portlet column by
-        manually doing the multi adapter lookup and then manually
-        doing the rendering for the content provider.
-        See zope.contentprovider
-        """
-        portlet_manager = getMultiAdapter(
-            (self.context, self.request, self.__parent__), name="plone.footerportlets"
-        )
-        portlet_manager.update()
-        return portlet_manager.render()
