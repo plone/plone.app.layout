@@ -1,4 +1,0 @@
-Move most (hard dependency) portlet related to `plone.app.portlets`:
-Dashboard, Portlet related viewlets.
-A first step towards a Portlet-as-an-Addon story.
-[jensens]
