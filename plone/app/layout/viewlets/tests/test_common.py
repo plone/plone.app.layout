@@ -581,6 +581,27 @@ class TestGlobalSectionsViewlet(ViewletsTestCase):
         self.assertEqual(len(navtree["/plone"]), 1)
         self.assertEqual(navtree["/plone"][0]["title"], "Folder 1")
 
+    def test_types_using_view(self):
+        """Test for constructing the navigation purely out of a catalog query
+        and not using portal tabs at all."""
+
+        class CustomGlobalSectionsViewlet(GlobalSectionsViewlet):
+            portal_tabs = []
+            types_using_view = ["Folder"]
+
+        self.portal.invokeFactory("Folder", id="folder1", title="Folder 1")
+
+        nav = CustomGlobalSectionsViewlet(self.portal, self.request.clone(), None)
+        navtree = nav.navtree
+
+        self.assertListEqual(nav.types_using_view, ["Folder"])
+        self.assertEqual(
+            navtree["/plone"][0]["url"], "http://nohost/plone/Members/view"
+        )
+        self.assertEqual(
+            navtree["/plone"][1]["url"], "http://nohost/plone/folder1/view"
+        )
+
 
 class TestTitleEscape(ViewletsFunctionalTestCase):
     """Test that the title in the global sections viewlet is escaped.

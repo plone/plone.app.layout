@@ -272,6 +272,13 @@ class GlobalSectionsViewlet(ViewletBase):
         )
 
     @property
+    @memoize_contextless
+    def types_using_view(self):
+        registry = getUtility(IRegistry)
+        types_using_view = registry.get("plone.types_use_view_action_in_listings", [])
+        return types_using_view
+
+    @property
     @memoize
     def navtree(self):
         ret = defaultdict(list)
@@ -325,9 +332,7 @@ class GlobalSectionsViewlet(ViewletBase):
         portal_catalog = getToolByName(self.context, "portal_catalog")
         brains = portal_catalog.searchResults(**query)
 
-        registry = getUtility(IRegistry)
-        types_using_view = registry.get("plone.types_use_view_action_in_listings", [])
-
+        types_using_view = self.types_using_view
         for brain in brains:
             brain_path = brain.getPath()
             brain_parent_path = brain_path.rpartition("/")[0]
