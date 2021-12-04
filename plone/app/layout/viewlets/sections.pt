@@ -2,8 +2,7 @@
      xmlns:tal="http://xml.zope.org/namespaces/tal"
      xmlns:metal="http://xml.zope.org/namespaces/metal"
      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-     tal:define="portal_tabs view/portal_tabs"
-     tal:condition="portal_tabs"
+     tal:condition="python:view.navtree"
      i18n:domain="plone">
 
   <nav class="plone-navbar pat-navigationmarker" id="portal-globalnav-wrapper">

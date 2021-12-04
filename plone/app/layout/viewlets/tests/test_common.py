@@ -510,6 +510,21 @@ class TestGlobalSectionsViewlet(ViewletsTestCase):
             ["/plone/excluded-folder/sub-folder"],
         )
 
+    def test_generate_tabs__no_portal_tabs(self):
+        """Test for constructing the navigation purely out of a catalog query
+        and not using portal tabs at all."""
+
+        class CustomGlobalSectionsViewlet(GlobalSectionsViewlet):
+            portal_tabs = []
+
+        self.portal.invokeFactory("Folder", id="folder1", title="Folder 1")
+
+        nav = CustomGlobalSectionsViewlet(self.portal, self.request.clone(), None)
+        navtree = nav.navtree
+
+        self.assertEqual(navtree["/plone"][0]["id"], "Members")
+        self.assertEqual(navtree["/plone"][1]["id"], "folder1")
+
 
 class TestTitleEscape(ViewletsFunctionalTestCase):
     """Test that the title in the global sections viewlet is escaped.
