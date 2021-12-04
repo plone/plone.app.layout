@@ -276,7 +276,8 @@ class GlobalSectionsViewlet(ViewletBase):
     def navtree(self):
         ret = defaultdict(list)
         navtree_path = self.navtree_path
-        for tab in self.portal_tabs:
+        portal_tabs = self.portal_tabs
+        for tab in portal_tabs:
             entry = tab.copy()
             entry.update(
                 {"path": "/".join((navtree_path, tab["id"])), "uid": tab["id"],}
@@ -328,7 +329,7 @@ class GlobalSectionsViewlet(ViewletBase):
         for brain in brains:
             brain_path = brain.getPath()
             brain_parent_path = brain_path.rpartition("/")[0]
-            if brain_parent_path == navtree_path:
+            if portal_tabs and brain_parent_path == navtree_path:
                 # This should be already provided by the portal_tabs_view
                 continue
             if brain.exclude_from_nav and not context_path.startswith(brain_path):
