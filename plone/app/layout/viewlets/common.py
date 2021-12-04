@@ -296,6 +296,7 @@ class GlobalSectionsViewlet(ViewletBase):
                 )
 
             entry["title"] = safe_unicode(entry["title"])
+            self.customize_tab(entry, tab)
             ret[navtree_path].append(entry)
 
         if not self.settings.generate_tabs:
@@ -325,6 +326,7 @@ class GlobalSectionsViewlet(ViewletBase):
             query["exclude_from_nav"] = False
 
         context_path = "/".join(self.context.getPhysicalPath())
+        self.customize_query(query)
         portal_catalog = getToolByName(self.context, "portal_catalog")
         brains = portal_catalog.searchResults(**query)
 
@@ -353,10 +355,19 @@ class GlobalSectionsViewlet(ViewletBase):
             }
             self.customize_entry(entry, brain)
             ret[brain_parent_path].append(entry)
+
         return ret
 
+    def customize_query(self, query):
+        """Helper to customize the catalog query."""
+        pass
+
+    def customize_tab(self, entry, tab):
+        """Helper to add custom entry keys/values."""
+        pass
+
     def customize_entry(self, entry, brain):
-        """a little helper to add custom entry keys/values."""
+        """Helper to add custom entry keys/values."""
         pass
 
     def render_item(self, item, path):
