@@ -10,7 +10,6 @@ from plone.app.layout.navigation.root import getNavigationRoot
 from plone.app.layout.navigation.root import getNavigationRootObject
 from plone.i18n.interfaces import ILanguageSchema
 from plone.memoize.view import memoize
-from plone.memoize.view import memoize_contextless
 from plone.protect.utils import addTokenToUrl
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
@@ -243,7 +242,6 @@ class GlobalSectionsViewlet(ViewletBase):
     _subtree_markup_wrapper = u'<ul class="has_subtree dropdown">{out}</ul>'
 
     @property
-    @memoize_contextless
     def settings(self):
         registry = getUtility(IRegistry)
         settings = registry.forInterface(INavigationSchema, prefix="plone")
@@ -260,6 +258,7 @@ class GlobalSectionsViewlet(ViewletBase):
         return getNavigationRoot(self.context)
 
     @property
+    @deprecate("This property will be removed in Plone 6")
     def navtree_depth(self):
         return self.settings.navigation_depth
 
@@ -272,7 +271,6 @@ class GlobalSectionsViewlet(ViewletBase):
         )
 
     @property
-    @memoize_contextless
     def types_using_view(self):
         registry = getUtility(IRegistry)
         types_using_view = registry.get("plone.types_use_view_action_in_listings", [])
@@ -282,12 +280,16 @@ class GlobalSectionsViewlet(ViewletBase):
     @memoize
     def navtree(self):
         ret = defaultdict(list)
+        settings = self.settings
         navtree_path = self.navtree_path
         portal_tabs = self.portal_tabs
         for tab in portal_tabs:
             entry = tab.copy()
             entry.update(
-                {"path": "/".join((navtree_path, tab["id"])), "uid": tab["id"],}
+                {
+                    "path": "/".join((navtree_path, tab["id"])),
+                    "uid": tab["id"],
+                }
             )
             if "review_state" not in entry:
                 entry["review_state"] = None
@@ -304,27 +306,30 @@ class GlobalSectionsViewlet(ViewletBase):
             self.customize_tab(entry, tab)
             ret[navtree_path].append(entry)
 
-        if not self.settings.generate_tabs:
+        if not settings.generate_tabs:
             return ret
 
         query = {
-            "path": {"query": self.navtree_path, "depth": self.navtree_depth,},
-            "portal_type": {"query": self.settings.displayed_types},
+            "path": {
+                "query": self.navtree_path,
+                "depth": settings.navigation_depth,
+            },
+            "portal_type": {"query": settings.displayed_types},
             "Language": self.current_language,
-            "sort_on": self.settings.sort_tabs_on,
+            "sort_on": settings.sort_tabs_on,
             "is_default_page": False,
         }
 
-        if self.settings.sort_tabs_reversed:
+        if settings.sort_tabs_reversed:
             query["sort_order"] = "reverse"
 
-        if not self.settings.nonfolderish_tabs:
+        if not settings.nonfolderish_tabs:
             query["is_folderish"] = True
 
-        if self.settings.filter_on_workflow:
-            query["review_state"] = list(self.settings.workflow_states_to_show or ())
+        if settings.filter_on_workflow:
+            query["review_state"] = list(settings.workflow_states_to_show or ())
 
-        if not self.settings.show_excluded_items:
+        if not settings.show_excluded_items:
             query["exclude_from_nav"] = False
 
         context_path = "/".join(self.context.getPhysicalPath())
