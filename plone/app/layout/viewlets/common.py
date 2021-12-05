@@ -6,7 +6,6 @@ from collections import defaultdict
 from functools import total_ordering
 from plone.app.layout.globals.interfaces import IViewView
 from plone.app.layout.navigation.root import getNavigationRoot
-from plone.app.layout.navigation.root import getNavigationRootObject
 from plone.i18n.interfaces import ILanguageSchema
 from plone.memoize.view import memoize
 from plone.protect.utils import addTokenToUrl
@@ -25,7 +24,6 @@ from urllib.parse import unquote
 from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.component import queryMultiAdapter
-from zope.deprecation.deprecation import deprecate
 from zope.i18n import translate
 from zope.interface import alsoProvides
 from zope.interface import implementer
@@ -58,13 +56,6 @@ class ViewletBase(BrowserView):
 
     def __hash__(self):
         return id(self) * 16
-
-    @property
-    @deprecate(
-        "Use site_url instead. " + "ViewletBase.portal_url will be removed in Plone 4"
-    )
-    def portal_url(self):
-        return self.site_url
 
     def update(self):
         self.portal_state = getMultiAdapter(
@@ -257,11 +248,6 @@ class GlobalSectionsViewlet(ViewletBase):
         return getNavigationRoot(self.context)
 
     @property
-    @deprecate("This property will be removed in Plone 6")
-    def navtree_depth(self):
-        return self.settings.navigation_depth
-
-    @property
     def current_language(self):
         return (
             self.request.get("LANGUAGE", None)
@@ -422,54 +408,6 @@ class GlobalSectionsViewlet(ViewletBase):
             (self.context, self.request), name="portal_tabs_view"
         )
         return portal_tabs_view.topLevelTabs()
-
-    @deprecate("This method will be removed in Plone 6")
-    def selectedTabs(self, default_tab="index_html", portal_tabs=()):
-        portal = getToolByName(self.context, "portal_url").getPortalObject()
-        plone_url = getNavigationRootObject(self.context, portal).absolute_url()
-        plone_url_len = len(plone_url)
-        request = self.request
-        valid_actions = []
-
-        url = request["URL"]
-        path = url[plone_url_len:]
-        path_list = path.split("/")
-        if len(path_list) <= 1:
-            return {"portal": default_tab}
-
-        for action in portal_tabs:
-            if not action["url"].startswith(plone_url):
-                # In this case the action url is an external link. Then, we
-                # avoid issues (bad portal_tab selection) continuing with next
-                # action.
-                continue
-            action_path = action["url"][plone_url_len:]
-            if not action_path.startswith("/"):
-                action_path = "/" + action_path
-            action_path_list = action_path.split("/")
-            if action_path_list[1] == path_list[1]:
-                # Make a list of the action ids, along with the path length
-                # for choosing the longest (most relevant) path.
-                valid_actions.append((len(action_path_list), action["id"]))
-
-        # Sort by path length, the longest matching path wins
-        valid_actions.sort()
-        if valid_actions:
-            return {"portal": valid_actions[-1][1]}
-
-        return {"portal": default_tab}
-
-    @property
-    @memoize
-    @deprecate("This method will be removed in Plone 6")
-    def selected_tabs(self):
-        return self.selectedTabs(portal_tabs=self.portal_tabs)
-
-    @property
-    @memoize
-    @deprecate("This method will be removed in Plone 6")
-    def selected_portal_tab(self):
-        return self.selected_tabs["portal"]
 
 
 class PersonalBarViewlet(ViewletBase):
