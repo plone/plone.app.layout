@@ -60,7 +60,10 @@ class FaviconViewlet(ViewletBase):
 
     @staticmethod
     def get_mimetype(filename=None) -> str:
-        return mimetypes.guess_type(filename)[0] if filename else 'image/x-icon'
+        registry = getUtility(IRegistry)
+        settings = registry.forInterface(ISiteSchema, prefix="plone")
+        print(settings)
+        return settings.site_favicon_mimetype
 
     def render(self):
         self.init_favicon()
