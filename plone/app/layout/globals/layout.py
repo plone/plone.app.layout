@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
+from AccessControl import getSecurityManager
 from plone.app.layout.globals.interfaces import IBodyClassAdapter
 from plone.app.layout.globals.interfaces import ILayoutPolicy
 from plone.app.layout.globals.interfaces import IViewView
-from plone.app.layout.icons.interfaces import IContentIcon
 from plone.i18n.normalizer.interfaces import IIDNormalizer
 from plone.memoize.view import memoize
 from plone.portlets.interfaces import IPortletManager
@@ -22,7 +21,6 @@ from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.component import queryMultiAdapter
 from zope.component import queryUtility
-from zope.deprecation import deprecate
 from zope.interface import alsoProvides
 from zope.interface import implementer
 from zope.interface import Interface
@@ -37,7 +35,6 @@ TEMPLATE_CLASSES = (
     ZopeViewPageTemplateFile,
     ViewMixinForTemplates,
 )
-
 
 @implementer(ILayoutPolicy)
 class LayoutPolicy(BrowserView):
@@ -93,59 +90,27 @@ class LayoutPolicy(BrowserView):
 
         return renderer.visible
 
+    def _image_visibility(self, name):
+        """check if image {name} is visible with current settings and user"""
+        registry = getUtility(IRegistry)
+        settings = registry.forInterface(ISiteSchema, prefix="plone", check=False)
+        visibility = getattr(settings, f"{name}_visibility")
+        if visibility == "enabled":
+            return True
+        if visibility != "authenticated":
+            return False
+        user = getSecurityManager().getUser()
+        return user is not None and user.getUserName() != 'Anonymous User'
+
     @memoize
     def icons_visible(self):
         """Returns True if icons should be shown or False otherwise."""
-        context = self.context
-        membership = getToolByName(context, "portal_membership")
-        anon = membership.isAnonymousUser()
-
-        registry = getUtility(IRegistry)
-        settings = registry.forInterface(ISiteSchema, prefix="plone", check=False)
-        icon_visibility = settings.icon_visibility
-
-        if icon_visibility == "enabled":
-            return True
-        elif icon_visibility == "authenticated" and not anon:
-            return True
-        else:
-            return False
+        return self._image_visibility("icon")
 
     @memoize
     def thumb_visible(self):
         """Returns True if thumbs should be shown or False otherwise."""
-        context = self.context
-        membership = getToolByName(context, "portal_membership")
-        anon = membership.isAnonymousUser()
-        registry = getUtility(IRegistry)
-        settings = registry.forInterface(ISiteSchema, prefix="plone", check=False)
-        thumb_visibility = settings.thumb_visibility
-
-        if thumb_visibility == "enabled":
-            return True
-        elif thumb_visibility == "authenticated" and not anon:
-            return True
-        else:
-            return False
-
-    @deprecate(
-        "deprecated since Plone 4, ContentIcons are rendered as Fonts now see"
-        "https://docs.plone.org/develop/addons/index.html"
-        "#upgrading-to-plone-5-1."
-    )
-    def getIcon(self, item):
-        """Returns an object which implements the IContentIcon interface and
-        provides the informations necessary to render an icon. The item
-        parameter needs to be adaptable to IContentIcon. Icons can be disabled
-        globally or just for anonymous users with the icon_visibility property
-        in site_properties.
-        """
-        context = self.context
-        if not self.icons_visible():
-            icon = getMultiAdapter((context, self.request, None), IContentIcon)
-        else:
-            icon = getMultiAdapter((context, self.request, item), IContentIcon)
-        return icon
+        return self._image_visibility("thumb")
 
     def _toolbar_classes(self):
         """current toolbar controlling classes"""

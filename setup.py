@@ -2,7 +2,7 @@ from setuptools import find_packages
 from setuptools import setup
 
 
-version = "4.0.0a5.dev0"
+version = "4.0.0a6.dev0"
 
 long_description = open("README.rst").read() + "\n" + open("CHANGES.rst").read()
 
@@ -38,7 +38,6 @@ setup(
         "Acquisition",
         "DateTime",
         "plone.app.content",
-        "plone.app.portlets",
         "plone.app.viewletmanager >=1.2",
         "plone.batching >1.0.999",
         "plone.i18n",

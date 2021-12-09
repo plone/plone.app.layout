@@ -1,15 +1,3 @@
-# -*- coding: utf-8 -*-
-from Products.Five.browser import BrowserView
-from zope.component import getMultiAdapter
+from zope.deprecation import moved
 
-
-class UserActionsView(BrowserView):
-    """Power the useraction fallback page"""
-
-    def user_actions(self):
-        context_state = getMultiAdapter(
-            (self.context, self.request), name=u"plone_context_state"
-        )
-
-        actions = context_state.actions("user")
-        return actions
+moved("plone.app.portlets.dashboard.user_actions", "Version 5.0")

@@ -8,6 +8,27 @@ Changelog
 
 .. towncrier release notes start
 
+4.0.0a5 (2021-11-23)
+--------------------
+
+Breaking changes:
+
+
+- Move most (hard dependency) portlet related to `plone.app.portlets`:
+  Dashboard, Portlet related viewlets.
+  A first step towards a Portlet-as-an-Addon story.
+  [jensens] (#268)
+- Remove long deprecated ``getIcon``` from layout-policy. [jensens] (#270)
+
+
+Bug fixes:
+
+
+- Fix breadcrumb id.
+  [agitator] (#267)
+- Micro optimizations at visibility in layoutpolicy [jensens] (#271)
+
+
 4.0.0a4 (2021-10-16)
 --------------------
 

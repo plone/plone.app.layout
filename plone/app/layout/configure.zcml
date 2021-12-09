@@ -10,7 +10,6 @@
     <include package=".icons" />
     <include package=".links" />
     <include package=".sitemap" />
-    <include package=".dashboard" />
     <include package=".analytics" />
 
     <include file="permissions.zcml" />

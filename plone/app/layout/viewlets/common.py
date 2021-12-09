@@ -3,14 +3,12 @@ from AccessControl import getSecurityManager
 from Acquisition import aq_base
 from Acquisition import aq_inner
 from collections import defaultdict
-from datetime import date
 from functools import total_ordering
 from plone.app.layout.globals.interfaces import IViewView
 from plone.app.layout.navigation.root import getNavigationRoot
 from plone.app.layout.navigation.root import getNavigationRootObject
 from plone.i18n.interfaces import ILanguageSchema
 from plone.memoize.view import memoize
-from plone.memoize.view import memoize_contextless
 from plone.protect.utils import addTokenToUrl
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
@@ -23,7 +21,7 @@ from Products.CMFPlone.utils import getSiteLogo
 from Products.CMFPlone.utils import safe_unicode
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from six.moves.urllib.parse import unquote
+from urllib.parse import unquote
 from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.component import queryMultiAdapter
@@ -32,14 +30,17 @@ from zope.i18n import translate
 from zope.interface import alsoProvides
 from zope.interface import implementer
 from zope.viewlet.interfaces import IViewlet
+from html import escape
 
 import json
+import zope.deferredimport
 
-
-try:
-    from html import escape
-except ImportError:
-    from cgi import escape
+zope.deferredimport.initialize()
+zope.deferredimport.deprecated(
+    "Import from plone.app.portlets.browser.viewlets instead",
+    ManagePortletsFallbackViewlet='plone.app.portlets.browser.viewlets:ManagePortletsFallbackViewlet',
+    FooterViewlet='plone.app.portlets.browser.viewlets:FooterViewlet',
+)
 
 
 @implementer(IViewlet)
@@ -240,7 +241,6 @@ class GlobalSectionsViewlet(ViewletBase):
     _subtree_markup_wrapper = u'<ul class="has_subtree dropdown">{out}</ul>'
 
     @property
-    @memoize_contextless
     def settings(self):
         registry = getUtility(IRegistry)
         settings = registry.forInterface(INavigationSchema, prefix="plone")
@@ -257,6 +257,7 @@ class GlobalSectionsViewlet(ViewletBase):
         return getNavigationRoot(self.context)
 
     @property
+    @deprecate("This property will be removed in Plone 6")
     def navtree_depth(self):
         return self.settings.navigation_depth
 
@@ -269,11 +270,19 @@ class GlobalSectionsViewlet(ViewletBase):
         )
 
     @property
+    def types_using_view(self):
+        registry = getUtility(IRegistry)
+        types_using_view = registry.get("plone.types_use_view_action_in_listings", [])
+        return types_using_view
+
+    @property
     @memoize
     def navtree(self):
         ret = defaultdict(list)
+        settings = self.settings
         navtree_path = self.navtree_path
-        for tab in self.portal_tabs:
+        portal_tabs = self.portal_tabs
+        for tab in portal_tabs:
             entry = tab.copy()
             entry.update(
                 {
@@ -293,45 +302,45 @@ class GlobalSectionsViewlet(ViewletBase):
                 )
 
             entry["title"] = safe_unicode(entry["title"])
+            self.customize_tab(entry, tab)
             ret[navtree_path].append(entry)
 
-        if not self.settings.generate_tabs:
+        if not settings.generate_tabs:
             return ret
 
         query = {
             "path": {
                 "query": self.navtree_path,
-                "depth": self.navtree_depth,
+                "depth": settings.navigation_depth,
             },
-            "portal_type": {"query": self.settings.displayed_types},
+            "portal_type": {"query": settings.displayed_types},
             "Language": self.current_language,
-            "sort_on": self.settings.sort_tabs_on,
+            "sort_on": settings.sort_tabs_on,
             "is_default_page": False,
         }
 
-        if self.settings.sort_tabs_reversed:
+        if settings.sort_tabs_reversed:
             query["sort_order"] = "reverse"
 
-        if not self.settings.nonfolderish_tabs:
+        if not settings.nonfolderish_tabs:
             query["is_folderish"] = True
 
-        if self.settings.filter_on_workflow:
-            query["review_state"] = list(self.settings.workflow_states_to_show or ())
+        if settings.filter_on_workflow:
+            query["review_state"] = list(settings.workflow_states_to_show or ())
 
-        if not self.settings.show_excluded_items:
+        if not settings.show_excluded_items:
             query["exclude_from_nav"] = False
 
         context_path = "/".join(self.context.getPhysicalPath())
+        self.customize_query(query)
         portal_catalog = getToolByName(self.context, "portal_catalog")
         brains = portal_catalog.searchResults(**query)
 
-        registry = getUtility(IRegistry)
-        types_using_view = registry.get("plone.types_use_view_action_in_listings", [])
-
+        types_using_view = self.types_using_view
         for brain in brains:
             brain_path = brain.getPath()
             brain_parent_path = brain_path.rpartition("/")[0]
-            if brain_parent_path == navtree_path:
+            if portal_tabs and brain_parent_path == navtree_path:
                 # This should be already provided by the portal_tabs_view
                 continue
             if brain.exclude_from_nav and not context_path.startswith(brain_path):
@@ -350,10 +359,19 @@ class GlobalSectionsViewlet(ViewletBase):
             }
             self.customize_entry(entry, brain)
             ret[brain_parent_path].append(entry)
+
         return ret
 
+    def customize_query(self, query):
+        """Helper to customize the catalog query."""
+        pass
+
+    def customize_tab(self, entry, tab):
+        """Helper to add custom entry keys/values."""
+        pass
+
     def customize_entry(self, entry, brain):
-        """a little helper to add custom entry keys/values."""
+        """Helper to add custom entry keys/values."""
         pass
 
     def render_item(self, item, path):
@@ -634,35 +652,6 @@ class ContentViewsViewlet(ViewletBase):
         return icon.tag(title="Locked")
 
 
-class ManagePortletsFallbackViewlet(ViewletBase):
-    """Manage portlets fallback link that sits below content"""
-
-    index = ViewPageTemplateFile("manage_portlets_fallback.pt")
-
-    def update(self):
-        plonelayout = getMultiAdapter(
-            (self.context, self.request), name=u"plone_layout"
-        )
-        context_state = getMultiAdapter(
-            (self.context, self.request), name=u"plone_context_state"
-        )
-
-        self.portlet_assignable = context_state.portlet_assignable()
-        self.sl = plonelayout.have_portlets("plone.leftcolumn", self.context)
-        self.sr = plonelayout.have_portlets("plone.rightcolumn", self.context)
-        self.object_url = context_state.object_url()
-
-    def available(self):
-        secman = getSecurityManager()
-        has_manage_portlets_permission = secman.checkPermission(
-            "Portlets: Manage portlets", self.context
-        )
-        if not has_manage_portlets_permission:
-            return False
-        elif not self.sl and not self.sr and self.portlet_assignable:
-            return True
-
-
 class PathBarViewlet(ViewletBase):
     index = ViewPageTemplateFile("path_bar.pt")
 
@@ -681,37 +670,3 @@ class TinyLogoViewlet(ViewletBase):
     index = ViewPageTemplateFile("tiny_logo.pt")
 
 
-class FooterViewlet(ViewletBase):
-    index = ViewPageTemplateFile("footer.pt")
-
-    def update(self):
-        super(FooterViewlet, self).update()
-        self.year = date.today().year
-
-    def render_footer_portlets(self):
-        """
-        You might ask, why is this necessary. Well, let me tell you a story...
-
-        plone.app.portlets, in order to provide @@manage-portlets on a context,
-        overrides the IPortletRenderer for the IManageContextualPortletsView
-        view.
-        See plone.portlets and plone.app.portlets
-
-        Seems fine right? Well, most of the time it is. Except, here.
-        Previously, we were just using the syntax like
-        `provider:plone.footerportlets` to render the footer portlets.
-        Since this tal expression was inside a viewlet,
-        the view is no longer IManageContextualPortletsView when
-        visiting @@manage-portlets. Instead, it was IViewlet.
-        See zope.contentprovider
-
-        In to fix this short coming, we render the portlet column by
-        manually doing the multi adapter lookup and then manually
-        doing the rendering for the content provider.
-        See zope.contentprovider
-        """
-        portlet_manager = getMultiAdapter(
-            (self.context, self.request, self.__parent__), name="plone.footerportlets"
-        )
-        portlet_manager.update()
-        return portlet_manager.render()
