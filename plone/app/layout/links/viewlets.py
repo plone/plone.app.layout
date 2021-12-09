@@ -16,6 +16,7 @@ from zope.component import getUtility
 from zope.schema.interfaces import IVocabularyFactory
 from plone.formwidget.namedfile.converter import b64decode_file
 import mimetypes
+from typing import NoReturn
 
 
 def get_language(context, request):
@@ -41,31 +42,24 @@ class FaviconViewlet(ViewletBase):
     mimetype: str
     favicon_path: str
 
-    def init_favicon(self):
-        filename = self.get_filename()
-        self.favicon_path = str(self.site_url) + '/favicon'
+    def init_favicon(self) -> NoReturn:
+        registry = getUtility(IRegistry)
+        settings: ISiteSchema = registry.forInterface(ISiteSchema, prefix="plone")
+
+        self.mimetype: str = settings.site_favicon_mimetype
+        filename: str = self.get_filename(settings)
+        self.favicon_path: str = str(self.site_url) + '/favicon'
         if not filename:
             self.favicon_path += '.ico'
-        self.mimetype = self.get_mimetype(filename)
 
     @staticmethod
-    def get_filename():
-        registry = getUtility(IRegistry)
-        settings = registry.forInterface(ISiteSchema, prefix="plone")
-
+    def get_filename(settings: ISiteSchema) -> str:
         if getattr(settings, 'site_favicon', False):
             filename, data = b64decode_file(settings.site_favicon)
             return filename
         return None
 
-    @staticmethod
-    def get_mimetype(filename=None) -> str:
-        registry = getUtility(IRegistry)
-        settings = registry.forInterface(ISiteSchema, prefix="plone")
-        print(settings)
-        return settings.site_favicon_mimetype
-
-    def render(self):
+    def render(self) -> ViewPageTemplateFile:
         self.init_favicon()
         return xhtml_compress(self._template())
 

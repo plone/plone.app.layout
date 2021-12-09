@@ -8,20 +8,14 @@ from plone.registry.interfaces import IRegistry
 from plone.registry.recordsproxy import RecordsProxy
 
 
-from plone import api
-import transaction
-
-
 @adapter(ISiteSchema, IRecordModifiedEvent)
 def updateMimetype(settings: RecordsProxy, event: IRecordModifiedEvent=None):
-    # import pdb;
-    # pdb.set_trace()
 
     if event.record.fieldName == 'site_favicon_mimetype':
         if event.newValue != event.oldValue:
             event.record.value = event.newValue
 
-    if event.record.fieldName != 'site_favicon':
+    if event.record.fieldName != 'site_favicon' or not event.record.value:
         return
 
     filename, data = b64decode_file(event.newValue)
