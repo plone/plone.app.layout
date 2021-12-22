@@ -16,9 +16,7 @@
 
   <div id="edit-zone" role="toolbar"
        class="pat-toolbar bg-dark text-white position-fixed top-0 start-0 h-100 overflow-scroll d-flex flex-column"
-       data-bs-scroll="true" data-bs-backdrop="false"
-       data-pat-toolbar="${view/get_options}">
-       <!-- class="pat-toolbar bg-dark text-white offcanvas offcanvas-start show h-100 overflow-scroll" -->
+       data-bs-scroll="true" data-bs-backdrop="false">
     <div class="offcanvas-header mb-3 bg-primary">
       <a class="text-white text-decoration-none">
         <img alt="Plone Toolbar" tal:attributes="src view/get_toolbar_logo" class="img-fluid" />

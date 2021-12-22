@@ -8,8 +8,6 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope.component import getMultiAdapter
 from zope.component import getUtility
 
-import json
-
 
 class ToolbarViewletManager(OrderedViewletManager):
     custom_template = ViewPageTemplateFile("toolbar.pt")
@@ -29,25 +27,6 @@ class ToolbarViewletManager(OrderedViewletManager):
     @memoize
     def portal_state(self):
         return getMultiAdapter((self.context, self.request), name="plone_portal_state")
-
-    def get_options(self):
-        registry = getUtility(IRegistry)
-        options = {}
-
-        lessvars = registry.get("plone.lessvariables", {})
-
-        toolbar_width = lessvars.get("plone-left-toolbar-expanded", None)
-        submenu_width = lessvars.get("plone-toolbar-submenu-width", None)
-        desktop_width = lessvars.get("plone-screen-sm-min", None)
-
-        if toolbar_width:
-            options["toolbar_width"] = toolbar_width
-        if submenu_width:
-            options["submenu_width"] = submenu_width
-        if desktop_width:
-            options["desktop_width"] = desktop_width
-
-        return json.dumps(options)
 
     def get_personal_bar(self):
         viewlet = PersonalBarViewlet(self.context, self.request, self.__parent__, self)
