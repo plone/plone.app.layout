@@ -11,10 +11,6 @@ from plone.registry.recordsproxy import RecordsProxy
 @adapter(ISiteSchema, IRecordModifiedEvent)
 def updateMimetype(settings: RecordsProxy, event: IRecordModifiedEvent=None):
 
-    if event.record.fieldName == 'site_favicon_mimetype':
-        if event.newValue != event.oldValue:
-            event.record.value = event.newValue
-
     if event.record.fieldName != 'site_favicon' or not event.record.value:
         return
 
