@@ -8,6 +8,32 @@ Changelog
 
 .. towncrier release notes start
 
+3.5.0 (2021-12-30)
+------------------
+
+New features:
+
+
+- Global section viewlet: Catalog based navigation.
+  Show the global sections also if navigation contains items but tabs are empty.
+  This allows for disabling portal tabs rendering and constructing the navigation only from the catalog query.
+  [thet] (273-1)
+- Global sections viewlet: Customize entries and query.
+  Also allow customizing the tabs entries and the navigation query along with the other navigation entries.
+  [thet] (273-2)
+- Global sections viewlet: Factor out types_using_view.
+  Factor out types_using_view so that this method can be re-used, e.g. in a subclass with a customize_entry method.
+  [thet] (273-3)
+- Global sections viewlet performance optimizations:
+
+  - Remove pointless caching on types_using_view,
+  - Store settings in variable for multiple access, bypassing cache checks,
+  - Remove now pointless caching on settings property,
+  - Deprecate now unused navtree_depth property.
+
+  [thet] (#275)
+
+
 3.4.6 (2020-09-28)
 ------------------
 
