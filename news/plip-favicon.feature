@@ -1,0 +1,2 @@
+add favicon
+[talarias]
