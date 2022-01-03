@@ -230,7 +230,7 @@ class GlobalSectionsViewlet(ViewletBase):
 
     _opener_markup_template = (
         u'<input id="navitem-{uid}" type="checkbox" class="opener" />'
-        u'<label for="navitem-{uid}" role="button" aria-label="{title}"></label>'  # noqa: E 501
+        u'<label for="navitem-{uid}" aria-label="{title}"></label>'  # noqa: E 501
     )
     _item_markup_template = (
         u'<li class="{id}{has_sub_class} nav-item">'
