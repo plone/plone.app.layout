@@ -301,7 +301,9 @@ class GlobalSectionsViewlet(ViewletBase):
                     entry["title"], domain="plone", context=self.request
                 )
 
-            entry["title"] = safe_unicode(entry["title"])
+            entry["title"] = escape(safe_unicode(entry["title"]))
+            if "name" in entry and entry["name"]:
+                entry["name"] = escape(safe_unicode(entry["name"]))
             self.customize_tab(entry, tab)
             ret[navtree_path].append(entry)
 
@@ -354,7 +356,7 @@ class GlobalSectionsViewlet(ViewletBase):
                 "path": brain_path,
                 "uid": brain.UID,
                 "url": url,
-                "title": safe_unicode(brain.Title),
+                "title": escape(safe_unicode(brain.Title)),
                 "review_state": brain.review_state,
             }
             self.customize_entry(entry, brain)
@@ -394,10 +396,6 @@ class GlobalSectionsViewlet(ViewletBase):
                     "has_sub_class": "",
                 }
             )
-        if "title" in item and item["title"]:
-            item["title"] = escape(item["title"])
-        if "name" in item and item["name"]:
-            item["name"] = escape(item["name"])
         return self._item_markup_template.format(**item)
 
     def build_tree(self, path, first_run=True):
