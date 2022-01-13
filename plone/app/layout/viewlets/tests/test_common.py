@@ -616,6 +616,27 @@ class TestGlobalSectionsViewlet(ViewletsTestCase):
             navtree["/plone"][1]["url"], "http://nohost/plone/folder1/view"
         )
 
+    def test_escaping_twice_does_not_double_escape_items(self):
+        """Test for https://github.com/plone/plone.app.layout/issues/280."""
+
+        self.portal.invokeFactory(
+            "Document", "test-doc-1", title=u"Document 1 & 2",
+        )
+
+        request = self.layer["request"]
+        gsv = GlobalSectionsViewlet(self.portal, request, None)
+        gsv.update()
+        html = gsv.render()
+        self.assertIn("Document 1 &amp; 2", html)
+
+        # Render again, as this is what happens when an error view is rendered
+        # Before the fix this test will fail, as it produces a title with
+        # 'Document 1 &amp;amp; 2'.
+        html = gsv.render()
+        self.assertNotIn("Document 1 &amp;amp; 2", html)
+        self.assertIn("Document 1 &amp; 2", html)
+
+
 
 class TestTitleEscape(ViewletsFunctionalTestCase):
     """Test that the title in the global sections viewlet is escaped.
