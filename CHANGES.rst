@@ -8,6 +8,16 @@ Changelog
 
 .. towncrier release notes start
 
+3.5.1 (2022-01-19)
+------------------
+
+Bug fixes:
+
+
+- Escape navigation titles only once.
+  [thomasmassmann] (#280)
+
+
 3.5.0 (2021-12-30)
 ------------------
 
