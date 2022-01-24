@@ -38,8 +38,8 @@ import zope.deferredimport
 zope.deferredimport.initialize()
 zope.deferredimport.deprecated(
     "Import from plone.app.portlets.browser.viewlets instead",
-    ManagePortletsFallbackViewlet='plone.app.portlets.browser.viewlets:ManagePortletsFallbackViewlet',
-    FooterViewlet='plone.app.portlets.browser.viewlets:FooterViewlet',
+    ManagePortletsFallbackViewlet="plone.app.portlets.browser.viewlets:ManagePortletsFallbackViewlet",
+    FooterViewlet="plone.app.portlets.browser.viewlets:FooterViewlet",
 )
 
 
@@ -68,7 +68,7 @@ class ViewletBase(BrowserView):
 
     def update(self):
         self.portal_state = getMultiAdapter(
-            (self.context, self.request), name=u"plone_portal_state"
+            (self.context, self.request), name="plone_portal_state"
         )
         self.site_url = self.portal_state.portal_url()
         self.navigation_root_url = self.portal_state.navigation_root_url()
@@ -94,7 +94,7 @@ class TitleViewlet(ViewletBase):
     index = ViewPageTemplateFile("title.pt")
 
     # seperator of page- and portal-title
-    sep = u" &mdash; "
+    sep = " &mdash; "
 
     @property
     @memoize
@@ -133,7 +133,7 @@ class TitleViewlet(ViewletBase):
             return self.site_title_setting
 
         context_state = getMultiAdapter(
-            (self.context, self.request), name=u"plone_context_state"
+            (self.context, self.request), name="plone_context_state"
         )
         return escape(safe_unicode(context_state.object_title()))
 
@@ -142,7 +142,7 @@ class TitleViewlet(ViewletBase):
             self.site_title = self.site_title_setting
             return
         portal_state = getMultiAdapter(
-            (self.context, self.request), name=u"plone_portal_state"
+            (self.context, self.request), name="plone_portal_state"
         )
         if IPloneSiteRoot.providedBy(portal_state.navigation_root()):
             portal_title = self.site_title_setting
@@ -187,7 +187,7 @@ class SiteActionsViewlet(ViewletBase):
 
     def update(self):
         context_state = getMultiAdapter(
-            (self.context, self.request), name=u"plone_context_state"
+            (self.context, self.request), name="plone_context_state"
         )
         self.site_actions = context_state.actions("site_actions")
 
@@ -199,7 +199,7 @@ class SearchBoxViewlet(ViewletBase):
         super(SearchBoxViewlet, self).update()
 
         context_state = getMultiAdapter(
-            (self.context, self.request), name=u"plone_context_state"
+            (self.context, self.request), name="plone_context_state"
         )
 
         registry = getUtility(IRegistry)
@@ -229,16 +229,16 @@ class GlobalSectionsViewlet(ViewletBase):
     index = ViewPageTemplateFile("sections.pt")
 
     _opener_markup_template = (
-        u'<input id="navitem-{uid}" type="checkbox" class="opener" />'
-        u'<label for="navitem-{uid}" role="button" aria-label="{title}"></label>'  # noqa: E 501
+        '<input id="navitem-{uid}" type="checkbox" class="opener" />'
+        '<label for="navitem-{uid}" role="button" aria-label="{title}"></label>'  # noqa: E 501
     )
     _item_markup_template = (
-        u'<li class="{id}{has_sub_class} nav-item">'
-        u'<a href="{url}" class="state-{review_state} nav-link"{aria_haspopup}>{title}</a>{opener}'  # noqa: E 501
-        u"{sub}"
-        u"</li>"
+        '<li class="{id}{has_sub_class} nav-item">'
+        '<a href="{url}" class="state-{review_state} nav-link"{aria_haspopup}>{title}</a>{opener}'  # noqa: E 501
+        "{sub}"
+        "</li>"
     )
-    _subtree_markup_wrapper = u'<ul class="has_subtree dropdown">{out}</ul>'
+    _subtree_markup_wrapper = '<ul class="has_subtree dropdown">{out}</ul>'
 
     def __init__(self, *args):
         super().__init__(*args)
@@ -396,7 +396,7 @@ class GlobalSectionsViewlet(ViewletBase):
         """Non-template based recursive tree building.
         3-4 times faster than template based.
         """
-        out = u""
+        out = ""
         for item in self.navtree.get(path, []):
             out += self.render_item(item, path)
 
@@ -426,7 +426,7 @@ class PersonalBarViewlet(ViewletBase):
         context = aq_inner(self.context)
 
         context_state = getMultiAdapter(
-            (context, self.request), name=u"plone_context_state"
+            (context, self.request), name="plone_context_state"
         )
 
         user_actions = context_state.actions("user")
@@ -497,7 +497,7 @@ class ContentViewsViewlet(ViewletBase):
         context_fti = context.getTypeInfo()
 
         context_state = getMultiAdapter(
-            (context, self.request), name=u"plone_context_state"
+            (context, self.request), name="plone_context_state"
         )
         actions = context_state.actions
 
@@ -612,5 +612,3 @@ class PathBarViewlet(ViewletBase):
 
 class TinyLogoViewlet(ViewletBase):
     index = ViewPageTemplateFile("tiny_logo.pt")
-
-
