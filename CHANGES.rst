@@ -8,6 +8,21 @@ Changelog
 
 .. towncrier release notes start
 
+4.0.0a8 (2022-01-25)
+--------------------
+
+Breaking changes:
+
+
+- Remove (marked for removal im Plone 6) deprecated methods. [jensens] (#285)
+
+
+Bug fixes:
+
+
+- In global sections viewlet fetch registry only one time. Also: Code style black and minor code cleanup. [jensens] (#285)
+
+
 4.0.0a7 (2022-01-19)
 --------------------
 
