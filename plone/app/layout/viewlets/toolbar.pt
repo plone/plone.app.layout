@@ -5,17 +5,17 @@
          tal:condition="context_state/is_toolbar_visible"
          i18n:domain="plone">
 
-  <div class="bg-dark h-100 position-fixed top-0 start-0 d-flex d-md-none flex-column offcanvas-toggler">
+  <div class="bg-dark h-100 d-flex d-md-none flex-column offcanvas-toggler">
     <div class="toggler-header px-1 py-3">
       <img alt="Plone Toolbar" tal:attributes="src view/get_toolbar_logo" class="img-fluid" />
     </div>
-    <a class="d-block p-1 text-white my-auto" data-bs-toggle="offcanvas" href="#edit-zone">
+    <a class="d-flex flex-column justify-content-center h-100 w-100 text-white" data-bs-toggle="offcanvas" href="#edit-zone">
       <tal:icon tal:replace="structure python:icons.tag('arrow-bar-right')" />
     </a>
   </div>
 
   <div id="edit-zone" role="toolbar"
-       class="pat-toolbar bg-dark text-white position-fixed top-0 start-0 h-100 overflow-scroll d-flex flex-column"
+       class="pat-toolbar bg-dark text-white offcanvas offcanvas-start"
        data-bs-scroll="true" data-bs-backdrop="false">
     <div class="offcanvas-header mb-3 bg-primary">
       <a class="text-white text-decoration-none">
