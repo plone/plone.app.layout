@@ -14,4 +14,8 @@
 
     <include file="permissions.zcml" />
 
+    <subscriber
+        handler=".favicon_handler.updateMimetype"
+    />
+
 </configure>
