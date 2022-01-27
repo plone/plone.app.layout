@@ -14,8 +14,7 @@
     </div>
 
   <div id="edit-zone" role="toolbar"
-       class="pat-toolbar offcanvas offcanvas-start bg-dark"
-       data-bs-scroll="true" data-bs-backdrop="false">
+       class="pat-toolbar offcanvas offcanvas-start bg-dark">
 
     <div class="offcanvas-header mb-3 bg-primary">
       <a class="offcanvas-dismiss text-white" data-bs-dismiss="offcanvas" aria-label="Dismiss" href="#edit-zone">
