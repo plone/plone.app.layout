@@ -5,38 +5,41 @@
          tal:condition="context_state/is_toolbar_visible"
          i18n:domain="plone">
 
-  <div class="bg-dark h-100 d-flex d-md-none flex-column offcanvas-toggler">
-    <div class="toggler-header px-1 py-3">
-      <img alt="Plone Toolbar" tal:attributes="src view/get_toolbar_logo" class="img-fluid" />
+    <div class="h-100 offcanvas-toggler bg-dark">
+      <div class="toggler-header">
+        <a class="d-block" data-bs-toggle="offcanvas" href="#edit-zone">
+          <tal:icon tal:replace="structure python:icons.tag('list')" />
+        </a>
+      </div>
     </div>
-    <a class="d-flex flex-column justify-content-center h-100 w-100 text-white" data-bs-toggle="offcanvas" href="#edit-zone">
-      <tal:icon tal:replace="structure python:icons.tag('arrow-bar-right')" />
-    </a>
-  </div>
 
   <div id="edit-zone" role="toolbar"
-       class="pat-toolbar bg-dark text-white offcanvas offcanvas-start"
+       class="pat-toolbar offcanvas offcanvas-start bg-dark"
        data-bs-scroll="true" data-bs-backdrop="false">
+
     <div class="offcanvas-header mb-3 bg-primary">
-      <a class="text-white text-decoration-none">
-        <img alt="Plone Toolbar" tal:attributes="src view/get_toolbar_logo" class="img-fluid" />
+      <a class="offcanvas-dismiss text-white" data-bs-dismiss="offcanvas" aria-label="Dismiss" href="#edit-zone">
+        <tal:icon tal:replace="structure python:icons.tag('x-lg')" />
       </a>
-      <button type="button" class="btn-close text-white d-md-none" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      <a class="offcanvas-unpin text-white" data-bs-dismiss="offcanvas" aria-label="Unpin" href="#edit-zone">
+        <tal:icon tal:replace="structure python:icons.tag('arrow-bar-left')" />
+      </a>
+      <a class="offcanvas-pin text-white" data-bs-dismiss="offcanvas" aria-label="Pin" href="#edit-zone">
+        <tal:icon tal:replace="structure python:icons.tag('pin-angle')" />
+      </a>
     </div>
 
-    <ul class="nav nav-pills flex-column flex-shrink-0 plone-toolbar-main"
+    <ul class="nav nav-pills flex-column flex-nowrap flex-shrink-0 plone-toolbar-main"
         tal:define="toolbar_main view/base_render"
         tal:condition="toolbar_main">
-      <div tal:replace="structure toolbar_main">
-      </div>
+      <li tal:replace="structure toolbar_main">
+      </li>
     </ul>
 
-    <div tal:condition="personal_bar/user_actions" class="mt-auto mb-3">
-
-      <hr class="nav-divider" />
+    <div tal:condition="personal_bar/user_actions" class="mt-auto py-2 border-top">
 
       <a id="personaltools-menulink"
-        class="text-white nav-link dropdown-toggle collapsed"
+        class="nav-link dropdown-toggle collapsed"
         data-bs-toggle="collapse"
         data-bs-target="#collapse-personaltools"
         aria-expanded="false"
@@ -48,7 +51,7 @@
       <div id="collapse-personaltools" class="collapse">
         <ul class="nav nav-pills flex-column small" aria-labelledby="personaltools-menulink">
           <li class="ps-3" tal:repeat="action personal_bar/user_actions">
-            <a href="${action/href}" class="nav-link text-white">
+            <a href="${action/href}" class="nav-link">
               <tal:icon replace="structure python:icons.tag(action.get('icon', 'dot'), tag_alt='portal-personaltools', tag_class='me-1')" />
               <tal:actionname tal:content="action/title">
                 action title
