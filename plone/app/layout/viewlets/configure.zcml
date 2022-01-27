@@ -136,14 +136,6 @@
         permission="zope.Public"
         />
 
-    <!-- The portal header -->
-    <browser:viewlet
-        name="plone.header"
-        manager=".interfaces.IPortalTop"
-        template="portal_header.pt"
-        permission="zope2.View"
-        />
-
     <!-- The site actions -->
     <browser:viewlet
         name="plone.site_actions"
