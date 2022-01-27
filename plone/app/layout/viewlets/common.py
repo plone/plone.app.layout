@@ -38,8 +38,8 @@ import zope.deferredimport
 zope.deferredimport.initialize()
 zope.deferredimport.deprecated(
     "Import from plone.app.portlets.browser.viewlets instead",
-    ManagePortletsFallbackViewlet='plone.app.portlets.browser.viewlets:ManagePortletsFallbackViewlet',
-    FooterViewlet='plone.app.portlets.browser.viewlets:FooterViewlet',
+    ManagePortletsFallbackViewlet="plone.app.portlets.browser.viewlets:ManagePortletsFallbackViewlet",
+    FooterViewlet="plone.app.portlets.browser.viewlets:FooterViewlet",
 )
 
 
@@ -68,7 +68,7 @@ class ViewletBase(BrowserView):
 
     def update(self):
         self.portal_state = getMultiAdapter(
-            (self.context, self.request), name=u"plone_portal_state"
+            (self.context, self.request), name="plone_portal_state"
         )
         self.site_url = self.portal_state.portal_url()
         self.navigation_root_url = self.portal_state.navigation_root_url()
@@ -94,7 +94,7 @@ class TitleViewlet(ViewletBase):
     index = ViewPageTemplateFile("title.pt")
 
     # seperator of page- and portal-title
-    sep = u" &mdash; "
+    sep = " &mdash; "
 
     @property
     @memoize
@@ -133,7 +133,7 @@ class TitleViewlet(ViewletBase):
             return self.site_title_setting
 
         context_state = getMultiAdapter(
-            (self.context, self.request), name=u"plone_context_state"
+            (self.context, self.request), name="plone_context_state"
         )
         return escape(safe_unicode(context_state.object_title()))
 
@@ -142,7 +142,7 @@ class TitleViewlet(ViewletBase):
             self.site_title = self.site_title_setting
             return
         portal_state = getMultiAdapter(
-            (self.context, self.request), name=u"plone_portal_state"
+            (self.context, self.request), name="plone_portal_state"
         )
         if IPloneSiteRoot.providedBy(portal_state.navigation_root()):
             portal_title = self.site_title_setting
@@ -187,7 +187,7 @@ class SiteActionsViewlet(ViewletBase):
 
     def update(self):
         context_state = getMultiAdapter(
-            (self.context, self.request), name=u"plone_context_state"
+            (self.context, self.request), name="plone_context_state"
         )
         self.site_actions = context_state.actions("site_actions")
 
@@ -199,7 +199,7 @@ class SearchBoxViewlet(ViewletBase):
         super(SearchBoxViewlet, self).update()
 
         context_state = getMultiAdapter(
-            (self.context, self.request), name=u"plone_context_state"
+            (self.context, self.request), name="plone_context_state"
         )
 
         registry = getUtility(IRegistry)
@@ -229,57 +229,50 @@ class GlobalSectionsViewlet(ViewletBase):
     index = ViewPageTemplateFile("sections.pt")
 
     _opener_markup_template = (
-        u'<input id="navitem-{uid}" type="checkbox" class="opener" />'
-        u'<label for="navitem-{uid}" role="button" aria-label="{title}"></label>'  # noqa: E 501
+        '<input id="navitem-{uid}" type="checkbox" class="opener" />'
+        '<label for="navitem-{uid}" role="button" aria-label="{title}"></label>'  # noqa: E 501
     )
     _item_markup_template = (
-        u'<li class="{id}{has_sub_class} nav-item">'
-        u'<a href="{url}" class="state-{review_state} nav-link"{aria_haspopup}>{title}</a>{opener}'  # noqa: E 501
-        u"{sub}"
-        u"</li>"
+        '<li class="{id}{has_sub_class} nav-item">'
+        '<a href="{url}" class="state-{review_state} nav-link"{aria_haspopup}>{title}</a>{opener}'  # noqa: E 501
+        "{sub}"
+        "</li>"
     )
-    _subtree_markup_wrapper = u'<ul class="has_subtree dropdown">{out}</ul>'
+    _subtree_markup_wrapper = '<ul class="has_subtree dropdown">{out}</ul>'
+
+    def __init__(self, *args):
+        super().__init__(*args)
+        self.registry = getUtility(IRegistry)
 
     @property
     def settings(self):
-        registry = getUtility(IRegistry)
-        settings = registry.forInterface(INavigationSchema, prefix="plone")
-        return settings
+        return self.registry.forInterface(INavigationSchema, prefix="plone")
 
     @property
     def language_settings(self):
-        registry = getUtility(IRegistry)
-        settings = registry.forInterface(ILanguageSchema, prefix="plone")
-        return settings
+        return self.registry.forInterface(ILanguageSchema, prefix="plone")
 
     @property
     def navtree_path(self):
         return getNavigationRoot(self.context)
 
     @property
-    @deprecate("This property will be removed in Plone 6")
-    def navtree_depth(self):
-        return self.settings.navigation_depth
-
-    @property
     def current_language(self):
+        language_settings = self.registry.forInterface(ILanguageSchema, prefix="plone")
         return (
             self.request.get("LANGUAGE", None)
             or (self.context and aq_inner(self.context).Language())
-            or self.language_settings.default_language
+            or language_settings.default_language
         )
 
     @property
     def types_using_view(self):
-        registry = getUtility(IRegistry)
-        types_using_view = registry.get("plone.types_use_view_action_in_listings", [])
-        return types_using_view
+        return self.registry.get("plone.types_use_view_action_in_listings", [])
 
     @property
     @memoize
     def navtree(self):
         ret = defaultdict(list)
-        settings = self.settings
         navtree_path = self.navtree_path
         portal_tabs = self.portal_tabs
         for tab in portal_tabs:
@@ -307,6 +300,7 @@ class GlobalSectionsViewlet(ViewletBase):
             self.customize_tab(entry, tab)
             ret[navtree_path].append(entry)
 
+        settings = self.settings
         if not settings.generate_tabs:
             return ret
 
@@ -338,7 +332,7 @@ class GlobalSectionsViewlet(ViewletBase):
         portal_catalog = getToolByName(self.context, "portal_catalog")
         brains = portal_catalog.searchResults(**query)
 
-        types_using_view = self.types_using_view
+        types_using_view = set(self.types_using_view)
         for brain in brains:
             brain_path = brain.getPath()
             brain_parent_path = brain_path.rpartition("/")[0]
@@ -402,7 +396,7 @@ class GlobalSectionsViewlet(ViewletBase):
         """Non-template based recursive tree building.
         3-4 times faster than template based.
         """
-        out = u""
+        out = ""
         for item in self.navtree.get(path, []):
             out += self.render_item(item, path)
 
@@ -421,54 +415,6 @@ class GlobalSectionsViewlet(ViewletBase):
         )
         return portal_tabs_view.topLevelTabs()
 
-    @deprecate("This method will be removed in Plone 6")
-    def selectedTabs(self, default_tab="index_html", portal_tabs=()):
-        portal = getToolByName(self.context, "portal_url").getPortalObject()
-        plone_url = getNavigationRootObject(self.context, portal).absolute_url()
-        plone_url_len = len(plone_url)
-        request = self.request
-        valid_actions = []
-
-        url = request["URL"]
-        path = url[plone_url_len:]
-        path_list = path.split("/")
-        if len(path_list) <= 1:
-            return {"portal": default_tab}
-
-        for action in portal_tabs:
-            if not action["url"].startswith(plone_url):
-                # In this case the action url is an external link. Then, we
-                # avoid issues (bad portal_tab selection) continuing with next
-                # action.
-                continue
-            action_path = action["url"][plone_url_len:]
-            if not action_path.startswith("/"):
-                action_path = "/" + action_path
-            action_path_list = action_path.split("/")
-            if action_path_list[1] == path_list[1]:
-                # Make a list of the action ids, along with the path length
-                # for choosing the longest (most relevant) path.
-                valid_actions.append((len(action_path_list), action["id"]))
-
-        # Sort by path length, the longest matching path wins
-        valid_actions.sort()
-        if valid_actions:
-            return {"portal": valid_actions[-1][1]}
-
-        return {"portal": default_tab}
-
-    @property
-    @memoize
-    @deprecate("This method will be removed in Plone 6")
-    def selected_tabs(self):
-        return self.selectedTabs(portal_tabs=self.portal_tabs)
-
-    @property
-    @memoize
-    @deprecate("This method will be removed in Plone 6")
-    def selected_portal_tab(self):
-        return self.selected_tabs["portal"]
-
 
 class PersonalBarViewlet(ViewletBase):
 
@@ -480,7 +426,7 @@ class PersonalBarViewlet(ViewletBase):
         context = aq_inner(self.context)
 
         context_state = getMultiAdapter(
-            (context, self.request), name=u"plone_context_state"
+            (context, self.request), name="plone_context_state"
         )
 
         user_actions = context_state.actions("user")
@@ -510,7 +456,7 @@ class PersonalBarViewlet(ViewletBase):
             member = self.portal_state.member()
             userid = member.getId()
 
-            self.homelink_url = "%s/useractions" % self.navigation_root_url
+            self.homelink_url = f"{self.navigation_root_url}/useractions"
 
             membership = getToolByName(context, "portal_membership")
             member_info = membership.getMemberInfo(userid)
@@ -551,7 +497,7 @@ class ContentViewsViewlet(ViewletBase):
         context_fti = context.getTypeInfo()
 
         context_state = getMultiAdapter(
-            (context, self.request), name=u"plone_context_state"
+            (context, self.request), name="plone_context_state"
         )
         actions = context_state.actions
 
@@ -666,5 +612,3 @@ class PathBarViewlet(ViewletBase):
 
 class TinyLogoViewlet(ViewletBase):
     index = ViewPageTemplateFile("tiny_logo.pt")
-
-
