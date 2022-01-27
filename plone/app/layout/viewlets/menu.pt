@@ -8,7 +8,7 @@
         tal:define="actionid action/id;
                     selected action/selected | python:False">
 
-        <a href="#" class="nav-link ${python:'text-warning' if locked and actionid == 'history' else 'text-white'} ${action/cssClass | nothing} ${python:'active' if selected else None}"
+        <a href="#" class="nav-link ${python:'locked' if locked and actionid == 'history' else ''} ${action/cssClass | nothing} ${python:'active' if selected else None}"
            tal:attributes="href action/url;
                            target action/link_target|nothing;">
 
