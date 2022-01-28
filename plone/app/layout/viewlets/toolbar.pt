@@ -6,11 +6,10 @@
          i18n:domain="plone">
 
     <div class="h-100 offcanvas-toggler bg-dark">
-      <div class="toggler-header">
-        <a class="d-block" data-bs-toggle="offcanvas" href="#edit-zone">
-          <tal:icon tal:replace="structure python:icons.tag('list')" />
-        </a>
-      </div>
+      <a class="toggler-header" data-bs-toggle="offcanvas" href="#edit-zone">
+        <tal:icon tal:replace="structure python:icons.tag('list')" />
+      </a>
+      <a class="toggler-hover"></a>
     </div>
 
   <div id="edit-zone" role="toolbar"
