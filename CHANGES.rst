@@ -8,6 +8,16 @@ Changelog
 
 .. towncrier release notes start
 
+4.0.0a9 (2022-01-28)
+--------------------
+
+New features:
+
+
+- Add viewlet to display customizable favicon with handler to update its MIME-type
+  [talarias] (plip-favicon)
+
+
 4.0.0a8 (2022-01-25)
 --------------------
 
