@@ -45,19 +45,24 @@ class FaviconViewlet(ViewletBase):
     def init_favicon(self) -> NoReturn:
         registry = getUtility(IRegistry)
         settings: ISiteSchema = registry.forInterface(ISiteSchema, prefix="plone")
-
-        self.mimetype: str = settings.site_favicon_mimetype
-        filename: str = self.get_filename(settings)
-        self.favicon_path: str = str(self.site_url) + '/favicon'
-        if not filename:
-            self.favicon_path += '.ico'
-
-    @staticmethod
-    def get_filename(settings: ISiteSchema) -> str:
-        if getattr(settings, 'site_favicon', False):
-            filename, data = b64decode_file(settings.site_favicon)
-            return filename
-        return None
+        self.mimetype: str = getattr(
+            settings, "site_favicon_mimetype", "image/vnd.microsoft.icon"
+        )
+        # The filename is *always* /favicon.ico, irrespective of the content type,
+        # because:
+        #
+        # 1. Browsers obey the content type over the extension.
+        # 2. The actual serving view URL for the favicon is always /favicon.ico,
+        #    and this name cannot be overridden from here into the view registered
+        #    on CMFPlone, where the *actual* serving of the data takes place.
+        # 3. Even if we could somehow override the view, there is no easy way to
+        #    register in CMFPlone a different browser view for every icon file
+        #    name the user may decide to upload.
+        # 4. In many cases client applications just hit /favicon.ico irrespective
+        #    of what the HTML says (remember that this specific view is only
+        #    responsible for generating the metadata that lets the browser know
+        #    where to find the favicon URL).
+        self.favicon_path: str = str(self.navigation_root_url) + "/favicon.ico"
 
     def render(self) -> ViewPageTemplateFile:
         self.init_favicon()
