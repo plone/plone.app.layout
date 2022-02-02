@@ -48,6 +48,11 @@ class FaviconViewlet(ViewletBase):
         self.mimetype: str = getattr(
             settings, "site_favicon_mimetype", "image/vnd.microsoft.icon"
         )
+        cachebust = ""
+        if getattr(settings, "site_favicon", False):
+            # The user has customized the favicon via the Site configlet.
+            filename, unused_data = b64decode_file(settings.site_favicon)
+            cachebust = "?name=" + filename
         # The filename is *always* /favicon.ico, irrespective of the content type,
         # because:
         #
@@ -62,7 +67,17 @@ class FaviconViewlet(ViewletBase):
         #    of what the HTML says (remember that this specific view is only
         #    responsible for generating the metadata that lets the browser know
         #    where to find the favicon URL).
-        self.favicon_path: str = str(self.navigation_root_url) + "/favicon.ico"
+        #
+        # However, to allow for users to change their favicons *and* bust their
+        # proxy caches, we do use the favicon filename in the served favicon
+        # URL.  This does not cover the case of RSS and podcast apps that access
+        # /favicon.ico by custom instead of consulting the HTML, but at least
+        # it covers pretty much every browser out there.
+        self.favicon_path: str = "".join([
+            str(self.navigation_root_url),
+            "/favicon.ico",
+            cachebust,
+        ])
 
     def render(self) -> ViewPageTemplateFile:
         self.init_favicon()
