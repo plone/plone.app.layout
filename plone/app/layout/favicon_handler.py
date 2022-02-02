@@ -15,5 +15,5 @@ def updateMimetype(settings: RecordsProxy, event: IRecordModifiedEvent=None):
         return
 
     filename, data = b64decode_file(event.newValue)
-    mimetype = mimetypes.guess_type(filename)[0] if filename else 'image/x-icon'
+    mimetype = mimetypes.guess_type(filename)[0] if filename else 'image/vnd.microsoft.icon'
     settings.__registry__['plone.site_favicon_mimetype'] = mimetype
