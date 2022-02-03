@@ -1,1 +1,1 @@
-Correct favicon handling -- fix URL to navroot/favicon.ico and use customized icon file name as part of the proxy cache key.
+Correct favicon handling: fix URL to navroot/favicon.ico and use customized icon file name as part of the proxy cache key.
