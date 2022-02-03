@@ -74,11 +74,7 @@ class FaviconViewlet(ViewletBase):
         # URL.  This does not cover the case of RSS and podcast apps that access
         # /favicon.ico by custom instead of consulting the HTML, but at least
         # it covers pretty much every browser out there.
-        self.favicon_path: str = "".join([
-            str(self.navigation_root_url),
-            "/favicon.ico",
-            cachebust,
-        ])
+        self.favicon_path: str = f"{self.navigation_root_url}/favicon.ico{cachebust}"
 
     def render(self) -> ViewPageTemplateFile:
         self.init_favicon()
