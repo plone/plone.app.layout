@@ -14,6 +14,10 @@ def updateMimetype(settings: RecordsProxy, event: IRecordModifiedEvent=None):
     if event.record.fieldName != 'site_favicon' or not event.record.value:
         return
 
-    filename, data = b64decode_file(event.newValue)
-    mimetype = mimetypes.guess_type(filename)[0] if filename else 'image/vnd.microsoft.icon'
+    filename = b64decode_file(event.newValue)[0]
+    mimetype = mimetypes.guess_type(filename)[0] if filename else None
+    if mimetype in ('image/x-icon', None):
+        # Override incorrect MIME type registered in both PIL and the
+        # Products.MimetypesRegistry product.
+        mimetype = 'image/vnd.microsoft.icon'
     settings.__registry__['plone.site_favicon_mimetype'] = mimetype
