@@ -1,6 +1,5 @@
-<tal:favicon define="portal_url view/site_url">
+<tal:favicon>
     <link rel="preload icon" type="${python: view.mimetype}"
           tal:attributes="href python: view.favicon_path" />
-    <link rel="alternate icon" type="image/x-icon">
     <link rel="mask-icon" tal:attributes="href python: view.favicon_path" />
 </tal:favicon>

@@ -60,11 +60,11 @@ class TestFaviconViewletView(ViewletsTestCase, FaviconViewlet):
         encoded_data = b64encode_file(filename=filename, data=file_data)
         settings.site_favicon = encoded_data
         mimetype = settings.site_favicon_mimetype
-        self.assertEqual(mimetype, 'image/x-icon')
+        self.assertEqual(mimetype, 'image/vnd.microsoft.icon')
 
     def test_FaviconViewlet_get_mimetype_none(self):
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ISiteSchema, prefix="plone")
         settings.site_favicon = None
         mimetype = settings.site_favicon_mimetype
-        self.assertEqual(mimetype, 'image/x-icon')
+        self.assertEqual(mimetype, 'image/vnd.microsoft.icon')
