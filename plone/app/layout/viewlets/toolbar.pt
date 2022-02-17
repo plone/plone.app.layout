@@ -5,12 +5,13 @@
          tal:condition="context_state/is_toolbar_visible"
          i18n:domain="plone">
 
-    <div class="h-100 offcanvas-toggler bg-dark">
-      <a class="toggler-header" data-bs-toggle="offcanvas" href="#edit-zone">
+  <div class="h-100 offcanvas-toggler bg-dark">
+    <a class="toggler-hover" data-bs-toggle="offcanvas" href="#edit-zone">
+      <span class="toggler-header">
         <tal:icon tal:replace="structure python:icons.tag('list')" />
-      </a>
-      <a class="toggler-hover"></a>
-    </div>
+      </span>
+    </a>
+  </div>
 
   <div id="edit-zone" role="toolbar"
        class="pat-toolbar offcanvas offcanvas-start bg-dark">
