@@ -8,6 +8,17 @@ Changelog
 
 .. towncrier release notes start
 
+4.0.0a10 (2022-02-23)
+---------------------
+
+Bug fixes:
+
+
+- Remove plone.header viewlet
+  [erral] (#286)
+- Correct favicon handling: fix URL to navroot/favicon.ico and use customized icon file name as part of the proxy cache key. (#290)
+
+
 4.0.0a9 (2022-01-28)
 --------------------
 
