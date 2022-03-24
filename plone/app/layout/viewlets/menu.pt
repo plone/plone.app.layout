@@ -1,40 +1,34 @@
-<tal:contentviews tal:define="ploneview context/@@plone;"
+<tal:contentviews tal:define="ploneview context/@@plone;
+                              locked view/locked_icon;
+                              icons python:context.restrictedTraverse('@@iconresolver');"
                   tal:condition="ploneview/showToolbar"
                   i18n:domain="plone">
   <tal:actions tal:repeat="action options/actions">
-    <li tal:attributes="id string:contentview-${action/id};
-                        class python: action.get('selected') and 'active' or ''"
-        tal:define="actionid action/id"
-        tal:condition="python:actionid != 'history'">
-      <tal:var define="selected action/selected|nothing;">
-        <a href="#"
+    <li id="contentview-${action/id}" class="nav-item"
+        tal:define="actionid action/id;
+                    selected action/selected | python:False">
+
+        <a href="#" class="nav-link ${python:'locked' if locked and actionid == 'history' else ''} ${action/cssClass | nothing} ${python:'active' if selected else None}"
            tal:attributes="href action/url;
-                           target action/link_target|nothing;
-                           class action/cssClass|nothing;">
-          <span tal:attributes="class string:icon-${action/id}${action/cssClass|nothing}  toolbar-menu-icon;"
-                class="icon-folderContents" aria-hidden="true">
-          </span>
-          <span tal:content="action/title" i18n:translate="">View name</span>
+                           target action/link_target|nothing;">
+
+          <tal:if condition="python:actionid != 'history'">
+            <tal:icon tal:condition="python:action['icon']"
+                      tal:replace="structure python:icons.tag(action['icon'] or 'toolbar-action', tag_alt=action['id'], tag_class='me-1')" />
+            <span tal:content="action/title" i18n:translate="">View name</span>
+          </tal:if>
+
+          <tal:if tal:condition="python:actionid == 'history'">
+            <tal:icon tal:replace="structure python:icons.tag('lock' if locked else action['icon'], tag_alt=action['id'], tag_class='me-1')" />
+            <time
+                class="pat-display-time"
+                data-pat-display-time="from-now: true"
+                datetime="${context/ModificationDate}"
+                tal:content="">${context/ModificationDate}</time>
+          </tal:if>
+
         </a>
-      </tal:var>
-    </li>
-    <li tal:attributes="id string:contentview-${action/id};
-                        class python: action.get('selected') and 'active' or ''"
-        tal:define="actionid action/id"
-        tal:condition="python:actionid == 'history'">
-      <tal:var define="selected action/selected|nothing;
-                       locked view/locked_icon">
-        <a href="#"
-           tal:attributes="href action/url;
-                           target action/link_target|nothing;
-                           class action/cssClass|nothing">
-          <span tal:attributes="class python:locked and 'icon-lock' or 'icon-history'"
-                class="icon-folderContents toolbar-menu-icon" aria-hidden="true">
-          </span>
-          <span class="pat-moment" data-pat-moment="format:relative;"
-                tal:content="context/ModificationDate">Modified</span>
-        </a>
-      </tal:var>
+
     </li>
   </tal:actions>
 </tal:contentviews>
