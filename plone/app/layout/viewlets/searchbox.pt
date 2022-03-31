@@ -1,43 +1,45 @@
 <div id="portal-searchbox" class="d-flex flex-column position-relative"
-     i18n:domain="plone"
-     tal:define="navigation_root_url view/navigation_root_url;">
+  i18n:domain="plone"
+  tal:define="navigation_root_url view/navigation_root_url;">
 
-    <form id="searchGadget_form"
-          action="@@search"
-          role="search"
-          tal:attributes="action string:${navigation_root_url}/@@search;
-                          data-pat-livesearch string:ajaxUrl:${navigation_root_url}/@@ajax-search;
-                          class python: view.livesearch and 'pat-livesearch d-flex' or 'd-flex'">
+  <form id="searchGadget_form"
+    action="@@search"
+    role="search"
+    tal:attributes="action string:${navigation_root_url}/@@search;
+                    data-pat-livesearch string:ajaxUrl:${navigation_root_url}/@@ajax-search;
+                    class python: view.livesearch and 'pat-livesearch d-flex' or 'd-flex'">
 
-        <label class="hiddenStructure"
-               for="searchGadget"
-               i18n:translate="text_search">Search Site</label>
+    <label class="hiddenStructure"
+      for="searchGadget"
+      i18n:translate="text_search">Search Site</label>
 
-          <input name="SearchableText"
-                type="text"
-                size="18"
-                value=""
-                id="searchGadget"
-                title="Search Site"
-                placeholder="Search Site"
-                i18n:attributes="title title_search_site;
-                                  placeholder title_search_site"
-                tal:attributes="value request/form/SearchableText|nothing;"
-                class="searchField form-control me-2" />
-          <button class="searchButton btn btn-outline-light"
-                type="submit"
-                i18n:translate="label_search;">
-                Search
-          </button>
-          <div id="portal-advanced-search"
-               class="hiddenStructure">
-              <a href="#"
-                 tal:attributes="href string:${navigation_root_url}/@@search"
-                 i18n:translate="label_advanced_search">
-                  Advanced Search&hellip;
-              </a>
-          </div>
-        </form>
+    <input name="SearchableText"
+      type="text"
+      size="18"
+      value=""
+      id="searchGadget"
+      title="Search Site"
+      placeholder="Search Site"
+      i18n:attributes="title title_search_site;
+                        placeholder title_search_site"
+      tal:attributes="value request/form/SearchableText|nothing;"
+      class="searchField form-control me-2" />
 
+    <button class="searchButton btn btn-outline-light"
+      type="submit"
+      i18n:translate="label_search;">
+      Search
+    </button>
+
+    <div id="portal-advanced-search"
+          class="hiddenStructure">
+      <a href="#"
+          tal:attributes="href string:${navigation_root_url}/@@search"
+          i18n:translate="label_advanced_search">
+          Advanced Search&hellip;
+      </a>
+    </div>
+
+  </form>
 
 </div>
