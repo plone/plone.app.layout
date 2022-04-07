@@ -8,6 +8,34 @@ Changelog
 
 .. towncrier release notes start
 
+4.0.0a11 (2022-04-07)
+---------------------
+
+New features:
+
+
+- Restructure global sections and searchbox markup for mobile navigation as offcanvas sidebar.
+  [agitator] (#294)
+- LiveSearch with support for images in search results.
+  [agitator] (#299)
+
+
+Bug fixes:
+
+
+- Use icon resolver from Plone 6 and use SVG icons.
+  [agitator]
+
+  Integrate new toolbar.
+  [petschki] (254-2)
+- Use pat-display-time from Patternslib in the toolbar and remove pat-moment from the history view.
+  [thet] (#254)
+- Allow scrolling content while offcanvas toolbar is expanded
+  [pbauer] (#295)
+- Do not use ``structure`` for status messages.
+  [maurits] (#297)
+
+
 4.0.0a10 (2022-02-23)
 ---------------------
 
