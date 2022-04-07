@@ -205,6 +205,7 @@ class SearchBoxViewlet(ViewletBase):
         registry = getUtility(IRegistry)
         search_settings = registry.forInterface(ISearchSchema, prefix="plone")
         self.livesearch = search_settings.enable_livesearch
+        self.show_images = search_settings.search_show_images
 
         folder = context_state.folder()
         self.folder_path = "/".join(folder.getPhysicalPath())
