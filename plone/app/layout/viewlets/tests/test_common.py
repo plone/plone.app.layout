@@ -246,12 +246,14 @@ class TestGlobalSectionsViewlet(ViewletsTestCase):
         self.portal.invokeFactory("Image", "image", title=u"Söme Image")
         self.portal.invokeFactory("File", "file", title=u"Some File")
         self.portal.invokeFactory("Document", "doc", title=u"Some Döcument")
+        self.portal.invokeFactory("Collection", "collection", title=u"Some Collection")
         request = self.layer["request"]
         gsv = GlobalSectionsViewlet(self.portal, request, None)
         gsv.update()
         html = gsv.render()
-        self.assertIn('href="http://nohost/plone/image/view"', html)
-        self.assertIn('href="http://nohost/plone/file/view"', html)
+        self.assertIn('href="http://nohost/plone/collection"', html)
+        self.assertNotIn('href="http://nohost/plone/image/view"', html)
+        self.assertNotIn('href="http://nohost/plone/file/view"', html)
         self.assertIn('href="http://nohost/plone/doc"', html)
 
     def test_globalnav_navigation_depth(self):
