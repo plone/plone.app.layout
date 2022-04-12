@@ -6,7 +6,6 @@ from collections import defaultdict
 from functools import total_ordering
 from plone.app.layout.globals.interfaces import IViewView
 from plone.app.layout.navigation.root import getNavigationRoot
-from plone.app.layout.navigation.root import getNavigationRootObject
 from plone.i18n.interfaces import ILanguageSchema
 from plone.memoize.view import memoize
 from plone.protect.utils import addTokenToUrl
@@ -25,7 +24,6 @@ from urllib.parse import unquote
 from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.component import queryMultiAdapter
-from zope.deprecation.deprecation import deprecate
 from zope.i18n import translate
 from zope.interface import alsoProvides
 from zope.interface import implementer
@@ -58,13 +56,6 @@ class ViewletBase(BrowserView):
 
     def __hash__(self):
         return id(self) * 16
-
-    @property
-    @deprecate(
-        "Use site_url instead. " + "ViewletBase.portal_url will be removed in Plone 4"
-    )
-    def portal_url(self):
-        return self.site_url
 
     def update(self):
         self.portal_state = getMultiAdapter(

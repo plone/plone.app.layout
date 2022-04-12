@@ -1,14 +1,6 @@
 # -*- coding: utf-8 -*-
-from zope.deferredimport import deprecated
 from zope.interface import Attribute
 from zope.interface import Interface
-
-
-# remove in plone 6
-deprecated(
-    "Import from Products.CMFPlone instead",
-    IDefaultPage="Products.CMFPlone.interfaces.defaultpage:DefaultPage",
-)
 
 
 class INavigationRoot(Interface):
