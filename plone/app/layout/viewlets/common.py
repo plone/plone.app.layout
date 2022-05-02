@@ -304,12 +304,11 @@ class GlobalSectionsViewlet(ViewletBase):
         settings = self.settings
         if not settings.generate_tabs:
             return ret
-        navigation_depth = int(self.request.get("navigation_depth") or settings.navigation_depth)
 
         query = {
             "path": {
                 "query": self.navtree_path,
-                "depth": navigation_depth,
+                "depth": settings.navigation_depth,
             },
             "portal_type": {"query": settings.displayed_types},
             "Language": self.current_language,
