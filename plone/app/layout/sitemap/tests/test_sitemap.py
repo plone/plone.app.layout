@@ -8,11 +8,11 @@ from plone.app.testing import logout
 from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
 from plone.app.testing import TEST_USER_NAME
+from plone.base.utils import safe_text
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import ISearchSchema
 from Products.CMFPlone.interfaces import ISiteSchema
-from Products.CMFPlone.utils import safe_unicode
 from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.interface import alsoProvides
@@ -74,7 +74,7 @@ class SiteMapTestCase(unittest.TestCase):
         unziped = GzipFile(fileobj=sio)
         xml = unziped.read()
         unziped.close()
-        return safe_unicode(xml)
+        return safe_text(xml)
 
     def test_disabled(self):
         """

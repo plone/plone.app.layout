@@ -1,6 +1,7 @@
 from Acquisition import aq_inner
 from plone.app.layout.viewlets import ViewletBase
 from plone.app.uuid.utils import uuidToObject
+from plone.base.utils import safe_bytes
 from plone.formwidget.namedfile.converter import b64decode_file
 from plone.memoize import ram
 from plone.memoize import view
@@ -10,7 +11,6 @@ from Products.CMFPlone.interfaces import ISecuritySchema
 from Products.CMFPlone.interfaces import ISiteSchema
 from Products.CMFPlone.interfaces.syndication import IFeedSettings
 from Products.CMFPlone.interfaces.syndication import ISiteSyndicationSettings
-from Products.CMFPlone.utils import safe_bytes
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from typing import NoReturn
 from zope.component import getMultiAdapter

@@ -249,7 +249,7 @@ class TestDexterityRelatedItemsViewlet(ViewletsTestCase):
     def setUp(self):
         super().setUp()
         """ create some sample content to test with """
-        from Products.CMFPlone.utils import get_installer
+        from plone.base.utils import get_installer
 
         setRoles(self.portal, TEST_USER_ID, ["Manager"])
         fti = DexterityFTI("Dexterity Item with relatedItems behavior")

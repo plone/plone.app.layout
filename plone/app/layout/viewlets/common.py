@@ -6,6 +6,7 @@ from functools import total_ordering
 from html import escape
 from plone.app.layout.globals.interfaces import IViewView
 from plone.app.layout.navigation.root import getNavigationRoot
+from plone.base.utils import safe_text
 from plone.i18n.interfaces import ILanguageSchema
 from plone.memoize.view import memoize
 from plone.protect.utils import addTokenToUrl
@@ -17,7 +18,6 @@ from Products.CMFPlone.interfaces import ISearchSchema
 from Products.CMFPlone.interfaces import ISiteSchema
 from Products.CMFPlone.interfaces.controlpanel import INavigationSchema
 from Products.CMFPlone.utils import getSiteLogo
-from Products.CMFPlone.utils import safe_unicode
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from urllib.parse import unquote
@@ -134,7 +134,7 @@ class TitleViewlet(ViewletBase):
         context_state = getMultiAdapter(
             (self.context, self.request), name="plone_context_state"
         )
-        return escape(safe_unicode(context_state.object_title()))
+        return escape(safe_text(context_state.object_title()))
 
     def update(self):
         if IPloneSiteRoot.providedBy(self.context):
@@ -146,7 +146,7 @@ class TitleViewlet(ViewletBase):
         if IPloneSiteRoot.providedBy(portal_state.navigation_root()):
             portal_title = self.site_title_setting
         else:
-            portal_title = escape(safe_unicode(portal_state.navigation_root_title()))
+            portal_title = escape(safe_text(portal_state.navigation_root_title()))
         if self.page_title == portal_title:
             self.site_title = portal_title
         else:
@@ -294,9 +294,9 @@ class GlobalSectionsViewlet(ViewletBase):
                     entry["title"], domain="plone", context=self.request
                 )
 
-            entry["title"] = escape(safe_unicode(entry["title"]))
+            entry["title"] = escape(safe_text(entry["title"]))
             if "name" in entry and entry["name"]:
-                entry["name"] = escape(safe_unicode(entry["name"]))
+                entry["name"] = escape(safe_text(entry["name"]))
             self.customize_tab(entry, tab)
             ret[navtree_path].append(entry)
 
@@ -350,7 +350,7 @@ class GlobalSectionsViewlet(ViewletBase):
                 "path": brain_path,
                 "uid": brain.UID,
                 "url": url,
-                "title": escape(safe_unicode(brain.Title)),
+                "title": escape(safe_text(brain.Title)),
                 "review_state": brain.review_state,
             }
             self.customize_entry(entry, brain)

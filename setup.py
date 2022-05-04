@@ -40,6 +40,7 @@ setup(
         "DateTime",
         "plone.app.content",
         "plone.app.viewletmanager >=1.2",
+        "plone.base",
         "plone.batching >1.0.999",
         "plone.i18n",
         "plone.memoize",
@@ -58,7 +59,7 @@ setup(
         "zope.publisher",
         "zope.schema",
         "zope.viewlet",
-        "Zope2",
+        "Zope",
     ],
     extras_require=dict(
         test=[

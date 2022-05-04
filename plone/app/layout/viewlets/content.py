@@ -7,6 +7,7 @@ from plone.app.layout.viewlets import ViewletBase
 from plone.app.multilingual.browser.vocabularies import translated_languages
 from plone.app.multilingual.interfaces import ITranslatable
 from plone.app.multilingual.interfaces import ITranslationManager
+from plone.base.utils import base_hasattr
 from plone.memoize.instance import memoize
 from plone.protect.authenticator import createToken
 from plone.registry.interfaces import IRegistry
@@ -17,7 +18,6 @@ from Products.CMFEditions.Permissions import AccessPreviousVersions
 from Products.CMFPlone import PloneMessageFactory as _
 from Products.CMFPlone.interfaces import ISecuritySchema
 from Products.CMFPlone.interfaces import ISiteSchema
-from Products.CMFPlone.utils import base_hasattr
 from Products.CMFPlone.utils import log
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
