@@ -4,6 +4,7 @@ from Acquisition import aq_base
 from Acquisition import aq_inner
 from collections import defaultdict
 from functools import total_ordering
+from html import escape
 from plone.app.layout.globals.interfaces import IViewView
 from plone.app.layout.navigation.root import getNavigationRoot
 from plone.app.layout.navigation.root import getNavigationRootObject
@@ -30,10 +31,10 @@ from zope.i18n import translate
 from zope.interface import alsoProvides
 from zope.interface import implementer
 from zope.viewlet.interfaces import IViewlet
-from html import escape
 
 import json
 import zope.deferredimport
+
 
 zope.deferredimport.initialize()
 zope.deferredimport.deprecated(
