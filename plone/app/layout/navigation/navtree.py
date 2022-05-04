@@ -6,8 +6,6 @@ from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.defaultpage import check_default_page_via_view
 from zope.interface import implementer
 
-import six
-
 
 @implementer(INavtreeStrategy)
 class NavtreeStrategyBase:

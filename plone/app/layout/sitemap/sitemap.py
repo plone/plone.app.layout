@@ -1,5 +1,6 @@
 from BTrees.OOBTree import OOBTree
 from gzip import GzipFile
+from io import BytesIO
 from plone.memoize import ram
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
@@ -7,11 +8,8 @@ from Products.CMFPlone.interfaces import IPloneSiteRoot
 from Products.CMFPlone.interfaces import ISiteSchema
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from six import BytesIO
 from zope.component import getUtility
 from zope.publisher.interfaces import NotFound
-
-import six
 
 
 def _render_cachekey(fun, self):

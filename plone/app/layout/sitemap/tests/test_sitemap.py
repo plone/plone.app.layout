@@ -12,7 +12,7 @@ from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import ISearchSchema
 from Products.CMFPlone.interfaces import ISiteSchema
 from Products.CMFPlone.utils import safe_unicode
-from six import BytesIO
+from io import BytesIO
 from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.interface import alsoProvides
