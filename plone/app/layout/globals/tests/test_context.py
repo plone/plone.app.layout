@@ -5,7 +5,7 @@ from plone.app.testing import TEST_USER_ID
 from plone.app.testing.helpers import logout
 from plone.locking.interfaces import ILockable
 from Products.CMFDynamicViewFTI.interfaces import IBrowserDefault
-from Products.CMFPlone.interfaces import INonStructuralFolder
+from plone.base.interfaces import INonStructuralFolder
 from Products.CMFPlone.utils import _createObjectByType
 from zope.interface import alsoProvides
 from zope.interface import directlyProvides

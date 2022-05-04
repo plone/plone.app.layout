@@ -29,7 +29,7 @@
 
   <adapter for="*
                 zope.publisher.interfaces.browser.IBrowserRequest
-                Products.CMFPlone.interfaces.IPloneSiteRoot"
+                plone.base.interfaces.IPloneSiteRoot"
            factory=".icons.PloneSiteContentIcon"
            provides=".interfaces.IContentIcon" />
 

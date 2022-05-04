@@ -4,8 +4,8 @@ from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.browser.syndication.adapters import BaseItem
 from Products.CMFPlone.browser.syndication.adapters import FolderFeed
-from Products.CMFPlone.interfaces import ISocialMediaSchema
-from Products.CMFPlone.interfaces.syndication import IFeedItem
+from plone.base.interfaces import ISocialMediaSchema
+from plone.base.interfaces.syndication import IFeedItem
 from Products.CMFPlone.utils import getSiteLogo
 from zope.component import getUtility
 from zope.component import queryMultiAdapter

@@ -1,7 +1,7 @@
 from plone.formwidget.namedfile.converter import b64decode_file
 from plone.registry.interfaces import IRecordModifiedEvent
 from plone.registry.recordsproxy import RecordsProxy
-from Products.CMFPlone.interfaces import ISiteSchema
+from plone.base.interfaces import ISiteSchema
 from zope.component import adapter
 
 import mimetypes

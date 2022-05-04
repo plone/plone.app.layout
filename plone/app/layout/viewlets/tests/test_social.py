@@ -6,7 +6,7 @@ from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
 from plone.app.testing import TEST_USER_NAME
 from plone.registry.interfaces import IRegistry
-from Products.CMFPlone.interfaces import ISocialMediaSchema
+from plone.base.interfaces import ISocialMediaSchema
 from zope.annotation.interfaces import IAnnotations
 from zope.component import getUtility
 

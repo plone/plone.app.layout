@@ -13,8 +13,8 @@ from plone.app.testing import TEST_USER_ID
 from plone.protect import authenticator as auth
 from plone.registry.interfaces import IRegistry
 from plone.testing.zope import Browser
-from Products.CMFPlone.interfaces import INonStructuralFolder
-from Products.CMFPlone.interfaces import ISiteSchema
+from plone.base.interfaces import INonStructuralFolder
+from plone.base.interfaces import ISiteSchema
 from zope.component import getUtility
 from zope.component.hooks import setSite
 from zope.interface import alsoProvides

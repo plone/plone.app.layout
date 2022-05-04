@@ -11,7 +11,7 @@ from Products.CMFCore.interfaces import IDynamicType
 from Products.CMFCore.interfaces import ISiteRoot
 from Products.CMFCore.utils import getToolByName
 from Products.CMFDynamicViewFTI.interfaces import IBrowserDefault
-from Products.CMFPlone.interfaces import INonStructuralFolder
+from plone.base.interfaces import INonStructuralFolder
 from Products.Five.browser import BrowserView
 from zope.component import getMultiAdapter
 from zope.component import getUtility

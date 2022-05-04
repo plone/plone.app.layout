@@ -6,8 +6,8 @@ from plone.app.testing import TEST_USER_ID
 from plone.app.testing.helpers import logout
 from plone.i18n.interfaces import ILanguageSchema
 from plone.registry.interfaces import IRegistry
-from Products.CMFPlone.interfaces import ISearchSchema
-from Products.CMFPlone.interfaces import ISiteSchema
+from plone.base.interfaces import ISearchSchema
+from plone.base.interfaces import ISiteSchema
 from zope.component import getUtility
 from zope.event import notify
 from zope.i18n.locales import locales

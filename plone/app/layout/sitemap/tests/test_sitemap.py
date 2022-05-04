@@ -11,8 +11,8 @@ from plone.app.testing import TEST_USER_NAME
 from plone.base.utils import safe_text
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.interfaces import ISearchSchema
-from Products.CMFPlone.interfaces import ISiteSchema
+from plone.base.interfaces import ISearchSchema
+from plone.base.interfaces import ISiteSchema
 from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.interface import alsoProvides

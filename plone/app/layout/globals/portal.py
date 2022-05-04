@@ -8,8 +8,8 @@ from plone.memoize.view import memoize_contextless
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.interfaces import ISiteRoot
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.interfaces import ISearchSchema
-from Products.CMFPlone.interfaces import ISiteSchema
+from plone.base.interfaces import ISearchSchema
+from plone.base.interfaces import ISiteSchema
 from Products.Five.browser import BrowserView
 from zope.component import getUtility
 from zope.component import providedBy

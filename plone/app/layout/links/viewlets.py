@@ -9,8 +9,8 @@ from plone.memoize import ram
 from plone.memoize import view
 from plone.memoize.compress import xhtml_compress
 from plone.registry.interfaces import IRegistry
-from Products.CMFPlone.interfaces import ISecuritySchema
-from Products.CMFPlone.interfaces import ISiteSchema
+from plone.base.interfaces import ISecuritySchema
+from plone.base.interfaces import ISiteSchema
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from typing import NoReturn
 from zope.component import getMultiAdapter
