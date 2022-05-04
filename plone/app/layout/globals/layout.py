@@ -36,6 +36,7 @@ TEMPLATE_CLASSES = (
     ViewMixinForTemplates,
 )
 
+
 @implementer(ILayoutPolicy)
 class LayoutPolicy(BrowserView):
     """A view that gives access to various layout related functions."""
@@ -100,7 +101,7 @@ class LayoutPolicy(BrowserView):
         if visibility != "authenticated":
             return False
         user = getSecurityManager().getUser()
-        return user is not None and user.getUserName() != 'Anonymous User'
+        return user is not None and user.getUserName() != "Anonymous User"
 
     @memoize
     def icons_visible(self):

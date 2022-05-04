@@ -53,7 +53,7 @@ class FaviconViewlet(ViewletBase):
         if getattr(settings, "site_favicon", False):
             # The user has customized the favicon via the Site configlet.
             filename = b64decode_file(settings.site_favicon)[0]
-            
+
             cachebust = "?name=" + filename
         # The filename is *always* /favicon.ico, irrespective of the content type,
         # because:

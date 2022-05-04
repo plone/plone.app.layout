@@ -17,52 +17,52 @@ class TestFaviconViewletView(ViewletsTestCase, FaviconViewlet):
 
     def setUp(self):
         self.portal = self.layer["portal"]
-        self.request = ''
-        self.site_url = ''
+        self.request = ""
+        self.site_url = ""
 
     def test_FaviconViewlet_get_mimetype_svg(self):
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ISiteSchema, prefix="plone")
-        filename = 'test.svg'
-        file_data = b'Hello World'
+        filename = "test.svg"
+        file_data = b"Hello World"
         encoded_data = b64encode_file(filename=filename, data=file_data)
         settings.site_favicon = encoded_data
         mimetype = settings.site_favicon_mimetype
-        self.assertEqual(mimetype, 'image/svg+xml')
+        self.assertEqual(mimetype, "image/svg+xml")
 
     def test_FaviconViewlet_get_mimetype_jpg(self):
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ISiteSchema, prefix="plone")
-        filename = 'test.jpg'
-        file_data = b'Hello World'
+        filename = "test.jpg"
+        file_data = b"Hello World"
         encoded_data = b64encode_file(filename=filename, data=file_data)
         settings.site_favicon = encoded_data
         mimetype = settings.site_favicon_mimetype
-        self.assertEqual(mimetype, 'image/jpeg')
+        self.assertEqual(mimetype, "image/jpeg")
 
     def test_FaviconViewlet_get_mimetype_png(self):
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ISiteSchema, prefix="plone")
-        filename = 'test.png'
-        file_data = b'Hello World'
+        filename = "test.png"
+        file_data = b"Hello World"
         encoded_data = b64encode_file(filename=filename, data=file_data)
         settings.site_favicon = encoded_data
         mimetype = settings.site_favicon_mimetype
-        self.assertEqual(mimetype, 'image/png')
+        self.assertEqual(mimetype, "image/png")
 
     def test_FaviconViewlet_get_mimetype_ico(self):
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ISiteSchema, prefix="plone")
-        filename = 'test.ico'
-        file_data = b'Hello World'
+        filename = "test.ico"
+        file_data = b"Hello World"
         encoded_data = b64encode_file(filename=filename, data=file_data)
         settings.site_favicon = encoded_data
         mimetype = settings.site_favicon_mimetype
-        self.assertEqual(mimetype, 'image/vnd.microsoft.icon')
+        self.assertEqual(mimetype, "image/vnd.microsoft.icon")
 
     def test_FaviconViewlet_get_mimetype_none(self):
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ISiteSchema, prefix="plone")
         settings.site_favicon = None
         mimetype = settings.site_favicon_mimetype
-        self.assertEqual(mimetype, 'image/vnd.microsoft.icon')
+        self.assertEqual(mimetype, "image/vnd.microsoft.icon")

@@ -173,9 +173,7 @@ class TestLogoViewlet(ViewletsTestCase):
         """
         viewlet = LogoViewlet(self.folder, self.app.REQUEST, None)
         viewlet.update()
-        self.assertEqual(
-            viewlet.img_src, f"{self.portal.absolute_url()}/logo.png"
-        )
+        self.assertEqual(viewlet.img_src, f"{self.portal.absolute_url()}/logo.png")
 
     def test_logo_viewlet_portal_root_registry(self):
         """When a logo is set, and viewlet is opened on a non-navigation root,
@@ -199,9 +197,7 @@ class TestLogoViewlet(ViewletsTestCase):
         self._set_site(self.folder)
         viewlet = LogoViewlet(self.folder, self.app.REQUEST, None)
         viewlet.update()
-        self.assertEqual(
-            viewlet.img_src, f"{self.folder.absolute_url()}/logo.png"
-        )
+        self.assertEqual(viewlet.img_src, f"{self.folder.absolute_url()}/logo.png")
 
     def test_viewlet_navigation_root_registry(self):
         """When a logo is set, and viewlet is opened on a navigation root,
@@ -621,7 +617,9 @@ class TestGlobalSectionsViewlet(ViewletsTestCase):
         """Test for https://github.com/plone/plone.app.layout/issues/280."""
 
         self.portal.invokeFactory(
-            "Document", "test-doc-1", title="Document 1 & 2",
+            "Document",
+            "test-doc-1",
+            title="Document 1 & 2",
         )
 
         request = self.layer["request"]
@@ -636,7 +634,6 @@ class TestGlobalSectionsViewlet(ViewletsTestCase):
         html = gsv.render()
         self.assertNotIn("Document 1 &amp;amp; 2", html)
         self.assertIn("Document 1 &amp; 2", html)
-
 
 
 class TestTitleEscape(ViewletsFunctionalTestCase):

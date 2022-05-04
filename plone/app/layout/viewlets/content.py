@@ -147,7 +147,7 @@ class DocumentBylineViewlet(ViewletBase):
 
 
 class HistoryByLineView(BrowserView):
-    """ DocumentByLine information for content history view """
+    """DocumentByLine information for content history view"""
 
     index = ViewPageTemplateFile("history_view.pt")
 
@@ -495,13 +495,9 @@ class ContentHistoryViewlet(WorkflowHistoryViewlet):
 
     def toLocalizedTime(self, time, long_format=None, time_only=None):
         """Convert time to localized time"""
-        util = getToolByName(self.context, 'translation_service')
+        util = getToolByName(self.context, "translation_service")
         return util.ulocalized_time(
-            time,
-            long_format,
-            time_only,
-            self.context,
-            domain='plonelocales'
+            time, long_format, time_only, self.context, domain="plonelocales"
         )
 
 
