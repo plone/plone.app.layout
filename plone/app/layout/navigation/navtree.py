@@ -2,8 +2,8 @@
 # from catalog queries.
 
 from plone.app.layout.navigation.interfaces import INavtreeStrategy
+from plone.base.defaultpage import check_default_page_via_view
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.defaultpage import check_default_page_via_view
 from zope.interface import implementer
 
 
