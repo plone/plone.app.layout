@@ -1,5 +1,6 @@
 from DateTime import DateTime
 from gzip import GzipFile
+from io import BytesIO
 from plone.app.layout.navigation.interfaces import INavigationRoot
 from plone.app.layout.testing import INTEGRATION_TESTING
 from plone.app.testing import login
@@ -12,7 +13,6 @@ from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import ISearchSchema
 from Products.CMFPlone.interfaces import ISiteSchema
 from Products.CMFPlone.utils import safe_unicode
-from io import BytesIO
 from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.interface import alsoProvides

@@ -63,10 +63,6 @@ class IBelowContentDescription(IViewletManager):
     """A viewlet manager that sits below the content description in view templates"""
 
 
-class IBelowContentDescription(IViewletManager):
-    """A viewlet manager that sits below the content description in view templates"""
-
-
 class IAboveContentBody(IViewletManager):
     """A viewlet manager that sits above the content body in view templates"""
 

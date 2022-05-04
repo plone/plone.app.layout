@@ -17,8 +17,6 @@ from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.schema.interfaces import IVocabularyFactory
 
-import mimetypes
-
 
 def get_language(context, request):
     portal_state = getMultiAdapter((context, request), name="plone_portal_state")

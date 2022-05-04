@@ -1,14 +1,9 @@
 from plone.app.layout.links.viewlets import FaviconViewlet
 from plone.app.layout.testing import FUNCTIONAL_TESTING
 from plone.app.layout.viewlets.tests.base import ViewletsTestCase
-from plone.app.testing import setRoles
-from plone.app.testing import TEST_USER_ID
 from plone.formwidget.namedfile.converter import b64encode_file
-from plone.namedfile.file import NamedBlobFile
 from plone.registry.interfaces import IRegistry
-from Products.CMFPlone.interfaces import ISecuritySchema
 from Products.CMFPlone.interfaces import ISiteSchema
-from Products.CMFPlone.interfaces.syndication import ISiteSyndicationSettings
 from zope.component import getUtility
 
 

@@ -6,7 +6,6 @@ from functools import total_ordering
 from html import escape
 from plone.app.layout.globals.interfaces import IViewView
 from plone.app.layout.navigation.root import getNavigationRoot
-from plone.app.layout.navigation.root import getNavigationRootObject
 from plone.i18n.interfaces import ILanguageSchema
 from plone.memoize.view import memoize
 from plone.protect.utils import addTokenToUrl

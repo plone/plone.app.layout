@@ -60,9 +60,6 @@ class TestDocumentBylineViewletView(ViewletsTestCase):
     def test_pub_date(self):
         # configure our portal to enable publication date on pages globally on
         # the site
-        registry = getUtility(IRegistry)
-        # settings = registry.forInterface(ISiteSchema, prefix="plone")
-
         self.site_settings.display_publication_date_in_byline = True
 
         logout()
