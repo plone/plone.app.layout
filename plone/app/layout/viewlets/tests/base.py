@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from plone.app.layout.testing import FUNCTIONAL_TESTING
 from plone.app.layout.testing import INTEGRATION_TESTING
 from plone.app.layout.testing import TEST_USER_ID

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from plone.app.layout.viewlets.common import ViewletBase
 
 
@@ -6,10 +5,10 @@ class HeaderViewlet(ViewletBase):
     """a base viewlet that do not render anything, just ready to set headers"""
 
     def index(self):
-        return u""
+        return ""
 
     def update(self):
-        super(HeaderViewlet, self).update()
+        super().update()
         self.setHeader = self.request.response.setHeader
         for name, value in self.getHeaders():
             self.setHeader(name, value)

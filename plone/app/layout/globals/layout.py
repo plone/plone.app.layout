@@ -199,7 +199,7 @@ class LayoutPolicy(BrowserView):
         - pat-markspeciallinks: mark special links is set
         """
         portal_state = getMultiAdapter(
-            (self.context, self.request), name=u"plone_portal_state"
+            (self.context, self.request), name="plone_portal_state"
         )
         normalizer = queryUtility(IIDNormalizer)
         registry = getUtility(IRegistry)
@@ -289,7 +289,7 @@ class LayoutPolicy(BrowserView):
                 extra_classes = body_class_adapter.get_classes(template, view) or []
             except TypeError:  # This adapter is implemented without arguments
                 extra_classes = body_class_adapter.get_classes() or []
-            if isinstance(extra_classes, six.string_types):
+            if isinstance(extra_classes, str):
                 extra_classes = extra_classes.split(" ")
             body_classes.update(extra_classes)
 
@@ -298,7 +298,7 @@ class LayoutPolicy(BrowserView):
 
 @adapter(Interface)
 @implementer(IBodyClassAdapter)
-class DefaultBodyClasses(object):
+class DefaultBodyClasses:
     def __init__(self, context, request):
         self.context = context
         self.request = request

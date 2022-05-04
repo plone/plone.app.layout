@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from .interfaces import IPortalState
 from Acquisition import aq_inner
 from plone.app.layout.navigation.root import getNavigationRoot

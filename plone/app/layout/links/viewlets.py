@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from Acquisition import aq_inner
 from plone.app.layout.viewlets import ViewletBase
 from plone.app.uuid.utils import uuidToObject
@@ -22,7 +21,7 @@ import mimetypes
 
 
 def get_language(context, request):
-    portal_state = getMultiAdapter((context, request), name=u"plone_portal_state")
+    portal_state = getMultiAdapter((context, request), name="plone_portal_state")
     return portal_state.language()
 
 
@@ -97,7 +96,7 @@ class AuthorViewlet(ViewletBase):
     _template = ViewPageTemplateFile("author.pt")
 
     def update(self):
-        super(AuthorViewlet, self).update()
+        super().update()
         self.tools = getMultiAdapter((self.context, self.request), name="plone_tools")
 
     def show(self):
@@ -112,7 +111,7 @@ class AuthorViewlet(ViewletBase):
     def render(self):
         if self.show():
             return self._template()
-        return u""
+        return ""
 
 
 class RSSViewlet(ViewletBase):
@@ -133,19 +132,19 @@ class RSSViewlet(ViewletBase):
 
             urls.append(
                 {
-                    "title": "%s - %s" % (obj.Title(), safe_bytes(term.title)),
+                    "title": f"{obj.Title()} - {safe_bytes(term.title)}",
                     "url": obj.absolute_url() + "/" + term.value,
                 }
             )
         return urls
 
     def update(self):
-        super(RSSViewlet, self).update()
+        super().update()
         self.rsslinks = []
         portal = self.portal_state.portal()
         util = getMultiAdapter((self.context, self.request), name="syndication-util")
         context_state = getMultiAdapter(
-            (self.context, self.request), name=u"plone_context_state"
+            (self.context, self.request), name="plone_context_state"
         )
         if context_state.is_portal_root():
             if util.site_enabled():
@@ -182,7 +181,7 @@ class CanonicalURL(ViewletBase):
     @view.memoize
     def render(self):
         context_state = getMultiAdapter(
-            (self.context, self.request), name=u"plone_context_state"
+            (self.context, self.request), name="plone_context_state"
         )
         canonical_url = context_state.canonical_object_url()
-        return u'    <link rel="canonical" href="%s" />' % canonical_url
+        return '    <link rel="canonical" href="%s" />' % canonical_url

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from .interfaces import IInterfaceInformation
 from Acquisition import aq_base
 from plone.memoize.view import memoize
@@ -18,7 +17,7 @@ def resolveInterface(dotted_name):
 
 
 def getDottedName(iface):
-    return "%s.%s" % (iface.__module__, iface.__name__)
+    return f"{iface.__module__}.{iface.__name__}"
 
 
 def _trim_doc_string(text):

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from plone.app.layout.navigation.interfaces import INavigationRoot
 from plone.app.layout.testing import INTEGRATION_TESTING
 from plone.app.testing import setRoles
@@ -104,7 +103,7 @@ class TestContextStateView(unittest.TestCase):
         fti = self.portal.portal_types.TempFolder
         view_action = fti.getActionObject("object/view")
         view_perms = view_action.getPermissions()
-        view_action.edit(permissions=(u"Modify Portal Content",))
+        view_action.edit(permissions=("Modify Portal Content",))
 
         tf = _createObjectByType("TempFolder", self.folder, "tf")
         tf.manage_addLocalRoles(TEST_USER_ID, ("Manager",))

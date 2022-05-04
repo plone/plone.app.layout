@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from AccessControl import getSecurityManager
 from Acquisition import aq_base
 from Acquisition import aq_inner
@@ -50,7 +49,7 @@ class ViewletBase(BrowserView):
     """Base class with common functions for link viewlets."""
 
     def __init__(self, context, request, view, manager=None):
-        super(ViewletBase, self).__init__(context, request)
+        super().__init__(context, request)
         self.__parent__ = view
         self.context = context
         self.request = request
@@ -197,7 +196,7 @@ class SearchBoxViewlet(ViewletBase):
     index = ViewPageTemplateFile("searchbox.pt")
 
     def update(self):
-        super(SearchBoxViewlet, self).update()
+        super().update()
 
         context_state = getMultiAdapter(
             (self.context, self.request), name="plone_context_state"
@@ -216,7 +215,7 @@ class LogoViewlet(ViewletBase):
     index = ViewPageTemplateFile("logo.pt")
 
     def update(self):
-        super(LogoViewlet, self).update()
+        super().update()
 
         # TODO: should this be changed to settings.site_title?
         self.navigation_root_title = self.portal_state.navigation_root_title()
@@ -424,7 +423,7 @@ class PersonalBarViewlet(ViewletBase):
     user_name = ""
 
     def update(self):
-        super(PersonalBarViewlet, self).update()
+        super().update()
         context = aq_inner(self.context)
 
         context_state = getMultiAdapter(
@@ -486,7 +485,7 @@ class ContentViewsViewlet(ViewletBase):
         # from plone.app.contentmenu. This behaves differently depending on
         # whether the view is marked with IViewView. If our parent view
         # provides that marker, we should do it here as well.
-        super(ContentViewsViewlet, self).update()
+        super().update()
         if IViewView.providedBy(self.__parent__):
             alsoProvides(self, IViewView)
 
@@ -532,7 +531,7 @@ class ContentViewsViewlet(ViewletBase):
             if starts("http") or starts("javascript"):
                 item["url"] = action_url
             else:
-                item["url"] = "%s/%s" % (context_url, action_url)
+                item["url"] = f"{context_url}/{action_url}"
             item["url"] = addTokenToUrl(item["url"], self.request)
 
             action_method = item["url"].split("/")[-1].split("?")[0]
@@ -602,7 +601,7 @@ class PathBarViewlet(ViewletBase):
     index = ViewPageTemplateFile("path_bar.pt")
 
     def update(self):
-        super(PathBarViewlet, self).update()
+        super().update()
 
         self.is_rtl = self.portal_state.is_rtl()
 

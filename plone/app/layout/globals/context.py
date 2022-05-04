@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from .interfaces import IContextState
 from Acquisition import aq_base
 from Acquisition import aq_inner

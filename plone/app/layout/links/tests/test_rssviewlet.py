@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from plone.app.layout.links.viewlets import RSSViewlet
 from plone.app.layout.viewlets.tests.base import ViewletsTestCase
 from plone.app.testing import setRoles

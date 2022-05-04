@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from plone.app.layout.viewlets.common import PersonalBarViewlet
 from plone.app.viewletmanager.manager import OrderedViewletManager
 from plone.memoize.instance import memoize
@@ -13,7 +12,7 @@ class ToolbarViewletManager(OrderedViewletManager):
     custom_template = ViewPageTemplateFile("toolbar.pt")
 
     def base_render(self):
-        return super(ToolbarViewletManager, self).render()
+        return super().render()
 
     def render(self):
         return self.custom_template()

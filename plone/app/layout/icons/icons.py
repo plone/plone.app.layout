@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from Acquisition import aq_inner
 from Acquisition import aq_parent
 from plone.app.layout.icons.interfaces import IContentIcon
@@ -11,7 +10,7 @@ from zope.i18n import translate
 from zope.interface import implementer
 
 
-class BaseIcon(object):
+class BaseIcon:
     """Helper base class for html rendering"""
 
     __allow_access_to_unprotected_subobjects__ = True
@@ -25,7 +24,7 @@ class BaseIcon(object):
         if not self.url:
             return None
 
-        tag = '<img width="%s" height="%s" src="%s"' % (
+        tag = '<img width="{}" height="{}" src="{}"'.format(
             self.width,
             self.height,
             self.url,
@@ -56,10 +55,10 @@ class CatalogBrainContentIcon(BaseIcon):
             return path
 
         portal_state_view = getMultiAdapter(
-            (self.context, self.request), name=u"plone_portal_state"
+            (self.context, self.request), name="plone_portal_state"
         )
         portal_url = portal_state_view.portal_url()
-        return "%s/%s" % (portal_url, path)
+        return f"{portal_url}/{path}"
 
     @property
     def description(self):
@@ -67,7 +66,7 @@ class CatalogBrainContentIcon(BaseIcon):
         tt = getToolByName(context, "portal_types")
         fti = tt.get(self.brain["portal_type"])
         if fti is not None:
-            res = "%s %s" % (
+            res = "{} {}".format(
                 translate(fti.Title(), context=self.request),
                 self._mimetype(),
             )
@@ -121,7 +120,7 @@ class CMFContentIcon(BaseIcon):
             return path
 
         portal_url = getToolByName(self.context, "portal_url")()
-        return "%s/%s" % (portal_url, path)
+        return f"{portal_url}/{path}"
 
     @property
     def description(self):
@@ -178,7 +177,7 @@ class PloneSiteContentIcon(BaseIcon):
     def url(self):
         portal_url = getToolByName(self.context, "portal_url")()
         portal_state = getMultiAdapter(
-            (self.context, self.request), name=u"plone_portal_state"
+            (self.context, self.request), name="plone_portal_state"
         )
         if portal_state.is_rtl():
             return "%s/rtl-site_icon.png" % portal_url

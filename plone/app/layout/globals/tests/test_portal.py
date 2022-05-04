@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from plone.app.layout.navigation.interfaces import INavigationRoot
 from plone.app.layout.navigation.root import getNavigationRoot
 from plone.app.layout.testing import INTEGRATION_TESTING
@@ -36,7 +35,7 @@ class TestPortalStateView(unittest.TestCase):
     def test_portal_title(self):
         registry = getUtility(IRegistry)
         self.site_settings = registry.forInterface(ISiteSchema, prefix="plone")
-        self.site_settings.site_title = u"My title"
+        self.site_settings.site_title = "My title"
         self.assertEqual(self.view.portal_title(), "My title")
 
     def test_portal_url(self):

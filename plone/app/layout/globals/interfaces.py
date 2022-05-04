@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from zope.deprecation import deprecated
 from zope.interface import Interface
 

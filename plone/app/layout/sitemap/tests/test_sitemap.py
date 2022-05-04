@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from DateTime import DateTime
 from gzip import GzipFile
 from plone.app.layout.navigation.interfaces import INavigationRoot
@@ -224,7 +223,7 @@ class SiteMapTestCase(unittest.TestCase):
         self.wftool.doActionFor(newsitem, "publish")
         self.assertTrue("published" == self.wftool.getInfoFor(newsitem, "review_state"))
         registry = getUtility(IRegistry)
-        registry["plone.types_use_view_action_in_listings"] = [u"News Item"]
+        registry["plone.types_use_view_action_in_listings"] = ["News Item"]
 
         logout()
 

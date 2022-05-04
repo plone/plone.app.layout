@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from plone.app.layout.links.viewlets import FaviconViewlet
 from plone.app.layout.testing import FUNCTIONAL_TESTING
 from plone.app.layout.viewlets.tests.base import ViewletsTestCase
@@ -25,7 +24,7 @@ class TestFaviconViewletView(ViewletsTestCase, FaviconViewlet):
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ISiteSchema, prefix="plone")
         filename = 'test.svg'
-        file_data = 'Hello World'.encode()
+        file_data = b'Hello World'
         encoded_data = b64encode_file(filename=filename, data=file_data)
         settings.site_favicon = encoded_data
         mimetype = settings.site_favicon_mimetype
@@ -35,7 +34,7 @@ class TestFaviconViewletView(ViewletsTestCase, FaviconViewlet):
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ISiteSchema, prefix="plone")
         filename = 'test.jpg'
-        file_data = 'Hello World'.encode()
+        file_data = b'Hello World'
         encoded_data = b64encode_file(filename=filename, data=file_data)
         settings.site_favicon = encoded_data
         mimetype = settings.site_favicon_mimetype
@@ -45,7 +44,7 @@ class TestFaviconViewletView(ViewletsTestCase, FaviconViewlet):
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ISiteSchema, prefix="plone")
         filename = 'test.png'
-        file_data = 'Hello World'.encode()
+        file_data = b'Hello World'
         encoded_data = b64encode_file(filename=filename, data=file_data)
         settings.site_favicon = encoded_data
         mimetype = settings.site_favicon_mimetype
@@ -55,7 +54,7 @@ class TestFaviconViewletView(ViewletsTestCase, FaviconViewlet):
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ISiteSchema, prefix="plone")
         filename = 'test.ico'
-        file_data = 'Hello World'.encode()
+        file_data = b'Hello World'
         encoded_data = b64encode_file(filename=filename, data=file_data)
         settings.site_favicon = encoded_data
         mimetype = settings.site_favicon_mimetype

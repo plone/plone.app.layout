@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from plone.app.layout.viewlets.content import ContentHistoryViewlet
 from plone.app.layout.viewlets.content import WorkflowHistoryViewlet
 from plone.app.layout.viewlets.tests.base import ViewletsFunctionalTestCase
@@ -11,7 +10,7 @@ from plone.app.testing import TEST_USER_NAME
 
 class TestWorkflowHistoryViewlet(ViewletsFunctionalTestCase):
     def setUp(self):
-        super(TestWorkflowHistoryViewlet, self).setUp()
+        super().setUp()
         # add document, perform transition, set history for non-existent
         # member and also None (anonymous)
         self.folder.invokeFactory("Document", "d1")
@@ -69,7 +68,7 @@ class TestWorkflowHistoryViewlet(ViewletsFunctionalTestCase):
 
 class TestContentHistoryViewlet(ViewletsFunctionalTestCase):
     def setUp(self):
-        super(TestContentHistoryViewlet, self).setUp()
+        super().setUp()
         # add document, perform transition, set history for non-existent
         # member and also None (anonymous)
         self.folder.invokeFactory("Document", "d1")

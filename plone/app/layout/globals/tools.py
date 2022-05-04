@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from .interfaces import ITools
 from plone.memoize.view import memoize_contextless
 from Products.CMFCore.utils import getToolByName

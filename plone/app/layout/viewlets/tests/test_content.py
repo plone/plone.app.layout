@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from DateTime import DateTime
 from plone.app.layout.viewlets.content import ContentRelatedItems
 from plone.app.layout.viewlets.content import DocumentBylineViewlet
@@ -38,7 +37,7 @@ class TestDocumentBylineViewletView(ViewletsTestCase):
     """
 
     def setUp(self):
-        super(TestDocumentBylineViewletView, self).setUp()
+        super().setUp()
         self.folder.invokeFactory("Document", "doc1", title="Document 1")
         self.context = self.folder["doc1"]
 
@@ -134,7 +133,7 @@ class TestHistoryBylineViewletView(ViewletsTestCase):
     """
 
     def setUp(self):
-        super(TestHistoryBylineViewletView, self).setUp()
+        super().setUp()
         self.folder.invokeFactory("Document", "doc1", title="Document 1")
         self.context = self.folder["doc1"]
 
@@ -222,7 +221,7 @@ title="Locked" height="16" width="16" />'
 
 class TestRelatedItemsViewlet(ViewletsTestCase):
     def setUp(self):
-        super(TestRelatedItemsViewlet, self).setUp()
+        super().setUp()
         self.folder.invokeFactory("Document", "doc1", title="Document 1")
         self.folder.invokeFactory("Document", "doc2", title="Document 2")
         self.folder.invokeFactory("Document", "doc3", title="Document 3")
@@ -251,7 +250,7 @@ class TestRelatedItemsViewlet(ViewletsTestCase):
 
 class TestDexterityRelatedItemsViewlet(ViewletsTestCase):
     def setUp(self):
-        super(TestDexterityRelatedItemsViewlet, self).setUp()
+        super().setUp()
         """ create some sample content to test with """
         from Products.CMFPlone.utils import get_installer
 

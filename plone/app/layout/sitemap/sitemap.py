@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from BTrees.OOBTree import OOBTree
 from gzip import GzipFile
 from plone.memoize import ram
@@ -24,7 +23,7 @@ def _render_cachekey(fun, self):
     url = self.context.absolute_url()
     catalog = getToolByName(self.context, "portal_catalog")
     counter = catalog.getCounter()
-    return "%s/%s/%s" % (url, self.filename, counter)
+    return f"{url}/{self.filename}/{counter}"
 
 
 class SiteMapView(BrowserView):
@@ -106,7 +105,7 @@ class SiteMapView(BrowserView):
         xml = self.template()
         fp = BytesIO()
         gzip = GzipFile(self.filename, "wb", 9, fp)
-        if isinstance(xml, six.text_type):
+        if isinstance(xml, str):
             xml = xml.encode("utf8")
         gzip.write(xml)
         gzip.close()

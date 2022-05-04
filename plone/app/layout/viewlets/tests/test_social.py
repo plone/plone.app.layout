@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from plone.app.layout.viewlets.social import SocialTagsViewlet
 from plone.app.layout.viewlets.tests.base import ViewletsTestCase
 from plone.app.testing import login
@@ -16,7 +15,7 @@ class TestSocialViewlet(ViewletsTestCase):
     """Test the content views viewlet."""
 
     def setUp(self):
-        super(TestSocialViewlet, self).setUp()
+        super().setUp()
         login(self.portal, TEST_USER_NAME)
         setRoles(self.portal, TEST_USER_ID, ["Manager"])
         self.folder.invokeFactory("News Item", "news-item", title="News Item")

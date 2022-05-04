@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from plone.app.layout.viewlets.common import TitleViewlet
 from plone.memoize.view import memoize
 from plone.registry.interfaces import IRegistry
