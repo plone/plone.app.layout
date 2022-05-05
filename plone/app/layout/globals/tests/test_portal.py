@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from plone.app.layout.navigation.interfaces import INavigationRoot
 from plone.app.layout.navigation.root import getNavigationRoot
 from plone.app.layout.testing import INTEGRATION_TESTING
@@ -7,8 +6,8 @@ from plone.app.testing import TEST_USER_ID
 from plone.app.testing.helpers import logout
 from plone.i18n.interfaces import ILanguageSchema
 from plone.registry.interfaces import IRegistry
-from Products.CMFPlone.interfaces import ISearchSchema
-from Products.CMFPlone.interfaces import ISiteSchema
+from plone.base.interfaces import ISearchSchema
+from plone.base.interfaces import ISiteSchema
 from zope.component import getUtility
 from zope.event import notify
 from zope.i18n.locales import locales
@@ -36,7 +35,7 @@ class TestPortalStateView(unittest.TestCase):
     def test_portal_title(self):
         registry = getUtility(IRegistry)
         self.site_settings = registry.forInterface(ISiteSchema, prefix="plone")
-        self.site_settings.site_title = u"My title"
+        self.site_settings.site_title = "My title"
         self.assertEqual(self.view.portal_title(), "My title")
 
     def test_portal_url(self):

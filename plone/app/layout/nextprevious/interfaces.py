@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from zope.interface import Interface
 from zope.schema import Bool
 
@@ -8,7 +7,7 @@ class INextPreviousProvider(Interface):
     item relative to a particular id.
     """
 
-    enabled = Bool(title=u"True if next/previous behaviour is enabled")
+    enabled = Bool(title="True if next/previous behaviour is enabled")
 
     def getNextItem(obj):
         """Returns information about next item in the container relative to

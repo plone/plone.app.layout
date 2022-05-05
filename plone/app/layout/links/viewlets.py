@@ -1,26 +1,25 @@
-# -*- coding: utf-8 -*-
 from Acquisition import aq_inner
 from plone.app.layout.viewlets import ViewletBase
 from plone.app.uuid.utils import uuidToObject
+from plone.base.interfaces import ISiteSyndicationSettings
+from plone.base.interfaces.syndication import IFeedSettings
+from plone.base.utils import safe_bytes
+from plone.formwidget.namedfile.converter import b64decode_file
 from plone.memoize import ram
 from plone.memoize import view
 from plone.memoize.compress import xhtml_compress
 from plone.registry.interfaces import IRegistry
-from Products.CMFPlone.interfaces import ISecuritySchema, ISiteSchema
-from Products.CMFPlone.interfaces.syndication import IFeedSettings
-from Products.CMFPlone.interfaces.syndication import ISiteSyndicationSettings
-from Products.CMFPlone.utils import safe_bytes
+from plone.base.interfaces import ISecuritySchema
+from plone.base.interfaces import ISiteSchema
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from typing import NoReturn
 from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.schema.interfaces import IVocabularyFactory
-from plone.formwidget.namedfile.converter import b64decode_file
-import mimetypes
-from typing import NoReturn
 
 
 def get_language(context, request):
-    portal_state = getMultiAdapter((context, request), name=u"plone_portal_state")
+    portal_state = getMultiAdapter((context, request), name="plone_portal_state")
     return portal_state.language()
 
 
@@ -52,7 +51,7 @@ class FaviconViewlet(ViewletBase):
         if getattr(settings, "site_favicon", False):
             # The user has customized the favicon via the Site configlet.
             filename = b64decode_file(settings.site_favicon)[0]
-            
+
             cachebust = "?name=" + filename
         # The filename is *always* /favicon.ico, irrespective of the content type,
         # because:
@@ -95,7 +94,7 @@ class AuthorViewlet(ViewletBase):
     _template = ViewPageTemplateFile("author.pt")
 
     def update(self):
-        super(AuthorViewlet, self).update()
+        super().update()
         self.tools = getMultiAdapter((self.context, self.request), name="plone_tools")
 
     def show(self):
@@ -110,7 +109,7 @@ class AuthorViewlet(ViewletBase):
     def render(self):
         if self.show():
             return self._template()
-        return u""
+        return ""
 
 
 class RSSViewlet(ViewletBase):
@@ -131,19 +130,19 @@ class RSSViewlet(ViewletBase):
 
             urls.append(
                 {
-                    "title": "%s - %s" % (obj.Title(), safe_bytes(term.title)),
+                    "title": f"{obj.Title()} - {safe_bytes(term.title)}",
                     "url": obj.absolute_url() + "/" + term.value,
                 }
             )
         return urls
 
     def update(self):
-        super(RSSViewlet, self).update()
+        super().update()
         self.rsslinks = []
         portal = self.portal_state.portal()
         util = getMultiAdapter((self.context, self.request), name="syndication-util")
         context_state = getMultiAdapter(
-            (self.context, self.request), name=u"plone_context_state"
+            (self.context, self.request), name="plone_context_state"
         )
         if context_state.is_portal_root():
             if util.site_enabled():
@@ -180,7 +179,7 @@ class CanonicalURL(ViewletBase):
     @view.memoize
     def render(self):
         context_state = getMultiAdapter(
-            (self.context, self.request), name=u"plone_context_state"
+            (self.context, self.request), name="plone_context_state"
         )
         canonical_url = context_state.canonical_object_url()
-        return u'    <link rel="canonical" href="%s" />' % canonical_url
+        return '    <link rel="canonical" href="%s" />' % canonical_url

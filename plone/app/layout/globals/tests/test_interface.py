@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from zope.interface import Attribute
 from zope.interface import Interface
 
@@ -30,7 +29,7 @@ class ITwo(Interface):
     pass
 
 
-class NotAnInterface(object):
+class NotAnInterface:
     pass
 
 

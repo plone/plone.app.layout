@@ -1,17 +1,14 @@
-# -*- coding: utf-8 -*-
 # This module contains a function to help build navigation-tree-like structures
 # from catalog queries.
 
 from plone.app.layout.navigation.interfaces import INavtreeStrategy
+from plone.base.defaultpage import check_default_page_via_view
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.defaultpage import check_default_page_via_view
 from zope.interface import implementer
-
-import six
 
 
 @implementer(INavtreeStrategy)
-class NavtreeStrategyBase(object):
+class NavtreeStrategyBase:
     """Basic navigation tree strategy that does nothing."""
 
     __allow_access_to_unprotected_subobjects__ = 1
@@ -143,7 +140,7 @@ def buildFolderTree(context, obj=None, query={}, strategy=NavtreeStrategyBase())
         query["path"] = rootPath
     elif rootPath is None:
         pathQuery = query["path"]
-        if isinstance(pathQuery, six.string_types):
+        if isinstance(pathQuery, str):
             rootPath = pathQuery
         else:
             # Adjust for the fact that in a 'navtree' query, the actual path
@@ -181,7 +178,7 @@ def buildFolderTree(context, obj=None, query={}, strategy=NavtreeStrategyBase())
 
     # Allow the strategy to suppliment the query for keys not already
     # present in the query such as sorting and omitting default pages
-    for key, value in six.iteritems(strategy.supplimentQuery):
+    for key, value in strategy.supplimentQuery.items():
         if key not in query:
             query[key] = value
 

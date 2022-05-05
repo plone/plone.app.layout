@@ -1,6 +1,5 @@
-# -*- coding: utf-8 -*-
 from plone.app.layout.testing import INTEGRATION_TESTING
-from Products.CMFPlone.utils import getToolByName
+from Products.CMFCore.utils import getToolByName
 
 import unittest
 

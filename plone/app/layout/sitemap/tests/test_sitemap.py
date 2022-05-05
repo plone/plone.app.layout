@@ -1,6 +1,6 @@
-# -*- coding: utf-8 -*-
 from DateTime import DateTime
 from gzip import GzipFile
+from io import BytesIO
 from plone.app.layout.navigation.interfaces import INavigationRoot
 from plone.app.layout.testing import INTEGRATION_TESTING
 from plone.app.testing import login
@@ -8,12 +8,11 @@ from plone.app.testing import logout
 from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
 from plone.app.testing import TEST_USER_NAME
+from plone.base.utils import safe_text
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.interfaces import ISearchSchema
-from Products.CMFPlone.interfaces import ISiteSchema
-from Products.CMFPlone.utils import safe_unicode
-from six import BytesIO
+from plone.base.interfaces import ISearchSchema
+from plone.base.interfaces import ISiteSchema
 from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.interface import alsoProvides
@@ -75,7 +74,7 @@ class SiteMapTestCase(unittest.TestCase):
         unziped = GzipFile(fileobj=sio)
         xml = unziped.read()
         unziped.close()
-        return safe_unicode(xml)
+        return safe_text(xml)
 
     def test_disabled(self):
         """
@@ -224,7 +223,7 @@ class SiteMapTestCase(unittest.TestCase):
         self.wftool.doActionFor(newsitem, "publish")
         self.assertTrue("published" == self.wftool.getInfoFor(newsitem, "review_state"))
         registry = getUtility(IRegistry)
-        registry["plone.types_use_view_action_in_listings"] = [u"News Item"]
+        registry["plone.types_use_view_action_in_listings"] = ["News Item"]
 
         logout()
 

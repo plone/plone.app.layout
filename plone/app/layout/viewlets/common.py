@@ -1,39 +1,37 @@
-# -*- coding: utf-8 -*-
 from AccessControl import getSecurityManager
 from Acquisition import aq_base
 from Acquisition import aq_inner
 from collections import defaultdict
 from functools import total_ordering
+from html import escape
 from plone.app.layout.globals.interfaces import IViewView
 from plone.app.layout.navigation.root import getNavigationRoot
-from plone.app.layout.navigation.root import getNavigationRootObject
+from plone.base.utils import safe_text
 from plone.i18n.interfaces import ILanguageSchema
 from plone.memoize.view import memoize
 from plone.protect.utils import addTokenToUrl
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone import PloneMessageFactory as _
-from Products.CMFPlone.interfaces import IPloneSiteRoot
-from Products.CMFPlone.interfaces import ISearchSchema
-from Products.CMFPlone.interfaces import ISiteSchema
-from Products.CMFPlone.interfaces.controlpanel import INavigationSchema
+from plone.base.interfaces import IPloneSiteRoot
+from plone.base.interfaces import ISearchSchema
+from plone.base.interfaces import ISiteSchema
+from plone.base.interfaces.controlpanel import INavigationSchema
 from Products.CMFPlone.utils import getSiteLogo
-from Products.CMFPlone.utils import safe_unicode
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from urllib.parse import unquote
 from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.component import queryMultiAdapter
-from zope.deprecation.deprecation import deprecate
 from zope.i18n import translate
 from zope.interface import alsoProvides
 from zope.interface import implementer
 from zope.viewlet.interfaces import IViewlet
-from html import escape
 
 import json
 import zope.deferredimport
+
 
 zope.deferredimport.initialize()
 zope.deferredimport.deprecated(
@@ -49,7 +47,7 @@ class ViewletBase(BrowserView):
     """Base class with common functions for link viewlets."""
 
     def __init__(self, context, request, view, manager=None):
-        super(ViewletBase, self).__init__(context, request)
+        super().__init__(context, request)
         self.__parent__ = view
         self.context = context
         self.request = request
@@ -58,13 +56,6 @@ class ViewletBase(BrowserView):
 
     def __hash__(self):
         return id(self) * 16
-
-    @property
-    @deprecate(
-        "Use site_url instead. " + "ViewletBase.portal_url will be removed in Plone 4"
-    )
-    def portal_url(self):
-        return self.site_url
 
     def update(self):
         self.portal_state = getMultiAdapter(
@@ -135,7 +126,7 @@ class TitleViewlet(ViewletBase):
         context_state = getMultiAdapter(
             (self.context, self.request), name="plone_context_state"
         )
-        return escape(safe_unicode(context_state.object_title()))
+        return escape(safe_text(context_state.object_title()))
 
     def update(self):
         if IPloneSiteRoot.providedBy(self.context):
@@ -147,7 +138,7 @@ class TitleViewlet(ViewletBase):
         if IPloneSiteRoot.providedBy(portal_state.navigation_root()):
             portal_title = self.site_title_setting
         else:
-            portal_title = escape(safe_unicode(portal_state.navigation_root_title()))
+            portal_title = escape(safe_text(portal_state.navigation_root_title()))
         if self.page_title == portal_title:
             self.site_title = portal_title
         else:
@@ -196,7 +187,7 @@ class SearchBoxViewlet(ViewletBase):
     index = ViewPageTemplateFile("searchbox.pt")
 
     def update(self):
-        super(SearchBoxViewlet, self).update()
+        super().update()
 
         context_state = getMultiAdapter(
             (self.context, self.request), name="plone_context_state"
@@ -215,7 +206,7 @@ class LogoViewlet(ViewletBase):
     index = ViewPageTemplateFile("logo.pt")
 
     def update(self):
-        super(LogoViewlet, self).update()
+        super().update()
 
         # TODO: should this be changed to settings.site_title?
         self.navigation_root_title = self.portal_state.navigation_root_title()
@@ -295,9 +286,9 @@ class GlobalSectionsViewlet(ViewletBase):
                     entry["title"], domain="plone", context=self.request
                 )
 
-            entry["title"] = escape(safe_unicode(entry["title"]))
+            entry["title"] = escape(safe_text(entry["title"]))
             if "name" in entry and entry["name"]:
-                entry["name"] = escape(safe_unicode(entry["name"]))
+                entry["name"] = escape(safe_text(entry["name"]))
             self.customize_tab(entry, tab)
             ret[navtree_path].append(entry)
 
@@ -351,7 +342,7 @@ class GlobalSectionsViewlet(ViewletBase):
                 "path": brain_path,
                 "uid": brain.UID,
                 "url": url,
-                "title": escape(safe_unicode(brain.Title)),
+                "title": escape(safe_text(brain.Title)),
                 "review_state": brain.review_state,
             }
             self.customize_entry(entry, brain)
@@ -423,7 +414,7 @@ class PersonalBarViewlet(ViewletBase):
     user_name = ""
 
     def update(self):
-        super(PersonalBarViewlet, self).update()
+        super().update()
         context = aq_inner(self.context)
 
         context_state = getMultiAdapter(
@@ -485,7 +476,7 @@ class ContentViewsViewlet(ViewletBase):
         # from plone.app.contentmenu. This behaves differently depending on
         # whether the view is marked with IViewView. If our parent view
         # provides that marker, we should do it here as well.
-        super(ContentViewsViewlet, self).update()
+        super().update()
         if IViewView.providedBy(self.__parent__):
             alsoProvides(self, IViewView)
 
@@ -531,7 +522,7 @@ class ContentViewsViewlet(ViewletBase):
             if starts("http") or starts("javascript"):
                 item["url"] = action_url
             else:
-                item["url"] = "%s/%s" % (context_url, action_url)
+                item["url"] = f"{context_url}/{action_url}"
             item["url"] = addTokenToUrl(item["url"], self.request)
 
             action_method = item["url"].split("/")[-1].split("?")[0]
@@ -601,7 +592,7 @@ class PathBarViewlet(ViewletBase):
     index = ViewPageTemplateFile("path_bar.pt")
 
     def update(self):
-        super(PathBarViewlet, self).update()
+        super().update()
 
         self.is_rtl = self.portal_state.is_rtl()
 

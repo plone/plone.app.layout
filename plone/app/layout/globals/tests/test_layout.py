@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from plone.app.layout.navigation.interfaces import INavigationRoot
 from plone.app.layout.testing import INTEGRATION_TESTING
 from plone.app.testing import setRoles
@@ -6,7 +5,7 @@ from plone.app.testing import TEST_USER_ID
 from plone.app.testing.helpers import logout
 from plone.portlets.interfaces import IPortletType
 from plone.registry.interfaces import IRegistry
-from Products.CMFPlone.interfaces.controlpanel import ILinkSchema
+from plone.base.interfaces.controlpanel import ILinkSchema
 from zope.component import getUtility
 
 import os

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from AccessControl import getSecurityManager
 from Acquisition import aq_inner
 from DateTime import DateTime
@@ -8,6 +7,7 @@ from plone.app.layout.viewlets import ViewletBase
 from plone.app.multilingual.browser.vocabularies import translated_languages
 from plone.app.multilingual.interfaces import ITranslatable
 from plone.app.multilingual.interfaces import ITranslationManager
+from plone.base.utils import base_hasattr
 from plone.memoize.instance import memoize
 from plone.protect.authenticator import createToken
 from plone.registry.interfaces import IRegistry
@@ -16,13 +16,11 @@ from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.WorkflowCore import WorkflowException
 from Products.CMFEditions.Permissions import AccessPreviousVersions
 from Products.CMFPlone import PloneMessageFactory as _
-from Products.CMFPlone.interfaces import ISecuritySchema
-from Products.CMFPlone.interfaces import ISiteSchema
-from Products.CMFPlone.utils import base_hasattr
+from plone.base.interfaces import ISecuritySchema
+from plone.base.interfaces import ISiteSchema
 from Products.CMFPlone.utils import log
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from six.moves import range
 from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.component import queryMultiAdapter
@@ -49,10 +47,10 @@ class DocumentActionsViewlet(ViewletBase):
     index = ViewPageTemplateFile("document_actions.pt")
 
     def update(self):
-        super(DocumentActionsViewlet, self).update()
+        super().update()
 
         self.context_state = getMultiAdapter(
-            (self.context, self.request), name=u"plone_context_state"
+            (self.context, self.request), name="plone_context_state"
         )
         self.actions = self.context_state.actions("document_actions")
 
@@ -62,9 +60,9 @@ class DocumentBylineViewlet(ViewletBase):
     index = ViewPageTemplateFile("document_byline.pt")
 
     def update(self):
-        super(DocumentBylineViewlet, self).update()
+        super().update()
         self.context_state = getMultiAdapter(
-            (self.context, self.request), name=u"plone_context_state"
+            (self.context, self.request), name="plone_context_state"
         )
         self.anonymous = self.portal_state.anonymous()
         self.has_pam = HAS_PAM
@@ -149,17 +147,17 @@ class DocumentBylineViewlet(ViewletBase):
 
 
 class HistoryByLineView(BrowserView):
-    """ DocumentByLine information for content history view """
+    """DocumentByLine information for content history view"""
 
     index = ViewPageTemplateFile("history_view.pt")
 
     def update(self):
         context = self.context
         self.portal_state = getMultiAdapter(
-            (context, self.request), name=u"plone_portal_state"
+            (context, self.request), name="plone_portal_state"
         )
         self.context_state = getMultiAdapter(
-            (self.context, self.request), name=u"plone_context_state"
+            (self.context, self.request), name="plone_context_state"
         )
         self.anonymous = self.portal_state.anonymous()
         self.has_pam = HAS_PAM
@@ -289,7 +287,7 @@ class ContentRelatedItems(ViewletBase):
             brains = catalog(UID=related)
             if brains:
                 # build a position dict by iterating over the items once
-                positions = dict([(v, i) for (i, v) in enumerate(related)])
+                positions = {v: i for (i, v) in enumerate(related)}
                 # We need to keep the ordering intact
                 res = list(brains)
 
@@ -345,7 +343,7 @@ class WorkflowHistoryViewlet(ViewletBase):
         if fullname:
             actor["fullname"] = fullname
 
-        return dict(actor=actor, actor_home="%s/author/%s" % (self.site_url, userid))
+        return dict(actor=actor, actor_home=f"{self.site_url}/author/{userid}")
 
     def workflowHistory(self, complete=True):
         """Return workflow history of this context.
@@ -374,7 +372,7 @@ class WorkflowHistoryViewlet(ViewletBase):
                 review_history = list(review_history)
 
             portal_type = context.portal_type
-            anon = _(u"label_anonymous_user", default=u"Anonymous User")
+            anon = _("label_anonymous_user", default="Anonymous User")
 
             for r in review_history:
                 r["type"] = "workflow"
@@ -438,8 +436,8 @@ class ContentHistoryViewlet(WorkflowHistoryViewlet):
             )
             info = dict(
                 type="versioning",
-                action=_(u"Edited"),
-                transition_title=_(u"Edited"),
+                action=_("Edited"),
+                transition_title=_("Edited"),
                 actorid=userid,
                 time=meta["timestamp"],
                 comments=meta["comment"],
@@ -450,7 +448,7 @@ class ContentHistoryViewlet(WorkflowHistoryViewlet):
                 if version_id > 0:
                     info[
                         "diff_previous_url"
-                    ] = "%s/@@history?one=%s&two=%s&_authenticator=%s" % (
+                    ] = "{}/@@history?one={}&two={}&_authenticator={}".format(
                         context_url,
                         version_id,
                         version_id - 1,
@@ -459,7 +457,7 @@ class ContentHistoryViewlet(WorkflowHistoryViewlet):
                 if not rt.isUpToDate(context, version_id):
                     info[
                         "diff_current_url"
-                    ] = "%s/@@history?one=current&two=%s&_authenticator=%s" % (
+                    ] = "{}/@@history?one=current&two={}&_authenticator={}".format(
                         context_url,
                         version_id,
                         token,
@@ -497,19 +495,15 @@ class ContentHistoryViewlet(WorkflowHistoryViewlet):
 
     def toLocalizedTime(self, time, long_format=None, time_only=None):
         """Convert time to localized time"""
-        util = getToolByName(self.context, 'translation_service')
+        util = getToolByName(self.context, "translation_service")
         return util.ulocalized_time(
-            time,
-            long_format,
-            time_only,
-            self.context,
-            domain='plonelocales'
+            time, long_format, time_only, self.context, domain="plonelocales"
         )
 
 
 class ContentHistoryView(ContentHistoryViewlet):
     def __init__(self, context, request):
-        super(ContentHistoryView, self).__init__(context, request, None, None)
+        super().__init__(context, request, None, None)
         self.update()
 
     def __call__(self):

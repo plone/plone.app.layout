@@ -1,18 +1,15 @@
-# -*- coding: utf-8 -*-
 from BTrees.OOBTree import OOBTree
 from gzip import GzipFile
+from io import BytesIO
 from plone.memoize import ram
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.interfaces import IPloneSiteRoot
-from Products.CMFPlone.interfaces import ISiteSchema
+from plone.base.interfaces import IPloneSiteRoot
+from plone.base.interfaces import ISiteSchema
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from six import BytesIO
 from zope.component import getUtility
 from zope.publisher.interfaces import NotFound
-
-import six
 
 
 def _render_cachekey(fun, self):
@@ -24,7 +21,7 @@ def _render_cachekey(fun, self):
     url = self.context.absolute_url()
     catalog = getToolByName(self.context, "portal_catalog")
     counter = catalog.getCounter()
-    return "%s/%s/%s" % (url, self.filename, counter)
+    return f"{url}/{self.filename}/{counter}"
 
 
 class SiteMapView(BrowserView):
@@ -106,7 +103,7 @@ class SiteMapView(BrowserView):
         xml = self.template()
         fp = BytesIO()
         gzip = GzipFile(self.filename, "wb", 9, fp)
-        if isinstance(xml, six.text_type):
+        if isinstance(xml, str):
             xml = xml.encode("utf8")
         gzip.write(xml)
         gzip.close()
