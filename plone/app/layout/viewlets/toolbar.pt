@@ -1,7 +1,8 @@
 <section id="edit-bar" role="toolbar"
          tal:define="context_state view/context_state;
                      icons python:context.restrictedTraverse('@@iconresolver');
-                     personal_bar python: view.get_personal_bar()"
+                     personal_bar python: view.get_personal_bar();
+                     toolbar_pos view/toolbar_position"
          tal:condition="context_state/is_toolbar_visible"
          i18n:domain="plone">
 
@@ -24,7 +25,7 @@
         <tal:icon tal:replace="structure python:icons.tag('arrow-bar-left')" />
       </a>
       <a class="offcanvas-pin text-white" data-bs-dismiss="offcanvas" aria-label="Pin" href="#edit-zone">
-        <tal:icon tal:replace="structure python:icons.tag('pin-angle')" />
+        <tal:icon tal:replace="structure python:icons.tag('arrow-bar-right')" />
       </a>
     </div>
 
@@ -35,31 +36,33 @@
       </li>
     </ul>
 
-    <div tal:condition="personal_bar/user_actions" class="personaltools-wrapper">
+    <div tal:condition="personal_bar/user_actions" class="personaltools-wrapper ${python:'dropend' if toolbar_pos == 'side' else ''}">
 
       <a id="personaltools-menulink"
-        class="nav-link dropdown-toggle collapsed"
-        data-bs-toggle="collapse"
-        data-bs-target="#collapse-personaltools"
-        data-bs-
-        aria-expanded="false"
-        tal:attributes="href personal_bar/homelink_url">
+         class="nav-link dropdown-toggle"
+         data-bs-toggle="dropdown"
+         data-bs-offset="0,0"
+         aria-expanded="false"
+         tal:attributes="href personal_bar/homelink_url">
         <tal:icon tal:replace="structure python:icons.tag('toolbar-action/personaltools', tag_alt='portal-personaltools', tag_class='me-1')" />
-        <span tal:replace="personal_bar/user_name">User</span>
+        <span class="toolbar-label" tal:content="personal_bar/user_name">User</span>
       </a>
 
-      <div id="collapse-personaltools" class="collapse" data-bs-parent="#edit-zone">
-        <ul class="nav nav-pills flex-column small" aria-labelledby="personaltools-menulink">
-          <li tal:repeat="action personal_bar/user_actions">
-            <a href="${action/href}" class="nav-link">
-              <tal:icon replace="structure python:icons.tag(action.get('icon', 'dot'), tag_alt='portal-personaltools', tag_class='me-1')" />
-              <tal:actionname tal:content="action/title">
-                action title
-              </tal:actionname>
-            </a>
-          </li>
-        </ul>
-      </div>
+      <ul id="collapse-personaltools"
+          class="dropdown-menu"
+          aria-labelledby="personaltools-menulink">
+        <li>
+          <h6 class="dropdown-header">${personal_bar/user_name}</h6>
+        </li>
+        <li tal:repeat="action personal_bar/user_actions">
+          <a href="${action/href}" class="dropdown-item">
+            <tal:icon replace="structure python:icons.tag(action.get('icon', 'dot'), tag_alt='portal-personaltools', tag_class='me-1')" />
+            <tal:actionname tal:content="action/title">
+              action title
+            </tal:actionname>
+          </a>
+        </li>
+      </ul>
 
     </div>
   </div>

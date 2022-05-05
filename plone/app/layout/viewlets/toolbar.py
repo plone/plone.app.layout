@@ -11,6 +11,12 @@ from zope.component import getUtility
 class ToolbarViewletManager(OrderedViewletManager):
     custom_template = ViewPageTemplateFile("toolbar.pt")
 
+    @property
+    @memoize
+    def _settings(self):
+        registry = getUtility(IRegistry)
+        return registry.forInterface(ISiteSchema, prefix="plone", check=False)
+
     def base_render(self):
         return super().render()
 
@@ -27,17 +33,18 @@ class ToolbarViewletManager(OrderedViewletManager):
     def portal_state(self):
         return getMultiAdapter((self.context, self.request), name="plone_portal_state")
 
+    def toolbar_position(self):
+        return self._settings.toolbar_position
+
     def get_personal_bar(self):
         viewlet = PersonalBarViewlet(self.context, self.request, self.__parent__, self)
         viewlet.update()
         return viewlet
 
     def get_toolbar_logo(self):
-        registry = getUtility(IRegistry)
-        settings = registry.forInterface(ISiteSchema, prefix="plone", check=False)
         portal_url = self.portal_state.portal_url()
         try:
-            logo = settings.toolbar_logo
+            logo = self._settings.toolbar_logo
         except AttributeError:
             logo = "/++plone++static/plone-toolbarlogo.svg"
         if not logo:
