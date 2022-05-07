@@ -1,18 +1,28 @@
 <section id="section-byline" i18n:domain="plone" tal:condition="view/show">
-  <tal:creators
-      tal:define="creator_ids here/creators"
-      tal:condition="python:creator_ids and view.show_about()"
-  >
-    <tal:i18n i18n:translate="">by</tal:i18n>
-    <tal:creator repeat="creator_id creator_ids">
-      <a class="btn btn-sm btn-outline-primary"
-          href="${context/@@plone_portal_state/navigation_root_url}/${python: view.get_url_path(creator_id)"
-      >${python:view.get_fullname(creator_id)}</a>
-    </tal:creator>
-    —
-  </tal:creators>
 
-  <tal:dates define="published view/pub_date;
+  <tal:creator tal:define="creator_short_form view/creator;" 
+      tal:condition="python:creator_short_form and view.show_about()">
+
+  <tal:name tal:define="creator_long_form string:?author=${creator_short_form};
+                        creator_is_openid python:'/' in creator_short_form;
+                        creator_id python:(creator_short_form, creator_long_form)[creator_is_openid];">
+
+    <span class="documentAuthor">
+
+      <tal:i18n i18n:translate="label_by_author">
+      by
+      <a href="#"
+         tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/author/${creator_id}"
+         tal:content="view/authorname"
+         tal:omit-tag="python:view.author() is None"
+         i18n:name="author">Roland Barthes</a>
+      </tal:i18n>
+         —
+    </span>
+  </tal:name>
+  </tal:creator>
+
+  <tal:dates define="published view/pub_date; 
                      modified context/ModificationDate;
                      show_modification_date python:view.show_modification_date()">
   <span class="documentPublished" tal:condition="published">
