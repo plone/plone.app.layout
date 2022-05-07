@@ -7,8 +7,11 @@ from plone.app.layout.viewlets import ViewletBase
 from plone.app.multilingual.browser.vocabularies import translated_languages
 from plone.app.multilingual.interfaces import ITranslatable
 from plone.app.multilingual.interfaces import ITranslationManager
+from plone.base.interfaces import ISecuritySchema
+from plone.base.interfaces import ISiteSchema
 from plone.base.utils import base_hasattr
 from plone.memoize.instance import memoize
+from plone.memoize.view import memoize_contextless
 from plone.protect.authenticator import createToken
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import _checkPermission
@@ -16,11 +19,10 @@ from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.WorkflowCore import WorkflowException
 from Products.CMFEditions.Permissions import AccessPreviousVersions
 from Products.CMFPlone import PloneMessageFactory as _
-from plone.base.interfaces import ISecuritySchema
-from plone.base.interfaces import ISiteSchema
 from Products.CMFPlone.utils import log
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from urllib.parse import urlencode
 from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.component import queryMultiAdapter
@@ -67,6 +69,11 @@ class DocumentBylineViewlet(ViewletBase):
         self.anonymous = self.portal_state.anonymous()
         self.has_pam = HAS_PAM
 
+    @property
+    @memoize_contextless
+    def portal_membership(self):
+        return getToolByName(self.context, "portal_membership")
+
     def show(self):
         registry = getUtility(IRegistry)
         settings = registry.forInterface(
@@ -93,6 +100,15 @@ class DocumentBylineViewlet(ViewletBase):
     def authorname(self):
         author = self.author()
         return author and author["fullname"] or self.creator()
+
+    def get_url_path(self, user_id):
+        if "/" in user_id:
+            qs = urlencode({"author": user_id})
+            return f"author/?{qs}"
+        return f"author/{user_id}"
+
+    def get_fullname(self, user_id):
+        return self.portal_membership.getMemberInfo(user_id).get("fullname") or user_id
 
     def show_modification_date(self):
         return not self.context.effective_date or (
