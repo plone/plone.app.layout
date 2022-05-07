@@ -26,6 +26,7 @@ from urllib.parse import urlencode
 from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.component import queryMultiAdapter
+from zope.deprecation import deprecation
 
 import logging
 import pkg_resources
@@ -63,11 +64,17 @@ class DocumentBylineViewlet(ViewletBase):
 
     def update(self):
         super().update()
-        self.context_state = getMultiAdapter(
-            (self.context, self.request), name="plone_context_state"
-        )
         self.anonymous = self.portal_state.anonymous()
-        self.has_pam = HAS_PAM
+
+    @property
+    @deprecation.deprecate("The context_state property is unused and will be removed in Plone 7")
+    def context_state(self):
+        return getMultiAdapter((self.context, self.request), name="plone_context_state")
+
+    @property
+    @deprecation.deprecate("The has_pam property is unused and will be removed in Plone 7")
+    def has_pam(self):
+        return HAS_PAM
 
     @property
     @memoize_contextless
@@ -90,13 +97,16 @@ class DocumentBylineViewlet(ViewletBase):
         )
         return not self.anonymous or settings.allow_anon_views_about
 
+    @deprecation.deprecate("The creator method is unused and will be removed in Plone 7")
     def creator(self):
         return self.context.Creator()
 
+    @deprecation.deprecate("The author method is unused and will be removed in Plone 7")
     def author(self):
         membership = getToolByName(self.context, "portal_membership")
         return membership.getMemberInfo(self.creator())
 
+    @deprecation.deprecate("The authorname method is unused and will be removed in Plone 7")
     def authorname(self):
         author = self.author()
         return author and author["fullname"] or self.creator()
@@ -120,6 +130,7 @@ class DocumentBylineViewlet(ViewletBase):
             return self.context.expires().isPast()
         return False
 
+    @deprecation.deprecate("The toLocalizedTime method is unused and will be removed in Plone 7")
     def toLocalizedTime(self, time, long_format=None, time_only=None):
         """Convert time to localized time"""
         util = getToolByName(self.context, "translation_service")
@@ -147,6 +158,7 @@ class DocumentBylineViewlet(ViewletBase):
 
         return DateTime(date)
 
+    @deprecation.deprecate("The get_translations method is unused and will be removed in Plone 7")
     def get_translations(self):
         cts = []
         if ITranslatable.providedBy(self.context):
