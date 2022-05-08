@@ -3,9 +3,9 @@
     <header class="section-heading" i18n:translate="section_contributors_heading">
       Contributors
     </header>
-
-    <small><span tal:omit-tag="" tal:content="python: ', '.join(contributors)">John Doe</span></small>
-
+    <a class="badge rounded-pill bg-light text-dark fw-normal fs-6"
+       href="${context/@@plone_portal_state/navigation_root_url}/${python: view.get_url_path(contributor)}"
+       tal:repeat="contributor contributors"
+    >${python:view.get_fullname(contributor)}</a>
 
 </section>
-

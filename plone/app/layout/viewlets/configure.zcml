@@ -305,6 +305,7 @@
     <browser:viewlet
         name="plone.contributors"
         manager=".interfaces.IBelowContentBody"
+        class=".content.DocumentBylineViewlet"
         template="document_contributors.pt"
         permission="zope2.View"
         />
