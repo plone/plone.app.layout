@@ -10,6 +10,7 @@ from plone.locking.interfaces import ILockable
 from plone.registry.interfaces import IRegistry
 from plone.base.interfaces import ISecuritySchema
 from plone.base.interfaces import ISiteSchema
+from Products.CMFCore.utils import getToolByName
 from z3c.relationfield import RelationValue
 from zope.component import getUtility
 from zope.interface import Interface
@@ -56,6 +57,35 @@ class TestDocumentBylineViewletView(ViewletsTestCase):
         viewlet = DocumentBylineViewlet(self.context, request, None, None)
         viewlet.update()
         return viewlet
+
+    def test_get_memberinfo(self):
+        viewlet = self._get_viewlet()
+        self.assertIsNone(viewlet.get_member_info("bogus"))
+        self.assertIsInstance(viewlet.get_member_info("test_user_1_"), dict)
+
+    def test_get_url_path(self):
+        viewlet = self._get_viewlet()
+        self.assertEqual(viewlet.get_url_path("bogus"), "")
+        self.assertEqual(viewlet.get_url_path("test_user_1_"), "author/test_user_1_")
+
+        # users with a slash in the userid will have a different URL
+        portal_membership = getToolByName(self.portal, "portal_membership")
+        portal_membership.addMember("foo/bar", "secret", ["Member"], "")
+        self.assertEqual(viewlet.get_url_path("foo/bar"), "author/?author=foo%2Fbar")
+
+    def test_get_fullname(self):
+        viewlet = self._get_viewlet()
+        # For non existent user we return the user id
+        self.assertEqual(viewlet.get_fullname("bogus"), "bogus")
+        # If the fullname is not set we return the user id
+        self.assertEqual(viewlet.get_fullname("test_user_1_"), "test_user_1_")
+
+        # otherwise we will return the fullname property
+        portal_membership = getToolByName(self.portal, "portal_membership")
+        portal_membership.addMember(
+            "foo/bar", "secret", ["Member"], "", properties={"fullname": "Foo Bar"}
+        )
+        self.assertEqual(viewlet.get_fullname("foo/bar"), "Foo Bar")
 
     def test_pub_date(self):
         # configure our portal to enable publication date on pages globally on
