@@ -111,14 +111,23 @@ class DocumentBylineViewlet(ViewletBase):
         author = self.author()
         return author and author["fullname"] or self.creator()
 
+    @memoize
+    def get_member_info(self, user_id):
+        return self.portal_membership.getMemberInfo(user_id)
+
     def get_url_path(self, user_id):
+        if self.get_member_info(user_id) is None:
+            return ""
         if "/" in user_id:
             qs = urlencode({"author": user_id})
             return f"author/?{qs}"
         return f"author/{user_id}"
 
     def get_fullname(self, user_id):
-        return self.portal_membership.getMemberInfo(user_id).get("fullname") or user_id
+        info = self.get_member_info(user_id)
+        if info is None:
+            return user_id
+        return info.get("fullname") or user_id
 
     def show_modification_date(self):
         return not self.context.effective_date or (
