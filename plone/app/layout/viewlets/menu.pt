@@ -15,16 +15,18 @@
           <tal:if condition="python:actionid != 'history'">
             <tal:icon tal:condition="python:action['icon']"
                       tal:replace="structure python:icons.tag(action['icon'] or 'toolbar-action', tag_alt=action['id'], tag_class='me-1')" />
-            <span tal:content="action/title" i18n:translate="">View name</span>
+            <span class="toolbar-label" tal:content="action/title" i18n:translate="">View name</span>
           </tal:if>
 
           <tal:if tal:condition="python:actionid == 'history'">
             <tal:icon tal:replace="structure python:icons.tag('lock' if locked else action['icon'], tag_alt=action['id'], tag_class='me-1')" />
-            <time
+            <span class="toolbar-label">
+              <time
                 class="pat-display-time"
                 data-pat-display-time="from-now: true"
                 datetime="${context/ModificationDate}"
                 tal:content="">${context/ModificationDate}</time>
+            </span>
           </tal:if>
 
         </a>
