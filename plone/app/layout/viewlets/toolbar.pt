@@ -6,25 +6,15 @@
          tal:condition="context_state/is_toolbar_visible"
          i18n:domain="plone">
 
-  <div class="h-100 offcanvas-toggler bg-dark">
-    <a class="toggler-hover" data-bs-toggle="offcanvas" href="#edit-zone">
-      <span class="toggler-header">
-        <tal:icon tal:replace="structure python:icons.tag('list')" />
-      </span>
-    </a>
-  </div>
 
   <div id="edit-zone" role="toolbar"
-       class="pat-toolbar offcanvas offcanvas-start bg-dark" data-bs-scroll="true">
+       class="pat-toolbar" data-bs-scroll="true">
 
-    <div class="offcanvas-header mb-3 bg-primary">
-      <a class="offcanvas-dismiss text-white" data-bs-dismiss="offcanvas" aria-label="Dismiss" href="#edit-zone">
-        <tal:icon tal:replace="structure python:icons.tag('x-lg')" />
-      </a>
-      <a class="offcanvas-unpin text-white" data-bs-dismiss="offcanvas" aria-label="Unpin" href="#edit-zone">
+    <div class="toolbar-header">
+      <a class="toolbar-collapse" aria-label="Unpin" href="#edit-zone">
         <tal:icon tal:replace="structure python:icons.tag('arrow-bar-left')" />
       </a>
-      <a class="offcanvas-pin text-white" data-bs-dismiss="offcanvas" aria-label="Pin" href="#edit-zone">
+      <a class="toolbar-expand" aria-label="Pin" href="#edit-zone">
         <tal:icon tal:replace="structure python:icons.tag('arrow-bar-right')" />
       </a>
     </div>
