@@ -10,7 +10,7 @@
   <div id="edit-zone" role="toolbar"
        class="pat-toolbar" data-bs-scroll="true">
 
-    <div class="toolbar-header">
+    <div class="toolbar-header nav">
       <a class="toolbar-collapse" aria-label="Unpin" href="#edit-zone">
         <tal:icon tal:replace="structure python:icons.tag('arrow-bar-left')" />
       </a>
@@ -26,7 +26,7 @@
       </li>
     </ul>
 
-    <div tal:condition="personal_bar/user_actions" class="personaltools-wrapper ${python:'dropend' if toolbar_pos == 'side' else ''}">
+    <div tal:condition="personal_bar/user_actions" class="personaltools-wrapper nav ${python:'dropend' if toolbar_pos == 'side' else ''}">
 
       <a id="personaltools-menulink"
          class="nav-link dropdown-toggle"
