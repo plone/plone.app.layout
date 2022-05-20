@@ -34,7 +34,7 @@
          data-bs-offset="0,0"
          aria-expanded="false"
          tal:attributes="href personal_bar/homelink_url">
-        <tal:icon tal:replace="structure python:icons.tag('toolbar-action/personaltools', tag_alt='portal-personaltools', tag_class='me-1')" />
+        <tal:icon tal:replace="structure python:icons.tag('toolbar-action/personaltools', tag_class='me-1')" />
         <span class="toolbar-label" tal:content="personal_bar/user_name">User</span>
       </a>
 
@@ -46,7 +46,7 @@
         </li>
         <li tal:repeat="action personal_bar/user_actions">
           <a href="${action/href}" class="dropdown-item">
-            <tal:icon replace="structure python:icons.tag(action.get('icon', 'dot'), tag_alt='portal-personaltools', tag_class='me-1')" />
+            <tal:icon replace="structure python:icons.tag(action.get('icon', 'dot'), tag_class='me-1')" />
             <tal:actionname tal:content="action/title">
               action title
             </tal:actionname>
