@@ -8,6 +8,33 @@ Changelog
 
 .. towncrier release notes start
 
+4.0.0a12 (2022-05-24)
+---------------------
+
+Breaking changes:
+
+
+- Use ``plone.base``, black, isort.  [maurits] (#302)
+
+
+New features:
+
+
+- Reimplement dropout toolbar submenus and collapsed icons.
+  [petschki, agitator] (#303)
+
+
+Bug fixes:
+
+
+- Display all the creators if they are more than one.
+  Make the byline and the contributor viewlet markup consistent.
+  [ale-rt] (#304)
+- Deprecate unused code [ale-rt] (#305)
+- Remove alt tags from icons within links.
+  [agitator] (#309)
+
+
 4.0.0a11 (2022-04-07)
 ---------------------
 
