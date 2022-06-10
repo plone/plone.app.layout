@@ -119,12 +119,12 @@ class SocialTagsViewlet(TitleViewlet):
                 )
 
         if not found_image:
-            url = getSiteLogo()
+            url, mime_type = getSiteLogo(include_type=True)
             tags.extend(
                 [
                     dict(property="og:image", content=url),
                     dict(itemprop="image", content=url),
-                    dict(property="og:image:type", content="image/png"),
+                    dict(property="og:image:type", content=mime_type),
                 ]
             )
         return tags
