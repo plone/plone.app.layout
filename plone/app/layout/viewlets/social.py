@@ -92,14 +92,24 @@ class SocialTagsViewlet(TitleViewlet):
         found_image = False
         if item.has_enclosure and item.file_length > 0:
             if item.file_type.startswith("image"):
-                found_image = True
-                tags.extend(
-                    [
-                        dict(property="og:image", content=item.file_url),
-                        dict(itemprop="image", content=item.file_url),
-                        dict(property="og:image:type", content=item.file_type),
-                    ]
-                )
+                image = None
+                scales = self.context.restrictedTraverse('@@images', None)
+                if scales:
+                    try:
+                        image = scales.scale('image', scale='great')
+                    except Exception as e:
+                        logger.exception(e)
+                if image:
+                    tags.extend(
+                        [
+                            dict(property="og:image", content=image.url),
+                            dict(property="og:image:width", content=image.width),
+                            dict(property="og:image:height", content=image.height),
+                            dict(itemprop="image", content=image.url),
+                            dict(property="og:image:type", content=item.file_type),
+                        ]
+                    )
+                    found_image = True
             elif (
                 item.file_type.startswith("video")
                 or item.file_type == "application/x-shockwave-flash"
