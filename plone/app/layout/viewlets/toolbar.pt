@@ -11,10 +11,10 @@
        class="pat-toolbar" data-bs-scroll="true">
 
     <div class="toolbar-header nav">
-      <a class="toolbar-collapse" aria-label="Unpin" href="#edit-zone">
+      <a class="toolbar-collapse" aria-label="Unpin">
         <tal:icon tal:replace="structure python:icons.tag('arrow-bar-left')" />
       </a>
-      <a class="toolbar-expand" aria-label="Pin" href="#edit-zone">
+      <a class="toolbar-expand" aria-label="Pin">
         <tal:icon tal:replace="structure python:icons.tag('arrow-bar-right')" />
       </a>
     </div>
