@@ -8,6 +8,29 @@ Changelog
 
 .. towncrier release notes start
 
+4.0.0b1 (2022-06-23)
+--------------------
+
+New features:
+
+
+- Updated tests for SVG Plone logo.
+  [petschki] (#310)
+
+
+Bug fixes:
+
+
+- Toolbar width and wrapping tweaks.
+  [agitator] (#311)
+- Fix og:image by using an @@images scale instead of @@download.
+  [agitator] (#312)
+- Fix toolbar header toggle (do not change url when clicking).
+  [petschki] (#313)
+- Add missing i18n tags
+  [erral] (#314)
+
+
 4.0.0a12 (2022-05-24)
 ---------------------
 
