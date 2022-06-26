@@ -27,7 +27,7 @@
 
     <button class="searchButton btn btn-outline-light"
       type="submit"
-      i18n:translate="label_search;">
+      i18n:translate="label_search">
       Search
     </button>
 
