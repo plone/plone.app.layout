@@ -5,7 +5,7 @@
 
     <table class="table" id="history-list" tal:condition="history"
         summary="Content history"
-        i18n:attributes="summary summary_content_listing;">
+        i18n:attributes="summary summary_content_history;">
         <tbody>
             <tr class="odd">
                 <th i18n:translate="">What</th>
