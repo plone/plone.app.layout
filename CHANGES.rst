@@ -8,6 +8,18 @@ Changelog
 
 .. towncrier release notes start
 
+4.0.0b2 (2022-07-19)
+--------------------
+
+Bug fixes:
+
+
+- Reuse existing i18n label
+  [erral] (#315)
+- Change i18n translation msgid
+  [erral] (#316)
+
+
 4.0.0b1 (2022-06-23)
 --------------------
 
