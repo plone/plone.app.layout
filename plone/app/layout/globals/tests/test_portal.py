@@ -69,7 +69,7 @@ class TestPortalStateView(unittest.TestCase):
     def test_navigation_root_title(self):
         registry = getUtility(IRegistry)
         self.site_settings = registry.forInterface(ISiteSchema, prefix="plone")
-        self.site_settings.site_title = "Portal title"
+        self.site_settings.site_title = u"Portal title"
         self.assertEqual(self.view.navigation_root_title(), "Portal title")
         members = self.portal["Members"]
         # mark a folder "between" self.folder and self.portal with
