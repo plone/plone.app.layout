@@ -8,6 +8,7 @@ from plone.memoize.view import memoize_contextless
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.interfaces import ISiteRoot
 from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.interfaces import IPloneSiteRoot
 from plone.base.interfaces import ISearchSchema
 from plone.base.interfaces import ISiteSchema
 from Products.Five.browser import BrowserView
@@ -51,6 +52,10 @@ class PortalState(BrowserView):
 
     @memoize
     def navigation_root_title(self):
+        navigation_root = self.navigation_root()
+        if IPloneSiteRoot.providedBy(navigation_root):
+            return self.portal_title()
+
         title = self.navigation_root().Title
         if callable(title):
             return title()
