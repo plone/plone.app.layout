@@ -6,7 +6,7 @@
 
   <p class="hiddenStructure" i18n:translate="heading_member_tools">Member tools</p>
 
-  <div class="dropdown float-end" id="portal-membertools"
+  <div class="dropdown dropdown-menu-end" id="portal-membertools"
       tal:condition="python:view.user_actions and not view.anonymous">
       <a id="user-name"
          class="dropdown-toggle" data-bs-toggle="dropdown"
@@ -17,7 +17,7 @@
       <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
           <li tal:repeat="action view/user_actions"
               tal:attributes="id string:membertools-${action/id}">
-              <a href=""
+              <a href="" class="dropdown-item"
                  tal:attributes="href action/href;
                                  target action/link_target|nothing"
                  tal:content="action/title"
