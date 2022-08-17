@@ -11,6 +11,7 @@ from Products.CMFCore.interfaces import ISiteRoot
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import ISearchSchema
 from Products.CMFPlone.interfaces import ISiteSchema
+from Products.CMFPlone.interfaces import IPloneSiteRoot
 from Products.Five.browser import BrowserView
 from zope.component import getUtility
 from zope.component import providedBy
@@ -53,6 +54,10 @@ class PortalState(BrowserView):
 
     @memoize
     def navigation_root_title(self):
+        navigation_root = self.navigation_root()
+        if IPloneSiteRoot.providedBy(navigation_root):
+            return self.portal_title()
+
         title = self.navigation_root().Title
         if callable(title):
             return title()
