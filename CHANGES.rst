@@ -8,6 +8,20 @@ Changelog
 
 .. towncrier release notes start
 
+4.0.0b3 (2022-08-31)
+--------------------
+
+Bug fixes:
+
+
+- get the title of the navigation root from the registry when the navigation root object is the portal object
+  [erral] (#317)
+- Fix css classes for membertools dropdown if toolbar is disabled.
+  [petschki] (#320)
+- Update markup and css classes for anontools viewlet.
+  [petschki] (#322)
+
+
 4.0.0b2 (2022-07-19)
 --------------------
 
