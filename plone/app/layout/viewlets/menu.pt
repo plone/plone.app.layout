@@ -23,7 +23,7 @@
             <span class="toolbar-label">
               <time
                 class="pat-display-time"
-                data-pat-display-time="from-now: true"
+                data-pat-display-time="output-format: L LTS"
                 datetime="${context/ModificationDate}"
                 tal:content="">${context/ModificationDate}</time>
             </span>
