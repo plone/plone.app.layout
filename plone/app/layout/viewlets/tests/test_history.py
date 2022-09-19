@@ -6,6 +6,7 @@ from plone.app.testing import logout
 from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
 from plone.app.testing import TEST_USER_NAME
+from plone.app.testing import TEST_USER_PASSWORD
 
 
 class TestWorkflowHistoryViewlet(ViewletsFunctionalTestCase):
@@ -16,7 +17,7 @@ class TestWorkflowHistoryViewlet(ViewletsFunctionalTestCase):
         self.folder.invokeFactory("Document", "d1")
 
     def addMember(self, username, roles=("Member",)):
-        self.portal.portal_membership.addMember(username, "secret", roles, [])
+        self.portal.portal_membership.addMember(username, TEST_USER_PASSWORD, roles, [])
 
     def delMember(self, username):
         self.portal.portal_membership.deleteMembers([username])

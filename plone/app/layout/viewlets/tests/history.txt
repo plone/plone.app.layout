@@ -11,9 +11,10 @@ Open a browser logged in as a Manager.
 
     >>> app = layer['app']
     >>> from plone.testing.zope import Browser
+    >>> from plone.app.testing import TEST_USER_PASSWORD
     >>> browser = Browser(app)
     >>> browser.handleErrors = False
-    >>> browser.addHeader('Authorization', 'Basic admin:secret')
+    >>> browser.addHeader('Authorization', f'Basic admin:{TEST_USER_PASSWORD}')
     >>> portal_url = 'http://nohost/plone'
 
 By default, only HTTP error codes (e.g. 500 Server Side Error) are shown when an
