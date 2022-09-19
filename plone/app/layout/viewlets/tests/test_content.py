@@ -6,6 +6,7 @@ from plone.app.layout.viewlets.tests.base import ViewletsTestCase
 from plone.app.testing import logout
 from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
+from plone.app.testing import TEST_USER_PASSWORD
 from plone.locking.interfaces import ILockable
 from plone.registry.interfaces import IRegistry
 from plone.base.interfaces import ISecuritySchema
@@ -70,7 +71,7 @@ class TestDocumentBylineViewletView(ViewletsTestCase):
 
         # users with a slash in the userid will have a different URL
         portal_membership = getToolByName(self.portal, "portal_membership")
-        portal_membership.addMember("foo/bar", "secret", ["Member"], "")
+        portal_membership.addMember("foo/bar", TEST_USER_PASSWORD, ["Member"], "")
         self.assertEqual(viewlet.get_url_path("foo/bar"), "author/?author=foo%2Fbar")
 
     def test_get_fullname(self):
@@ -83,7 +84,7 @@ class TestDocumentBylineViewletView(ViewletsTestCase):
         # otherwise we will return the fullname property
         portal_membership = getToolByName(self.portal, "portal_membership")
         portal_membership.addMember(
-            "foo/bar", "secret", ["Member"], "", properties={"fullname": "Foo Bar"}
+            "foo/bar", TEST_USER_PASSWORD, ["Member"], "", properties={"fullname": "Foo Bar"}
         )
         self.assertEqual(viewlet.get_fullname("foo/bar"), "Foo Bar")
 
