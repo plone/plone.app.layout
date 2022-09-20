@@ -17,6 +17,8 @@ logger = logging.getLogger("plone.app.layout")
 
 
 class SocialTagsViewlet(TitleViewlet):
+    social_image_scale = "great"
+
     def head_tag_filter(self, value):
         if not isinstance(value, dict):
             return
@@ -100,7 +102,7 @@ class SocialTagsViewlet(TitleViewlet):
                 scales = self.context.restrictedTraverse('@@images', None)
                 if scales:
                     try:
-                        image = scales.scale('image', scale='great')
+                        image = scales.scale('image', scale=self.social_image_scale)
                     except Exception as e:
                         logger.exception(e)
                 if image:
