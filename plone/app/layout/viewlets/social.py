@@ -11,6 +11,10 @@ from zope.component import getUtility
 from zope.component import queryMultiAdapter
 from zope.component.hooks import getSite
 
+import logging
+
+logger = logging.getLogger("plone.app.layout")
+
 
 class SocialTagsViewlet(TitleViewlet):
     def head_tag_filter(self, value):
