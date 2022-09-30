@@ -8,6 +8,26 @@ Changelog
 
 .. towncrier release notes start
 
+4.0.0b4 (2022-09-30)
+--------------------
+
+New features:
+
+
+- Use a variable to allow customization of the image scale used for social tags
+  [laulaz] (#323)
+
+
+Bug fixes:
+
+
+- Fix undefined logger variable
+  [laulaz] (#323)
+- Show modification datetime in toolbar with full datetime according to locale format
+  [erral] (#325)
+- Use longer password in tests. [davisagli] (#327)
+
+
 4.0.0b3 (2022-08-31)
 --------------------
 
