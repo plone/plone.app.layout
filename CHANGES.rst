@@ -8,6 +8,16 @@ Changelog
 
 .. towncrier release notes start
 
+3.5.2 (2022-10-28)
+------------------
+
+Bug fixes:
+
+
+- get the title of the navigation root from the registry when the navigation root object is the portal object
+  [erral] (#317)
+
+
 3.5.1 (2022-01-19)
 ------------------
 
