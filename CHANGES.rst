@@ -8,6 +8,15 @@ Changelog
 
 .. towncrier release notes start
 
+4.0.0 (2022-11-18)
+------------------
+
+Bug fixes:
+
+
+- Fix document-actions icons [MrTango] (#321)
+
+
 4.0.0b5 (2022-10-11)
 --------------------
 
