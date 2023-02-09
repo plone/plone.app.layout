@@ -4,7 +4,7 @@ from plone.app.testing import IntegrationTesting
 from plone.app.testing import PloneSandboxLayer
 from plone.app.testing import TEST_USER_ID
 from plone.app.testing import TEST_USER_PASSWORD
-from Products.CMFPlone.utils import _createObjectByType
+from plone.base.utils import unrestricted_construct_instance
 
 
 class Fixture(PloneSandboxLayer):
@@ -18,7 +18,7 @@ class Fixture(PloneSandboxLayer):
         self.loadZCML(package=plone.app.layout)
 
     def setUpPloneSite(self, portal):
-        _createObjectByType("Folder", portal, id="Members")
+        unrestricted_construct_instance("Folder", portal, id="Members")
         mtool = portal.portal_membership
         if not mtool.getMemberareaCreationFlag():
             mtool.setMemberareaCreationFlag()

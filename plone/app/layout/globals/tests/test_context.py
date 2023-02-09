@@ -6,7 +6,7 @@ from plone.app.testing.helpers import logout
 from plone.locking.interfaces import ILockable
 from Products.CMFDynamicViewFTI.interfaces import IBrowserDefault
 from plone.base.interfaces import INonStructuralFolder
-from Products.CMFPlone.utils import _createObjectByType
+from plone.base.utils import unrestricted_construct_instance
 from zope.interface import alsoProvides
 from zope.interface import directlyProvides
 
@@ -70,7 +70,7 @@ class TestContextStateView(unittest.TestCase):
     def test_view_template_id_nonbrowserdefault(self):
         # The view template id is taken from the FTI for non-browserdefault
         # (non ATContentTypes) content
-        tf = _createObjectByType("TempFolder", self.folder, "tf")
+        tf = unrestricted_construct_instance("TempFolder", self.folder, "tf")
         tfview = tf.restrictedTraverse("@@plone_context_state")
         self.assertEqual(tfview.view_template_id(), "index_html")
 
@@ -85,7 +85,7 @@ class TestContextStateView(unittest.TestCase):
         view_expression = view_action.getActionExpression()
         view_action.setActionExpression("foobar")
 
-        tf = _createObjectByType("TempFolder", self.folder, "tf")
+        tf = unrestricted_construct_instance("TempFolder", self.folder, "tf")
         tf.manage_addLocalRoles(TEST_USER_ID, ("Manager",))
         tfview = tf.restrictedTraverse("@@plone_context_state")
         self.assertEqual(tfview.view_template_id(), "foobar")
@@ -105,7 +105,7 @@ class TestContextStateView(unittest.TestCase):
         view_perms = view_action.getPermissions()
         view_action.edit(permissions=("Modify Portal Content",))
 
-        tf = _createObjectByType("TempFolder", self.folder, "tf")
+        tf = unrestricted_construct_instance("TempFolder", self.folder, "tf")
         tf.manage_addLocalRoles(TEST_USER_ID, ("Manager",))
         tfview = tf.restrictedTraverse("@@plone_context_state")
         self.assertEqual(tfview.view_template_id(), "index_html")

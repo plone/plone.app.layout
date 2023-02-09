@@ -7,6 +7,7 @@ from plone.app.layout.viewlets import ViewletBase
 from plone.app.multilingual.browser.vocabularies import translated_languages
 from plone.app.multilingual.interfaces import ITranslatable
 from plone.app.multilingual.interfaces import ITranslationManager
+from plone.base import PloneMessageFactory as _
 from plone.base.interfaces import ISecuritySchema
 from plone.base.interfaces import ISiteSchema
 from plone.base.utils import base_hasattr
@@ -18,7 +19,6 @@ from Products.CMFCore.utils import _checkPermission
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.WorkflowCore import WorkflowException
 from Products.CMFEditions.Permissions import AccessPreviousVersions
-from Products.CMFPlone import PloneMessageFactory as _
 from Products.CMFPlone.utils import log
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
