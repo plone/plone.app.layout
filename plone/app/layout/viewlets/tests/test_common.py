@@ -1,4 +1,4 @@
-from plone.app.layout.navigation.interfaces import INavigationRoot
+from plone.base.interfaces import INavigationRoot
 from plone.app.layout.viewlets.common import ContentViewsViewlet
 from plone.app.layout.viewlets.common import GlobalSectionsViewlet
 from plone.app.layout.viewlets.common import LogoViewlet

@@ -2,7 +2,7 @@ from .interfaces import IContextState
 from Acquisition import aq_base
 from Acquisition import aq_inner
 from Acquisition import aq_parent
-from plone.app.layout.navigation.interfaces import INavigationRoot
+from plone.base.interfaces import INavigationRoot
 from plone.base.utils import pretty_title_or_id
 from plone.memoize.view import memoize
 from plone.portlets.interfaces import ILocalPortletAssignable

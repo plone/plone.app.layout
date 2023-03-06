@@ -1,9 +1,12 @@
+from zope.deferredimport import deprecated
 from zope.interface import Attribute
 from zope.interface import Interface
 
 
-class INavigationRoot(Interface):
-    """A marker interface for signaling the navigation root."""
+deprecated(
+    "Import from plone.base.interfaces.siteroot instead (will be removed in Plone 7)",
+    INavigationRoot="plone.base.interfaces.siteroot:INavigationRoot",
+)
 
 
 class INavigationQueryBuilder(Interface):
