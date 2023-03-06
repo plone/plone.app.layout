@@ -40,7 +40,7 @@ setup(
         "DateTime",
         "plone.app.content",
         "plone.app.viewletmanager >=1.2",
-        "plone.base",
+        "plone.base >1.0.3",
         "plone.batching >1.0.999",
         "plone.i18n",
         "plone.memoize",
