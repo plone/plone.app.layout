@@ -1,4 +1,4 @@
-from plone.app.layout.navigation.root import getNavigationRootObject
+from plone.base.navigationroot import get_navigation_root_object
 from plone.app.layout.testing import INTEGRATION_TESTING
 
 import unittest
@@ -14,4 +14,4 @@ class NavigationRootTestCase(unittest.TestCase):
         navigation root is.
         """
         self.portal = self.layer["portal"]
-        self.assertEqual(None, getNavigationRootObject(None, self.portal))
+        self.assertEqual(None, get_navigation_root_object(None, self.portal))
