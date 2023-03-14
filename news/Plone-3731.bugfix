@@ -1,2 +1,0 @@
-Move interface plone.app.layout.navigation.interfaces.INavigationRoot to plone.base.interfaces.siteroot and add a deprecated import to plone.app.layout.
-[jensens, gforcarda]

@@ -8,6 +8,16 @@ Changelog
 
 .. towncrier release notes start
 
+4.0.2 (2023-03-14)
+------------------
+
+Bug fixes:
+
+
+- Move interface plone.app.layout.navigation.interfaces.INavigationRoot to plone.base.interfaces.siteroot and add a deprecated import to plone.app.layout.
+  [jensens, gforcarda] (Plone-3731)
+
+
 4.0.1 (2023-02-22)
 ------------------
 
