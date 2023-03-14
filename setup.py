@@ -42,7 +42,7 @@ setup(
         "plone.app.content",
         "plone.app.viewletmanager >=1.2",
         "plone.base >=1.0.4",
-        "plone.batching >1.0.999",
+        "plone.batching >=2.0.0",
         "plone.i18n",
         "plone.memoize",
         "plone.portlets",
