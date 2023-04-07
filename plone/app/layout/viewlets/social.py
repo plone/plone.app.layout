@@ -100,10 +100,10 @@ class SocialTagsViewlet(TitleViewlet):
         if item.has_enclosure and item.file_length > 0:
             if item.file_type.startswith("image"):
                 image = None
-                scales = self.context.restrictedTraverse('@@images', None)
+                scales = self.context.restrictedTraverse("@@images", None)
                 if scales:
                     try:
-                        image = scales.scale('image', scale=self.social_image_scale)
+                        image = scales.scale("image", scale=self.social_image_scale)
                     except Exception as e:
                         logger.exception(e)
                 if image:

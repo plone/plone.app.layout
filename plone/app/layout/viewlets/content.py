@@ -46,7 +46,6 @@ HAS_PAM = True
 
 
 class DocumentActionsViewlet(ViewletBase):
-
     index = ViewPageTemplateFile("document_actions.pt")
 
     def update(self):
@@ -59,7 +58,6 @@ class DocumentActionsViewlet(ViewletBase):
 
 
 class DocumentBylineViewlet(ViewletBase):
-
     index = ViewPageTemplateFile("document_byline.pt")
 
     def update(self):
@@ -67,12 +65,16 @@ class DocumentBylineViewlet(ViewletBase):
         self.anonymous = self.portal_state.anonymous()
 
     @property
-    @deprecation.deprecate("The context_state property is unused and will be removed in Plone 7")
+    @deprecation.deprecate(
+        "The context_state property is unused and will be removed in Plone 7"
+    )
     def context_state(self):
         return getMultiAdapter((self.context, self.request), name="plone_context_state")
 
     @property
-    @deprecation.deprecate("The has_pam property is unused and will be removed in Plone 7")
+    @deprecation.deprecate(
+        "The has_pam property is unused and will be removed in Plone 7"
+    )
     def has_pam(self):
         return HAS_PAM
 
@@ -97,7 +99,9 @@ class DocumentBylineViewlet(ViewletBase):
         )
         return not self.anonymous or settings.allow_anon_views_about
 
-    @deprecation.deprecate("The creator method is unused and will be removed in Plone 7")
+    @deprecation.deprecate(
+        "The creator method is unused and will be removed in Plone 7"
+    )
     def creator(self):
         return self.context.Creator()
 
@@ -106,7 +110,9 @@ class DocumentBylineViewlet(ViewletBase):
         membership = getToolByName(self.context, "portal_membership")
         return membership.getMemberInfo(self.creator())
 
-    @deprecation.deprecate("The authorname method is unused and will be removed in Plone 7")
+    @deprecation.deprecate(
+        "The authorname method is unused and will be removed in Plone 7"
+    )
     def authorname(self):
         author = self.author()
         return author and author["fullname"] or self.creator()
@@ -139,7 +145,9 @@ class DocumentBylineViewlet(ViewletBase):
             return self.context.expires().isPast()
         return False
 
-    @deprecation.deprecate("The toLocalizedTime method is unused and will be removed in Plone 7")
+    @deprecation.deprecate(
+        "The toLocalizedTime method is unused and will be removed in Plone 7"
+    )
     def toLocalizedTime(self, time, long_format=None, time_only=None):
         """Convert time to localized time"""
         util = getToolByName(self.context, "translation_service")
@@ -167,7 +175,9 @@ class DocumentBylineViewlet(ViewletBase):
 
         return DateTime(date)
 
-    @deprecation.deprecate("The get_translations method is unused and will be removed in Plone 7")
+    @deprecation.deprecate(
+        "The get_translations method is unused and will be removed in Plone 7"
+    )
     def get_translations(self):
         cts = []
         if ITranslatable.providedBy(self.context):
@@ -308,7 +318,6 @@ class HistoryByLineView(BrowserView):
 
 
 class ContentRelatedItems(ViewletBase):
-
     index = ViewPageTemplateFile("document_relateditems.pt")
 
     def related_items(self):
@@ -365,7 +374,6 @@ class ContentRelatedItems(ViewletBase):
 
 
 class WorkflowHistoryViewlet(ViewletBase):
-
     index = ViewPageTemplateFile("review_history.pt")
 
     @memoize
@@ -440,7 +448,6 @@ class WorkflowHistoryViewlet(ViewletBase):
 
 
 class ContentHistoryViewlet(WorkflowHistoryViewlet):
-
     index = ViewPageTemplateFile("content_history.pt")
 
     def revisionHistory(self):

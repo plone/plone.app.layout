@@ -5,7 +5,6 @@ import unittest
 
 
 class NavigationRootTestCase(unittest.TestCase):
-
     layer = INTEGRATION_TESTING
 
     def test_getNavigationRootObject_no_context(self):

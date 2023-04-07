@@ -260,7 +260,6 @@ def buildFolderTree(context, obj=None, query={}, strategy=NavtreeStrategyBase())
         if not forceInsert and strategy is not None:
             insert = strategy.nodeFilter(newNode)
         if insert:
-
             if strategy is not None:
                 newNode = strategy.decoratorFactory(newNode)
 

@@ -20,7 +20,6 @@ class BaseIcon:
 
     @memoize
     def html_tag(self):
-
         if not self.url:
             return None
 

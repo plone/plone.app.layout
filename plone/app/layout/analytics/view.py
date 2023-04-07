@@ -9,7 +9,6 @@ from zope.viewlet.interfaces import IViewlet
 
 @implementer(IViewlet)
 class AnalyticsViewlet(BrowserView):
-
     render = ViewPageTemplateFile("view.pt")
 
     def __init__(self, context, request, view, manager):

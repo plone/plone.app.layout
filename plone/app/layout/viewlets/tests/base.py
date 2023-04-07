@@ -6,7 +6,6 @@ import unittest
 
 
 class ViewletsTestCase(unittest.TestCase):
-
     layer = INTEGRATION_TESTING
 
     def setUp(self):
@@ -16,7 +15,6 @@ class ViewletsTestCase(unittest.TestCase):
 
 
 class ViewletsFunctionalTestCase(unittest.TestCase):
-
     layer = FUNCTIONAL_TESTING
 
     def setUp(self):

@@ -84,7 +84,11 @@ class TestDocumentBylineViewletView(ViewletsTestCase):
         # otherwise we will return the fullname property
         portal_membership = getToolByName(self.portal, "portal_membership")
         portal_membership.addMember(
-            "foo/bar", TEST_USER_PASSWORD, ["Member"], "", properties={"fullname": "Foo Bar"}
+            "foo/bar",
+            TEST_USER_PASSWORD,
+            ["Member"],
+            "",
+            properties={"fullname": "Foo Bar"},
         )
         self.assertEqual(viewlet.get_fullname("foo/bar"), "Foo Bar")
 

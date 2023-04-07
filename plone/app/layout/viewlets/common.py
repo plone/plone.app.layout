@@ -409,7 +409,6 @@ class GlobalSectionsViewlet(ViewletBase):
 
 
 class PersonalBarViewlet(ViewletBase):
-
     homelink_url = ""
     user_name = ""
 

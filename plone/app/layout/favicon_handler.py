@@ -9,7 +9,6 @@ import mimetypes
 
 @adapter(ISiteSchema, IRecordModifiedEvent)
 def updateMimetype(settings: RecordsProxy, event: IRecordModifiedEvent = None):
-
     if event.record.fieldName != "site_favicon" or not event.record.value:
         return
 

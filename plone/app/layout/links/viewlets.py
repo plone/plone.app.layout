@@ -36,7 +36,6 @@ def render_cachekey(fun, self):
 
 
 class FaviconViewlet(ViewletBase):
-
     _template = ViewPageTemplateFile("favicon.pt")
     mimetype: str
     favicon_path: str
@@ -81,7 +80,6 @@ class FaviconViewlet(ViewletBase):
 
 
 class SearchViewlet(ViewletBase):
-
     _template = ViewPageTemplateFile("search.pt")
 
     @ram.cache(render_cachekey)
@@ -90,7 +88,6 @@ class SearchViewlet(ViewletBase):
 
 
 class AuthorViewlet(ViewletBase):
-
     _template = ViewPageTemplateFile("author.pt")
 
     def update(self):
