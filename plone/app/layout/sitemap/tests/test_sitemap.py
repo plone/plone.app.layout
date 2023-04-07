@@ -266,6 +266,6 @@ class SiteMapTestCase(unittest.TestCase):
         xml = self.uncompress(self.sitemap())
         self.assertFalse("<loc>http://nohost/plone/folder/default</loc>" in xml)
         self.assertTrue("<loc>http://nohost/plone/folder</loc>" in xml)
-        self.assertTrue("<lastmod>2001-01-01T" in xml)
+        self.assertTrue("<lastmod >2001-01-01T" in xml)
         self.assertTrue("<loc>http://nohost/plone</loc>" in xml)
         self.assertFalse("<loc>http://nohost/plone/published</loc>" in xml)
