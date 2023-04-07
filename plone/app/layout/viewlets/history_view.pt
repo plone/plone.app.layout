@@ -1,19 +1,21 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
-      xmlns:tal="http://xml.zope.org/namespaces/tal"
-      xmlns:metal="http://xml.zope.org/namespaces/metal"
+<html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
       lang="en"
       metal:use-macro="context/main_template/macros/master"
-      i18n:domain="plone">
+      xml:lang="en"
+      i18n:domain="plone"
+>
 
-<body>
+  <body>
 
     <metal:description fill-slot="content-description" />
-    
+
     <metal:content fill-slot="content-core">
-        <h3 i18n:translate="label_history">History</h3>
-        <div tal:replace="structure here/@@contenthistory">Content History</div>
+      <h3 i18n:translate="label_history">History</h3>
+      <div tal:replace="structure here/@@contenthistory">Content History</div>
     </metal:content>
 
-</body>
+  </body>
 </html>

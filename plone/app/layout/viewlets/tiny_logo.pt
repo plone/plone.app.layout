@@ -1,3 +1,8 @@
-<a class="plone-toolbar-logo" aria-hidden="true">
-    <img alt="Plone Toolbar" i18n:attributes="alt label_plone_toolbar_logo" src="++resource++plone-toolbarlogo.svg" />
+<a class="plone-toolbar-logo"
+   aria-hidden="true"
+>
+  <img alt="Plone Toolbar"
+       src="++resource++plone-toolbarlogo.svg"
+       i18n:attributes="alt label_plone_toolbar_logo"
+  />
 </a>

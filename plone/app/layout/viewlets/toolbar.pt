@@ -1,51 +1,77 @@
-<section id="edit-bar" role="toolbar"
-         tal:define="context_state view/context_state;
-                     icons python:context.restrictedTraverse('@@iconresolver');
-                     personal_bar python: view.get_personal_bar();
-                     toolbar_pos view/toolbar_position"
+<section id="edit-bar"
+         role="toolbar"
+         tal:define="
+           context_state view/context_state;
+           icons python:context.restrictedTraverse('@@iconresolver');
+           personal_bar python: view.get_personal_bar();
+           toolbar_pos view/toolbar_position;
+         "
          tal:condition="context_state/is_toolbar_visible"
-         i18n:domain="plone">
+         i18n:domain="plone"
+>
 
 
-  <div id="edit-zone" role="toolbar"
-       class="pat-toolbar" data-bs-scroll="true">
+  <div class="pat-toolbar"
+       id="edit-zone"
+       role="toolbar"
+       data-bs-scroll="true"
+  >
 
     <div class="toolbar-header nav">
-      <a class="toolbar-collapse" aria-label="Unpin" i18n:attributes="aria-label">
+      <a class="toolbar-collapse"
+         aria-label="Unpin"
+         i18n:attributes="aria-label"
+      >
         <tal:icon tal:replace="structure python:icons.tag('arrow-bar-left')" />
       </a>
-      <a class="toolbar-expand" aria-label="Pin" i18n:attributes="aria-label">
+      <a class="toolbar-expand"
+         aria-label="Pin"
+         i18n:attributes="aria-label"
+      >
         <tal:icon tal:replace="structure python:icons.tag('arrow-bar-right')" />
       </a>
     </div>
 
     <ul class="nav flex-column plone-toolbar-main"
-        tal:define="toolbar_main view/base_render"
-        tal:condition="toolbar_main">
+        tal:define="
+          toolbar_main view/base_render;
+        "
+        tal:condition="toolbar_main"
+    >
       <li tal:replace="structure toolbar_main">
       </li>
     </ul>
 
-    <div tal:condition="personal_bar/user_actions" class="personaltools-wrapper nav ${python:'dropend' if toolbar_pos == 'side' else ''}">
+    <div class="personaltools-wrapper nav ${python:'dropend' if toolbar_pos == 'side' else ''}"
+         tal:condition="personal_bar/user_actions"
+    >
 
-      <a id="personaltools-menulink"
-         class="nav-link dropdown-toggle"
-         data-bs-toggle="dropdown"
-         data-bs-offset="0,0"
+      <a class="nav-link dropdown-toggle"
+         id="personaltools-menulink"
          aria-expanded="false"
-         tal:attributes="href personal_bar/homelink_url">
+         data-bs-offset="0,0"
+         data-bs-toggle="dropdown"
+         tal:attributes="
+           href personal_bar/homelink_url;
+         "
+      >
         <tal:icon tal:replace="structure python:icons.tag('toolbar-action/personaltools', tag_class='')" />
-        <span class="toolbar-label" tal:content="personal_bar/user_name">User</span>
+        <span class="toolbar-label"
+              tal:content="personal_bar/user_name"
+        >User</span>
       </a>
 
-      <ul id="collapse-personaltools"
-          class="dropdown-menu"
-          aria-labelledby="personaltools-menulink">
+      <ul class="dropdown-menu"
+          id="collapse-personaltools"
+          aria-labelledby="personaltools-menulink"
+      >
         <li>
           <h6 class="dropdown-header">${personal_bar/user_name}</h6>
         </li>
         <li tal:repeat="action personal_bar/user_actions">
-          <a href="${action/href}" class="nav-link dropdown-item">
+          <a class="nav-link dropdown-item"
+             href="${action/href}"
+          >
             <tal:icon replace="structure python:icons.tag(action.get('icon', 'dot'), tag_class='')" />
             <tal:actionname tal:content="action/title">
               action title

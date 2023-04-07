@@ -1,5 +1,7 @@
 <div id="plone-analytics"
-     tal:define="webstats_js view/webstats_js"
+     tal:define="
+       webstats_js view/webstats_js;
+     "
      tal:condition="webstats_js"
      tal:content="structure webstats_js"
 >
