@@ -1,53 +1,54 @@
 <configure
     xmlns="http://namespaces.zope.org/zope"
-    xmlns:browser="http://namespaces.zope.org/browser">
+    xmlns:browser="http://namespaces.zope.org/browser"
+    >
 
-    <!-- Views with global constants -->
+  <!-- Views with global constants -->
 
-    <browser:page
-        name="plone_interface_info"
-        for="*"
-        permission="zope.Public"
-        class=".interface.InterfaceInformation"
-        allowed_interface=".interfaces.IInterfaceInformation"
-        />
+  <browser:page
+      name="plone_interface_info"
+      for="*"
+      class=".interface.InterfaceInformation"
+      allowed_interface=".interfaces.IInterfaceInformation"
+      permission="zope.Public"
+      />
 
-    <browser:page
-        name="plone_layout"
-        for="*"
-        permission="zope.Public"
-        class=".layout.LayoutPolicy"
-        allowed_interface=".interfaces.ILayoutPolicy"
-        />
+  <browser:page
+      name="plone_layout"
+      for="*"
+      class=".layout.LayoutPolicy"
+      allowed_interface=".interfaces.ILayoutPolicy"
+      permission="zope.Public"
+      />
 
-    <browser:page
-        name="plone_tools"
-        for="*"
-        permission="zope.Public"
-        class=".tools.Tools"
-        allowed_interface=".interfaces.ITools"
-        />
+  <browser:page
+      name="plone_tools"
+      for="*"
+      class=".tools.Tools"
+      allowed_interface=".interfaces.ITools"
+      permission="zope.Public"
+      />
 
-    <browser:page
-        name="plone_context_state"
-        for="*"
-        permission="zope.Public"
-        class=".context.ContextState"
-        allowed_interface=".interfaces.IContextState"
-        />
+  <browser:page
+      name="plone_context_state"
+      for="*"
+      class=".context.ContextState"
+      allowed_interface=".interfaces.IContextState"
+      permission="zope.Public"
+      />
 
-    <browser:page
-        name="plone_portal_state"
-        for="*"
-        permission="zope.Public"
-        class=".portal.PortalState"
-        allowed_interface=".interfaces.IPortalState"
-        />
+  <browser:page
+      name="plone_portal_state"
+      for="*"
+      class=".portal.PortalState"
+      allowed_interface=".interfaces.IPortalState"
+      permission="zope.Public"
+      />
 
-    <!-- We need to make the request annotatable for this to work -->
+  <!-- We need to make the request annotatable for this to work -->
 
-    <class class="ZPublisher.BaseRequest.BaseRequest">
-        <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
-    </class>
+  <class class="ZPublisher.BaseRequest.BaseRequest">
+    <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
+  </class>
 
 </configure>
