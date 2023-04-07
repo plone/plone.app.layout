@@ -11,6 +11,7 @@ from plone.base import PloneMessageFactory as _
 from plone.base.interfaces import ISecuritySchema
 from plone.base.interfaces import ISiteSchema
 from plone.base.utils import base_hasattr
+from plone.base.utils import logger
 from plone.memoize.instance import memoize
 from plone.memoize.view import memoize_contextless
 from plone.protect.authenticator import createToken
@@ -19,7 +20,6 @@ from Products.CMFCore.utils import _checkPermission
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.WorkflowCore import WorkflowException
 from Products.CMFEditions.Permissions import AccessPreviousVersions
-from Products.CMFPlone.utils import log
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from urllib.parse import urlencode
@@ -28,7 +28,6 @@ from zope.component import getUtility
 from zope.component import queryMultiAdapter
 from zope.deprecation import deprecation
 
-import logging
 import pkg_resources
 
 
@@ -438,10 +437,9 @@ class WorkflowHistoryViewlet(ViewletBase):
             review_history.reverse()
 
         except WorkflowException:
-            log(
-                "plone.app.layout.viewlets.content: "
-                "%s has no associated workflow" % context.absolute_url(),
-                severity=logging.DEBUG,
+            logger.debug(
+                "plone.app.layout.viewlets.content: %s has no associated workflow",
+                context.absolute_url(),
             )
 
         return review_history

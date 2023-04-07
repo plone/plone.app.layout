@@ -2,6 +2,7 @@ from .interfaces import IPortalState
 from Acquisition import aq_inner
 from plone.app.layout.navigation.root import getNavigationRoot
 from plone.app.layout.navigation.root import getNavigationRootObject
+from plone.base.interfaces import IPloneSiteRoot
 from plone.base.interfaces import ISearchSchema
 from plone.base.interfaces import ISiteSchema
 from plone.i18n.interfaces import ILanguageSchema
@@ -10,7 +11,6 @@ from plone.memoize.view import memoize_contextless
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.interfaces import ISiteRoot
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.interfaces import IPloneSiteRoot
 from Products.Five.browser import BrowserView
 from zope.component import getUtility
 from zope.component import providedBy
