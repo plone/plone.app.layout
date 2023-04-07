@@ -1,11 +1,11 @@
-from plone.base.interfaces import INavigationRoot
 from plone.app.layout.testing import INTEGRATION_TESTING
 from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
 from plone.app.testing.helpers import logout
+from plone.base.interfaces import INavigationRoot
+from plone.base.interfaces.controlpanel import ILinkSchema
 from plone.portlets.interfaces import IPortletType
 from plone.registry.interfaces import IRegistry
-from plone.base.interfaces.controlpanel import ILinkSchema
 from zope.component import getUtility
 
 import os

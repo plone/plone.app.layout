@@ -1,4 +1,3 @@
-from plone.base.interfaces import INavigationRoot
 from plone.app.layout.viewlets.common import ContentViewsViewlet
 from plone.app.layout.viewlets.common import GlobalSectionsViewlet
 from plone.app.layout.viewlets.common import LogoViewlet
@@ -10,11 +9,12 @@ from plone.app.testing import setRoles
 from plone.app.testing import SITE_OWNER_NAME
 from plone.app.testing import SITE_OWNER_PASSWORD
 from plone.app.testing import TEST_USER_ID
+from plone.base.interfaces import INavigationRoot
+from plone.base.interfaces import INonStructuralFolder
+from plone.base.interfaces import ISiteSchema
 from plone.protect import authenticator as auth
 from plone.registry.interfaces import IRegistry
 from plone.testing.zope import Browser
-from plone.base.interfaces import INonStructuralFolder
-from plone.base.interfaces import ISiteSchema
 from zope.component import getUtility
 from zope.component.hooks import setSite
 from zope.interface import alsoProvides
