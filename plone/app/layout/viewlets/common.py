@@ -84,7 +84,7 @@ class ViewletBase(BrowserView):
 class TitleViewlet(ViewletBase):
     index = ViewPageTemplateFile("title.pt")
 
-    # seperator of page- and portal-title
+    # separator of page- and portal-title
     sep = " &mdash; "
 
     @property

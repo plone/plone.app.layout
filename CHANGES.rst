@@ -392,7 +392,7 @@ Bug fixes:
 
 
 - Analytics viewlet: make webstats_js a property, so that it does not rely on an a call to the update method to be correctly evaluated [ale-rt] (#227)
-- Code formating according to Plone standards (black, isort).
+- Code formatting according to Plone standards (black, isort).
   [thet] (#230)
 - Remove selectedTabs and update method from GlobalSectionsViewlet as both are now unused.
   [thet] (#231)
@@ -427,7 +427,7 @@ Bug fixes:
 New features:
 
 
-- Add a sorrounding div to the webstats js. Fixes #157
+- Add a surrounding div to the webstats js. Fixes #157
   [erral] (#157)
 
 
@@ -576,7 +576,7 @@ New features:
 - Allow addition of extra body classes via multiple IBodyClassAdapter adapter registrations without the need to overload the ILayoutPolicy view.
   [thet, jensens, agitator]
 
-- Make it easier to override seperator in title viewlet
+- Make it easier to override separator in title viewlet
   [tomgross]
 
 Bug fixes:
@@ -642,7 +642,7 @@ New features:
 
 Bug fixes:
 
-- show 'in current section only' before seach input field for a11y reasons. https://github.com/plone/Products.CMFPlone/issues/1619 [polyester]
+- show 'in current section only' before search input field for a11y reasons. https://github.com/plone/Products.CMFPlone/issues/1619 [polyester]
 
 
 2.7.1 (2017-07-03)
@@ -751,7 +751,7 @@ Bug fixes:
 
 Bug fixes:
 
-- Document byline viewlet is now displayed only to anonymous users if permited by the `Allow anyone to view 'about' information` option in the `Security Settings` of `Site Setup` (closes `CMFPlone#1556`_).
+- Document byline viewlet is now displayed only to anonymous users if permitted by the `Allow anyone to view 'about' information` option in the `Security Settings` of `Site Setup` (closes `CMFPlone#1556`_).
   Code used to show the lock status and history view was removed from the document byline as this information was not available to anonymous users anyway.
   [hvelarde]
 
@@ -968,7 +968,7 @@ Fixes:
 - by default, show site logo in social settings
   [vangheem]
 
-- Add aria hidden role to avoid screenreaders to nonesense stop by at the
+- Add aria hidden role to avoid screenreaders to nonsense stop by at the
   toolbar tiny logo [sneridagh]
 
 - Get rid completely of the plone.skip_links viewlet because it already doesn't
@@ -1299,7 +1299,7 @@ Fixes:
 - handle missing feed type so it doesn't throw an error
   [vangheem]
 
-- handle absense of ACTUAL_URL on request.
+- handle absence of ACTUAL_URL on request.
   Fixes https://dev.plone.org/ticket/13173
   [vangheem]
 
@@ -1363,7 +1363,7 @@ Fixes:
   see https://dev.plone.org/ticket/12904
   [polyester]
 
-- Add language atribute to presentation.pt for WCAG 2.0 compliance.
+- Add language attribute to presentation.pt for WCAG 2.0 compliance.
   See https://dev.plone.org/ticket/12902
   [rmatt, polyester]
 
@@ -1376,7 +1376,7 @@ Fixes:
 
 - Correctly hand action URLs not ending / [phrearch]
 
-- Removed obsolete 'define-macro' and 'define-slot' from viewlet page tempates.
+- Removed obsolete 'define-macro' and 'define-slot' from viewlet page templates.
   Fixes http://dev.plone.org/ticket/11541.
   [kleist]
 
@@ -1395,7 +1395,7 @@ Fixes:
   see https://dev.plone.org/ticket/12904
   [polyester]
 
-- Add language atribute to presentation.pt for WCAG 2.0 compliance.
+- Add language attribute to presentation.pt for WCAG 2.0 compliance.
   See https://dev.plone.org/ticket/12902
   [rmatt, polyester]
 
@@ -1435,7 +1435,7 @@ Fixes:
 2.2.4 (2011-12-03)
 ------------------
 
-- Add the ability for the navtree strategy to suppliment the query.
+- Add the ability for the navtree strategy to supplement the query.
   Fixes a problem where the listing of default pages in navigation
   trees could no longer be enabled.
   [rossp]

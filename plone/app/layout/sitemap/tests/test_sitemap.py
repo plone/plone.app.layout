@@ -36,7 +36,7 @@ class SiteMapTestCase(unittest.TestCase):
         )
         self.wftool = getToolByName(self.portal, "portal_workflow")
 
-        # we need to explizitly set a workflow cause we can't rely on the
+        # we need to explicitly set a workflow cause we can't rely on the
         # test environment.
         # `instance test -m plone.app.layout`:
         # wftool._default_chain == 'simple_publication_workflow'
@@ -71,9 +71,9 @@ class SiteMapTestCase(unittest.TestCase):
 
     def uncompress(self, sitemapdata):
         sio = BytesIO(sitemapdata)
-        unziped = GzipFile(fileobj=sio)
-        xml = unziped.read()
-        unziped.close()
+        unzipped = GzipFile(fileobj=sio)
+        xml = unzipped.read()
+        unzipped.close()
         return safe_text(xml)
 
     def test_disabled(self):
