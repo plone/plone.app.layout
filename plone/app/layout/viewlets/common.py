@@ -158,19 +158,7 @@ class TableOfContentsViewlet(ViewletBase):
     index = ViewPageTemplateFile("toc.pt")
 
     def update(self):
-        obj = aq_base(self.context)
-        getTableContents = getattr(obj, "getTableContents", None)
-        self.enabled = False
-        if getTableContents is not None:
-            try:
-                self.enabled = getTableContents()
-            except KeyError:
-                # schema not updated yet
-                self.enabled = False
-        # handle dexterity-behavior
-        toc = getattr(obj, "table_of_contents", None)
-        if toc is not None:
-            self.enabled = toc
+        self.enabled = getattr(aq_base(self.context), "table_of_contents", False)
 
 
 class SiteActionsViewlet(ViewletBase):
