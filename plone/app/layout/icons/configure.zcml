@@ -1,42 +1,56 @@
-<configure xmlns="http://namespaces.zope.org/zope"
-           xmlns:browser="http://namespaces.zope.org/browser"
-           xmlns:five="http://namespaces.zope.org/five">
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:five="http://namespaces.zope.org/five"
+    >
 
-  <adapter for="*
-                zope.publisher.interfaces.browser.IBrowserRequest
-                Products.ZCatalog.CatalogBrains.AbstractCatalogBrain"
-           factory=".icons.CatalogBrainContentIcon"
-           provides=".interfaces.IContentIcon" />
+  <adapter
+      factory=".icons.CatalogBrainContentIcon"
+      provides=".interfaces.IContentIcon"
+      for="*
+           zope.publisher.interfaces.browser.IBrowserRequest
+           Products.ZCatalog.CatalogBrains.AbstractCatalogBrain"
+      />
 
-  <adapter for="*
-                zope.publisher.interfaces.browser.IBrowserRequest
-                Products.CMFCore.interfaces.IDynamicType"
-           factory=".icons.CMFContentIcon"
-           provides=".interfaces.IContentIcon" />
+  <adapter
+      factory=".icons.CMFContentIcon"
+      provides=".interfaces.IContentIcon"
+      for="*
+           zope.publisher.interfaces.browser.IBrowserRequest
+           Products.CMFCore.interfaces.IDynamicType"
+      />
 
-  <adapter for="*
-                zope.publisher.interfaces.browser.IBrowserRequest
-                plone.dexterity.interfaces.IDexterityContent"
-           factory=".icons.DefaultContentIcon"
-           provides=".interfaces.IContentIcon" />
+  <adapter
+      factory=".icons.DefaultContentIcon"
+      provides=".interfaces.IContentIcon"
+      for="*
+           zope.publisher.interfaces.browser.IBrowserRequest
+           plone.dexterity.interfaces.IDexterityContent"
+      />
 
 
-  <adapter for="*
-                zope.publisher.interfaces.browser.IBrowserRequest
-                Products.CMFCore.TypesTool.FactoryTypeInformation"
-           factory=".icons.FTIContentIcon"
-           provides=".interfaces.IContentIcon" />
+  <adapter
+      factory=".icons.FTIContentIcon"
+      provides=".interfaces.IContentIcon"
+      for="*
+           zope.publisher.interfaces.browser.IBrowserRequest
+           Products.CMFCore.TypesTool.FactoryTypeInformation"
+      />
 
-  <adapter for="*
-                zope.publisher.interfaces.browser.IBrowserRequest
-                plone.base.interfaces.IPloneSiteRoot"
-           factory=".icons.PloneSiteContentIcon"
-           provides=".interfaces.IContentIcon" />
+  <adapter
+      factory=".icons.PloneSiteContentIcon"
+      provides=".interfaces.IContentIcon"
+      for="*
+           zope.publisher.interfaces.browser.IBrowserRequest
+           plone.base.interfaces.IPloneSiteRoot"
+      />
 
-  <adapter for="*
-                zope.publisher.interfaces.browser.IBrowserRequest
-                *"
-           factory=".icons.DefaultContentIcon"
-           provides=".interfaces.IContentIcon" />
+  <adapter
+      factory=".icons.DefaultContentIcon"
+      provides=".interfaces.IContentIcon"
+      for="*
+           zope.publisher.interfaces.browser.IBrowserRequest
+           *"
+      />
 
 </configure>

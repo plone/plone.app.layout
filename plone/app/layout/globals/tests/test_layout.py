@@ -1,11 +1,11 @@
-from plone.base.interfaces import INavigationRoot
 from plone.app.layout.testing import INTEGRATION_TESTING
 from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
 from plone.app.testing.helpers import logout
+from plone.base.interfaces import INavigationRoot
+from plone.base.interfaces.controlpanel import ILinkSchema
 from plone.portlets.interfaces import IPortletType
 from plone.registry.interfaces import IRegistry
-from plone.base.interfaces.controlpanel import ILinkSchema
 from zope.component import getUtility
 
 import os
@@ -44,7 +44,7 @@ class TestLayoutView(unittest.TestCase):
         self.app = self.layer["app"]
         # Now add some portlets to be sure we have columns.  For
         # simplicity we want a portlet that has no add form.  Note
-        # that apparently the Calender had no add form until Plone
+        # that apparently the Calendar had no add form until Plone
         # 4.3, but since 4.4 it does, so it is not fit to use here.
         portlet = getUtility(IPortletType, name="portlets.Login")
         mapping_left = self.portal.restrictedTraverse(
@@ -110,7 +110,7 @@ class TestLayoutView(unittest.TestCase):
         body_class = layout_view.bodyClass(template, None)
         self.assertIn("template-document_view", body_class)
 
-        # case 3: if theres no template get name from view
+        # case 3: if there's no template get name from view
         body_class = layout_view.bodyClass(None, view)
         self.assertIn("template-view", body_class)
 

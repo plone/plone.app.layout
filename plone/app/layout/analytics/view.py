@@ -1,5 +1,5 @@
-from plone.registry.interfaces import IRegistry
 from plone.base.interfaces import ISiteSchema
+from plone.registry.interfaces import IRegistry
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope.component import getUtility
@@ -9,7 +9,6 @@ from zope.viewlet.interfaces import IViewlet
 
 @implementer(IViewlet)
 class AnalyticsViewlet(BrowserView):
-
     render = ViewPageTemplateFile("view.pt")
 
     def __init__(self, context, request, view, manager):

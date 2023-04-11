@@ -1,7 +1,7 @@
+from plone.base.interfaces import ISiteSchema
 from plone.formwidget.namedfile.converter import b64decode_file
 from plone.registry.interfaces import IRecordModifiedEvent
 from plone.registry.recordsproxy import RecordsProxy
-from plone.base.interfaces import ISiteSchema
 from zope.component import adapter
 
 import mimetypes
@@ -9,7 +9,6 @@ import mimetypes
 
 @adapter(ISiteSchema, IRecordModifiedEvent)
 def updateMimetype(settings: RecordsProxy, event: IRecordModifiedEvent = None):
-
     if event.record.fieldName != "site_favicon" or not event.record.value:
         return
 

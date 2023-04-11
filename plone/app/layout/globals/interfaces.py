@@ -29,7 +29,7 @@ class IInterfaceInformation(Interface):
         """
 
     def get_interface_informations(self, iface):
-        """Gets all useful informations from an iface
+        """Gets all useful information from an iface
 
         * name
         * dotted name
@@ -170,7 +170,7 @@ class IContextState(Interface):
         """The id of the view template of the context"""
 
     def is_view_template():
-        """Return True if the currentl URL (in the request) refers to the
+        """Return True if the current URL (in the request) refers to the
         standard "view" of the context (i.e. the "view" tab).
         """
 
@@ -208,7 +208,7 @@ class IContextState(Interface):
         """Whether or not the current object is locked"""
 
     def is_toolbar_visible():
-        """Wether toolbar is visible or not in the actual context"""
+        """Whether toolbar is visible or not in the actual context"""
 
     def actions(category):
         """The filtered actions in the context. You can restrict the actions

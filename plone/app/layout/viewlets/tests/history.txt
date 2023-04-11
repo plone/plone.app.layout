@@ -62,7 +62,7 @@ The history viewlet gracefully handles initial default workflow state.
     <...<span class="historyAction state-private">Create</span>...
 
 
-The history viewlet handles revert actions sucessfully. Let's make a revision.
+The history viewlet handles revert actions successfully. Let's make a revision.
 
     >>> browser.open(urldoc2)
     >>> browser.follow('Edit')

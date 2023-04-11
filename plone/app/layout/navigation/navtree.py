@@ -176,7 +176,7 @@ def buildFolderTree(context, obj=None, query={}, strategy=NavtreeStrategyBase())
         if rootObject is not None:
             pruneRoot = not strategy.showChildrenOf(rootObject)
 
-    # Allow the strategy to suppliment the query for keys not already
+    # Allow the strategy to supplement the query for keys not already
     # present in the query such as sorting and omitting default pages
     for key, value in strategy.supplimentQuery.items():
         if key not in query:
@@ -260,7 +260,6 @@ def buildFolderTree(context, obj=None, query={}, strategy=NavtreeStrategyBase())
         if not forceInsert and strategy is not None:
             insert = strategy.nodeFilter(newNode)
         if insert:
-
             if strategy is not None:
                 newNode = strategy.decoratorFactory(newNode)
 

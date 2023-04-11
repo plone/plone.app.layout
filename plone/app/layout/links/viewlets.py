@@ -1,6 +1,8 @@
 from Acquisition import aq_inner
 from plone.app.layout.viewlets import ViewletBase
 from plone.app.uuid.utils import uuidToObject
+from plone.base.interfaces import ISecuritySchema
+from plone.base.interfaces import ISiteSchema
 from plone.base.interfaces import ISiteSyndicationSettings
 from plone.base.interfaces.syndication import IFeedSettings
 from plone.base.utils import safe_bytes
@@ -9,8 +11,6 @@ from plone.memoize import ram
 from plone.memoize import view
 from plone.memoize.compress import xhtml_compress
 from plone.registry.interfaces import IRegistry
-from plone.base.interfaces import ISecuritySchema
-from plone.base.interfaces import ISiteSchema
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from typing import NoReturn
 from zope.component import getMultiAdapter
@@ -36,7 +36,6 @@ def render_cachekey(fun, self):
 
 
 class FaviconViewlet(ViewletBase):
-
     _template = ViewPageTemplateFile("favicon.pt")
     mimetype: str
     favicon_path: str
@@ -81,7 +80,6 @@ class FaviconViewlet(ViewletBase):
 
 
 class SearchViewlet(ViewletBase):
-
     _template = ViewPageTemplateFile("search.pt")
 
     @ram.cache(render_cachekey)
@@ -90,7 +88,6 @@ class SearchViewlet(ViewletBase):
 
 
 class AuthorViewlet(ViewletBase):
-
     _template = ViewPageTemplateFile("author.pt")
 
     def update(self):

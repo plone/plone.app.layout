@@ -3,12 +3,10 @@ from plone.app.testing import FunctionalTesting
 from plone.app.testing import IntegrationTesting
 from plone.app.testing import PloneSandboxLayer
 from plone.app.testing import TEST_USER_ID
-from plone.app.testing import TEST_USER_PASSWORD
 from plone.base.utils import unrestricted_construct_instance
 
 
 class Fixture(PloneSandboxLayer):
-
     defaultBases = (PLONE_APP_CONTENTTYPES_FIXTURE,)
 
     def setUpZope(self, app, configurationContext):

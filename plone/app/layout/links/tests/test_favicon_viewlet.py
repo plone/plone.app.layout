@@ -1,9 +1,9 @@
 from plone.app.layout.links.viewlets import FaviconViewlet
 from plone.app.layout.testing import FUNCTIONAL_TESTING
 from plone.app.layout.viewlets.tests.base import ViewletsTestCase
+from plone.base.interfaces import ISiteSchema
 from plone.formwidget.namedfile.converter import b64encode_file
 from plone.registry.interfaces import IRegistry
-from plone.base.interfaces import ISiteSchema
 from zope.component import getUtility
 
 

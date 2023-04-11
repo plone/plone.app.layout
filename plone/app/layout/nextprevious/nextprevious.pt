@@ -1,36 +1,61 @@
 <section id="section-next-prev"
-     tal:define="enabled view/enabled|nothing;
-                 isViewTemplate view/isViewTemplate|nothing"
-     tal:condition="python:enabled and isViewTemplate"
-     i18n:domain="plone">
+         tal:define="
+           enabled view/enabled|nothing;
+           isViewTemplate view/isViewTemplate|nothing;
+         "
+         tal:condition="python:enabled and isViewTemplate"
+         i18n:domain="plone"
+>
 
-  <tal:block define="portal_url view/site_url;">
+  <tal:block define="
+               portal_url view/site_url;
+             ">
 
     <nav class="pagination justify-content-between"
-         tal:define="next view/next;
-                     previous view/previous"
-         tal:condition="python:previous is not None or next is not None">
+         tal:define="
+           next view/next;
+           previous view/previous;
+         "
+         tal:condition="python:previous is not None or next is not None"
+    >
 
-          <a class="btn btn-sm btn-outline-secondary align-self-start previous" tal:condition="previous"
-              title="Go to previous item"
-              i18n:attributes="title title_previous_item"
-              tal:attributes="href previous/url">
-            <span class="arrow"></span>
-            <span i18n:translate="label_previous_item" class="label">
+      <a class="btn btn-sm btn-outline-secondary align-self-start previous"
+         title="Go to previous item"
+         tal:condition="previous"
+         tal:attributes="
+           href previous/url;
+         "
+         i18n:attributes="title title_previous_item"
+      >
+        <span class="arrow"></span>
+        <span class="label"
+              i18n:translate="label_previous_item"
+        >
               Previous:
-              <span i18n:name="itemtitle" tal:replace="previous/title" />
-            </span>
-          </a>
+          <span tal:replace="previous/title"
+                i18n:name="itemtitle"
+          ></span>
+        </span>
+      </a>
 
-          <a class="btn btn-sm btn-outline-secondary align-self-end next" tal:condition="next" title="Go to next item"
-              i18n:attributes="title title_next_item"
-              tal:attributes="href next/url">
-            <span i18n:translate="label_next_item" class="label">
+      <a class="btn btn-sm btn-outline-secondary align-self-end next"
+         title="Go to next item"
+         tal:condition="next"
+         tal:attributes="
+           href next/url;
+         "
+         i18n:attributes="title title_next_item"
+      >
+        <span class="label"
+              i18n:translate="label_next_item"
+        >
               Next:
-              <span i18n:name="itemtitle" tal:replace="next/title" />
-            </span>
-            <span class="arrow"></span>
-          </a>
+          <span tal:replace="next/title"
+                i18n:name="itemtitle"
+          ></span>
+        </span>
+        <span class="arrow"></span>
+      </a>
 
 
     </nav>

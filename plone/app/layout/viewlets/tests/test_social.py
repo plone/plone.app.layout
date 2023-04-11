@@ -5,8 +5,8 @@ from plone.app.testing import logout
 from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
 from plone.app.testing import TEST_USER_NAME
-from plone.registry.interfaces import IRegistry
 from plone.base.interfaces import ISocialMediaSchema
+from plone.registry.interfaces import IRegistry
 from zope.annotation.interfaces import IAnnotations
 from zope.component import getUtility
 
@@ -131,12 +131,18 @@ class TestSocialViewlet(ViewletsTestCase):
         viewlet.update()
         self.assertTrue(
             self.tagFound(
-                viewlet, "property", "og:image", "http://nohost/plone/++resource++plone-logo.svg"
+                viewlet,
+                "property",
+                "og:image",
+                "http://nohost/plone/++resource++plone-logo.svg",
             )
         )
         self.assertFalse(self.tagFound(viewlet, "itemprop"))
         self.assertTrue(
             self.bodyTagFound(
-                viewlet, "itemprop", "image", "http://nohost/plone/++resource++plone-logo.svg"
+                viewlet,
+                "itemprop",
+                "image",
+                "http://nohost/plone/++resource++plone-logo.svg",
             )
         )

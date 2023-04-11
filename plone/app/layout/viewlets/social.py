@@ -1,17 +1,18 @@
 from plone.app.layout.viewlets.common import TitleViewlet
+from plone.base.interfaces import ISocialMediaSchema
+from plone.base.interfaces.syndication import IFeedItem
 from plone.memoize.view import memoize
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.browser.syndication.adapters import BaseItem
 from Products.CMFPlone.browser.syndication.adapters import FolderFeed
-from plone.base.interfaces import ISocialMediaSchema
-from plone.base.interfaces.syndication import IFeedItem
 from Products.CMFPlone.utils import getSiteLogo
 from zope.component import getUtility
 from zope.component import queryMultiAdapter
 from zope.component.hooks import getSite
 
 import logging
+
 
 logger = logging.getLogger("plone.app.layout")
 
@@ -99,10 +100,10 @@ class SocialTagsViewlet(TitleViewlet):
         if item.has_enclosure and item.file_length > 0:
             if item.file_type.startswith("image"):
                 image = None
-                scales = self.context.restrictedTraverse('@@images', None)
+                scales = self.context.restrictedTraverse("@@images", None)
                 if scales:
                     try:
-                        image = scales.scale('image', scale=self.social_image_scale)
+                        image = scales.scale("image", scale=self.social_image_scale)
                     except Exception as e:
                         logger.exception(e)
                 if image:

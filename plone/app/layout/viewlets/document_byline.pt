@@ -23,30 +23,38 @@
         >${fullname}</span>
       </tal:user>
     </tal:for>
-    —
+    &mdash;
   </tal:creators>
 
-  <tal:dates define="published view/pub_date;
-                     modified context/ModificationDate;
-                     show_modification_date python:view.show_modification_date()">
-  <span class="documentPublished" tal:condition="published">
-    <span i18n:translate="box_published">published</span>
-    <span tal:content="python:context.toLocalizedTime(published)">Published</span><tal:sep condition="show_modification_date">,</tal:sep>
-  </span>
+  <tal:dates define="
+               published view/pub_date;
+               modified context/ModificationDate;
+               show_modification_date python:view.show_modification_date();
+             ">
+    <span class="documentPublished"
+          tal:condition="published"
+    >
+      <span i18n:translate="box_published">published</span>
+      <span tal:content="python:context.toLocalizedTime(published)">Published</span><tal:sep condition="show_modification_date">,</tal:sep>
+    </span>
 
-  <span class="documentModified" tal:condition="show_modification_date">
-    <span i18n:translate="box_last_modified">
+    <span class="documentModified"
+          tal:condition="show_modification_date"
+    >
+      <span i18n:translate="box_last_modified">
       last modified
-    </span>
-    <span tal:content="python:context.toLocalizedTime(modified)">
+      </span>
+      <span tal:content="python:context.toLocalizedTime(modified)">
       Modified
+      </span>
     </span>
-  </span>
   </tal:dates>
 
   <tal:expired tal:condition="view/isExpired">
-    —
-    <span class="state-expired" i18n:translate="time_expired">expired</span>
+    &mdash;
+    <span class="state-expired"
+          i18n:translate="time_expired"
+    >expired</span>
   </tal:expired>
 
 </section>

@@ -7,16 +7,16 @@ from html import escape
 from plone.app.layout.globals.interfaces import IViewView
 from plone.app.layout.navigation.root import getNavigationRoot
 from plone.base import PloneMessageFactory as _
+from plone.base.interfaces import IPloneSiteRoot
+from plone.base.interfaces import ISearchSchema
+from plone.base.interfaces import ISiteSchema
+from plone.base.interfaces.controlpanel import INavigationSchema
 from plone.base.utils import safe_text
 from plone.i18n.interfaces import ILanguageSchema
 from plone.memoize.view import memoize
 from plone.protect.utils import addTokenToUrl
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
-from plone.base.interfaces import IPloneSiteRoot
-from plone.base.interfaces import ISearchSchema
-from plone.base.interfaces import ISiteSchema
-from plone.base.interfaces.controlpanel import INavigationSchema
 from Products.CMFPlone.utils import getSiteLogo
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
@@ -84,7 +84,7 @@ class ViewletBase(BrowserView):
 class TitleViewlet(ViewletBase):
     index = ViewPageTemplateFile("title.pt")
 
-    # seperator of page- and portal-title
+    # separator of page- and portal-title
     sep = " &mdash; "
 
     @property
@@ -409,7 +409,6 @@ class GlobalSectionsViewlet(ViewletBase):
 
 
 class PersonalBarViewlet(ViewletBase):
-
     homelink_url = ""
     user_name = ""
 

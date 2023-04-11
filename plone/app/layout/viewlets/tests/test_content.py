@@ -7,10 +7,10 @@ from plone.app.testing import logout
 from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
 from plone.app.testing import TEST_USER_PASSWORD
-from plone.locking.interfaces import ILockable
-from plone.registry.interfaces import IRegistry
 from plone.base.interfaces import ISecuritySchema
 from plone.base.interfaces import ISiteSchema
+from plone.locking.interfaces import ILockable
+from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from z3c.relationfield import RelationValue
 from zope.component import getUtility
@@ -84,7 +84,11 @@ class TestDocumentBylineViewletView(ViewletsTestCase):
         # otherwise we will return the fullname property
         portal_membership = getToolByName(self.portal, "portal_membership")
         portal_membership.addMember(
-            "foo/bar", TEST_USER_PASSWORD, ["Member"], "", properties={"fullname": "Foo Bar"}
+            "foo/bar",
+            TEST_USER_PASSWORD,
+            ["Member"],
+            "",
+            properties={"fullname": "Foo Bar"},
         )
         self.assertEqual(viewlet.get_fullname("foo/bar"), "Foo Bar")
 

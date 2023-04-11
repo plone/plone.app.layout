@@ -3,6 +3,7 @@ from Acquisition import aq_base
 from Acquisition import aq_inner
 from Acquisition import aq_parent
 from plone.base.interfaces import INavigationRoot
+from plone.base.interfaces import INonStructuralFolder
 from plone.base.utils import pretty_title_or_id
 from plone.memoize.view import memoize
 from plone.portlets.interfaces import ILocalPortletAssignable
@@ -11,7 +12,6 @@ from Products.CMFCore.interfaces import IDynamicType
 from Products.CMFCore.interfaces import ISiteRoot
 from Products.CMFCore.utils import getToolByName
 from Products.CMFDynamicViewFTI.interfaces import IBrowserDefault
-from plone.base.interfaces import INonStructuralFolder
 from Products.Five.browser import BrowserView
 from zope.component import getMultiAdapter
 from zope.component import getUtility

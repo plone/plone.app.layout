@@ -1,12 +1,12 @@
-from plone.base.interfaces import INavigationRoot
 from plone.app.layout.testing import INTEGRATION_TESTING
 from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
 from plone.app.testing.helpers import logout
-from plone.locking.interfaces import ILockable
-from Products.CMFDynamicViewFTI.interfaces import IBrowserDefault
+from plone.base.interfaces import INavigationRoot
 from plone.base.interfaces import INonStructuralFolder
 from plone.base.utils import unrestricted_construct_instance
+from plone.locking.interfaces import ILockable
+from Products.CMFDynamicViewFTI.interfaces import IBrowserDefault
 from zope.interface import alsoProvides
 from zope.interface import directlyProvides
 

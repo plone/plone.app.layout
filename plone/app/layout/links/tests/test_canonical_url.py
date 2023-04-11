@@ -5,7 +5,6 @@ import unittest
 
 
 class ViewletTestCase(unittest.TestCase):
-
     layer = FUNCTIONAL_TESTING
 
     def setUp(self):
