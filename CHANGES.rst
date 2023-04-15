@@ -8,6 +8,23 @@ Changelog
 
 .. towncrier release notes start
 
+4.0.3 (2023-04-15)
+------------------
+
+Bug fixes:
+
+
+- Remove Archetypes code from TOC viewlet.
+  @jensens (rm-at-code-from-toc)
+
+
+Internal:
+
+
+- Update configuration files.
+  [plone devs] (11f0db91)
+
+
 4.0.2 (2023-03-14)
 ------------------
 
