@@ -4,9 +4,7 @@ from DateTime import DateTime
 from plone.app.content.browser.interfaces import IFolderContentsView
 from plone.app.layout.globals.interfaces import IViewView
 from plone.app.layout.viewlets import ViewletBase
-from plone.app.multilingual.browser.vocabularies import translated_languages
-from plone.app.multilingual.interfaces import ITranslatable
-from plone.app.multilingual.interfaces import ITranslationManager
+from plone.app.relationfield.behavior import IRelatedItems
 from plone.base import PloneMessageFactory as _
 from plone.base.interfaces import ISecuritySchema
 from plone.base.interfaces import ISiteSchema
@@ -27,21 +25,6 @@ from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.component import queryMultiAdapter
 from zope.deprecation import deprecation
-
-import pkg_resources
-
-
-try:
-    pkg_resources.get_distribution("plone.app.relationfield")
-except pkg_resources.DistributionNotFound:
-    HAS_RELATIONFIELD = False
-else:
-    from plone.app.relationfield.behavior import IRelatedItems
-
-    HAS_RELATIONFIELD = True
-
-# XXX needs refactoring, since Plone 5 we have PAM in core.
-HAS_PAM = True
 
 
 class DocumentActionsViewlet(ViewletBase):
@@ -75,7 +58,7 @@ class DocumentBylineViewlet(ViewletBase):
         "The has_pam property is unused and will be removed in Plone 7"
     )
     def has_pam(self):
-        return HAS_PAM
+        return True
 
     @property
     @memoize_contextless
@@ -178,6 +161,10 @@ class DocumentBylineViewlet(ViewletBase):
         "The get_translations method is unused and will be removed in Plone 7"
     )
     def get_translations(self):
+        from plone.app.multilingual.browser.vocabularies import translated_languages
+        from plone.app.multilingual.interfaces import ITranslatable
+        from plone.app.multilingual.interfaces import ITranslationManager
+
         cts = []
         if ITranslatable.providedBy(self.context):
             t_langs = translated_languages(self.context)
@@ -206,12 +193,18 @@ class HistoryByLineView(BrowserView):
             (self.context, self.request), name="plone_context_state"
         )
         self.anonymous = self.portal_state.anonymous()
-        self.has_pam = HAS_PAM
 
     def __call__(self):
         self.update()
 
         return self.index()
+
+    @property
+    @deprecation.deprecate(
+        "The has_pam property is unused and will be removed in Plone 7"
+    )
+    def has_pam(self):
+        return True
 
     def show(self):
         registry = getUtility(IRegistry)
@@ -300,7 +293,14 @@ class HistoryByLineView(BrowserView):
 
         return DateTime(date)
 
+    @deprecation.deprecate(
+        "The get_translations method is unused and will be removed in Plone 7"
+    )
     def get_translations(self):
+        from plone.app.multilingual.browser.vocabularies import translated_languages
+        from plone.app.multilingual.interfaces import ITranslatable
+        from plone.app.multilingual.interfaces import ITranslationManager
+
         cts = []
         if ITranslatable.providedBy(self.context):
             t_langs = translated_languages(self.context)
@@ -320,35 +320,12 @@ class ContentRelatedItems(ViewletBase):
     index = ViewPageTemplateFile("document_relateditems.pt")
 
     def related_items(self):
-        context = aq_inner(self.context)
-        res = ()
-
-        # Archetypes
-        if base_hasattr(context, "getRawRelatedItems"):
-            catalog = getToolByName(context, "portal_catalog")
-            related = context.getRawRelatedItems()
-            if not related:
-                return ()
-            brains = catalog(UID=related)
-            if brains:
-                # build a position dict by iterating over the items once
-                positions = {v: i for (i, v) in enumerate(related)}
-                # We need to keep the ordering intact
-                res = list(brains)
-
-                def _key(brain):
-                    return positions.get(brain.UID, -1)
-
-                res.sort(key=_key)
-
-        # Dexterity
-        if HAS_RELATIONFIELD and IRelatedItems.providedBy(context):
-            related = context.relatedItems
-            if not related:
-                return ()
-            res = self.related2brains(related)
-
-        return res
+        if not IRelatedItems.providedBy(self.context):
+            return ()
+        related = aq_inner(self.context).relatedItems
+        if not related:
+            return ()
+        return self.related2brains(related)
 
     def related2brains(self, related):
         """Return a list of brains based on a list of relations. Will filter

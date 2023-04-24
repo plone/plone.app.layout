@@ -39,7 +39,6 @@ setup(
     install_requires=[
         "BTrees",
         "plone.app.content",
-        "plone.app.multilingual",
         "plone.app.relationfield",
         "plone.app.uuid",
         "plone.app.viewletmanager >=1.2",
