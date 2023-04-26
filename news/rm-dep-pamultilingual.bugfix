@@ -1,5 +1,0 @@
-Add another unused `get_translations` method to deprecated ones.
-Circula dependency on plone.app.multilingual is only for unused deprecated methods.
-Move it's imports into methods-body and remove dependency from setup.py.
-[@jensens]
-

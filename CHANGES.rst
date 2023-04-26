@@ -8,6 +8,20 @@ Changelog
 
 .. towncrier release notes start
 
+4.0.4 (2023-04-26)
+------------------
+
+Bug fixes:
+
+
+- Remove dead code for Archetypes relations lookup.
+  [@jensens] (rm-archetypes-code)
+- Add another unused `get_translations` method to deprecated ones.
+  Circula dependency on plone.app.multilingual is only for unused deprecated methods.
+  Move it's imports into methods-body and remove dependency from setup.py.
+  [@jensens] (rm-dep-pamultilingual)
+
+
 4.0.3 (2023-04-15)
 ------------------
 
