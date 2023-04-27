@@ -5,8 +5,8 @@ from plone.app.testing.helpers import logout
 from plone.base.interfaces import INavigationRoot
 from plone.base.interfaces import ISearchSchema
 from plone.base.interfaces import ISiteSchema
-from plone.i18n.interfaces import ILanguageSchema
 from plone.base.navigationroot import get_navigation_root
+from plone.i18n.interfaces import ILanguageSchema
 from plone.registry.interfaces import IRegistry
 from zope.component import getUtility
 from zope.event import notify
