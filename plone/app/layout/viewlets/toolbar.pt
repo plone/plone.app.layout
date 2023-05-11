@@ -71,6 +71,7 @@
         <li tal:repeat="action personal_bar/user_actions">
           <a class="nav-link dropdown-item"
              href="${action/href}"
+             target="${action/target|string:}"
           >
             <tal:icon replace="structure python:icons.tag(action.get('icon', 'dot'), tag_class='')" />
             <tal:actionname tal:content="action/title">
