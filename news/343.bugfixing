@@ -1,0 +1,1 @@
+Move INextPreviousProvider interface to plone.app.dexterity and the plone.app.dexterity.defaultpagewarning viewlet to the current package in order to remove the circular dependency btw plone.app.layout and the plone.app.dexterity
