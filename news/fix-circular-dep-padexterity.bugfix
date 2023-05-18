@@ -1,0 +1,4 @@
+Fix transitive circular dependencies in `plone.app.layout`.
+Move `.nextprevious.INextPreviousProvider` to `plone.app.dexterity.behaviors.nextprevious` and put BBB import into place.
+Move the default page warning viewlet from `plone.app.dexterity.browser:default_page_warning.pt` with it's ZCML to `plone.app.layout.viewlets`.
+[@jensens]
