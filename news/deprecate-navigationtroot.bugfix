@@ -1,3 +1,0 @@
-Deprecate moved `getNavigationRoot` and `getNavigationRootObject` in `plone.app.layout.navigation.root`.
-This was already moved earlier as `get_navigation_root` and `get_navigation_root_object` to `plone.base.navigationroot`.
-[@jensens]

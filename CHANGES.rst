@@ -8,6 +8,23 @@ Changelog
 
 .. towncrier release notes start
 
+4.0.5 (2023-05-22)
+------------------
+
+Bug fixes:
+
+
+- Deprecate moved `getNavigationRoot` and `getNavigationRootObject` in `plone.app.layout.navigation.root`.
+  This was already moved earlier as `get_navigation_root` and `get_navigation_root_object` to `plone.base.navigationroot`.
+  [@jensens] (deprecate-navigationtroot)
+- Fix transitive circular dependencies in `plone.app.layout`.
+  Move `.nextprevious.INextPreviousProvider` to `plone.app.dexterity.behaviors.nextprevious` and put BBB import into place.
+  Move the default page warning viewlet from `plone.app.dexterity.browser:default_page_warning.pt` with it's ZCML to `plone.app.layout.viewlets`.
+  [@jensens] (fix-circular-dep-padexterity)
+- Bring back all HTML attributes for actions.
+  [gforcada] (#340)
+
+
 4.0.4 (2023-04-26)
 ------------------
 
