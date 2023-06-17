@@ -67,7 +67,9 @@
                         i18n:translate=""
                   ></span>
                 </tal:action>
-                <tal:effective tal:condition="effective|nothing">
+                <tal:effective tal:condition="effective|nothing"
+                               i18n:ignore="true"
+                >
                   (<span tal:omit-tag=""
                         i18n:translate="label_publishing_effective"
                   >effective</span>: ${effectiveDate})
