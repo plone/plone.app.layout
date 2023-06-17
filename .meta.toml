@@ -6,4 +6,4 @@ template = "default"
 commit-id = "7723aeaf"
 
 [pyproject]
-dependencies_ignores = "['plone.app.relationfield', 'plone.app.multilingual']"
+dependencies_ignores = "['plone.app.relationfield', 'plone.app.multilingual', 'Products.CMFPlone']"

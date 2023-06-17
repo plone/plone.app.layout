@@ -92,7 +92,7 @@ Zope = [
   'Products.CMFCore', 'Products.CMFDynamicViewFTI',
 ]
 python-dateutil = ['dateutil']
-ignore-packages = ['plone.app.relationfield', 'plone.app.multilingual']
+ignore-packages = ['plone.app.relationfield', 'plone.app.multilingual', 'Products.CMFPlone']
 
 ##
 # Add extra configuration options in .meta.toml:
