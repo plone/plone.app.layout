@@ -1,5 +1,9 @@
 # Generated from:
 # https://github.com/plone/meta/tree/master/config/default
+# See the inline comments on how to expand/tweak this configuration file
 [meta]
 template = "default"
-commit-id = "11f0db91"
+commit-id = "7723aeaf"
+
+[pyproject]
+dependencies_ignores = "['plone.app.relationfield', 'plone.app.multilingual']"
