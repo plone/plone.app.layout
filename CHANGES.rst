@@ -8,6 +8,16 @@ Changelog
 
 .. towncrier release notes start
 
+4.0.6 (2023-06-22)
+------------------
+
+Bug fixes:
+
+
+- Unify default values for translations
+  [erral] (#347)
+
+
 4.0.5 (2023-05-22)
 ------------------
 
