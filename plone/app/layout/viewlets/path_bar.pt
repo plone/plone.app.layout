@@ -4,7 +4,7 @@
      tal:define="
        breadcrumbs python:view.breadcrumbs;
      "
-     i18n:attributes="label_breadcrumb"
+     i18n:attributes="aria-label"
      i18n:domain="plone"
 >
   <div class="container">

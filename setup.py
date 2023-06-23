@@ -37,7 +37,6 @@ setup(
     zip_safe=False,
     python_requires=">=3.8",
     install_requires=[
-        "BTrees",
         "plone.app.content",
         "plone.app.relationfield",
         "plone.app.uuid",
@@ -64,7 +63,6 @@ setup(
             "plone.locking",
             "plone.testing",
             "z3c.relationfield",
-            "zope.annotation",
             "zope.intid",
         ]
     ),
