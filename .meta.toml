@@ -3,7 +3,12 @@
 # See the inline comments on how to expand/tweak this configuration file
 [meta]
 template = "default"
-commit-id = "7723aeaf"
+commit-id = "cfffba8c"
 
 [pyproject]
 dependencies_ignores = "['plone.app.relationfield', 'plone.app.multilingual', 'Products.CMFPlone']"
+
+[pre_commit]
+extra_lines = """
+        exclude: .*/tests/.*.pt
+"""
