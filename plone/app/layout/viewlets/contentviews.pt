@@ -11,18 +11,18 @@
     <div tal:replace="structure python: view.menu_template(actions=actions)"></div>
   </tal:block>
 
-  <li class="border-top my-2">
+  <li class="border-top my-2"></li>
 
-    <tal:contentmenus>
-      <div tal:replace="structure provider:plone.contentmenu"></div>
-    </tal:contentmenus>
+  <tal:contentmenus>
+    <div tal:replace="structure provider:plone.contentmenu"></div>
+  </tal:contentmenus>
 
-    <li class="border-top my-2">
+  <li class="border-top my-2"></li>
 
-      <tal:block define="
-                   actions view/tabSet2;
-                 ">
-        <div tal:replace="structure python: view.menu_template(actions=actions)"></div>
-      </tal:block>
+  <tal:block define="
+               actions view/tabSet2;
+             ">
+    <div tal:replace="structure python: view.menu_template(actions=actions)"></div>
+  </tal:block>
 
-    </li></li></tal:contentviews>
+</tal:contentviews>
