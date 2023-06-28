@@ -1,16 +1,22 @@
+from pathlib import Path
 from setuptools import find_packages
 from setuptools import setup
 
 
 version = "4.0.7.dev0"
 
-long_description = open("README.rst").read() + "\n" + open("CHANGES.rst").read()
+long_description = (
+    f"{Path('README.rst').read_text()}\n{Path('CHANGES.rst').read_text()}"
+)
 
 setup(
     name="plone.app.layout",
     version=version,
     description="Layout mechanisms for Plone",
     long_description=long_description,
+    long_description_content_type="text/x-rst",
+    # Get more strings from
+    # https://pypi.org/classifiers/
     classifiers=[
         "Development Status :: 6 - Mature",
         "Environment :: Web Environment",
