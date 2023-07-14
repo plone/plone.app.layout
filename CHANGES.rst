@@ -8,6 +8,23 @@ Changelog
 
 .. towncrier release notes start
 
+4.0.7 (2023-07-14)
+------------------
+
+Bug fixes:
+
+
+- Fix nested `li` tags after zpretty in `contentviews.pt`
+  [petschki] (#350)
+
+
+Internal:
+
+
+- Update configuration files.
+  [plone devs] (7723aeaf, cfffba8c)
+
+
 4.0.6 (2023-06-22)
 ------------------
 
