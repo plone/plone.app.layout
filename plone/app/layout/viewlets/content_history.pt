@@ -25,13 +25,13 @@
         <tal:historyitem define="
                            rhComments item/comments|nothing;
                            actor item/actor;
-                           actor_name python:actor and actor.get('fullname','username') or item['actorid'];
+                           actor_name python:actor and actor.get('fullname','username') or item.get('actorid', '');
                            actor_home item/actor_home;
                            action item/transition_title;
-                           action_id python:item['action'] or item['review_state'];
+                           action_id python:item.get('action') or item.get('review_state', '');
                            effective item/effective_date|nothing;
                            effectiveDate python:effective and view.toLocalizedTime(item['effective_date'],long_format=True);
-                           isVersion python:item['type']=='versioning';
+                           isVersion python:item.get('type', '')=='versioning';
                            icons python:context.restrictedTraverse('@@iconresolver');
                          ">
           <tr class="historyRecord ${python:'table-secondary' if not isVersion else ''}">
@@ -62,7 +62,7 @@
                     ></span>
                   </tal:actor>
                             on
-                  <span tal:content="python:view.toLocalizedTime(item['time'],long_format=True)"
+                  <span tal:content="python:view.toLocalizedTime(item.get('time', 0.0),long_format=True)"
                         i18n:name="time"
                         i18n:translate=""
                   ></span>

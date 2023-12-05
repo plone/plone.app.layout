@@ -383,30 +383,43 @@ class WorkflowHistoryViewlet(ViewletBase):
         review_history = []
 
         try:
-            # get total history
+            # Get total history.
+            # Note: expected variables like 'action' may not exist:
+            # the workflow may have started out without variables.
             review_history = workflow.getInfoFor(context, "review_history")
 
             if not complete:
                 # filter out automatic transitions.
-                review_history = [r for r in review_history if r["action"]]
+                review_history = [r for r in review_history if r.get("action")]
             else:
                 review_history = list(review_history)
 
             portal_type = context.portal_type
             anon = _("label_anonymous_user", default="Anonymous User")
-
             for r in review_history:
                 r["type"] = "workflow"
-                r["transition_title"] = workflow.getTitleForTransitionOnType(
-                    r["action"], portal_type
-                ) or _("Create")
+
+                # Get transition title.
+                transition_title = ""
+                action = r.get("action")
+                if action:
+                    transition_title = workflow.getTitleForTransitionOnType(
+                        action, portal_type
+                    )
+                if not transition_title:
+                    transition_title = _("Create")
+                r["transition_title"] = transition_title
+
+                # Get state title.
                 r["state_title"] = workflow.getTitleForStateOnType(
-                    r["review_state"], portal_type
+                    r.get("review_state", ""), portal_type
                 )
-                actorid = r["actor"]
+
+                # Get actor.
+                actorid = r.get("actor")
                 r["actorid"] = actorid
                 if actorid is None:
-                    # action performed by an anonymous user
+                    # action performed by an anonymous user, or unknown
                     r["actor"] = {"username": anon, "fullname": anon}
                     r["actor_home"] = ""
                 else:
@@ -509,7 +522,7 @@ class ContentHistoryViewlet(WorkflowHistoryViewlet):
         history = self.workflowHistory() + self.revisionHistory()
         if len(history) == 0:
             return None
-        history.sort(key=lambda x: x["time"], reverse=True)
+        history.sort(key=lambda x: x.get("time", 0.0), reverse=True)
         return history
 
     def toLocalizedTime(self, time, long_format=None, time_only=None):
