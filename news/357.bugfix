@@ -1,3 +1,0 @@
-Fix KeyError `time` when missing workflow variables are added later.
-Fixes `issue 357 <https://github.com/plone/plone.app.layout/issues/357>`_.
-[maurits]

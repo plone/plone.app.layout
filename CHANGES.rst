@@ -8,6 +8,17 @@ Changelog
 
 .. towncrier release notes start
 
+4.0.8 (2023-12-22)
+------------------
+
+Bug fixes:
+
+
+- Fix KeyError `time` when missing workflow variables are added later.
+  Fixes `issue 357 <https://github.com/plone/plone.app.layout/issues/357>`_.
+  [maurits] (#357)
+
+
 4.0.7 (2023-07-14)
 ------------------
 
