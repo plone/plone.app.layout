@@ -478,21 +478,21 @@ class ContentHistoryViewlet(WorkflowHistoryViewlet):
             )
             if can_diff:
                 if version_id > 0:
-                    info[
-                        "diff_previous_url"
-                    ] = "{}/@@history?one={}&two={}&_authenticator={}".format(
-                        context_url,
-                        version_id,
-                        version_id - 1,
-                        token,
+                    info["diff_previous_url"] = (
+                        "{}/@@history?one={}&two={}&_authenticator={}".format(
+                            context_url,
+                            version_id,
+                            version_id - 1,
+                            token,
+                        )
                     )
                 if not rt.isUpToDate(context, version_id):
-                    info[
-                        "diff_current_url"
-                    ] = "{}/@@history?one=current&two={}&_authenticator={}".format(
-                        context_url,
-                        version_id,
-                        token,
+                    info["diff_current_url"] = (
+                        "{}/@@history?one=current&two={}&_authenticator={}".format(
+                            context_url,
+                            version_id,
+                            token,
+                        )
                     )
             if can_revert:
                 info["revert_url"] = "%s/revertversion" % context_url
