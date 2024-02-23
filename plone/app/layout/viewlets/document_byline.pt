@@ -7,7 +7,7 @@
                   navigation_root_url context/@@plone_portal_state/navigation_root_url;
                 "
                 tal:condition="python:creator_ids and view.show_about()"
-  >
+  ><span class="label-by-author">
     <tal:i18n i18n:translate="">by</tal:i18n>
     <tal:for repeat="user_id creator_ids">
       <tal:user define="
@@ -24,6 +24,7 @@
       </tal:user>
     </tal:for>
     &mdash;
+    </span>
   </tal:creators>
 
   <tal:dates define="
