@@ -171,25 +171,6 @@ class SiteActionsViewlet(ViewletBase):
         self.site_actions = context_state.actions("site_actions")
 
 
-class SearchBoxViewlet(ViewletBase):
-    index = ViewPageTemplateFile("searchbox.pt")
-
-    def update(self):
-        super().update()
-
-        context_state = getMultiAdapter(
-            (self.context, self.request), name="plone_context_state"
-        )
-
-        registry = getUtility(IRegistry)
-        search_settings = registry.forInterface(ISearchSchema, prefix="plone")
-        self.livesearch = search_settings.enable_livesearch
-        self.show_images = search_settings.search_show_images
-
-        folder = context_state.folder()
-        self.folder_path = "/".join(folder.getPhysicalPath())
-
-
 class LogoViewlet(ViewletBase):
     index = ViewPageTemplateFile("logo.pt")
 

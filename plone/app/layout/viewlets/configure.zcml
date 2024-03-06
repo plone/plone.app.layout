@@ -148,14 +148,6 @@
       permission="zope2.View"
       />
 
-  <!-- The search box -->
-  <browser:viewlet
-      name="plone.searchbox"
-      manager=".interfaces.IPortalHeader"
-      class=".common.SearchBoxViewlet"
-      permission="zope2.View"
-      />
-
   <!-- The anontools (login, register) -->
   <browser:viewlet
       name="plone.anontools"
