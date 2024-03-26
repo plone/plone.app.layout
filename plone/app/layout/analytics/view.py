@@ -10,6 +10,7 @@ from zope.viewlet.interfaces import IViewlet
 @implementer(IViewlet)
 class AnalyticsViewlet(BrowserView):
     render = ViewPageTemplateFile("view.pt")
+    record_name = "webstats_js"
 
     def __init__(self, context, request, view, manager):
         super().__init__(context, request)
@@ -21,10 +22,7 @@ class AnalyticsViewlet(BrowserView):
     def webstats_js(self):
         registry = getUtility(IRegistry)
         site_settings = registry.forInterface(ISiteSchema, prefix="plone", check=False)
-        try:
-            return site_settings.webstats_js or ""
-        except AttributeError:
-            return ""
+        return getattr(site_settings, self.record_name, "")
 
     def update(self):
         """The viewlet manager _updateViewlets requires this method"""
@@ -32,24 +30,6 @@ class AnalyticsViewlet(BrowserView):
 
 
 @implementer(IViewlet)
-class AnalyticsHeadViewlet(BrowserView):
+class AnalyticsHeadViewlet(AnalyticsViewlet):
     render = ViewPageTemplateFile("view_head.pt")
-
-    def __init__(self, context, request, view, manager):
-        super().__init__(context, request)
-        self.__parent__ = view
-        self.view = view
-        self.manager = manager
-
-    @property
-    def webstats_head_js(self):
-        registry = getUtility(IRegistry)
-        site_settings = registry.forInterface(ISiteSchema, prefix="plone", check=False)
-        try:
-            return site_settings.webstats_head_js or ""
-        except AttributeError:
-            return ""
-
-    def update(self):
-        """The viewlet manager _updateViewlets requires this method"""
-        pass
+    record_name = "webstats_head_js"
