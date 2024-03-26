@@ -29,3 +29,27 @@ class AnalyticsViewlet(BrowserView):
     def update(self):
         """The viewlet manager _updateViewlets requires this method"""
         pass
+
+
+@implementer(IViewlet)
+class AnalyticsHeadViewlet(BrowserView):
+    render = ViewPageTemplateFile("view_head.pt")
+
+    def __init__(self, context, request, view, manager):
+        super().__init__(context, request)
+        self.__parent__ = view
+        self.view = view
+        self.manager = manager
+
+    @property
+    def webstats_head_js(self):
+        registry = getUtility(IRegistry)
+        site_settings = registry.forInterface(ISiteSchema, prefix="plone", check=False)
+        try:
+            return site_settings.webstats_head_js or ""
+        except AttributeError:
+            return ""
+
+    def update(self):
+        """The viewlet manager _updateViewlets requires this method"""
+        pass

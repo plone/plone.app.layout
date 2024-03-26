@@ -4,6 +4,13 @@
     >
 
   <browser:viewlet
+      name="plone.analytics.head"
+      manager="plone.app.layout.viewlets.interfaces.IScripts"
+      class=".view.AnalyticsHeadViewlet"
+      permission="zope2.View"
+      />
+
+  <browser:viewlet
       name="plone.analytics"
       manager="plone.app.layout.viewlets.interfaces.IPortalFooter"
       class=".view.AnalyticsViewlet"
