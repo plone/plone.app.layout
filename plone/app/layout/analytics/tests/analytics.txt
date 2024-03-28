@@ -5,7 +5,7 @@ We need a view on the content.
     >>> from zope.publisher.browser import BrowserView
     >>> view = BrowserView(portal, request)
 
-    >>> from plone.app.layout.viewlets.interfaces import IScripts, IPortalFooter
+    >>> from plone.app.layout.viewlets.interfaces import IHtmlHeadLinks, IPortalFooter
     >>> from Products.Five.viewlet.manager import ViewletManager
     >>> Footer = ViewletManager('left', IPortalFooter)
 
@@ -51,7 +51,7 @@ Now enter some non-ascii text
 
 Now instantiate a viewlet manager for the header.
 
-    >>> Header = ViewletManager('left', IScripts)
+    >>> Header = ViewletManager('left', IHtmlHeadLinks)
     >>> manager = Header(portal, request, view)
     >>> manager.update()
     >>> for viewlet in manager.viewlets:
