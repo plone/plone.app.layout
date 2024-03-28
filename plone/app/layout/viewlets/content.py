@@ -70,6 +70,7 @@ class DocumentBylineViewlet(ViewletBase):
         settings = registry.forInterface(
             ISiteSchema,
             prefix="plone",
+            check=False,
         )
         return not self.anonymous or settings.display_publication_date_in_byline
 
@@ -145,7 +146,7 @@ class DocumentBylineViewlet(ViewletBase):
         """
         # check if we are allowed to display publication date
         registry = getUtility(IRegistry)
-        settings = registry.forInterface(ISiteSchema, prefix="plone")
+        settings = registry.forInterface(ISiteSchema, prefix="plone", check=False)
 
         if not settings.display_publication_date_in_byline:
             return None
@@ -281,7 +282,7 @@ class HistoryByLineView(BrowserView):
         """
         # check if we are allowed to display publication date
         registry = getUtility(IRegistry)
-        settings = registry.forInterface(ISiteSchema, prefix="plone")
+        settings = registry.forInterface(ISiteSchema, prefix="plone", check=False)
 
         if not settings.display_publication_date_in_byline:
             return None

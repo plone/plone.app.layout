@@ -42,7 +42,11 @@ class FaviconViewlet(ViewletBase):
 
     def init_favicon(self) -> NoReturn:
         registry = getUtility(IRegistry)
-        settings: ISiteSchema = registry.forInterface(ISiteSchema, prefix="plone")
+        settings: ISiteSchema = registry.forInterface(
+            ISiteSchema,
+            prefix="plone",
+            check=False,
+        )
         self.mimetype: str = getattr(
             settings, "site_favicon_mimetype", "image/vnd.microsoft.icon"
         )
