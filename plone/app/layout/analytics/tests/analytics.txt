@@ -75,6 +75,8 @@ Set the analytics code through the controlpanel and verify it renders properly:
     >>> registry = getUtility(IRegistry)
     >>> site_settings = registry.forInterface(ISiteSchema, prefix="plone")
     >>> site_settings.webstats_head_js = u"<script>window.title='Hello'</script>"
+    >>> analytics.webstats_js == site_settings.webstats_head_js
+    True
     >>> text = manager.render()
     >>> 'plone.analytics.head goes here' in text
     True
