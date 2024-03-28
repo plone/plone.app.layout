@@ -56,12 +56,12 @@ Now instantiate a viewlet manager for the header.
     >>> manager.update()
     >>> for viewlet in manager.viewlets:
     ...     if viewlet.__name__ == "plone.analytics.head":
-    ...         analytics = viewlet
+    ...         analytics_head = viewlet
     ...         break
 
 When no analytics (webstats_head_js) code is set up the viewlet will not be rendered:
 
-    >>> analytics.webstats_js == ""
+    >>> analytics_head.webstats_js == ""
     True
     >>> text = manager.render()
     >>> 'plone.analytics.head goes here' in text
@@ -75,7 +75,7 @@ Set the analytics code through the controlpanel and verify it renders properly:
     >>> registry = getUtility(IRegistry)
     >>> site_settings = registry.forInterface(ISiteSchema, prefix="plone")
     >>> site_settings.webstats_head_js = u"<script>window.title='Hello'</script>"
-    >>> analytics.webstats_js == site_settings.webstats_head_js
+    >>> analytics_head.webstats_js == site_settings.webstats_head_js
     True
     >>> text = manager.render()
     >>> 'plone.analytics.head goes here' in text
