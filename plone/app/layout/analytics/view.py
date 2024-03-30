@@ -1,3 +1,4 @@
+from lxml import html as lxmlhtml
 from plone.base.interfaces import ISiteSchema
 from plone.registry.interfaces import IRegistry
 from Products.Five.browser import BrowserView
@@ -5,7 +6,6 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope.component import getUtility
 from zope.interface import implementer
 from zope.viewlet.interfaces import IViewlet
-from lxml import html as lxmlhtml
 
 
 @implementer(IViewlet)
@@ -27,7 +27,10 @@ class AnalyticsViewlet(BrowserView):
         if stats != "":
             html = lxmlhtml.fromstring(stats)
             if html.xpath("//script"):
-                script_tags = [lxmlhtml.tostring(tag, encoding='unicode') for tag in html.xpath("//script")]
+                script_tags = [
+                    lxmlhtml.tostring(tag, encoding="unicode")
+                    for tag in html.xpath("//script")
+                ]
                 return "\n".join(script_tags)
         return ""
 
