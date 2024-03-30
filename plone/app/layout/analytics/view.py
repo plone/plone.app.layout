@@ -7,6 +7,7 @@ from zope.interface import implementer
 from zope.viewlet.interfaces import IViewlet
 import lxml.html
 
+
 @implementer(IViewlet)
 class AnalyticsViewlet(BrowserView):
     render = ViewPageTemplateFile("view.pt")
