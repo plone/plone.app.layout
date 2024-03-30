@@ -59,7 +59,7 @@ setup(
         "Products.ZCatalog",
         "setuptools",
         "Zope",
-        "lxml"
+        "lxml",
     ],
     extras_require=dict(
         test=[
