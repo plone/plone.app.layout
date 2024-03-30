@@ -5,7 +5,7 @@ We need a view on the content.
     >>> from zope.publisher.browser import BrowserView
     >>> view = BrowserView(portal, request)
 
-    >>> from plone.app.layout.viewlets.interfaces import IHtmlHeadLinks, IPortalFooter
+    >>> from plone.app.layout.viewlets.interfaces import IHtmlHead, IPortalFooter
     >>> from Products.Five.viewlet.manager import ViewletManager
     >>> Footer = ViewletManager('left', IPortalFooter)
 
@@ -51,8 +51,8 @@ Now enter some non-ascii text
 
 Now instantiate a viewlet manager for the header.
 
-    >>> Header = ViewletManager('left', IHtmlHeadLinks)
-    >>> manager = Header(portal, request, view)
+    >>> Head = ViewletManager('left', IHtmlHead)
+    >>> manager = Head(portal, request, view)
     >>> manager.update()
     >>> for viewlet in manager.viewlets:
     ...     if viewlet.__name__ == "plone.analytics.head":
@@ -102,3 +102,10 @@ Now enter some non-ascii text
     False
     >>> "<script>window.title='Císař'</script>" in text
     True
+
+Final check, if we have bogus content in here, will things break?
+
+    >>> site_settings.webstats_head_js = u"console.log('Missing script tag')"
+    >>> text = manager.render()
+    >>> "console.log('Missing script tag')" in text
+    False

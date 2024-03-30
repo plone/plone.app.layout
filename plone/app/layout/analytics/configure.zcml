@@ -5,7 +5,7 @@
 
   <browser:viewlet
       name="plone.analytics.head"
-      manager="plone.app.layout.viewlets.interfaces.IHtmlHeadLinks"
+      manager="plone.app.layout.viewlets.interfaces.IHtmlHead"
       class=".view.AnalyticsHeadViewlet"
       permission="zope2.View"
       />

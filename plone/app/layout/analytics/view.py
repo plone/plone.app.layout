@@ -30,7 +30,7 @@ class AnalyticsViewlet(BrowserView):
                 html = lxmlhtml.fromstring(stats)
             except Exception:
                 return ""
-            if html and html.xpath("//script"):
+            if html != "" and html.xpath("//script"):
                 script_tags = [
                     lxmlhtml.tostring(tag, encoding="unicode")
                     for tag in html.xpath("//script")
