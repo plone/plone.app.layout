@@ -24,9 +24,13 @@ class AnalyticsViewlet(BrowserView):
         registry = getUtility(IRegistry)
         site_settings = registry.forInterface(ISiteSchema, prefix="plone", check=False)
         stats = getattr(site_settings, self.record_name, "")
+        html = ""
         if stats != "":
-            html = lxmlhtml.fromstring(stats)
-            if html.xpath("//script"):
+            try:
+                html = lxmlhtml.fromstring(stats)
+            except Exception:
+                return ""
+            if html and html.xpath("//script"):
                 script_tags = [
                     lxmlhtml.tostring(tag, encoding="unicode")
                     for tag in html.xpath("//script")
