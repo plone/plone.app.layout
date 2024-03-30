@@ -5,7 +5,7 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope.component import getUtility
 from zope.interface import implementer
 from zope.viewlet.interfaces import IViewlet
-import lxml.html
+from lxml import html as lxmlhtml
 
 
 @implementer(IViewlet)
@@ -25,9 +25,9 @@ class AnalyticsViewlet(BrowserView):
         site_settings = registry.forInterface(ISiteSchema, prefix="plone", check=False)
         stats = getattr(site_settings, self.record_name, "")
         if stats != "":
-            html = lxml.html.fromstring(stats)
+            html = lxmlhtml.fromstring(stats)
             if html.xpath("//script"):
-                script_tags = [lxml.html.tostring(tag, encoding='unicode') for tag in html.xpath("//script")]
+                script_tags = [lxmlhtml.tostring(tag, encoding='unicode') for tag in html.xpath("//script")]
                 return "\n".join(script_tags)
         return ""
 
