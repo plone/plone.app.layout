@@ -5,7 +5,7 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope.component import getUtility
 from zope.interface import implementer
 from zope.viewlet.interfaces import IViewlet
-
+import lxml.html
 
 @implementer(IViewlet)
 class AnalyticsViewlet(BrowserView):
@@ -22,7 +22,13 @@ class AnalyticsViewlet(BrowserView):
     def webstats_js(self):
         registry = getUtility(IRegistry)
         site_settings = registry.forInterface(ISiteSchema, prefix="plone", check=False)
-        return getattr(site_settings, self.record_name, "")
+        stats = getattr(site_settings, self.record_name, "")
+        if stats != "":
+            html = lxml.html.fromstring(stats)
+            if html.xpath("//script"):
+                script_tags = [lxml.html.tostring(tag, encoding='unicode') for tag in html.xpath("//script")]
+                return "\n".join(script_tags)
+        return ""
 
     def update(self):
         """The viewlet manager _updateViewlets requires this method"""

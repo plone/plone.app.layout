@@ -46,7 +46,7 @@ Now enter some non-ascii text
 
     >>> site_settings.webstats_js = u"<script>window.title='C\xedsa\u0159'</script>"
     >>> text = manager.render()
-    >>> site_settings.webstats_js in text
+    >>> "<script>window.title='Císař'</script>" in text
     True
 
 Now instantiate a viewlet manager for the header.
@@ -83,9 +83,22 @@ Set the analytics code through the controlpanel and verify it renders properly:
     >>> site_settings.webstats_head_js in text
     True
 
+If we add other tags than script tags, we only render the script tags.
+
+    >>> site_settings.webstats_head_js = u"<script>window.title='Hello'</script><link rel='stylesheet' src='teststyle.css'/>"
+    >>> text = manager.render()
+    >>> "<link rel='stylesheet' src='teststyle.css'/>" in text
+    False
+    >>> site_settings.webstats_head_js in text
+    False
+    >>> "<script>window.title='Hello'</script>" in text
+    True
+
 Now enter some non-ascii text
 
-    >>> site_settings.webstats_head_js = u"<script>window.title='C\xedsa\u0159'</script>"
+    >>> site_settings.webstats_head_js = u"<link rel='stylesheet' src='teststyle.css'></link><script>window.title='C\xedsa\u0159'</script>"
     >>> text = manager.render()
-    >>> site_settings.webstats_head_js in text
+    >>> "<link rel='stylesheet' src='teststyle.css'>" in text
+    False
+    >>> "<script>window.title='Císař'</script>" in text
     True
