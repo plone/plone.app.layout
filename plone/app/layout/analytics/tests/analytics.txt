@@ -94,11 +94,17 @@ If we add other tags than script tags, we only render the script tags.
     >>> "<script>window.title='Hello'</script>" in text
     True
 
-Now enter some non-ascii text
+Now enter some tags we don't want to render, like a <base> and <title> tag,
+since they should occur only once and is set by Plone. <style>, <script> and
+<link> tags are allowed.
 
-    >>> site_settings.webstats_head_js = u"<link rel='stylesheet' src='teststyle.css'></link><script>window.title='C\xedsa\u0159'</script>"
+    >>> site_settings.webstats_head_js = u"<base href='some-url' /><title>Get's removed</title><link rel='stylesheet' src='teststyle.css' /><script>window.title='C\xedsa\u0159'</script>"
     >>> text = manager.render()
-    >>> "<link rel='stylesheet' src='teststyle.css'>" in text
+    >>> '<link rel="stylesheet" src="teststyle.css">' in text
+    True
+    >>> "<base href='some-url'>" in text
+    False
+    >>> "<title>Get's removed</title>" in text
     False
     >>> "<script>window.title='Císař'</script>" in text
     True

@@ -7,6 +7,8 @@ from zope.component import getUtility
 from zope.interface import implementer
 from zope.viewlet.interfaces import IViewlet
 
+UNWANTED_TAGS = ["base", "title"]
+
 
 @implementer(IViewlet)
 class AnalyticsViewlet(BrowserView):
@@ -27,15 +29,17 @@ class AnalyticsViewlet(BrowserView):
         html = ""
         if stats != "":
             try:
-                html = lxmlhtml.fromstring(stats)
+                html = lxmlhtml.fragment_fromstring(stats, create_parent='div')
             except Exception:
                 return ""
-            if html != "" and html.xpath("//script"):
-                script_tags = [
-                    lxmlhtml.tostring(tag, encoding="unicode")
-                    for tag in html.xpath("//script")
-                ]
-                return "\n".join(script_tags)
+            if html != "":
+                for tag in UNWANTED_TAGS:
+                    bad_tags = html.xpath(f"//{tag}")
+                    if bad_tags:
+                        for bad_tag in bad_tags:
+                            bad_tag.drop_tree() 
+
+                return '\n'.join(lxmlhtml.tostring(x, encoding="unicode") for x in html.iterchildren())
         return ""
 
     def update(self):
