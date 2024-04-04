@@ -40,8 +40,7 @@ class AnalyticsViewlet(BrowserView):
                 for bad_tag in bad_tags:
                     bad_tag.drop_tree()
             return "\n".join(
-                lxmlhtml.tostring(x, encoding="unicode")
-                for x in html.iterchildren()
+                lxmlhtml.tostring(x, encoding="unicode") for x in html.iterchildren()
             )
         return ""
 
