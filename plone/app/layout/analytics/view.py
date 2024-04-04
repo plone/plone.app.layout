@@ -33,17 +33,16 @@ class AnalyticsViewlet(BrowserView):
                 html = lxmlhtml.fragment_fromstring(stats, create_parent="div")
             except Exception:
                 return ""
-            if html != "":
-                for tag in UNWANTED_TAGS:
-                    bad_tags = html.xpath(f"//{tag}")
-                    if bad_tags:
-                        for bad_tag in bad_tags:
-                            bad_tag.drop_tree()
 
-                return "\n".join(
-                    lxmlhtml.tostring(x, encoding="unicode")
-                    for x in html.iterchildren()
-                )
+            query = "| //".join(UNWANTED_TAGS)
+            bad_tags = html.xpath(f"//{query}")
+            if bad_tags:
+                for bad_tag in bad_tags:
+                    bad_tag.drop_tree()
+            return "\n".join(
+                lxmlhtml.tostring(x, encoding="unicode")
+                for x in html.iterchildren()
+            )
         return ""
 
     def update(self):
