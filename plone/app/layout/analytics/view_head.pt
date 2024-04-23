@@ -1,0 +1,9 @@
+<div tal:define="
+       webstats_head_js view/webstats_js;
+     "
+     tal:condition="webstats_head_js"
+     tal:omit-tag=""
+>
+  <!-- plone.analytics.head goes here -->
+  <span tal:replace="structure webstats_head_js"></span>
+</div>
