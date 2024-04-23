@@ -82,36 +82,3 @@ Set the analytics code through the controlpanel and verify it renders properly:
     True
     >>> site_settings.webstats_head_js in text
     True
-
-If we add other tags than script tags, we only render the script tags.
-
-    >>> site_settings.webstats_head_js = u"<script>window.title='Hello'</script><link rel='stylesheet' src='teststyle.css'/>"
-    >>> text = manager.render()
-    >>> "<link rel='stylesheet' src='teststyle.css'/>" in text
-    False
-    >>> site_settings.webstats_head_js in text
-    False
-    >>> "<script>window.title='Hello'</script>" in text
-    True
-
-Now enter some tags we don't want to render, like a <base> and <title> tag,
-since they should occur only once and is set by Plone. <style>, <script> and
-<link> tags are allowed.
-
-    >>> site_settings.webstats_head_js = u"<base href='some-url' /><title>Gets removed</title><link rel='stylesheet' src='teststyle.css' /><script>window.title='C\xedsa\u0159'</script>"
-    >>> text = manager.render()
-    >>> '<link rel="stylesheet" src="teststyle.css">' in text
-    True
-    >>> "<base href='some-url'>" in text
-    False
-    >>> "<title>Gets removed</title>" in text
-    False
-    >>> "<script>window.title='Císař'</script>" in text
-    True
-
-Final check, if we have bogus content in here, will things break?
-
-    >>> site_settings.webstats_head_js = u"console.log('Missing script tag')"
-    >>> text = manager.render()
-    >>> "console.log('Missing script tag')" in text
-    False

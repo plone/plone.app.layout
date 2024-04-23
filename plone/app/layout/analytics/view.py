@@ -1,4 +1,3 @@
-from lxml import html as lxmlhtml
 from plone.base.interfaces import ISiteSchema
 from plone.registry.interfaces import IRegistry
 from Products.Five.browser import BrowserView
@@ -26,23 +25,7 @@ class AnalyticsViewlet(BrowserView):
     def webstats_js(self):
         registry = getUtility(IRegistry)
         site_settings = registry.forInterface(ISiteSchema, prefix="plone", check=False)
-        stats = getattr(site_settings, self.record_name, "")
-        html = ""
-        if stats != "":
-            try:
-                html = lxmlhtml.fragment_fromstring(stats, create_parent="div")
-            except Exception:
-                return ""
-
-            query = "| //".join(UNWANTED_TAGS)
-            bad_tags = html.xpath(f"//{query}")
-            if bad_tags:
-                for bad_tag in bad_tags:
-                    bad_tag.drop_tree()
-            return "\n".join(
-                lxmlhtml.tostring(x, encoding="unicode") for x in html.iterchildren()
-            )
-        return ""
+        return getattr(site_settings, self.record_name, "")
 
     def update(self):
         """The viewlet manager _updateViewlets requires this method"""
