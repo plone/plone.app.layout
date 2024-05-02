@@ -1,10 +1,10 @@
 from .interfaces import IPortalState
 from Acquisition import aq_inner
-from plone.app.layout.navigation.root import getNavigationRoot
-from plone.app.layout.navigation.root import getNavigationRootObject
 from plone.base.interfaces import IPloneSiteRoot
 from plone.base.interfaces import ISearchSchema
 from plone.base.interfaces import ISiteSchema
+from plone.base.navigationroot import get_navigation_root
+from plone.base.navigationroot import get_navigation_root_object
 from plone.i18n.interfaces import ILanguageSchema
 from plone.memoize.view import memoize
 from plone.memoize.view import memoize_contextless
@@ -48,7 +48,7 @@ class PortalState(BrowserView):
     def navigation_root(self):
         context = aq_inner(self.context)
         portal = self.portal()
-        return getNavigationRootObject(context, portal)
+        return get_navigation_root_object(context, portal)
 
     @memoize
     def navigation_root_title(self):
@@ -64,7 +64,7 @@ class PortalState(BrowserView):
 
     @memoize
     def navigation_root_path(self):
-        return getNavigationRoot(aq_inner(self.context))
+        return get_navigation_root(aq_inner(self.context))
 
     @memoize
     def navigation_root_url(self):
