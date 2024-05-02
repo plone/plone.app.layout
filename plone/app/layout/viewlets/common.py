@@ -5,12 +5,12 @@ from collections import defaultdict
 from functools import total_ordering
 from html import escape
 from plone.app.layout.globals.interfaces import IViewView
-from plone.app.layout.navigation.root import getNavigationRoot
 from plone.base import PloneMessageFactory as _
 from plone.base.interfaces import IPloneSiteRoot
 from plone.base.interfaces import ISearchSchema
 from plone.base.interfaces import ISiteSchema
 from plone.base.interfaces.controlpanel import INavigationSchema
+from plone.base.navigationroot import get_navigation_root
 from plone.base.utils import safe_text
 from plone.i18n.interfaces import ILanguageSchema
 from plone.memoize.view import memoize
@@ -234,7 +234,7 @@ class GlobalSectionsViewlet(ViewletBase):
 
     @property
     def navtree_path(self):
-        return getNavigationRoot(self.context)
+        return get_navigation_root(self.context)
 
     @property
     def current_language(self):
