@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from plone.app.layout.testing import FUNCTIONAL_TESTING
 from plone.testing.zope import Browser
 
@@ -7,7 +5,6 @@ import unittest
 
 
 class ViewletTestCase(unittest.TestCase):
-
     layer = FUNCTIONAL_TESTING
 
     def setUp(self):

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from DateTime import DateTime
 from plone.app.layout.viewlets.content import ContentRelatedItems
 from plone.app.layout.viewlets.content import DocumentBylineViewlet
@@ -7,10 +6,12 @@ from plone.app.layout.viewlets.tests.base import ViewletsTestCase
 from plone.app.testing import logout
 from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
+from plone.app.testing import TEST_USER_PASSWORD
+from plone.base.interfaces import ISecuritySchema
+from plone.base.interfaces import ISiteSchema
 from plone.locking.interfaces import ILockable
 from plone.registry.interfaces import IRegistry
-from Products.CMFPlone.interfaces import ISecuritySchema
-from Products.CMFPlone.interfaces import ISiteSchema
+from Products.CMFCore.utils import getToolByName
 from z3c.relationfield import RelationValue
 from zope.component import getUtility
 from zope.interface import Interface
@@ -38,7 +39,7 @@ class TestDocumentBylineViewletView(ViewletsTestCase):
     """
 
     def setUp(self):
-        super(TestDocumentBylineViewletView, self).setUp()
+        super().setUp()
         self.folder.invokeFactory("Document", "doc1", title="Document 1")
         self.context = self.folder["doc1"]
 
@@ -58,12 +59,42 @@ class TestDocumentBylineViewletView(ViewletsTestCase):
         viewlet.update()
         return viewlet
 
+    def test_get_memberinfo(self):
+        viewlet = self._get_viewlet()
+        self.assertIsNone(viewlet.get_member_info("bogus"))
+        self.assertIsInstance(viewlet.get_member_info("test_user_1_"), dict)
+
+    def test_get_url_path(self):
+        viewlet = self._get_viewlet()
+        self.assertEqual(viewlet.get_url_path("bogus"), "")
+        self.assertEqual(viewlet.get_url_path("test_user_1_"), "author/test_user_1_")
+
+        # users with a slash in the userid will have a different URL
+        portal_membership = getToolByName(self.portal, "portal_membership")
+        portal_membership.addMember("foo/bar", TEST_USER_PASSWORD, ["Member"], "")
+        self.assertEqual(viewlet.get_url_path("foo/bar"), "author/?author=foo%2Fbar")
+
+    def test_get_fullname(self):
+        viewlet = self._get_viewlet()
+        # For non existent user we return the user id
+        self.assertEqual(viewlet.get_fullname("bogus"), "bogus")
+        # If the fullname is not set we return the user id
+        self.assertEqual(viewlet.get_fullname("test_user_1_"), "test_user_1_")
+
+        # otherwise we will return the fullname property
+        portal_membership = getToolByName(self.portal, "portal_membership")
+        portal_membership.addMember(
+            "foo/bar",
+            TEST_USER_PASSWORD,
+            ["Member"],
+            "",
+            properties={"fullname": "Foo Bar"},
+        )
+        self.assertEqual(viewlet.get_fullname("foo/bar"), "Foo Bar")
+
     def test_pub_date(self):
         # configure our portal to enable publication date on pages globally on
         # the site
-        registry = getUtility(IRegistry)
-        # settings = registry.forInterface(ISiteSchema, prefix="plone")
-
         self.site_settings.display_publication_date_in_byline = True
 
         logout()
@@ -134,7 +165,7 @@ class TestHistoryBylineViewletView(ViewletsTestCase):
     """
 
     def setUp(self):
-        super(TestHistoryBylineViewletView, self).setUp()
+        super().setUp()
         self.folder.invokeFactory("Document", "doc1", title="Document 1")
         self.context = self.folder["doc1"]
 
@@ -222,7 +253,7 @@ title="Locked" height="16" width="16" />'
 
 class TestRelatedItemsViewlet(ViewletsTestCase):
     def setUp(self):
-        super(TestRelatedItemsViewlet, self).setUp()
+        super().setUp()
         self.folder.invokeFactory("Document", "doc1", title="Document 1")
         self.folder.invokeFactory("Document", "doc2", title="Document 2")
         self.folder.invokeFactory("Document", "doc3", title="Document 3")
@@ -251,9 +282,9 @@ class TestRelatedItemsViewlet(ViewletsTestCase):
 
 class TestDexterityRelatedItemsViewlet(ViewletsTestCase):
     def setUp(self):
-        super(TestDexterityRelatedItemsViewlet, self).setUp()
+        super().setUp()
         """ create some sample content to test with """
-        from Products.CMFPlone.utils import get_installer
+        from plone.base.utils import get_installer
 
         setRoles(self.portal, TEST_USER_ID, ["Manager"])
         fti = DexterityFTI("Dexterity Item with relatedItems behavior")

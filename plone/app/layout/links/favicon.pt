@@ -1,4 +1,13 @@
-<tal:favicon define="portal_url view/site_url">
-    <link rel="shortcut icon" type="image/x-icon" tal:attributes="href string:$portal_url/favicon.ico" />
-    <link rel="apple-touch-icon" tal:attributes="href string:$portal_url/touch_icon.png" />
+<tal:favicon>
+  <link rel="preload icon"
+        type="${python: view.mimetype}"
+        tal:attributes="
+          href python: view.favicon_path;
+        "
+  />
+  <link rel="mask-icon"
+        tal:attributes="
+          href python: view.favicon_path;
+        "
+  />
 </tal:favicon>

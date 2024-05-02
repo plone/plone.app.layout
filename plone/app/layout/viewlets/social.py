@@ -1,19 +1,25 @@
-# -*- coding: utf-8 -*-
 from plone.app.layout.viewlets.common import TitleViewlet
+from plone.base.interfaces import ISocialMediaSchema
+from plone.base.interfaces.syndication import IFeedItem
 from plone.memoize.view import memoize
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.browser.syndication.adapters import BaseItem
 from Products.CMFPlone.browser.syndication.adapters import FolderFeed
-from Products.CMFPlone.interfaces import ISocialMediaSchema
-from Products.CMFPlone.interfaces.syndication import IFeedItem
 from Products.CMFPlone.utils import getSiteLogo
 from zope.component import getUtility
 from zope.component import queryMultiAdapter
 from zope.component.hooks import getSite
 
+import logging
+
+
+logger = logging.getLogger("plone.app.layout")
+
 
 class SocialTagsViewlet(TitleViewlet):
+    social_image_scale = "great"
+
     def head_tag_filter(self, value):
         if not isinstance(value, dict):
             return
@@ -93,14 +99,24 @@ class SocialTagsViewlet(TitleViewlet):
         found_image = False
         if item.has_enclosure and item.file_length > 0:
             if item.file_type.startswith("image"):
-                found_image = True
-                tags.extend(
-                    [
-                        dict(property="og:image", content=item.file_url),
-                        dict(itemprop="image", content=item.file_url),
-                        dict(property="og:image:type", content=item.file_type),
-                    ]
-                )
+                image = None
+                scales = self.context.restrictedTraverse("@@images", None)
+                if scales:
+                    try:
+                        image = scales.scale("image", scale=self.social_image_scale)
+                    except Exception as e:
+                        logger.exception(e)
+                if image:
+                    tags.extend(
+                        [
+                            dict(property="og:image", content=image.url),
+                            dict(property="og:image:width", content=image.width),
+                            dict(property="og:image:height", content=image.height),
+                            dict(itemprop="image", content=image.url),
+                            dict(property="og:image:type", content=item.file_type),
+                        ]
+                    )
+                    found_image = True
             elif (
                 item.file_type.startswith("video")
                 or item.file_type == "application/x-shockwave-flash"
@@ -120,12 +136,12 @@ class SocialTagsViewlet(TitleViewlet):
                 )
 
         if not found_image:
-            url = getSiteLogo()
+            url, mime_type = getSiteLogo(include_type=True)
             tags.extend(
                 [
                     dict(property="og:image", content=url),
                     dict(itemprop="image", content=url),
-                    dict(property="og:image:type", content="image/png"),
+                    dict(property="og:image:type", content=mime_type),
                 ]
             )
         return tags

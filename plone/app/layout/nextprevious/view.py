@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from Acquisition import aq_inner
 from Acquisition import aq_parent
 from plone.app.layout.nextprevious.interfaces import INextPreviousProvider
@@ -36,7 +35,7 @@ class NextPreviousView(BrowserView):
 
     def isViewTemplate(self):
         plone = getMultiAdapter(
-            (self.context, self.request), name=u"plone_context_state"
+            (self.context, self.request), name="plone_context_state"
         )
         return plone.is_view_template()
 

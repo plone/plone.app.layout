@@ -1,47 +1,87 @@
-<section id="edit-bar" role="toolbar"
-         tal:define="context_state view/context_state;
-                     personal_bar python: view.get_personal_bar()"
+<section id="edit-bar"
+         role="toolbar"
+         tal:define="
+           context_state view/context_state;
+           icons python:context.restrictedTraverse('@@iconresolver');
+           personal_bar python: view.get_personal_bar();
+           toolbar_pos view/toolbar_position;
+         "
          tal:condition="context_state/is_toolbar_visible"
-         i18n:domain="plone">
-  <div id="edit-zone" role="toolbar" class="pat-toolbar" data-pat-toolbar="${view/get_options}">
-    <div class="plone-toolbar-container">
-      <a class="plone-toolbar-logo">
-        <img alt="Plone Toolbar" tal:attributes="src view/get_toolbar_logo" />
+         i18n:domain="plone"
+>
+
+
+  <div class="pat-toolbar"
+       id="edit-zone"
+       role="toolbar"
+       data-bs-scroll="true"
+  >
+
+    <div class="toolbar-header nav">
+      <a class="toolbar-collapse"
+         aria-label="Unpin"
+         i18n:attributes="aria-label"
+      >
+        <tal:icon tal:replace="structure python:icons.tag('arrow-bar-left')" />
       </a>
-      <a class="plone-toolbar-switcher" tal:condition="view/show_switcher"><span i18n:translate="label_toolbar_switcher">Left-Top switcher</span></a>
-      <nav>
-        <ul class="plone-toolbar-main">
-          <div tal:replace="structure view/base_render">
-          </div>
-        </ul>
-        <ul id="personal-bar-container">
-          <li id="portal-personaltools" class="plone-toolbar-separator"
-              tal:condition="personal_bar/user_actions">
-            <a href="#"
-               tal:attributes="href personal_bar/homelink_url">
-              <span class="icon-user" aria-hidden="true"></span>
-              <span tal:content="personal_bar/user_name">User</span>
-              <span class="plone-toolbar-caret"></span>
-            </a>
-            <ul>
-              <li class="plone-toolbar-submenu-header">
-                <span tal:content="personal_bar/user_name">Username</span>
-              </li>
-              <li class="user-action"
-                  tal:repeat="action personal_bar/user_actions">
-                <a href="" tal:attributes="action">
-                  <tal:actionname tal:content="action/title">
-                     action title
-                  </tal:actionname>
-                  <tal:islogout condition="python:action['id'] == 'personaltools-logout'">
-                    <span class="icon-logout"></span>
-                  </tal:islogout>
-                </a>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </nav>
+      <a class="toolbar-expand"
+         aria-label="Pin"
+         i18n:attributes="aria-label"
+      >
+        <tal:icon tal:replace="structure python:icons.tag('arrow-bar-right')" />
+      </a>
+    </div>
+
+    <ul class="nav flex-column plone-toolbar-main"
+        tal:define="
+          toolbar_main view/base_render;
+        "
+        tal:condition="toolbar_main"
+    >
+      <li tal:replace="structure toolbar_main">
+      </li>
+    </ul>
+
+    <div class="personaltools-wrapper nav ${python:'dropend' if toolbar_pos == 'side' else ''}"
+         tal:condition="personal_bar/user_actions"
+    >
+
+      <a class="nav-link dropdown-toggle"
+         id="personaltools-menulink"
+         aria-expanded="false"
+         data-bs-offset="0,0"
+         data-bs-toggle="dropdown"
+         tal:attributes="
+           href personal_bar/homelink_url;
+         "
+      >
+        <tal:icon tal:replace="structure python:icons.tag('toolbar-action/personaltools', tag_class='')" />
+        <span class="toolbar-label"
+              tal:content="personal_bar/user_name"
+        >User</span>
+      </a>
+
+      <ul class="dropdown-menu"
+          id="collapse-personaltools"
+          aria-labelledby="personaltools-menulink"
+      >
+        <li>
+          <h6 class="dropdown-header">${personal_bar/user_name}</h6>
+        </li>
+        <li tal:repeat="action personal_bar/user_actions">
+          <a class="nav-link dropdown-item"
+             tal:attributes="
+               action;
+             "
+          >
+            <tal:icon replace="structure python:icons.tag(action.get('icon', 'dot'), tag_class='')" />
+            <tal:actionname tal:content="action/title">
+              action title
+            </tal:actionname>
+          </a>
+        </li>
+      </ul>
+
     </div>
   </div>
 </section>

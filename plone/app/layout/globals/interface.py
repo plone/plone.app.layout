@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from .interfaces import IInterfaceInformation
 from Acquisition import aq_base
 from plone.memoize.view import memoize
@@ -18,7 +17,7 @@ def resolveInterface(dotted_name):
 
 
 def getDottedName(iface):
-    return "%s.%s" % (iface.__module__, iface.__name__)
+    return f"{iface.__module__}.{iface.__name__}"
 
 
 def _trim_doc_string(text):
@@ -66,8 +65,8 @@ class InterfaceInformation(BrowserView):
         """Returns a list of pairs (name, description) for a given
         interface"""
         iface = resolveInterface(dotted_name)
-        nd = iface.namesAndDescriptions(all=all)
-        return [(n, d.getDoc()) for n, d in nd]
+        data = iface.namesAndDescriptions(all=all)
+        return [(name, desc.getDoc()) for name, desc in data]
 
     @memoize
     def get_interfaces(self):
@@ -87,7 +86,7 @@ class InterfaceInformation(BrowserView):
         return [biface for biface in bases if biface not in ifaces]
 
     def get_interface_informations(self, iface):
-        """Gets all useful informations from an iface
+        """Gets all useful information from an iface
 
         * name
         * dotted name

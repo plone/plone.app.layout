@@ -1,9 +1,10 @@
-# -*- coding: utf-8 -*-
 from .interfaces import IContextState
 from Acquisition import aq_base
 from Acquisition import aq_inner
 from Acquisition import aq_parent
-from plone.app.layout.navigation.interfaces import INavigationRoot
+from plone.base.interfaces import INavigationRoot
+from plone.base.interfaces import INonStructuralFolder
+from plone.base.utils import pretty_title_or_id
 from plone.memoize.view import memoize
 from plone.portlets.interfaces import ILocalPortletAssignable
 from plone.registry.interfaces import IRegistry
@@ -11,8 +12,6 @@ from Products.CMFCore.interfaces import IDynamicType
 from Products.CMFCore.interfaces import ISiteRoot
 from Products.CMFCore.utils import getToolByName
 from Products.CMFDynamicViewFTI.interfaces import IBrowserDefault
-from Products.CMFPlone import utils
-from Products.CMFPlone.interfaces import INonStructuralFolder
 from Products.Five.browser import BrowserView
 from zope.component import getMultiAdapter
 from zope.component import getUtility
@@ -143,7 +142,7 @@ class ContextState(BrowserView):
     @memoize
     def object_title(self):
         context = aq_inner(self.context)
-        return utils.pretty_title_or_id(context, context)
+        return pretty_title_or_id(context, context)
 
     @memoize
     def workflow_state(self):

@@ -1,79 +1,76 @@
-# -*- coding: utf-8 -*-
 from AccessControl import getSecurityManager
 from Acquisition import aq_inner
 from DateTime import DateTime
 from plone.app.content.browser.interfaces import IFolderContentsView
 from plone.app.layout.globals.interfaces import IViewView
 from plone.app.layout.viewlets import ViewletBase
-from plone.app.multilingual.browser.vocabularies import translated_languages
-from plone.app.multilingual.interfaces import ITranslatable
-from plone.app.multilingual.interfaces import ITranslationManager
+from plone.app.relationfield.behavior import IRelatedItems
+from plone.base import PloneMessageFactory as _
+from plone.base.interfaces import ISecuritySchema
+from plone.base.interfaces import ISiteSchema
+from plone.base.utils import base_hasattr
+from plone.base.utils import logger
 from plone.memoize.instance import memoize
+from plone.memoize.view import memoize_contextless
 from plone.protect.authenticator import createToken
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import _checkPermission
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.WorkflowCore import WorkflowException
 from Products.CMFEditions.Permissions import AccessPreviousVersions
-from Products.CMFPlone import PloneMessageFactory as _
-from Products.CMFPlone.interfaces import ISecuritySchema
-from Products.CMFPlone.interfaces import ISiteSchema
-from Products.CMFPlone.utils import base_hasattr
-from Products.CMFPlone.utils import log
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from six.moves import range
+from urllib.parse import urlencode
 from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.component import queryMultiAdapter
-
-import logging
-import pkg_resources
-
-
-try:
-    pkg_resources.get_distribution("plone.app.relationfield")
-except pkg_resources.DistributionNotFound:
-    HAS_RELATIONFIELD = False
-else:
-    from plone.app.relationfield.behavior import IRelatedItems
-
-    HAS_RELATIONFIELD = True
-
-# XXX needs refactoring, since Plone 5 we have PAM in core.
-HAS_PAM = True
+from zope.deprecation import deprecation
 
 
 class DocumentActionsViewlet(ViewletBase):
-
     index = ViewPageTemplateFile("document_actions.pt")
 
     def update(self):
-        super(DocumentActionsViewlet, self).update()
+        super().update()
 
         self.context_state = getMultiAdapter(
-            (self.context, self.request), name=u"plone_context_state"
+            (self.context, self.request), name="plone_context_state"
         )
         self.actions = self.context_state.actions("document_actions")
 
 
 class DocumentBylineViewlet(ViewletBase):
-
     index = ViewPageTemplateFile("document_byline.pt")
 
     def update(self):
-        super(DocumentBylineViewlet, self).update()
-        self.context_state = getMultiAdapter(
-            (self.context, self.request), name=u"plone_context_state"
-        )
+        super().update()
         self.anonymous = self.portal_state.anonymous()
-        self.has_pam = HAS_PAM
+
+    @property
+    @deprecation.deprecate(
+        "The context_state property is unused and will be removed in Plone 7"
+    )
+    def context_state(self):
+        return getMultiAdapter((self.context, self.request), name="plone_context_state")
+
+    @property
+    @deprecation.deprecate(
+        "The has_pam property is unused and will be removed in Plone 7"
+    )
+    def has_pam(self):
+        return True
+
+    @property
+    @memoize_contextless
+    def portal_membership(self):
+        return getToolByName(self.context, "portal_membership")
 
     def show(self):
         registry = getUtility(IRegistry)
         settings = registry.forInterface(
             ISiteSchema,
             prefix="plone",
+            check=False,
         )
         return not self.anonymous or settings.display_publication_date_in_byline
 
@@ -85,16 +82,41 @@ class DocumentBylineViewlet(ViewletBase):
         )
         return not self.anonymous or settings.allow_anon_views_about
 
+    @deprecation.deprecate(
+        "The creator method is unused and will be removed in Plone 7"
+    )
     def creator(self):
         return self.context.Creator()
 
+    @deprecation.deprecate("The author method is unused and will be removed in Plone 7")
     def author(self):
         membership = getToolByName(self.context, "portal_membership")
         return membership.getMemberInfo(self.creator())
 
+    @deprecation.deprecate(
+        "The authorname method is unused and will be removed in Plone 7"
+    )
     def authorname(self):
         author = self.author()
         return author and author["fullname"] or self.creator()
+
+    @memoize
+    def get_member_info(self, user_id):
+        return self.portal_membership.getMemberInfo(user_id)
+
+    def get_url_path(self, user_id):
+        if self.get_member_info(user_id) is None:
+            return ""
+        if "/" in user_id:
+            qs = urlencode({"author": user_id})
+            return f"author/?{qs}"
+        return f"author/{user_id}"
+
+    def get_fullname(self, user_id):
+        info = self.get_member_info(user_id)
+        if info is None:
+            return user_id
+        return info.get("fullname") or user_id
 
     def show_modification_date(self):
         return not self.context.effective_date or (
@@ -106,6 +128,9 @@ class DocumentBylineViewlet(ViewletBase):
             return self.context.expires().isPast()
         return False
 
+    @deprecation.deprecate(
+        "The toLocalizedTime method is unused and will be removed in Plone 7"
+    )
     def toLocalizedTime(self, time, long_format=None, time_only=None):
         """Convert time to localized time"""
         util = getToolByName(self.context, "translation_service")
@@ -121,7 +146,7 @@ class DocumentBylineViewlet(ViewletBase):
         """
         # check if we are allowed to display publication date
         registry = getUtility(IRegistry)
-        settings = registry.forInterface(ISiteSchema, prefix="plone")
+        settings = registry.forInterface(ISiteSchema, prefix="plone", check=False)
 
         if not settings.display_publication_date_in_byline:
             return None
@@ -133,7 +158,14 @@ class DocumentBylineViewlet(ViewletBase):
 
         return DateTime(date)
 
+    @deprecation.deprecate(
+        "The get_translations method is unused and will be removed in Plone 7"
+    )
     def get_translations(self):
+        from plone.app.multilingual.browser.vocabularies import translated_languages
+        from plone.app.multilingual.interfaces import ITranslatable
+        from plone.app.multilingual.interfaces import ITranslationManager
+
         cts = []
         if ITranslatable.providedBy(self.context):
             t_langs = translated_languages(self.context)
@@ -149,25 +181,31 @@ class DocumentBylineViewlet(ViewletBase):
 
 
 class HistoryByLineView(BrowserView):
-    """ DocumentByLine information for content history view """
+    """DocumentByLine information for content history view"""
 
     index = ViewPageTemplateFile("history_view.pt")
 
     def update(self):
         context = self.context
         self.portal_state = getMultiAdapter(
-            (context, self.request), name=u"plone_portal_state"
+            (context, self.request), name="plone_portal_state"
         )
         self.context_state = getMultiAdapter(
-            (self.context, self.request), name=u"plone_context_state"
+            (self.context, self.request), name="plone_context_state"
         )
         self.anonymous = self.portal_state.anonymous()
-        self.has_pam = HAS_PAM
 
     def __call__(self):
         self.update()
 
         return self.index()
+
+    @property
+    @deprecation.deprecate(
+        "The has_pam property is unused and will be removed in Plone 7"
+    )
+    def has_pam(self):
+        return True
 
     def show(self):
         registry = getUtility(IRegistry)
@@ -244,7 +282,7 @@ class HistoryByLineView(BrowserView):
         """
         # check if we are allowed to display publication date
         registry = getUtility(IRegistry)
-        settings = registry.forInterface(ISiteSchema, prefix="plone")
+        settings = registry.forInterface(ISiteSchema, prefix="plone", check=False)
 
         if not settings.display_publication_date_in_byline:
             return None
@@ -256,7 +294,14 @@ class HistoryByLineView(BrowserView):
 
         return DateTime(date)
 
+    @deprecation.deprecate(
+        "The get_translations method is unused and will be removed in Plone 7"
+    )
     def get_translations(self):
+        from plone.app.multilingual.browser.vocabularies import translated_languages
+        from plone.app.multilingual.interfaces import ITranslatable
+        from plone.app.multilingual.interfaces import ITranslationManager
+
         cts = []
         if ITranslatable.providedBy(self.context):
             t_langs = translated_languages(self.context)
@@ -273,39 +318,15 @@ class HistoryByLineView(BrowserView):
 
 
 class ContentRelatedItems(ViewletBase):
-
     index = ViewPageTemplateFile("document_relateditems.pt")
 
     def related_items(self):
-        context = aq_inner(self.context)
-        res = ()
-
-        # Archetypes
-        if base_hasattr(context, "getRawRelatedItems"):
-            catalog = getToolByName(context, "portal_catalog")
-            related = context.getRawRelatedItems()
-            if not related:
-                return ()
-            brains = catalog(UID=related)
-            if brains:
-                # build a position dict by iterating over the items once
-                positions = dict([(v, i) for (i, v) in enumerate(related)])
-                # We need to keep the ordering intact
-                res = list(brains)
-
-                def _key(brain):
-                    return positions.get(brain.UID, -1)
-
-                res.sort(key=_key)
-
-        # Dexterity
-        if HAS_RELATIONFIELD and IRelatedItems.providedBy(context):
-            related = context.relatedItems
-            if not related:
-                return ()
-            res = self.related2brains(related)
-
-        return res
+        if not IRelatedItems.providedBy(self.context):
+            return ()
+        related = aq_inner(self.context).relatedItems
+        if not related:
+            return ()
+        return self.related2brains(related)
 
     def related2brains(self, related):
         """Return a list of brains based on a list of relations. Will filter
@@ -330,7 +351,6 @@ class ContentRelatedItems(ViewletBase):
 
 
 class WorkflowHistoryViewlet(ViewletBase):
-
     index = ViewPageTemplateFile("review_history.pt")
 
     @memoize
@@ -345,7 +365,7 @@ class WorkflowHistoryViewlet(ViewletBase):
         if fullname:
             actor["fullname"] = fullname
 
-        return dict(actor=actor, actor_home="%s/author/%s" % (self.site_url, userid))
+        return dict(actor=actor, actor_home=f"{self.site_url}/author/{userid}")
 
     def workflowHistory(self, complete=True):
         """Return workflow history of this context.
@@ -364,30 +384,43 @@ class WorkflowHistoryViewlet(ViewletBase):
         review_history = []
 
         try:
-            # get total history
+            # Get total history.
+            # Note: expected variables like 'action' may not exist:
+            # the workflow may have started out without variables.
             review_history = workflow.getInfoFor(context, "review_history")
 
             if not complete:
                 # filter out automatic transitions.
-                review_history = [r for r in review_history if r["action"]]
+                review_history = [r for r in review_history if r.get("action")]
             else:
                 review_history = list(review_history)
 
             portal_type = context.portal_type
-            anon = _(u"label_anonymous_user", default=u"Anonymous User")
-
+            anon = _("label_anonymous_user", default="Anonymous User")
             for r in review_history:
                 r["type"] = "workflow"
-                r["transition_title"] = workflow.getTitleForTransitionOnType(
-                    r["action"], portal_type
-                ) or _("Create")
+
+                # Get transition title.
+                transition_title = ""
+                action = r.get("action")
+                if action:
+                    transition_title = workflow.getTitleForTransitionOnType(
+                        action, portal_type
+                    )
+                if not transition_title:
+                    transition_title = _("Create")
+                r["transition_title"] = transition_title
+
+                # Get state title.
                 r["state_title"] = workflow.getTitleForStateOnType(
-                    r["review_state"], portal_type
+                    r.get("review_state", ""), portal_type
                 )
-                actorid = r["actor"]
+
+                # Get actor.
+                actorid = r.get("actor")
                 r["actorid"] = actorid
                 if actorid is None:
-                    # action performed by an anonymous user
+                    # action performed by an anonymous user, or unknown
                     r["actor"] = {"username": anon, "fullname": anon}
                     r["actor_home"] = ""
                 else:
@@ -395,17 +428,15 @@ class WorkflowHistoryViewlet(ViewletBase):
             review_history.reverse()
 
         except WorkflowException:
-            log(
-                "plone.app.layout.viewlets.content: "
-                "%s has no associated workflow" % context.absolute_url(),
-                severity=logging.DEBUG,
+            logger.debug(
+                "plone.app.layout.viewlets.content: %s has no associated workflow",
+                context.absolute_url(),
             )
 
         return review_history
 
 
 class ContentHistoryViewlet(WorkflowHistoryViewlet):
-
     index = ViewPageTemplateFile("content_history.pt")
 
     def revisionHistory(self):
@@ -438,8 +469,8 @@ class ContentHistoryViewlet(WorkflowHistoryViewlet):
             )
             info = dict(
                 type="versioning",
-                action=_(u"Edited"),
-                transition_title=_(u"Edited"),
+                action=_("Edited"),
+                transition_title=_("Edited"),
                 actorid=userid,
                 time=meta["timestamp"],
                 comments=meta["comment"],
@@ -448,21 +479,21 @@ class ContentHistoryViewlet(WorkflowHistoryViewlet):
             )
             if can_diff:
                 if version_id > 0:
-                    info[
-                        "diff_previous_url"
-                    ] = "%s/@@history?one=%s&two=%s&_authenticator=%s" % (
-                        context_url,
-                        version_id,
-                        version_id - 1,
-                        token,
+                    info["diff_previous_url"] = (
+                        "{}/@@history?one={}&two={}&_authenticator={}".format(
+                            context_url,
+                            version_id,
+                            version_id - 1,
+                            token,
+                        )
                     )
                 if not rt.isUpToDate(context, version_id):
-                    info[
-                        "diff_current_url"
-                    ] = "%s/@@history?one=current&two=%s&_authenticator=%s" % (
-                        context_url,
-                        version_id,
-                        token,
+                    info["diff_current_url"] = (
+                        "{}/@@history?one=current&two={}&_authenticator={}".format(
+                            context_url,
+                            version_id,
+                            token,
+                        )
                     )
             if can_revert:
                 info["revert_url"] = "%s/revertversion" % context_url
@@ -492,25 +523,20 @@ class ContentHistoryViewlet(WorkflowHistoryViewlet):
         history = self.workflowHistory() + self.revisionHistory()
         if len(history) == 0:
             return None
-        history.sort(key=lambda x: x["time"], reverse=True)
+        history.sort(key=lambda x: x.get("time", 0.0), reverse=True)
         return history
 
     def toLocalizedTime(self, time, long_format=None, time_only=None):
         """Convert time to localized time"""
-        return DateTime(time).ISO()
-        # util = getToolByName(self.context, 'translation_service')
-        # return util.ulocalized_time(
-        #     time,
-        #     long_format,
-        #     time_only,
-        #     self.context,
-        #     domain='plonelocales'
-        # )
+        util = getToolByName(self.context, "translation_service")
+        return util.ulocalized_time(
+            time, long_format, time_only, self.context, domain="plonelocales"
+        )
 
 
 class ContentHistoryView(ContentHistoryViewlet):
     def __init__(self, context, request):
-        super(ContentHistoryView, self).__init__(context, request, None, None)
+        super().__init__(context, request, None, None)
         self.update()
 
     def __call__(self):

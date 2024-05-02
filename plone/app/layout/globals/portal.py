@@ -1,16 +1,16 @@
-# -*- coding: utf-8 -*-
 from .interfaces import IPortalState
 from Acquisition import aq_inner
-from plone.app.layout.navigation.root import getNavigationRoot
-from plone.app.layout.navigation.root import getNavigationRootObject
+from plone.base.interfaces import IPloneSiteRoot
+from plone.base.interfaces import ISearchSchema
+from plone.base.interfaces import ISiteSchema
+from plone.base.navigationroot import get_navigation_root
+from plone.base.navigationroot import get_navigation_root_object
 from plone.i18n.interfaces import ILanguageSchema
 from plone.memoize.view import memoize
 from plone.memoize.view import memoize_contextless
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.interfaces import ISiteRoot
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.interfaces import ISearchSchema
-from Products.CMFPlone.interfaces import ISiteSchema
 from Products.Five.browser import BrowserView
 from zope.component import getUtility
 from zope.component import providedBy
@@ -48,10 +48,14 @@ class PortalState(BrowserView):
     def navigation_root(self):
         context = aq_inner(self.context)
         portal = self.portal()
-        return getNavigationRootObject(context, portal)
+        return get_navigation_root_object(context, portal)
 
     @memoize
     def navigation_root_title(self):
+        navigation_root = self.navigation_root()
+        if IPloneSiteRoot.providedBy(navigation_root):
+            return self.portal_title()
+
         title = self.navigation_root().Title
         if callable(title):
             return title()
@@ -60,7 +64,7 @@ class PortalState(BrowserView):
 
     @memoize
     def navigation_root_path(self):
-        return getNavigationRoot(aq_inner(self.context))
+        return get_navigation_root(aq_inner(self.context))
 
     @memoize
     def navigation_root_url(self):

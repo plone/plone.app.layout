@@ -1,26 +1,45 @@
 <section id="section-document-actions"
-    i18n:domain="plone"
-    tal:condition="view/actions">
+         tal:condition="view/actions"
+         i18n:domain="plone"
+>
 
-    <div class="viewlet viewlet-document-actions">
-        <tal:docactions>
+  <div class="viewlet viewlet-document-actions">
+    <tal:docactions>
 
-            <div class="d-none" i18n:translate="heading_document_actions">
+      <div class="d-none"
+           i18n:translate="heading_document_actions"
+      >
               Document Actions
-            </div>
+      </div>
 
-            <ul class="list-inline" tal:define="normalizeString nocall: context/@@plone/normalizeString">
-                  <li tal:repeat="daction view/actions"
-                      tal:attributes="id python:'document-action-' + normalizeString(daction['id'])">
-                      <a href=""
-                         tal:attributes="href daction/url;
-                                         target daction/link_target|nothing;
-                                         title daction/description"
-                         tal:content="daction/title">
-                      </a>
-                  </li>
-            </ul>
-        </tal:docactions>
+      <ul class="list-inline"
+          tal:define="
+            normalizeString nocall: context/@@plone/normalizeString;
+            icons python:context.restrictedTraverse('@@iconresolver');
+          "
+      >
+        <li tal:repeat="daction view/actions"
+            tal:attributes="
+              id python:'document-action-' + normalizeString(daction['id']);
+            "
+        >
+          <a href=""
+             tal:attributes="
+               href daction/url;
+               target daction/link_target|nothing;
+               title daction/description|nothing;
+             "
+          >
+            <tal:icon tal:replace="structure python:icons.tag(daction.get('icon'))" />
+            <span tal:replace="daction/title"
+                  i18n:translate=""
+            >
+                            Menu Title
+            </span>
+          </a>
+        </li>
+      </ul>
+    </tal:docactions>
 
-    </div>
+  </div>
 </section>

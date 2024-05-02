@@ -1,21 +1,24 @@
-# -*- coding: utf-8 -*-
 from plone.app.layout.viewlets.common import PersonalBarViewlet
 from plone.app.viewletmanager.manager import OrderedViewletManager
+from plone.base.interfaces.controlpanel import ISiteSchema
 from plone.memoize.instance import memoize
 from plone.registry.interfaces import IRegistry
-from Products.CMFPlone.interfaces.controlpanel import ISiteSchema
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope.component import getMultiAdapter
 from zope.component import getUtility
-
-import json
 
 
 class ToolbarViewletManager(OrderedViewletManager):
     custom_template = ViewPageTemplateFile("toolbar.pt")
 
+    @property
+    @memoize
+    def _settings(self):
+        registry = getUtility(IRegistry)
+        return registry.forInterface(ISiteSchema, prefix="plone", check=False)
+
     def base_render(self):
-        return super(ToolbarViewletManager, self).render()
+        return super().render()
 
     def render(self):
         return self.custom_template()
@@ -30,24 +33,8 @@ class ToolbarViewletManager(OrderedViewletManager):
     def portal_state(self):
         return getMultiAdapter((self.context, self.request), name="plone_portal_state")
 
-    def get_options(self):
-        registry = getUtility(IRegistry)
-        options = {}
-
-        lessvars = registry.get("plone.lessvariables", {})
-
-        toolbar_width = lessvars.get("plone-left-toolbar-expanded", None)
-        submenu_width = lessvars.get("plone-toolbar-submenu-width", None)
-        desktop_width = lessvars.get("plone-screen-sm-min", None)
-
-        if toolbar_width:
-            options["toolbar_width"] = toolbar_width
-        if submenu_width:
-            options["submenu_width"] = submenu_width
-        if desktop_width:
-            options["desktop_width"] = desktop_width
-
-        return json.dumps(options)
+    def toolbar_position(self):
+        return self._settings.toolbar_position
 
     def get_personal_bar(self):
         viewlet = PersonalBarViewlet(self.context, self.request, self.__parent__, self)
@@ -55,11 +42,9 @@ class ToolbarViewletManager(OrderedViewletManager):
         return viewlet
 
     def get_toolbar_logo(self):
-        registry = getUtility(IRegistry)
-        settings = registry.forInterface(ISiteSchema, prefix="plone", check=False)
         portal_url = self.portal_state.portal_url()
         try:
-            logo = settings.toolbar_logo
+            logo = self._settings.toolbar_logo
         except AttributeError:
             logo = "/++plone++static/plone-toolbarlogo.svg"
         if not logo:

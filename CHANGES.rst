@@ -8,6 +8,338 @@ Changelog
 
 .. towncrier release notes start
 
+4.1.0 (2024-04-23)
+------------------
+
+New features:
+
+
+- Add a field ``webstats_head_js`` to the Site controlpanel and render its
+  contents in the head section using ``IHtmlHeadLinks`` viewlet manager.
+  See `issue 3931 <https://github.com/plone/Products.CMFPlone/issues/3931>`_:
+  some javascript needs to be loaded at the bottom of the page, and some in the head section.
+  [jladage] (#3931)
+
+
+4.0.8 (2023-12-22)
+------------------
+
+Bug fixes:
+
+
+- Fix KeyError `time` when missing workflow variables are added later.
+  Fixes `issue 357 <https://github.com/plone/plone.app.layout/issues/357>`_.
+  [maurits] (#357)
+
+
+4.0.7 (2023-07-14)
+------------------
+
+Bug fixes:
+
+
+- Fix nested `li` tags after zpretty in `contentviews.pt`
+  [petschki] (#350)
+
+
+Internal:
+
+
+- Update configuration files.
+  [plone devs] (7723aeaf, cfffba8c)
+
+
+4.0.6 (2023-06-22)
+------------------
+
+Bug fixes:
+
+
+- Unify default values for translations
+  [erral] (#347)
+
+
+4.0.5 (2023-05-22)
+------------------
+
+Bug fixes:
+
+
+- Deprecate moved `getNavigationRoot` and `getNavigationRootObject` in `plone.app.layout.navigation.root`.
+  This was already moved earlier as `get_navigation_root` and `get_navigation_root_object` to `plone.base.navigationroot`.
+  [@jensens] (deprecate-navigationtroot)
+- Fix transitive circular dependencies in `plone.app.layout`.
+  Move `.nextprevious.INextPreviousProvider` to `plone.app.dexterity.behaviors.nextprevious` and put BBB import into place.
+  Move the default page warning viewlet from `plone.app.dexterity.browser:default_page_warning.pt` with it's ZCML to `plone.app.layout.viewlets`.
+  [@jensens] (fix-circular-dep-padexterity)
+- Bring back all HTML attributes for actions.
+  [gforcada] (#340)
+
+
+4.0.4 (2023-04-26)
+------------------
+
+Bug fixes:
+
+
+- Remove dead code for Archetypes relations lookup.
+  [@jensens] (rm-archetypes-code)
+- Add another unused `get_translations` method to deprecated ones.
+  Circula dependency on plone.app.multilingual is only for unused deprecated methods.
+  Move it's imports into methods-body and remove dependency from setup.py.
+  [@jensens] (rm-dep-pamultilingual)
+
+
+4.0.3 (2023-04-15)
+------------------
+
+Bug fixes:
+
+
+- Remove Archetypes code from TOC viewlet.
+  @jensens (rm-at-code-from-toc)
+
+
+Internal:
+
+
+- Update configuration files.
+  [plone devs] (11f0db91)
+
+
+4.0.2 (2023-03-14)
+------------------
+
+Bug fixes:
+
+
+- Move interface plone.app.layout.navigation.interfaces.INavigationRoot to plone.base.interfaces.siteroot and add a deprecated import to plone.app.layout.
+  [jensens, gforcarda] (Plone-3731)
+
+
+4.0.1 (2023-02-22)
+------------------
+
+Bug fixes:
+
+
+- Remove deprecation warnings (#331)
+
+
+4.0.0 (2022-11-18)
+------------------
+
+Bug fixes:
+
+
+- Fix document-actions icons [MrTango] (#321)
+
+
+4.0.0b5 (2022-10-11)
+--------------------
+
+Bug fixes:
+
+
+- Fix password used in tests. [davisagli] (#328)
+
+
+4.0.0b4 (2022-09-30)
+--------------------
+
+New features:
+
+
+- Use a variable to allow customization of the image scale used for social tags
+  [laulaz] (#323)
+
+
+Bug fixes:
+
+
+- Fix undefined logger variable
+  [laulaz] (#323)
+- Show modification datetime in toolbar with full datetime according to locale format
+  [erral] (#325)
+- Use longer password in tests. [davisagli] (#327)
+
+
+4.0.0b3 (2022-08-31)
+--------------------
+
+Bug fixes:
+
+
+- get the title of the navigation root from the registry when the navigation root object is the portal object
+  [erral] (#317)
+- Fix css classes for membertools dropdown if toolbar is disabled.
+  [petschki] (#320)
+- Update markup and css classes for anontools viewlet.
+  [petschki] (#322)
+
+
+4.0.0b2 (2022-07-19)
+--------------------
+
+Bug fixes:
+
+
+- Reuse existing i18n label
+  [erral] (#315)
+- Change i18n translation msgid
+  [erral] (#316)
+
+
+4.0.0b1 (2022-06-23)
+--------------------
+
+New features:
+
+
+- Updated tests for SVG Plone logo.
+  [petschki] (#310)
+
+
+Bug fixes:
+
+
+- Toolbar width and wrapping tweaks.
+  [agitator] (#311)
+- Fix og:image by using an @@images scale instead of @@download.
+  [agitator] (#312)
+- Fix toolbar header toggle (do not change url when clicking).
+  [petschki] (#313)
+- Add missing i18n tags
+  [erral] (#314)
+
+
+4.0.0a12 (2022-05-24)
+---------------------
+
+Breaking changes:
+
+
+- Use ``plone.base``, black, isort.  [maurits] (#302)
+
+
+New features:
+
+
+- Reimplement dropout toolbar submenus and collapsed icons.
+  [petschki, agitator] (#303)
+
+
+Bug fixes:
+
+
+- Display all the creators if they are more than one.
+  Make the byline and the contributor viewlet markup consistent.
+  [ale-rt] (#304)
+- Deprecate unused code [ale-rt] (#305)
+- Remove alt tags from icons within links.
+  [agitator] (#309)
+
+
+4.0.0a11 (2022-04-07)
+---------------------
+
+New features:
+
+
+- Restructure global sections and searchbox markup for mobile navigation as offcanvas sidebar.
+  [agitator] (#294)
+- LiveSearch with support for images in search results.
+  [agitator] (#299)
+
+
+Bug fixes:
+
+
+- Use icon resolver from Plone 6 and use SVG icons.
+  [agitator]
+
+  Integrate new toolbar.
+  [petschki] (254-2)
+- Use pat-display-time from Patternslib in the toolbar and remove pat-moment from the history view.
+  [thet] (#254)
+- Allow scrolling content while offcanvas toolbar is expanded
+  [pbauer] (#295)
+- Do not use ``structure`` for status messages.
+  [maurits] (#297)
+
+
+4.0.0a10 (2022-02-23)
+---------------------
+
+Bug fixes:
+
+
+- Remove plone.header viewlet
+  [erral] (#286)
+- Correct favicon handling: fix URL to navroot/favicon.ico and use customized icon file name as part of the proxy cache key. (#290)
+
+
+4.0.0a9 (2022-01-28)
+--------------------
+
+New features:
+
+
+- Add viewlet to display customizable favicon with handler to update its MIME-type
+  [talarias] (plip-favicon)
+
+
+4.0.0a8 (2022-01-25)
+--------------------
+
+Breaking changes:
+
+
+- Remove (marked for removal im Plone 6) deprecated methods. [jensens] (#285)
+
+
+Bug fixes:
+
+
+- In global sections viewlet fetch registry only one time. Also: Code style black and minor code cleanup. [jensens] (#285)
+
+
+4.0.0a7 (2022-01-19)
+--------------------
+
+Bug fixes:
+
+
+- Escape navigation titles only once.
+  [thomasmassmann] (#280)
+
+
+4.0.0a6 (2022-01-07)
+--------------------
+
+New features:
+
+
+- Global section viewlet: Catalog based navigation.
+  Show the global sections also if navigation contains items but tabs are empty.
+  This allows for disabling portal tabs rendering and constructing the navigation only from the catalog query.
+  [thet] (273-1)
+- Global sections viewlet: Customize entries and query.
+  Also allow customizing the tabs entries and the navigation query along with the other navigation entries.
+  [thet] (273-2)
+- Global sections viewlet: Factor out types_using_view.
+  Factor out types_using_view so that this method can be re-used, e.g. in a subclass with a customize_entry method.
+  [thet] (273-3)
+- Global sections viewlet performance optimizations:
+
+  - Remove pointless caching on types_using_view,
+  - Store settings in variable for multiple access, bypassing cache checks,
+  - Remove now pointless caching on settings property,
+  - Deprecate now unused navtree_depth property.
+
+  [thet] (#275)
+
+
 4.0.0a5 (2021-11-23)
 --------------------
 
@@ -159,7 +491,7 @@ Bug fixes:
 
 
 - Analytics viewlet: make webstats_js a property, so that it does not rely on an a call to the update method to be correctly evaluated [ale-rt] (#227)
-- Code formating according to Plone standards (black, isort).
+- Code formatting according to Plone standards (black, isort).
   [thet] (#230)
 - Remove selectedTabs and update method from GlobalSectionsViewlet as both are now unused.
   [thet] (#231)
@@ -194,7 +526,7 @@ Bug fixes:
 New features:
 
 
-- Add a sorrounding div to the webstats js. Fixes #157
+- Add a surrounding div to the webstats js. Fixes #157
   [erral] (#157)
 
 
@@ -343,7 +675,7 @@ New features:
 - Allow addition of extra body classes via multiple IBodyClassAdapter adapter registrations without the need to overload the ILayoutPolicy view.
   [thet, jensens, agitator]
 
-- Make it easier to override seperator in title viewlet
+- Make it easier to override separator in title viewlet
   [tomgross]
 
 Bug fixes:
@@ -409,7 +741,7 @@ New features:
 
 Bug fixes:
 
-- show 'in current section only' before seach input field for a11y reasons. https://github.com/plone/Products.CMFPlone/issues/1619 [polyester]
+- show 'in current section only' before search input field for a11y reasons. https://github.com/plone/Products.CMFPlone/issues/1619 [polyester]
 
 
 2.7.1 (2017-07-03)
@@ -518,7 +850,7 @@ Bug fixes:
 
 Bug fixes:
 
-- Document byline viewlet is now displayed only to anonymous users if permited by the `Allow anyone to view 'about' information` option in the `Security Settings` of `Site Setup` (closes `CMFPlone#1556`_).
+- Document byline viewlet is now displayed only to anonymous users if permitted by the `Allow anyone to view 'about' information` option in the `Security Settings` of `Site Setup` (closes `CMFPlone#1556`_).
   Code used to show the lock status and history view was removed from the document byline as this information was not available to anonymous users anyway.
   [hvelarde]
 
@@ -735,7 +1067,7 @@ Fixes:
 - by default, show site logo in social settings
   [vangheem]
 
-- Add aria hidden role to avoid screenreaders to nonesense stop by at the
+- Add aria hidden role to avoid screenreaders to nonsense stop by at the
   toolbar tiny logo [sneridagh]
 
 - Get rid completely of the plone.skip_links viewlet because it already doesn't
@@ -1066,7 +1398,7 @@ Fixes:
 - handle missing feed type so it doesn't throw an error
   [vangheem]
 
-- handle absense of ACTUAL_URL on request.
+- handle absence of ACTUAL_URL on request.
   Fixes https://dev.plone.org/ticket/13173
   [vangheem]
 
@@ -1130,7 +1462,7 @@ Fixes:
   see https://dev.plone.org/ticket/12904
   [polyester]
 
-- Add language atribute to presentation.pt for WCAG 2.0 compliance.
+- Add language attribute to presentation.pt for WCAG 2.0 compliance.
   See https://dev.plone.org/ticket/12902
   [rmatt, polyester]
 
@@ -1143,7 +1475,7 @@ Fixes:
 
 - Correctly hand action URLs not ending / [phrearch]
 
-- Removed obsolete 'define-macro' and 'define-slot' from viewlet page tempates.
+- Removed obsolete 'define-macro' and 'define-slot' from viewlet page templates.
   Fixes http://dev.plone.org/ticket/11541.
   [kleist]
 
@@ -1162,7 +1494,7 @@ Fixes:
   see https://dev.plone.org/ticket/12904
   [polyester]
 
-- Add language atribute to presentation.pt for WCAG 2.0 compliance.
+- Add language attribute to presentation.pt for WCAG 2.0 compliance.
   See https://dev.plone.org/ticket/12902
   [rmatt, polyester]
 
@@ -1202,7 +1534,7 @@ Fixes:
 2.2.4 (2011-12-03)
 ------------------
 
-- Add the ability for the navtree strategy to suppliment the query.
+- Add the ability for the navtree strategy to supplement the query.
   Fixes a problem where the listing of default pages in navigation
   trees could no longer be enabled.
   [rossp]

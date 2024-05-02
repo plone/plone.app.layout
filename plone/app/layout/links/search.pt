@@ -1,8 +1,14 @@
-<tal:search define="navigation_root_url view/navigation_root_url"
-            i18n:domain="plone">
-    <link rel="search"
-          href=""
-          title="Search this site"
-          i18n:attributes="title title_search_this_site"
-          tal:attributes="href string:${navigation_root_url}/@@search" />
+<tal:search define="
+              navigation_root_url view/navigation_root_url;
+            "
+            i18n:domain="plone"
+>
+  <link href=""
+        rel="search"
+        title="Search this site"
+        tal:attributes="
+          href string:${navigation_root_url}/@@search;
+        "
+        i18n:attributes="title title_search_this_site"
+  />
 </tal:search>

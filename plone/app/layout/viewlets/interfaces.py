@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from zope.viewlet.interfaces import IViewletManager
 
 
@@ -58,10 +57,6 @@ class IDocumentActions(IViewletManager):
 
 class IBelowContentTitle(IViewletManager):
     """A viewlet manager that sits below the content title in view templates"""
-
-
-class IBelowContentDescription(IViewletManager):
-    """A viewlet manager that sits below the content description in view templates"""
 
 
 class IBelowContentDescription(IViewletManager):

@@ -1,16 +1,22 @@
+from pathlib import Path
 from setuptools import find_packages
 from setuptools import setup
 
 
-version = "4.0.0a6.dev0"
+version = "4.1.1.dev0"
 
-long_description = open("README.rst").read() + "\n" + open("CHANGES.rst").read()
+long_description = (
+    f"{Path('README.rst').read_text()}\n{Path('CHANGES.rst').read_text()}"
+)
 
 setup(
     name="plone.app.layout",
     version=version,
     description="Layout mechanisms for Plone",
     long_description=long_description,
+    long_description_content_type="text/x-rst",
+    # Get more strings from
+    # https://pypi.org/classifiers/
     classifiers=[
         "Development Status :: 6 - Mature",
         "Environment :: Web Environment",
@@ -21,9 +27,10 @@ setup(
         "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
         "Operating System :: OS Independent",
         "Programming Language :: Python",
-        "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
     ],
     keywords="plone layout viewlet",
     author="Plone Foundation",
@@ -34,43 +41,35 @@ setup(
     namespace_packages=["plone", "plone.app"],
     include_package_data=True,
     zip_safe=False,
+    python_requires=">=3.8",
     install_requires=[
-        "Acquisition",
-        "DateTime",
         "plone.app.content",
+        "plone.app.relationfield",
+        "plone.app.uuid",
         "plone.app.viewletmanager >=1.2",
-        "plone.batching >1.0.999",
+        "plone.base >=1.0.4",
+        "plone.dexterity",
+        "plone.formwidget.namedfile",
         "plone.i18n",
         "plone.memoize",
         "plone.portlets",
-        "plone.registry",
-        "Products.CMFCore",
-        "Products.CMFDynamicViewFTI",
+        "plone.protect",
         "Products.CMFEditions >=1.2.2",
+        "Products.statusmessages",
+        "Products.ZCatalog",
         "setuptools",
-        "six",
-        "zope.component",
-        "zope.deferredimport",
-        "zope.deprecation",
-        "zope.dottedname",
-        "zope.i18n",
-        "zope.interface",
-        "zope.publisher",
-        "zope.schema",
-        "zope.viewlet",
-        "Zope2",
+        "Zope",
     ],
     extras_require=dict(
         test=[
-            "plone.app.contenttypes",
-            "plone.app.intid",
+            "plone.app.contenttypes[test]",
             "plone.app.relationfield",
             "plone.app.testing",
             "plone.dexterity",
             "plone.locking",
             "plone.testing",
             "z3c.relationfield",
-            "zope.annotation",
+            "zope.intid",
         ]
     ),
 )

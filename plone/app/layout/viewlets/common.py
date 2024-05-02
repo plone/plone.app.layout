@@ -1,23 +1,23 @@
-# -*- coding: utf-8 -*-
 from AccessControl import getSecurityManager
 from Acquisition import aq_base
 from Acquisition import aq_inner
 from collections import defaultdict
 from functools import total_ordering
+from html import escape
 from plone.app.layout.globals.interfaces import IViewView
-from plone.app.layout.navigation.root import getNavigationRoot
+from plone.base import PloneMessageFactory as _
+from plone.base.interfaces import IPloneSiteRoot
+from plone.base.interfaces import ISearchSchema
+from plone.base.interfaces import ISiteSchema
+from plone.base.interfaces.controlpanel import INavigationSchema
+from plone.base.navigationroot import get_navigation_root
+from plone.base.utils import safe_text
 from plone.i18n.interfaces import ILanguageSchema
 from plone.memoize.view import memoize
 from plone.protect.utils import addTokenToUrl
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone import PloneMessageFactory as _
-from Products.CMFPlone.interfaces import IPloneSiteRoot
-from Products.CMFPlone.interfaces import ISearchSchema
-from Products.CMFPlone.interfaces import ISiteSchema
-from Products.CMFPlone.interfaces.controlpanel import INavigationSchema
 from Products.CMFPlone.utils import getSiteLogo
-from Products.CMFPlone.utils import safe_unicode
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from urllib.parse import unquote
@@ -28,16 +28,16 @@ from zope.i18n import translate
 from zope.interface import alsoProvides
 from zope.interface import implementer
 from zope.viewlet.interfaces import IViewlet
-from html import escape
 
 import json
 import zope.deferredimport
 
+
 zope.deferredimport.initialize()
 zope.deferredimport.deprecated(
     "Import from plone.app.portlets.browser.viewlets instead",
-    ManagePortletsFallbackViewlet='plone.app.portlets.browser.viewlets:ManagePortletsFallbackViewlet',
-    FooterViewlet='plone.app.portlets.browser.viewlets:FooterViewlet',
+    ManagePortletsFallbackViewlet="plone.app.portlets.browser.viewlets:ManagePortletsFallbackViewlet",
+    FooterViewlet="plone.app.portlets.browser.viewlets:FooterViewlet",
 )
 
 
@@ -47,7 +47,7 @@ class ViewletBase(BrowserView):
     """Base class with common functions for link viewlets."""
 
     def __init__(self, context, request, view, manager=None):
-        super(ViewletBase, self).__init__(context, request)
+        super().__init__(context, request)
         self.__parent__ = view
         self.context = context
         self.request = request
@@ -59,7 +59,7 @@ class ViewletBase(BrowserView):
 
     def update(self):
         self.portal_state = getMultiAdapter(
-            (self.context, self.request), name=u"plone_portal_state"
+            (self.context, self.request), name="plone_portal_state"
         )
         self.site_url = self.portal_state.portal_url()
         self.navigation_root_url = self.portal_state.navigation_root_url()
@@ -84,8 +84,8 @@ class ViewletBase(BrowserView):
 class TitleViewlet(ViewletBase):
     index = ViewPageTemplateFile("title.pt")
 
-    # seperator of page- and portal-title
-    sep = u" &mdash; "
+    # separator of page- and portal-title
+    sep = " &mdash; "
 
     @property
     @memoize
@@ -124,21 +124,21 @@ class TitleViewlet(ViewletBase):
             return self.site_title_setting
 
         context_state = getMultiAdapter(
-            (self.context, self.request), name=u"plone_context_state"
+            (self.context, self.request), name="plone_context_state"
         )
-        return escape(safe_unicode(context_state.object_title()))
+        return escape(safe_text(context_state.object_title()))
 
     def update(self):
         if IPloneSiteRoot.providedBy(self.context):
             self.site_title = self.site_title_setting
             return
         portal_state = getMultiAdapter(
-            (self.context, self.request), name=u"plone_portal_state"
+            (self.context, self.request), name="plone_portal_state"
         )
         if IPloneSiteRoot.providedBy(portal_state.navigation_root()):
             portal_title = self.site_title_setting
         else:
-            portal_title = escape(safe_unicode(portal_state.navigation_root_title()))
+            portal_title = escape(safe_text(portal_state.navigation_root_title()))
         if self.page_title == portal_title:
             self.site_title = portal_title
         else:
@@ -158,19 +158,7 @@ class TableOfContentsViewlet(ViewletBase):
     index = ViewPageTemplateFile("toc.pt")
 
     def update(self):
-        obj = aq_base(self.context)
-        getTableContents = getattr(obj, "getTableContents", None)
-        self.enabled = False
-        if getTableContents is not None:
-            try:
-                self.enabled = getTableContents()
-            except KeyError:
-                # schema not updated yet
-                self.enabled = False
-        # handle dexterity-behavior
-        toc = getattr(obj, "table_of_contents", None)
-        if toc is not None:
-            self.enabled = toc
+        self.enabled = getattr(aq_base(self.context), "table_of_contents", False)
 
 
 class SiteActionsViewlet(ViewletBase):
@@ -178,7 +166,7 @@ class SiteActionsViewlet(ViewletBase):
 
     def update(self):
         context_state = getMultiAdapter(
-            (self.context, self.request), name=u"plone_context_state"
+            (self.context, self.request), name="plone_context_state"
         )
         self.site_actions = context_state.actions("site_actions")
 
@@ -187,15 +175,16 @@ class SearchBoxViewlet(ViewletBase):
     index = ViewPageTemplateFile("searchbox.pt")
 
     def update(self):
-        super(SearchBoxViewlet, self).update()
+        super().update()
 
         context_state = getMultiAdapter(
-            (self.context, self.request), name=u"plone_context_state"
+            (self.context, self.request), name="plone_context_state"
         )
 
         registry = getUtility(IRegistry)
         search_settings = registry.forInterface(ISearchSchema, prefix="plone")
         self.livesearch = search_settings.enable_livesearch
+        self.show_images = search_settings.search_show_images
 
         folder = context_state.folder()
         self.folder_path = "/".join(folder.getPhysicalPath())
@@ -205,7 +194,7 @@ class LogoViewlet(ViewletBase):
     index = ViewPageTemplateFile("logo.pt")
 
     def update(self):
-        super(LogoViewlet, self).update()
+        super().update()
 
         # TODO: should this be changed to settings.site_title?
         self.navigation_root_title = self.portal_state.navigation_root_title()
@@ -220,52 +209,50 @@ class GlobalSectionsViewlet(ViewletBase):
     index = ViewPageTemplateFile("sections.pt")
 
     _opener_markup_template = (
-        u'<input id="navitem-{uid}" type="checkbox" class="opener" />'
-        u'<label for="navitem-{uid}" role="button" aria-label="{title}"></label>'  # noqa: E 501
+        '<input id="navitem-{uid}" type="checkbox" class="opener" />'
+        '<label for="navitem-{uid}" role="button" aria-label="{title}"></label>'  # noqa: E 501
     )
     _item_markup_template = (
-        u'<li class="{id}{has_sub_class} nav-item">'
-        u'<a href="{url}" class="state-{review_state} nav-link"{aria_haspopup}>{title}</a>{opener}'  # noqa: E 501
-        u"{sub}"
-        u"</li>"
+        '<li class="{id}{has_sub_class} nav-item">'
+        '<a href="{url}" class="state-{review_state} nav-link"{aria_haspopup}>{title}</a>{opener}'  # noqa: E 501
+        "{sub}"
+        "</li>"
     )
-    _subtree_markup_wrapper = u'<ul class="has_subtree dropdown">{out}</ul>'
+    _subtree_markup_wrapper = '<ul class="has_subtree dropdown">{out}</ul>'
+
+    def __init__(self, *args):
+        super().__init__(*args)
+        self.registry = getUtility(IRegistry)
 
     @property
     def settings(self):
-        registry = getUtility(IRegistry)
-        settings = registry.forInterface(INavigationSchema, prefix="plone")
-        return settings
+        return self.registry.forInterface(INavigationSchema, prefix="plone")
 
     @property
     def language_settings(self):
-        registry = getUtility(IRegistry)
-        settings = registry.forInterface(ILanguageSchema, prefix="plone")
-        return settings
+        return self.registry.forInterface(ILanguageSchema, prefix="plone")
 
     @property
     def navtree_path(self):
-        return getNavigationRoot(self.context)
+        return get_navigation_root(self.context)
 
     @property
     def current_language(self):
+        language_settings = self.registry.forInterface(ILanguageSchema, prefix="plone")
         return (
             self.request.get("LANGUAGE", None)
             or (self.context and aq_inner(self.context).Language())
-            or self.language_settings.default_language
+            or language_settings.default_language
         )
 
     @property
     def types_using_view(self):
-        registry = getUtility(IRegistry)
-        types_using_view = registry.get("plone.types_use_view_action_in_listings", [])
-        return types_using_view
+        return self.registry.get("plone.types_use_view_action_in_listings", [])
 
     @property
     @memoize
     def navtree(self):
         ret = defaultdict(list)
-        settings = self.settings
         navtree_path = self.navtree_path
         portal_tabs = self.portal_tabs
         for tab in portal_tabs:
@@ -287,10 +274,13 @@ class GlobalSectionsViewlet(ViewletBase):
                     entry["title"], domain="plone", context=self.request
                 )
 
-            entry["title"] = safe_unicode(entry["title"])
+            entry["title"] = escape(safe_text(entry["title"]))
+            if "name" in entry and entry["name"]:
+                entry["name"] = escape(safe_text(entry["name"]))
             self.customize_tab(entry, tab)
             ret[navtree_path].append(entry)
 
+        settings = self.settings
         if not settings.generate_tabs:
             return ret
 
@@ -322,7 +312,7 @@ class GlobalSectionsViewlet(ViewletBase):
         portal_catalog = getToolByName(self.context, "portal_catalog")
         brains = portal_catalog.searchResults(**query)
 
-        types_using_view = self.types_using_view
+        types_using_view = set(self.types_using_view)
         for brain in brains:
             brain_path = brain.getPath()
             brain_parent_path = brain_path.rpartition("/")[0]
@@ -340,7 +330,7 @@ class GlobalSectionsViewlet(ViewletBase):
                 "path": brain_path,
                 "uid": brain.UID,
                 "url": url,
-                "title": safe_unicode(brain.Title),
+                "title": escape(safe_text(brain.Title)),
                 "review_state": brain.review_state,
             }
             self.customize_entry(entry, brain)
@@ -380,17 +370,13 @@ class GlobalSectionsViewlet(ViewletBase):
                     "has_sub_class": "",
                 }
             )
-        if "title" in item and item["title"]:
-            item["title"] = escape(item["title"])
-        if "name" in item and item["name"]:
-            item["name"] = escape(item["name"])
         return self._item_markup_template.format(**item)
 
     def build_tree(self, path, first_run=True):
         """Non-template based recursive tree building.
         3-4 times faster than template based.
         """
-        out = u""
+        out = ""
         for item in self.navtree.get(path, []):
             out += self.render_item(item, path)
 
@@ -411,16 +397,15 @@ class GlobalSectionsViewlet(ViewletBase):
 
 
 class PersonalBarViewlet(ViewletBase):
-
     homelink_url = ""
     user_name = ""
 
     def update(self):
-        super(PersonalBarViewlet, self).update()
+        super().update()
         context = aq_inner(self.context)
 
         context_state = getMultiAdapter(
-            (context, self.request), name=u"plone_context_state"
+            (context, self.request), name="plone_context_state"
         )
 
         user_actions = context_state.actions("user")
@@ -450,7 +435,7 @@ class PersonalBarViewlet(ViewletBase):
             member = self.portal_state.member()
             userid = member.getId()
 
-            self.homelink_url = "%s/useractions" % self.navigation_root_url
+            self.homelink_url = f"{self.navigation_root_url}/useractions"
 
             membership = getToolByName(context, "portal_membership")
             member_info = membership.getMemberInfo(userid)
@@ -478,7 +463,7 @@ class ContentViewsViewlet(ViewletBase):
         # from plone.app.contentmenu. This behaves differently depending on
         # whether the view is marked with IViewView. If our parent view
         # provides that marker, we should do it here as well.
-        super(ContentViewsViewlet, self).update()
+        super().update()
         if IViewView.providedBy(self.__parent__):
             alsoProvides(self, IViewView)
 
@@ -491,7 +476,7 @@ class ContentViewsViewlet(ViewletBase):
         context_fti = context.getTypeInfo()
 
         context_state = getMultiAdapter(
-            (context, self.request), name=u"plone_context_state"
+            (context, self.request), name="plone_context_state"
         )
         actions = context_state.actions
 
@@ -524,7 +509,7 @@ class ContentViewsViewlet(ViewletBase):
             if starts("http") or starts("javascript"):
                 item["url"] = action_url
             else:
-                item["url"] = "%s/%s" % (context_url, action_url)
+                item["url"] = f"{context_url}/{action_url}"
             item["url"] = addTokenToUrl(item["url"], self.request)
 
             action_method = item["url"].split("/")[-1].split("?")[0]
@@ -594,7 +579,7 @@ class PathBarViewlet(ViewletBase):
     index = ViewPageTemplateFile("path_bar.pt")
 
     def update(self):
-        super(PathBarViewlet, self).update()
+        super().update()
 
         self.is_rtl = self.portal_state.is_rtl()
 
@@ -606,5 +591,3 @@ class PathBarViewlet(ViewletBase):
 
 class TinyLogoViewlet(ViewletBase):
     index = ViewPageTemplateFile("tiny_logo.pt")
-
-

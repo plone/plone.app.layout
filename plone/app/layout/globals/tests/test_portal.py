@@ -1,14 +1,13 @@
-# -*- coding: utf-8 -*-
-from plone.app.layout.navigation.interfaces import INavigationRoot
-from plone.app.layout.navigation.root import getNavigationRoot
 from plone.app.layout.testing import INTEGRATION_TESTING
 from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
 from plone.app.testing.helpers import logout
+from plone.base.interfaces import INavigationRoot
+from plone.base.interfaces import ISearchSchema
+from plone.base.interfaces import ISiteSchema
+from plone.base.navigationroot import get_navigation_root
 from plone.i18n.interfaces import ILanguageSchema
 from plone.registry.interfaces import IRegistry
-from Products.CMFPlone.interfaces import ISearchSchema
-from Products.CMFPlone.interfaces import ISiteSchema
 from zope.component import getUtility
 from zope.event import notify
 from zope.i18n.locales import locales
@@ -36,7 +35,7 @@ class TestPortalStateView(unittest.TestCase):
     def test_portal_title(self):
         registry = getUtility(IRegistry)
         self.site_settings = registry.forInterface(ISiteSchema, prefix="plone")
-        self.site_settings.site_title = u"My title"
+        self.site_settings.site_title = "My title"
         self.assertEqual(self.view.portal_title(), "My title")
 
     def test_portal_url(self):
@@ -54,7 +53,7 @@ class TestPortalStateView(unittest.TestCase):
     def test_navigation_root_path(self):
         self.assertEqual(self.view.navigation_root_path(), "/plone")
         self.assertEqual(
-            self.view.navigation_root_path(), getNavigationRoot(self.folder)
+            self.view.navigation_root_path(), get_navigation_root(self.folder)
         )
 
         # mark a folder "between" self.folder and self.portal with
@@ -63,10 +62,12 @@ class TestPortalStateView(unittest.TestCase):
         zope.interface.alsoProvides(members, INavigationRoot)
         view = members.restrictedTraverse("@@plone_portal_state")
         self.assertEqual(view.navigation_root_path(), "/plone/Members")
-        self.assertEqual(view.navigation_root_path(), getNavigationRoot(self.folder))
+        self.assertEqual(view.navigation_root_path(), get_navigation_root(self.folder))
 
     def test_navigation_root_title(self):
-        self.portal.Title = "Portal title"
+        registry = getUtility(IRegistry)
+        self.site_settings = registry.forInterface(ISiteSchema, prefix="plone")
+        self.site_settings.site_title = "Portal title"
         self.assertEqual(self.view.navigation_root_title(), "Portal title")
         members = self.portal["Members"]
         # mark a folder "between" self.folder and self.portal with
@@ -76,7 +77,7 @@ class TestPortalStateView(unittest.TestCase):
         self.assertEqual(view.navigation_root_title(), members.Title())
 
     def test_navigation_root_url(self):
-        url = self.app.REQUEST.physicalPathToURL(getNavigationRoot(self.folder))
+        url = self.app.REQUEST.physicalPathToURL(get_navigation_root(self.folder))
         self.assertEqual(self.view.navigation_root_url(), "http://nohost/plone")
         self.assertEqual(self.view.navigation_root_url(), url)
 
@@ -87,7 +88,7 @@ class TestPortalStateView(unittest.TestCase):
         zope.interface.alsoProvides(members, INavigationRoot)
         view = members.restrictedTraverse("@@plone_portal_state")
         self.assertEqual(view.navigation_root_url(), "http://nohost/plone/Members")
-        url = self.app.REQUEST.physicalPathToURL(getNavigationRoot(members))
+        url = self.app.REQUEST.physicalPathToURL(get_navigation_root(members))
         self.assertEqual(view.navigation_root_url(), url)
 
     def test_default_language(self):

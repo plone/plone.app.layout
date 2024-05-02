@@ -2,14 +2,14 @@ from AccessControl import getSecurityManager
 from plone.app.layout.globals.interfaces import IBodyClassAdapter
 from plone.app.layout.globals.interfaces import ILayoutPolicy
 from plone.app.layout.globals.interfaces import IViewView
+from plone.base.interfaces.controlpanel import ILinkSchema
+from plone.base.interfaces.controlpanel import ISiteSchema
 from plone.i18n.normalizer.interfaces import IIDNormalizer
 from plone.memoize.view import memoize
 from plone.portlets.interfaces import IPortletManager
 from plone.portlets.interfaces import IPortletManagerRenderer
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.interfaces.controlpanel import ILinkSchema
-from Products.CMFPlone.interfaces.controlpanel import ISiteSchema
 from Products.Five.browser.metaconfigure import ViewMixinForTemplates
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope.browserpage.viewpagetemplatefile import (
@@ -27,7 +27,6 @@ from zope.interface import Interface
 from zope.publisher.browser import BrowserView
 
 import json
-import six
 
 
 TEMPLATE_CLASSES = (
@@ -35,6 +34,7 @@ TEMPLATE_CLASSES = (
     ZopeViewPageTemplateFile,
     ViewMixinForTemplates,
 )
+
 
 @implementer(ILayoutPolicy)
 class LayoutPolicy(BrowserView):
@@ -100,7 +100,7 @@ class LayoutPolicy(BrowserView):
         if visibility != "authenticated":
             return False
         user = getSecurityManager().getUser()
-        return user is not None and user.getUserName() != 'Anonymous User'
+        return user is not None and user.getUserName() != "Anonymous User"
 
     @memoize
     def icons_visible(self):
@@ -199,7 +199,7 @@ class LayoutPolicy(BrowserView):
         - pat-markspeciallinks: mark special links is set
         """
         portal_state = getMultiAdapter(
-            (self.context, self.request), name=u"plone_portal_state"
+            (self.context, self.request), name="plone_portal_state"
         )
         normalizer = queryUtility(IIDNormalizer)
         registry = getUtility(IRegistry)
@@ -289,7 +289,7 @@ class LayoutPolicy(BrowserView):
                 extra_classes = body_class_adapter.get_classes(template, view) or []
             except TypeError:  # This adapter is implemented without arguments
                 extra_classes = body_class_adapter.get_classes() or []
-            if isinstance(extra_classes, six.string_types):
+            if isinstance(extra_classes, str):
                 extra_classes = extra_classes.split(" ")
             body_classes.update(extra_classes)
 
@@ -298,7 +298,7 @@ class LayoutPolicy(BrowserView):
 
 @adapter(Interface)
 @implementer(IBodyClassAdapter)
-class DefaultBodyClasses(object):
+class DefaultBodyClasses:
     def __init__(self, context, request):
         self.context = context
         self.request = request

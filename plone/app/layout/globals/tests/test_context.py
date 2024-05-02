@@ -1,13 +1,12 @@
-# -*- coding: utf-8 -*-
-from plone.app.layout.navigation.interfaces import INavigationRoot
 from plone.app.layout.testing import INTEGRATION_TESTING
 from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
 from plone.app.testing.helpers import logout
+from plone.base.interfaces import INavigationRoot
+from plone.base.interfaces import INonStructuralFolder
+from plone.base.utils import unrestricted_construct_instance
 from plone.locking.interfaces import ILockable
 from Products.CMFDynamicViewFTI.interfaces import IBrowserDefault
-from Products.CMFPlone.interfaces import INonStructuralFolder
-from Products.CMFPlone.utils import _createObjectByType
 from zope.interface import alsoProvides
 from zope.interface import directlyProvides
 
@@ -71,7 +70,7 @@ class TestContextStateView(unittest.TestCase):
     def test_view_template_id_nonbrowserdefault(self):
         # The view template id is taken from the FTI for non-browserdefault
         # (non ATContentTypes) content
-        tf = _createObjectByType("TempFolder", self.folder, "tf")
+        tf = unrestricted_construct_instance("TempFolder", self.folder, "tf")
         tfview = tf.restrictedTraverse("@@plone_context_state")
         self.assertEqual(tfview.view_template_id(), "index_html")
 
@@ -86,7 +85,7 @@ class TestContextStateView(unittest.TestCase):
         view_expression = view_action.getActionExpression()
         view_action.setActionExpression("foobar")
 
-        tf = _createObjectByType("TempFolder", self.folder, "tf")
+        tf = unrestricted_construct_instance("TempFolder", self.folder, "tf")
         tf.manage_addLocalRoles(TEST_USER_ID, ("Manager",))
         tfview = tf.restrictedTraverse("@@plone_context_state")
         self.assertEqual(tfview.view_template_id(), "foobar")
@@ -104,9 +103,9 @@ class TestContextStateView(unittest.TestCase):
         fti = self.portal.portal_types.TempFolder
         view_action = fti.getActionObject("object/view")
         view_perms = view_action.getPermissions()
-        view_action.edit(permissions=(u"Modify Portal Content",))
+        view_action.edit(permissions=("Modify Portal Content",))
 
-        tf = _createObjectByType("TempFolder", self.folder, "tf")
+        tf = unrestricted_construct_instance("TempFolder", self.folder, "tf")
         tf.manage_addLocalRoles(TEST_USER_ID, ("Manager",))
         tfview = tf.restrictedTraverse("@@plone_context_state")
         self.assertEqual(tfview.view_template_id(), "index_html")
