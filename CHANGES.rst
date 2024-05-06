@@ -8,6 +8,17 @@ Changelog
 
 .. towncrier release notes start
 
+4.1.1 (2024-05-06)
+------------------
+
+Bug fixes:
+
+
+- Less DeprecationWarnings by using `plone.base.navigationroot.*` [@jensens] (#364)
+- Less DeprecationWarnings by using `plone.app.dexterity.behaviors.nextprevious.*` [@jensens] (#365)
+- Remove long outdated (Plone 5) deprecation `moved` for `dashboard` [@jensens] (#366)
+
+
 4.1.0 (2024-04-23)
 ------------------
 
