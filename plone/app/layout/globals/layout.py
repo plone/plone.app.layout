@@ -296,7 +296,7 @@ class LayoutPolicy(BrowserView):
         return " ".join(sorted(body_classes))
 
 
-@adapter(Interface)
+@adapter(Interface, Interface)
 @implementer(IBodyClassAdapter)
 class DefaultBodyClasses:
     def __init__(self, context, request):
