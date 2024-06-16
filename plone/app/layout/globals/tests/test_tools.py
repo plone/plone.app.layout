@@ -29,11 +29,6 @@ class TestToolsView(unittest.TestCase):
             self.view.membership(), getToolByName(self.folder, "portal_membership")
         )
 
-    def test_properties(self):
-        self.assertEqual(
-            self.view.properties(), getToolByName(self.folder, "portal_properties")
-        )
-
     def test_types(self):
         self.assertEqual(self.view.types(), getToolByName(self.folder, "portal_types"))
 

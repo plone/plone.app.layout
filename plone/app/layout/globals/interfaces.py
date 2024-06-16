@@ -75,9 +75,6 @@ class ITools(Interface):
     def membership():
         """The portal_membership tool"""
 
-    def properties():
-        """The portal_properties tool"""
-
     def types():
         """The portal_types tool"""
 

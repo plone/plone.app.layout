@@ -22,10 +22,6 @@ class Tools(BrowserView):
         return getToolByName(self.context, "portal_membership")
 
     @memoize_contextless
-    def properties(self):
-        return getToolByName(self.context, "portal_properties")
-
-    @memoize_contextless
     def url(self):
         return getToolByName(self.context, "portal_url")
 
