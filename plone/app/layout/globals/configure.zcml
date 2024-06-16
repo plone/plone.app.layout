@@ -51,4 +51,9 @@
     <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
   </class>
 
+  <adapter
+      factory=".layout.DefaultBodyClasses"
+      name="default-classes"
+      />
+
 </configure>
