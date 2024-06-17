@@ -39,12 +39,7 @@
           tal:condition="published"
     >
       <span i18n:translate="box_published">published</span>
-      <span tal:content="published"
-            class="pat-display-time"
-            data-pat-display-time="from-now: true"
-            datetime="${published}"
-            title="${python: context.toLocalizedTime(published, long_format=True)}"
-      >Published</span>
+      <span tal:content="python:context.toLocalizedTime(published)">Published</span>
       <tal:sep condition="show_modification_date">,</tal:sep>
     </span>
 
@@ -54,12 +49,9 @@
       <span i18n:translate="box_last_modified">
       last modified
       </span>
-      <span tal:content="modified"
-            class="pat-display-time"
-            data-pat-display-time="from-now: true"
-            datetime="${modified}"
-            title="${python: context.toLocalizedTime(modified, long_format=True)}"
-      >Modified</span>
+      <span tal:content="python:context.toLocalizedTime(modified)">
+      Modified
+      </span>
     </span>
   </tal:dates>
 
