@@ -44,10 +44,6 @@ class SiteMapTestCase(unittest.TestCase):
         # wftool._default_chain == 'plone_workflow'
         self.wftool.setChainForPortalTypes(["Document"], "simple_publication_workflow")
 
-        self.site_properties = getToolByName(
-            self.portal, "portal_properties"
-        ).site_properties
-
         # setup private content that isn't accessible for anonymous
         setRoles(self.portal, TEST_USER_ID, ["Manager"])
         self.portal.invokeFactory(id="private", type_name="Document")
