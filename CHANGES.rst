@@ -8,6 +8,23 @@ Changelog
 
 .. towncrier release notes start
 
+5.0.0 (2024-06-26)
+------------------
+
+Breaking changes:
+
+
+- Remove `portal_properties` code.  Remove `plone_tools.properties`.
+  [maurits] (#125)
+
+
+Bug fixes:
+
+
+- Fix `DefaultBodyClasses` adapter registration.
+  [gforcada]
+
+
 4.1.1 (2024-05-06)
 ------------------
 
