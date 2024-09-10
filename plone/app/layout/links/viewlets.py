@@ -1,3 +1,4 @@
+from AccessControl import Unauthorized
 from Acquisition import aq_inner
 from plone.app.layout.viewlets import ViewletBase
 from plone.app.uuid.utils import uuidToObject
@@ -156,7 +157,12 @@ class RSSViewlet(ViewletBase):
                     for uid in settings.site_rss_items:
                         if not uid:
                             continue
-                        obj = uuidToObject(uid)
+                        try:
+                            obj = uuidToObject(uid)
+                        except Unauthorized:
+                            # Do not break if we do not have enough permission
+                            # to access the object
+                            obj = None
                         if obj is None and uid[0] == "/":
                             obj = portal.restrictedTraverse(uid.lstrip("/"), None)
                         if obj is not None:
