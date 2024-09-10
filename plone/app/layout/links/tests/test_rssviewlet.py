@@ -71,7 +71,7 @@ class TestRSSViewletView(ViewletsTestCase):
         viewlet.update()
         result = viewlet.render()
 
-        # Verify that an anonymous users can see the RSS feed
+        # Verify that an authenticated user can see the RSS feed
         # from the aggregator collection
         self.assertSetEqual(
             {
