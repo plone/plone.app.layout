@@ -8,6 +8,16 @@ Changelog
 
 .. towncrier release notes start
 
+5.0.1 (2024-09-24)
+------------------
+
+Bug fixes:
+
+
+- Do not break if a syndication feed comes from a protected resource.
+  [ale-rt] (#374)
+
+
 5.0.0 (2024-06-26)
 ------------------
 
