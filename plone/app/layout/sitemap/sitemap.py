@@ -108,9 +108,7 @@ class SiteMapView(BrowserView):
         items = list(self._objects())
         page = self.request.get("page", "0")
         page_int = int(page)
-        import pdb
 
-        pdb.set_trace()
         if page_int:
             b_start = (page_int - 1) * self.BATCH_SIZE
             batch = Batch(items, start=b_start, size=self.BATCH_SIZE)
