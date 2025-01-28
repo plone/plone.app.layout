@@ -9,11 +9,11 @@ from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from zope.component import getUtility, getMultiAdapter
+from zope.component import getMultiAdapter
+from zope.component import getUtility
 from zope.publisher.interfaces import NotFound
 
 import math
-
 
 
 def _render_cachekey(fun, self):
@@ -108,9 +108,11 @@ class SiteMapView(BrowserView):
         items = list(self._objects())
         page = self.request.get("page", "0")
         page_int = int(page)
-        import pdb; pdb.set_trace()
+        import pdb
+
+        pdb.set_trace()
         if page_int:
-            b_start = (page_int-1) * self.BATCH_SIZE
+            b_start = (page_int - 1) * self.BATCH_SIZE
             batch = Batch(items, start=b_start, size=self.BATCH_SIZE)
             return batch
 
@@ -122,14 +124,14 @@ class SiteMapView(BrowserView):
             item_count = len(list(items))
             if item_count:
                 count = math.ceil(item_count / self.BATCH_SIZE)
-                return range(1, count+1)
+                return range(1, count + 1)
 
         return []
 
     @ram.cache(_render_cachekey)
     def generate(self):
         """Generates the Gzipped sitemap."""
-        if 'page' in self.request:
+        if "page" in self.request:
             xml = self.template()
         else:
             xml = self.template_index()
