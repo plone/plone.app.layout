@@ -317,7 +317,7 @@ class SiteMapTestCase(unittest.TestCase):
         for count in range(5000):
             self.portal.invokeFactory(id=f"private-{count}", type_name="Document")
 
-        self.portal.REQUEST['page'] = 1
+        self.portal.REQUEST["page"] = 1
 
         xml = self.uncompress(self.sitemap())
         self.assertEqual(xml.count("<loc>"), 5000)
