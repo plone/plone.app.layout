@@ -308,3 +308,22 @@ class SiteMapTestCase(unittest.TestCase):
         self.assertTrue(
             "<loc>http://nohost/plone/sitemap.xml.gz?page=3</loc>" not in xml
         )
+
+    def test_first_page_has_batch_size_count_items(self):
+        setRoles(self.portal, TEST_USER_ID, ["Manager"])
+        login(self.portal, TEST_USER_NAME)
+
+        # Generate 5000 items to have at least 2 sitemap URLs generated in the index file
+        for count in range(5000):
+            self.portal.invokeFactory(id=f"private-{count}", type_name="Document")
+
+        self.portal.REQUEST['page'] = 1
+
+        xml = self.uncompress(self.sitemap())
+        self.assertEqual(xml.count("<loc>"), 5000)
+
+        # Now we try the second batch
+        self.portal.REQUEST["page"] = 2
+
+        xml = self.uncompress(self.sitemap())
+        self.assertEqual(xml.count("<loc>"), 6)
