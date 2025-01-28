@@ -1,6 +1,7 @@
 from BTrees.OOBTree import OOBTree
 from gzip import GzipFile
 from io import BytesIO
+from plone.base.batch import Batch
 from plone.base.interfaces import IPloneSiteRoot
 from plone.base.interfaces import ISiteSchema
 from plone.memoize import ram
@@ -8,8 +9,11 @@ from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from zope.component import getUtility
+from zope.component import getUtility, getMultiAdapter
 from zope.publisher.interfaces import NotFound
+
+import math
+
 
 
 def _render_cachekey(fun, self):
@@ -30,14 +34,16 @@ class SiteMapView(BrowserView):
     http://www.sitemaps.org/protocol.php
     """
 
+    template_index = ViewPageTemplateFile("sitemap-index.xml")
     template = ViewPageTemplateFile("sitemap.xml")
+    BATCH_SIZE = 5000
 
     def __init__(self, context, request):
         self.context = context
         self.request = request
         self.filename = "sitemap.xml.gz"
 
-    def objects(self):
+    def _objects(self):
         """Returns the data to create the sitemap."""
         catalog = getToolByName(self.context, "portal_catalog")
         query = {}
@@ -54,6 +60,7 @@ class SiteMapView(BrowserView):
 
         query["is_default_page"] = True
         default_page_modified = OOBTree()
+
         for item in catalog.searchResults(query):
             key = item.getURL().rsplit("/", 1)[0]
             value = (item.modified.micros(), item.modified.ISO8601())
@@ -97,10 +104,36 @@ class SiteMapView(BrowserView):
                 # 'prioriy': 0.5, # 0.0 to 1.0
             }
 
+    def objects(self):
+        items = list(self._objects())
+        page = self.request.get("page", "0")
+        page_int = int(page)
+        import pdb; pdb.set_trace()
+        if page_int:
+            b_start = (page_int-1) * self.BATCH_SIZE
+            batch = Batch(items, start=b_start, size=self.BATCH_SIZE)
+            return batch
+
+        return []
+
+    def sitemap_count(self):
+        items = self._objects()
+        if items:
+            item_count = len(list(items))
+            if item_count:
+                count = math.ceil(item_count / self.BATCH_SIZE)
+                return range(1, count+1)
+
+        return []
+
     @ram.cache(_render_cachekey)
     def generate(self):
         """Generates the Gzipped sitemap."""
-        xml = self.template()
+        if 'page' in self.request:
+            xml = self.template()
+        else:
+            xml = self.template_index()
+
         fp = BytesIO()
         gzip = GzipFile(self.filename, "wb", 9, fp)
         if isinstance(xml, str):
@@ -120,3 +153,7 @@ class SiteMapView(BrowserView):
 
         self.request.response.setHeader("Content-Type", "application/octet-stream")
         return self.generate()
+
+    def navroot_url(self):
+        pps = getMultiAdapter((self.context, self.request), name="plone_portal_state")
+        return pps.navigation_root_url()
