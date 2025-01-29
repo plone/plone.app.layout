@@ -154,6 +154,3 @@ class SiteMapView(BrowserView):
         self.request.response.setHeader("Content-Type", "application/octet-stream")
         return self.generate()
 
-    def navroot_url(self):
-        pps = getMultiAdapter((self.context, self.request), name="plone_portal_state")
-        return pps.navigation_root_url()
