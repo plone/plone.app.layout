@@ -9,7 +9,6 @@ from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.publisher.interfaces import NotFound
 
@@ -153,4 +152,3 @@ class SiteMapView(BrowserView):
 
         self.request.response.setHeader("Content-Type", "application/octet-stream")
         return self.generate()
-
