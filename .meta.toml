@@ -1,9 +1,9 @@
 # Generated from:
-# https://github.com/plone/meta/tree/main/config/default
+# https://github.com/plone/meta/tree/main/src/plone/meta/default
 # See the inline comments on how to expand/tweak this configuration file
 [meta]
 template = "default"
-commit-id = "a89af8f2"
+commit-id = "cf67b171"
 
 [pyproject]
 dependencies_ignores = "['plone.app.relationfield', 'plone.app.multilingual', 'Products.CMFPlone']"
