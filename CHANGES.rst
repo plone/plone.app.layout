@@ -366,7 +366,7 @@ New features:
   Also allow customizing the tabs entries and the navigation query along with the other navigation entries.
   [thet] (273-2)
 - Global sections viewlet: Factor out types_using_view.
-  Factor out types_using_view so that this method can be re-used, e.g. in a subclass with a customize_entry method.
+  Factor out types_using_view so that this method can be reused, e.g. in a subclass with a customize_entry method.
   [thet] (273-3)
 - Global sections viewlet performance optimizations:
 
