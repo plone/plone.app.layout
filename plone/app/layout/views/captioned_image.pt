@@ -1,0 +1,8 @@
+<figure tal:attributes="
+          class options/class;
+        ">
+  <picture tal:replace="structure options/tag"></picture>
+  <figcaption class="image-caption"
+              tal:content="options/caption|nothing"
+  ></figcaption>
+</figure>

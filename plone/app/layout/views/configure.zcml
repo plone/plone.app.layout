@@ -1,0 +1,14 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    >
+
+  <browser:page
+      name="plone.outputfilters_captioned_image"
+      for="*"
+      class=".captioned_image.CaptionedImageView"
+      template="captioned_image.pt"
+      permission="zope.Public"
+      />
+
+</configure>
