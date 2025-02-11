@@ -12,6 +12,9 @@
   <include package=".links" />
   <include package=".sitemap" />
   <include package=".analytics" />
+  <include package=".controlpanels" />
+  <include package=".views" />
+  <include package=".user" />
 
   <include file="permissions.zcml" />
 
