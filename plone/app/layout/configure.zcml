@@ -14,7 +14,7 @@
   <include package=".analytics" />
   <include package=".controlpanels" />
   <include package=".views" />
-  <include package=".user" />
+  <include package=".users" />
 
   <include file="permissions.zcml" />
 
