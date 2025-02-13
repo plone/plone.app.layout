@@ -42,6 +42,7 @@ setup(
     install_requires=[
         "plone.app.content",
         "plone.app.dexterity",
+        "plone.app.linkintegrity",
         "plone.app.relationfield",
         "plone.app.uuid",
         "plone.app.viewletmanager >=1.2",
@@ -52,6 +53,7 @@ setup(
         "plone.memoize",
         "plone.portlets",
         "plone.protect",
+        "plone.uuid",
         "Products.CMFEditions >=1.2.2",
         "Products.GenericSetup",
         "Products.statusmessages",
