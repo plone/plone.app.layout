@@ -20,7 +20,10 @@
       layer="plone.app.layout.interfaces.IPloneAppLayoutLayer"
       />
 
-  <include package="plone.app.workflow" file="permissions.zcml" />
+  <include
+      package="plone.app.workflow"
+      file="permissions.zcml"
+      />
 
   <browser:page
       name="sharing"
