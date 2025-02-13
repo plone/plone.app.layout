@@ -14,10 +14,10 @@ class TestSetup(unittest.TestCase):
         self.request = self.layer["request"]
 
     def test_browserlayer(self):
-        from plone.app.layout.interfaces import IPloneAppLayoutBrowserLayer
+        from plone.app.layout.interfaces import IPloneAppLayoutLayer
         from plone.browserlayer import utils
 
-        self.assertIn(IPloneAppLayoutBrowserLayer, utils.registered_layers())
+        self.assertIn(IPloneAppLayoutLayer, utils.registered_layers())
 
 
 class TestUninstall(unittest.TestCase):
@@ -30,7 +30,7 @@ class TestUninstall(unittest.TestCase):
         self.installer.uninstall_product("plone.app.layout")
 
     def test_browserlayer_removed(self):
-        from plone.app.layout.interfaces import IPloneAppLayoutBrowserLayer
+        from plone.app.layout.interfaces import IPloneAppLayoutLayer
         from plone.browserlayer import utils
 
-        self.assertNotIn(IPloneAppLayoutBrowserLayer, utils.registered_layers())
+        self.assertNotIn(IPloneAppLayoutLayer, utils.registered_layers())
