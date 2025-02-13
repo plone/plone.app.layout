@@ -58,6 +58,7 @@ setup(
         "Products.CMFEditions >=1.2.2",
         "Products.statusmessages",
         "Products.ZCatalog",
+        "Products.GenericSetup",
         "setuptools",
         "Zope",
     ],
