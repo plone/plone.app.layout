@@ -53,7 +53,6 @@ setup(
         "plone.memoize",
         "plone.portlets",
         "plone.protect",
-        "plone.uuid",
         "Products.CMFEditions >=1.2.2",
         "Products.GenericSetup",
         "Products.statusmessages",
