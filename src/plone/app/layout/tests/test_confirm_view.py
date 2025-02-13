@@ -1,11 +1,11 @@
-from plone.app.layout.testing import INTEGRATION_TESTING
+from plone.app.layout.testing import PLONE_APP_LAYOUT_INTEGRATION_TESTING
 from zope.component import getMultiAdapter
 
 import unittest
 
 
 class TestAttackVector(unittest.TestCase):
-    layer = INTEGRATION_TESTING
+    layer = PLONE_APP_LAYOUT_INTEGRATION_TESTING
 
     def test_using_correct_template(self):
         """Ensure that confirm-action view uses the confirm.pt template from plone.app.layout."""
