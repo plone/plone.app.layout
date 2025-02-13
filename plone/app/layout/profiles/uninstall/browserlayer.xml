@@ -2,7 +2,7 @@
 <layers>
   <layer
       name="plone-app-layout-browserlayer"
-      interface="plone.app.layout.interfaces.IBrowserLayer"
+      interface="plone.app.layout.interfaces.IPloneAppLayoutBrowserLayer"
       remove="true"
       />
 </layers>
