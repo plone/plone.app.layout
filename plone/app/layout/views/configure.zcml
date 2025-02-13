@@ -1,7 +1,16 @@
 <configure
     xmlns="http://namespaces.zope.org/zope"
     xmlns:browser="http://namespaces.zope.org/browser"
-    xmlns:zcml="http://namespaces.zope.org/zcml"
     >
+
+  <include package="plone.app.workflow" file="permissions.zcml" />
+
+  <browser:page
+      name="sharing"
+      for="*"
+      class=".sharing.SharingView"
+      permission="plone.DelegateRoles"
+      layer="plone.app.layout.interfaces.IClassicUILayer"
+      />
 
 </configure>
