@@ -3,7 +3,10 @@
     xmlns:browser="http://namespaces.zope.org/browser"
     >
 
-  <include package="plone.app.workflow" file="permissions.zcml" />
+  <include
+      package="plone.app.workflow"
+      file="permissions.zcml"
+      />
 
   <browser:page
       name="sharing"

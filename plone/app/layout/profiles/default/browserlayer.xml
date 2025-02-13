@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layers>
   <layer interface="plone.app.layout.interfaces.IPloneAppLayoutLayer"
-         name="plone.app.layout"
-  />
+    name="plone.app.layout" />
 </layers>
