@@ -1,5 +1,5 @@
-from plone.app.testing import login
 from plone.app.layout.testing import INTEGRATION_TESTING
+from plone.app.testing import login
 from zope.component import getMultiAdapter
 
 import unittest
