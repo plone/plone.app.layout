@@ -1,0 +1,58 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      xml:lang="en"
+      tal:omit-tag=""
+      i18n:domain="plone"
+>
+
+  <head>
+    <metal:block fill-slot="top_slot"
+                 tal:define="
+                   dummy python:request.set('disable_border',1);
+                 "
+    />
+  </head>
+
+  <body>
+    <metal:main fill-slot="main">
+
+      <h1 class="documentFirstHeading"
+          i18n:translate="linkintegrity_update_title"
+      >Update link integrity information</h1>
+
+      <div id="content-core">
+
+        <p i18n:translate="linkintegrity_update_instructions">
+      Clicking the below button will cause link integrity information to be
+      updated. This might take a while, especially for bigger sites...
+        </p>
+
+        <form action="updateLinkIntegrityInformation"
+              method="post"
+              tal:attributes="
+                action request/URL;
+              "
+        >
+          <input class="destructive"
+                 name="update"
+                 type="submit"
+                 value="Update"
+                 i18n:attributes="value"
+          />
+          <input class="standalone"
+                 name="cancel"
+                 type="submit"
+                 value="Cancel"
+                 i18n:attributes="value"
+          />
+        </form>
+
+      </div>
+
+    </metal:main>
+  </body>
+</html>
