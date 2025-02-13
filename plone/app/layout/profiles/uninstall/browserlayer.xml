@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layers>
+  <layer
+      name="plone-app-layout-browserlayer"
+      interface="plone.app.layout.interfaces.IBrowserLayer"
+      remove="true"
+      />
+</layers>
