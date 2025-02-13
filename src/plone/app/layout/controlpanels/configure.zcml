@@ -9,6 +9,7 @@
       for="*"
       class=".linkintegrity.DeleteConfirmationInfo"
       permission="zope2.Public"
+      layer="plone.app.layout.interfaces.IPloneAppLayoutLayer"
       />
 
   <browser:page
