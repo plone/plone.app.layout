@@ -1,8 +1,25 @@
 <configure
     xmlns="http://namespaces.zope.org/zope"
     xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
     xmlns:zcml="http://namespaces.zope.org/zcml"
     >
+
+  <genericsetup:registerProfile
+      name="default"
+      title="plone.app.layout"
+      description="Installs the plone.app.layout add-on."
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      directory="profiles/default"
+      />
+
+  <genericsetup:registerProfile
+      name="uninstall"
+      title="plone.app.layout"
+      description="Uninstalls the plone.app.layout add-on."
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      directory="profiles/uninstall"
+      />
 
   <include package=".globals" />
   <include package=".navigation" />
