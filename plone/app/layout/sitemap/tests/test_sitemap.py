@@ -96,6 +96,7 @@ class SiteMapTestCase(unittest.TestCase):
         # first round as an authenticated (manager)
         setRoles(self.portal, TEST_USER_ID, ["Manager"])
         login(self.portal, TEST_USER_NAME)
+        self.portal.REQUEST["page"] = 1
         xml = self.uncompress(self.sitemap())
         self.assertTrue("<loc>http://nohost/plone/private</loc>" in xml)
         self.assertTrue("<loc>http://nohost/plone/pending</loc>" in xml)
@@ -103,6 +104,7 @@ class SiteMapTestCase(unittest.TestCase):
 
         # second round as anonymous
         logout()
+        self.portal.REQUEST["page"] = 1
         xml = self.uncompress(self.sitemap())
         self.assertFalse("<loc>http://nohost/plone/private</loc>" in xml)
         self.assertFalse("<loc>http://nohost/plone/pending</loc>" in xml)
@@ -116,6 +118,7 @@ class SiteMapTestCase(unittest.TestCase):
         """
 
         # first round as anonymous
+        self.portal.REQUEST["page"] = 1
         xml = self.uncompress(self.sitemap())
         self.assertFalse("<loc>http://nohost/plone/private</loc>" in xml)
         self.assertFalse("<loc>http://nohost/plone/pending</loc>" in xml)
@@ -124,6 +127,7 @@ class SiteMapTestCase(unittest.TestCase):
         # second round as an authenticated (manager)
         setRoles(self.portal, TEST_USER_ID, ["Manager"])
         login(self.portal, TEST_USER_NAME)
+        self.portal.REQUEST["page"] = 1
         xml = self.uncompress(self.sitemap())
         self.assertTrue("<loc>http://nohost/plone/private</loc>" in xml)
         self.assertTrue("<loc>http://nohost/plone/pending</loc>" in xml)
@@ -134,7 +138,7 @@ class SiteMapTestCase(unittest.TestCase):
         The sitemap is generated from the catalog. If the catalog changes, a
         new sitemap has to be generated.
         """
-
+        self.portal.REQUEST["page"] = 1
         xml = self.uncompress(self.sitemap())
         self.assertFalse("<loc>http://nohost/plone/pending</loc>" in xml)
 
@@ -145,6 +149,7 @@ class SiteMapTestCase(unittest.TestCase):
         self.wftool.doActionFor(pending, "publish")
         logout()
 
+        self.portal.REQUEST["page"] = 1
         xml = self.uncompress(self.sitemap())
         self.assertTrue("<loc>http://nohost/plone/pending</loc>" in xml)
 
@@ -157,6 +162,7 @@ class SiteMapTestCase(unittest.TestCase):
         )
         logout()
 
+        self.portal.REQUEST["page"] = 1
         xml = self.uncompress(self.sitemap())
         self.assertFalse("<loc>http://nohost/plone/published</loc>" in xml)
 
@@ -183,6 +189,7 @@ class SiteMapTestCase(unittest.TestCase):
         sitemap = getMultiAdapter(
             (self.portal.navroot, self.portal.REQUEST), name="sitemap.xml.gz"
         )
+        self.portal.REQUEST["page"] = 1
         xml = self.uncompress(sitemap())
         self.assertFalse("<loc>http://nohost/plone/published</loc>" in xml)
         self.assertTrue("<loc>http://nohost/plone/navroot</loc>" in xml)
@@ -204,6 +211,7 @@ class SiteMapTestCase(unittest.TestCase):
         search_settings.types_not_searched = ("News Item",)
         logout()
 
+        self.portal.REQUEST["page"] = 1
         xml = self.uncompress(self.sitemap())
         self.assertFalse("<loc>http://nohost/plone/newsitem</loc>" in xml)
 
@@ -223,6 +231,7 @@ class SiteMapTestCase(unittest.TestCase):
 
         logout()
 
+        self.portal.REQUEST["page"] = 1
         xml = self.uncompress(self.sitemap())
         self.assertTrue("<loc>http://nohost/plone/newsitem/view</loc>" in xml)
 
@@ -259,9 +268,62 @@ class SiteMapTestCase(unittest.TestCase):
         )
         logout()
 
+        self.portal.REQUEST["page"] = 1
         xml = self.uncompress(self.sitemap())
         self.assertFalse("<loc>http://nohost/plone/folder/default</loc>" in xml)
         self.assertTrue("<loc>http://nohost/plone/folder</loc>" in xml)
         self.assertTrue("<lastmod >2001-01-01T" in xml)
         self.assertTrue("<loc>http://nohost/plone</loc>" in xml)
         self.assertFalse("<loc>http://nohost/plone/published</loc>" in xml)
+
+    def test_rendering_of_sitemap_index(self):
+        """check that when calling without parameters,
+        it renders a sitemap index file pointing to the specific files
+        """
+        # first round as an authenticated (manager)
+        setRoles(self.portal, TEST_USER_ID, ["Manager"])
+        login(self.portal, TEST_USER_NAME)
+        xml = self.uncompress(self.sitemap())
+
+        self.assertTrue("<sitemapindex" in xml)
+        self.assertTrue("<loc>http://nohost/plone/sitemap.xml.gz?page=1</loc>" in xml)
+        self.assertTrue(
+            "<loc>http://nohost/plone/sitemap.xml.gz?page=2</loc>" not in xml
+        )
+
+    def test_rendering_multiple_sitemaps(self):
+        """test that when we have more than the batch size count items"""
+        setRoles(self.portal, TEST_USER_ID, ["Manager"])
+        login(self.portal, TEST_USER_NAME)
+
+        # Generate 5000 items to have at least 2 sitemap URLs generated in the index file
+        for count in range(5000):
+            self.portal.invokeFactory(id=f"private-{count}", type_name="Document")
+
+        xml = self.uncompress(self.sitemap())
+
+        self.assertTrue("<sitemapindex" in xml)
+        self.assertTrue("<loc>http://nohost/plone/sitemap.xml.gz?page=1</loc>" in xml)
+        self.assertTrue("<loc>http://nohost/plone/sitemap.xml.gz?page=2</loc>" in xml)
+        self.assertTrue(
+            "<loc>http://nohost/plone/sitemap.xml.gz?page=3</loc>" not in xml
+        )
+
+    def test_first_page_has_batch_size_count_items(self):
+        setRoles(self.portal, TEST_USER_ID, ["Manager"])
+        login(self.portal, TEST_USER_NAME)
+
+        # Generate 5000 items to have at least 2 sitemap URLs generated in the index file
+        for count in range(5000):
+            self.portal.invokeFactory(id=f"private-{count}", type_name="Document")
+
+        self.portal.REQUEST["page"] = 1
+
+        xml = self.uncompress(self.sitemap())
+        self.assertEqual(xml.count("<loc>"), 5000)
+
+        # Now we try the second batch
+        self.portal.REQUEST["page"] = 2
+
+        xml = self.uncompress(self.sitemap())
+        self.assertEqual(xml.count("<loc>"), 6)
