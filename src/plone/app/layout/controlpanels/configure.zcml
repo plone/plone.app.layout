@@ -30,7 +30,7 @@
       for="*"
       class=".sharing.SharingView"
       permission="plone.DelegateRoles"
-      layer="plone.app.layout.interfaces.IClassicUILayer"
+      layer="plone.app.layout.interfaces.IPloneAppLayoutLayer"
       />
 
 </configure>
