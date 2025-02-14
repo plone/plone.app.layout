@@ -1,4 +1,4 @@
-from plone.app.layout import _
+from plone.app.layout import PloneMessageFactory as _
 from plone.app.workflow.browser.sharing import SharingView as ApiSharingView
 from plone.app.workflow.events import LocalrolesModifiedEvent
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
