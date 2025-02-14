@@ -1,0 +1,60 @@
+<div id="plone-lock-status"
+     tal:define="
+       locked view/info/is_locked_for_current_user;
+       stealable view/lock_is_stealable;
+       lock_details view/lock_info;
+       icons python:context.restrictedTraverse('@@iconresolver');
+     "
+     i18n:domain="plone"
+>
+  <tal:block condition="locked">
+    <div class="portalMessage info alert alert-info">
+      <tal:icon tal:replace="structure python:icons.tag('lock-fill', tag_alt='locked', tag_class='mb-1 me-2')" />
+      <strong i18n:translate="label_locked">Locked</strong>
+      <tal:author-page tal:condition="lock_details/author_page"
+                       i18n:translate="description_webdav_locked_by_author_on_time"
+      >
+          This item was locked by
+        <a tal:content="lock_details/fullname"
+           tal:attributes="
+             href lock_details/author_page;
+           "
+           i18n:name="author"
+        ></a>
+        <span tal:content="lock_details/time_difference"
+              i18n:name="time"
+        ></span>
+         ago.
+      </tal:author-page>
+      <tal:no-author-page tal:condition="not:lock_details/author_page"
+                          i18n:translate="description_webdav_locked_by_author_on_time"
+      >
+          This item was locked by
+        <span tal:content="lock_details/fullname"
+              i18n:name="author"
+        ></span>
+        <span tal:content="lock_details/time_difference"
+              i18n:name="time"
+        ></span>
+         ago.
+      </tal:no-author-page>
+      <form method="POST"
+            tal:condition="stealable"
+            tal:attributes="
+              action string:${context/absolute_url}/@@plone_lock_operations/force_unlock;
+            "
+      >
+        <span i18n:translate="description_webdav_locked_steal">
+            If you are certain this user has abandoned the object,
+            you may
+          <input type="submit"
+                 value="Unlock"
+                 i18n:attributes="value"
+                 i18n:name="unlock_button"
+          />
+            the object. You will then be able to edit it.
+        </span>
+      </form>
+    </div>
+  </tal:block>
+</div>

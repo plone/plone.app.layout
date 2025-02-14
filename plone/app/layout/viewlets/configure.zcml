@@ -336,7 +336,7 @@
       name="plone.lockinfo"
       for="plone.locking.interfaces.ITTWLockable"
       manager=".interfaces.IAboveContent"
-      class="plone.locking.browser.info.LockInfoViewlet"
+      class=".locking.LockInfoViewlet"
       permission="cmf.ModifyPortalContent"
       />
 
