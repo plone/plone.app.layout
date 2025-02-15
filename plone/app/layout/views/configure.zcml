@@ -4,4 +4,20 @@
     xmlns:zcml="http://namespaces.zope.org/zcml"
     >
 
+  <browser:page
+      name="delete_confirmation_info"
+      for="*"
+      class=".linkintegrity.DeleteConfirmationInfo"
+      permission="zope2.Public"
+      layer="plone.app.layout.interfaces.IPloneAppLayoutLayer"
+      />
+
+  <browser:page
+      name="updateLinkIntegrityInformation"
+      for="plone.base.interfaces.IPloneSiteRoot"
+      class=".linkintegrity.UpdateView"
+      template="linkintegrity_update.pt"
+      permission="cmf.ManagePortal"
+      />
+
 </configure>
