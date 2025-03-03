@@ -9,6 +9,7 @@ from plone.app.testing import TEST_USER_ID
 from plone.app.testing import TEST_USER_PASSWORD
 from plone.base.interfaces import ISecuritySchema
 from plone.base.interfaces import ISiteSchema
+from plone.dexterity.fti import DexterityFTI
 from plone.locking.interfaces import ILockable
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
@@ -18,19 +19,8 @@ from zope.interface import Interface
 from zope.intid.interfaces import IIntIds
 
 
-try:
-    import pkg_resources
-
-    pkg_resources.get_distribution("plone.app.relationfield")
-except pkg_resources.DistributionNotFound:
-    HAS_DEXTERITY = False
-    pass
-else:
-    HAS_DEXTERITY = True
-    from plone.dexterity.fti import DexterityFTI
-
-    class IMyDexterityItem(Interface):
-        """Dexterity test type"""
+class IMyDexterityItem(Interface):
+    """Dexterity test type"""
 
 
 class TestDocumentBylineViewletView(ViewletsTestCase):
