@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layers>
-  <layer name="plone.app.layout"
+  <layer interface="plone.app.layout.interfaces.IPloneAppLayoutLayer"
+         name="plone.app.layout"
          remove="true"
   />
 </layers>
