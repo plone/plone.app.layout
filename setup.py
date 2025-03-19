@@ -46,6 +46,7 @@ setup(
         "plone.app.content",
         "plone.app.dexterity",
         "plone.app.relationfield",
+        "plone.app.workflow",
         "plone.app.uuid",
         "plone.app.viewletmanager >=1.2",
         "plone.base >=1.0.4",
