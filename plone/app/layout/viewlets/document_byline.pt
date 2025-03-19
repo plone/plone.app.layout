@@ -32,12 +32,13 @@
                published view/pub_date;
                modified context/ModificationDate;
                show_modification_date python:view.show_modification_date();
+               toLocalizedTime nocall:here/@@plone/toLocalizedTime;
              ">
     <span class="documentPublished"
           tal:condition="published"
     >
       <span i18n:translate="box_published">published</span>
-      <span tal:content="python:context.toLocalizedTime(published)">Published</span>
+      <span tal:content="python:toLocalizedTime(published)">Published</span>
       <tal:sep condition="show_modification_date">,</tal:sep>
     </span>
 
@@ -47,7 +48,7 @@
       <span i18n:translate="box_last_modified">
       last modified
       </span>
-      <span tal:content="python:context.toLocalizedTime(modified)">
+      <span tal:content="python:toLocalizedTime(modified)">
       Modified
       </span>
     </span>

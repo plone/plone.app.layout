@@ -2,6 +2,7 @@
      id="review-history"
      tal:define="
        history view/workflowHistory;
+       toLocalizedTime nocall:here/@@plone/toLocalizedTime;
      "
      i18n:domain="plone"
 >
@@ -67,12 +68,12 @@
               </td>
 
               <td>
-                <span tal:replace="python:context.toLocalizedTime(item['time'],long_format=True)"></span>
+                <span tal:replace="python:toLocalizedTime(item['time'],long_format=True)"></span>
                 <span tal:condition="item/effective_date|nothing">
                   (<span tal:omit-tag=""
                         i18n:translate="label_publishing_effective"
                   >effective</span>:
-                  <span tal:replace="python: context.toLocalizedTime(item['effective_date'],long_format=True)"></span>)
+                  <span tal:replace="python: toLocalizedTime(item['effective_date'],long_format=True)"></span>)
                 </span>
               </td>
 
