@@ -129,7 +129,8 @@ class DocumentBylineViewlet(ViewletBase):
         return False
 
     @deprecation.deprecate(
-        "The toLocalizedTime method is unused and will be removed in Plone 7"
+        "The toLocalizedTime method is unused and will be removed in Plone 7. "
+        "Use the @@plone.toLocalizedTime helper instead."
     )
     def toLocalizedTime(self, time, long_format=None, time_only=None):
         """Convert time to localized time"""
@@ -267,6 +268,10 @@ class HistoryByLineView(BrowserView):
             return self.context.expires().isPast()
         return False
 
+    @deprecation.deprecate(
+        "The toLocalizedTime method is unused and will be removed in Plone 7. "
+        "Use the @@plone.toLocalizedTime helper instead."
+    )
     def toLocalizedTime(self, time, long_format=None, time_only=None):
         """Convert time to localized time"""
         util = getToolByName(self.context, "translation_service")
@@ -526,6 +531,10 @@ class ContentHistoryViewlet(WorkflowHistoryViewlet):
         history.sort(key=lambda x: x.get("time", 0.0), reverse=True)
         return history
 
+    @deprecation.deprecate(
+        "The toLocalizedTime method is unused and will be removed in Plone 7. "
+        "Use the @@plone.toLocalizedTime helper instead."
+    )
     def toLocalizedTime(self, time, long_format=None, time_only=None):
         """Convert time to localized time"""
         util = getToolByName(self.context, "translation_service")

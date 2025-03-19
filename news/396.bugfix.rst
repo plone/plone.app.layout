@@ -1,0 +1,2 @@
+The templates do not rely anymore on the toLocalizedTime skin script.
+[ale-rt]
