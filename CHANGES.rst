@@ -8,6 +8,17 @@ Changelog
 
 .. towncrier release notes start
 
+4.1.3 (2025-03-26)
+------------------
+
+Bug fixes:
+
+
+- The templates do not rely anymore on the toLocalizedTime skin script.
+  [ale-rt] (#396)
+- Drop `pkg_resources` usage @gforcada (#4126)
+
+
 4.1.2 (2024-12-16)
 ------------------
 
