@@ -5,6 +5,7 @@ from plone.app.testing import IntegrationTesting
 from plone.app.testing import PloneSandboxLayer
 from plone.app.testing import TEST_USER_ID
 from plone.base.utils import unrestricted_construct_instance
+from Products.CMFCore.utils import getToolByName
 
 
 class Fixture(PloneSandboxLayer):
@@ -24,6 +25,91 @@ class Fixture(PloneSandboxLayer):
         mtool.createMemberArea(TEST_USER_ID)
         if mtool.getMemberareaCreationFlag():
             mtool.setMemberareaCreationFlag()
+        applyProfile(portal, "plone.app.contenttypes:default")
+
+        acl_users = getToolByName(portal, "acl_users")
+
+        acl_users.userFolderAddUser(
+            "manager",
+            "secret",
+            [
+                "Manager",
+            ],
+            [],
+        )
+        acl_users.userFolderAddUser(
+            "member",
+            "secret",
+            [
+                "Member",
+            ],
+            [],
+        )
+        acl_users.userFolderAddUser(
+            "owner",
+            "secret",
+            [
+                "Owner",
+            ],
+            [],
+        )
+        acl_users.userFolderAddUser(
+            "reviewer",
+            "secret",
+            [
+                "Reviewer",
+            ],
+            [],
+        )
+        acl_users.userFolderAddUser(
+            "editor",
+            "secret",
+            [
+                "Editor",
+            ],
+            [],
+        )
+        acl_users.userFolderAddUser(
+            "reader",
+            "secret",
+            [
+                "Reader",
+            ],
+            [],
+        )
+
+        acl_users.userFolderAddUser(
+            "delegate_reader",
+            "secret",
+            [
+                "Member",
+            ],
+            [],
+        )
+        acl_users.userFolderAddUser(
+            "delegate_editor",
+            "secret",
+            [
+                "Member",
+            ],
+            [],
+        )
+        acl_users.userFolderAddUser(
+            "delegate_contributor",
+            "secret",
+            [
+                "Member",
+            ],
+            [],
+        )
+        acl_users.userFolderAddUser(
+            "delegate_reviewer",
+            "secret",
+            [
+                "Member",
+            ],
+            [],
+        )
         applyProfile(portal, "plone.app.layout:default")
 
 
