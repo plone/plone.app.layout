@@ -1,0 +1,73 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      xml:lang="en"
+      i18n:domain="plone"
+>
+
+  <metal:block fill-slot="top_slot"
+               tal:define="
+                 dummy python:request.set('disable_border', 1);
+               "
+  />
+
+  <body>
+    <metal:title fill-slot="content-title">
+      <h1 class="documentFirstHeading"
+          i18n:translate=""
+      >
+         Confirming User Action.
+      </h1>
+    </metal:title>
+
+    <metal:description fill-slot="content-description">
+      <div class="documentDescription"
+           i18n:translate=""
+      >
+         Confirm that you'd like to perform this action.
+      </div>
+    </metal:description>
+
+    <metal:content-core fill-slot="content-core">
+      <metal:content-core define-macro="content-core">
+        <p class="discreet"
+           i18n:translate=""
+        >
+        Careful, it's possible someone is executing an exploit against you.
+        Verify you just performed an action on this site and that you were
+        not referred here by a different website or email.
+        </p>
+        <form method="GET"
+              tal:attributes="
+                action request/original_url;
+              "
+        >
+          <tal:values tal:repeat="key python: request.form.keys()">
+            <input type="hidden"
+                   tal:attributes="
+                     name key;
+                     value python: request.form[key];
+                   "
+            />
+          </tal:values>
+          <dl>
+            <dt i18n:translate="">Original URL</dt>
+            <dd tal:content="request/original_url"></dd>
+          </dl>
+          <div class="formControls">
+            <input class="standalone"
+                   name="form.button.confirm"
+                   type="submit"
+                   value="Confirm action"
+                   i18n:attributes="value"
+            />
+          </div>
+        </form>
+      </metal:content-core>
+    </metal:content-core>
+
+  </body>
+</html>
