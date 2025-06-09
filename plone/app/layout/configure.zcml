@@ -24,6 +24,7 @@
   <include package=".globals" />
   <include package=".navigation" />
   <include package=".viewlets" />
+  <include package=".views" />
   <include package=".nextprevious" />
   <include package=".icons" />
   <include package=".links" />
