@@ -4,6 +4,7 @@ from plone.app.layout.globals.interfaces import ILayoutPolicy
 from plone.app.layout.globals.interfaces import IViewView
 from plone.base.interfaces.controlpanel import ILinkSchema
 from plone.base.interfaces.controlpanel import ISiteSchema
+from plone.base.utils import is_truthy
 from plone.i18n.normalizer.interfaces import IIDNormalizer
 from plone.memoize.view import memoize
 from plone.portlets.interfaces import IPortletManager
@@ -294,6 +295,30 @@ class LayoutPolicy(BrowserView):
             body_classes.update(extra_classes)
 
         return " ".join(sorted(body_classes))
+
+    @memoize
+    def is_xhr(self):
+        """Check if the current request is an XHR request."""
+        return self.request.get("HTTP_X_REQUESTED_WITH") == "XMLHttpRequest"
+
+    @memoize
+    def use_ajax(self):
+        """Check if we should use some AJAX specifica.
+        This is used to load the AJAX main template instead of the regular one.
+        """
+
+        # ajax_load request/query parameters which are explicitly set take
+        # precedence over automatic AJAX detection.
+        if "ajax_load" in self.request:
+            return is_truthy(self.request.get("ajax_load", False))
+
+        # Automatic AJAX detection needs to be turned on.
+        # Defined in plone.base.controlpanel.site.ISiteSchema
+        registry = getUtility(IRegistry)
+        use_ajax = registry.get("plone.use_ajax", False)
+
+        # If turned on and we're in an XHR request, return True.
+        return use_ajax and self.is_xhr()
 
 
 @adapter(Interface, Interface)
