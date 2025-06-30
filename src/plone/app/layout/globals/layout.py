@@ -295,6 +295,19 @@ class LayoutPolicy(BrowserView):
 
         return " ".join(sorted(body_classes))
 
+    @property
+    @memoize
+    def is_ajax(self):
+        """Check if the current request is an XHR request.
+
+        Note: This is an unreliable way to detect AJAX requests.
+        While many client-side libraries (like jQuery) add this request header
+        automatically, the Fetch API does not. When using fetch, it is
+        recommended to wrap it with a helper function that adds this header to
+        each request.
+        """
+        return self.request.get("HTTP_X_REQUESTED_WITH") == "XMLHttpRequest"
+
 
 @adapter(Interface, Interface)
 @implementer(IBodyClassAdapter)

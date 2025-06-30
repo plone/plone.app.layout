@@ -6,6 +6,7 @@ from plone.base.interfaces import INavigationRoot
 from plone.base.interfaces.controlpanel import ILinkSchema
 from plone.portlets.interfaces import IPortletType
 from plone.registry.interfaces import IRegistry
+from zope.component import getMultiAdapter
 from zope.component import getUtility
 
 import os
@@ -190,3 +191,26 @@ class TestLayoutView(unittest.TestCase):
         layout_view = context.restrictedTraverse("@@plone_layout")
         body_class = layout_view.bodyClass(view, layout_view)
         assert "col-content" in body_class
+
+
+class TestLayoutViewXHR(unittest.TestCase):
+    """Tests the global layout view with it's XHR utilities."""
+
+    layer = INTEGRATION_TESTING
+
+    def setUp(self):
+        self.portal = self.layer["portal"]
+        self.request = self.layer["request"].clone()
+
+    @property
+    def view(self):
+        return getMultiAdapter((self.portal, self.request), name="plone_layout")
+
+    def test_is_ajax_default(self):
+        """Test the default case where no XHR request is requested."""
+        self.assertFalse(self.view.is_ajax)
+
+    def test_is_ajax_ajax(self):
+        """Test, if the view correctly identifies XHR requests."""
+        self.request.environ["HTTP_X_REQUESTED_WITH"] = "XMLHttpRequest"
+        self.assertTrue(self.view.is_ajax)
