@@ -12,3 +12,6 @@ dependencies_ignores = "['plone.app.relationfield', 'plone.app.multilingual', 'P
 extra_lines = """
         exclude: .*/tests/.*.pt
 """
+
+[tox]
+test_matrix = { "6.1" = ["3.13", "3.10"] }
