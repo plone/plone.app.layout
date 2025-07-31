@@ -3,7 +3,7 @@
 # See the inline comments on how to expand/tweak this configuration file
 [meta]
 template = "default"
-commit-id = "cf67b171"
+commit-id = "2.0.1.dev0"
 
 [pyproject]
 dependencies_ignores = "['plone.app.relationfield', 'plone.app.multilingual', 'Products.CMFPlone']"
@@ -12,3 +12,6 @@ dependencies_ignores = "['plone.app.relationfield', 'plone.app.multilingual', 'P
 extra_lines = """
         exclude: .*/tests/.*.pt
 """
+
+[tox]
+test_matrix = { "6.1" = ["3.13", "3.10"] }
