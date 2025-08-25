@@ -9,21 +9,23 @@
                 tal:condition="python:creator_ids and view.show_about()"
   >
     <span class="label-by-author">
-      <tal:i18n i18n:translate="">by</tal:i18n>
-      <tal:for repeat="user_id creator_ids">
-        <tal:user define="
-                    url_path python: view.get_url_path(user_id);
-                    fullname python:view.get_fullname(user_id);
-                  ">
-          <a class="badge rounded-pill bg-light text-dark fw-normal fs-6"
-             href="${navigation_root_url}/${url_path}"
-             tal:condition="url_path"
-          >${fullname}</a>
-          <span class="badge rounded-pill bg-light text-dark fw-normal fs-6"
-                tal:condition="not:url_path"
-          >${fullname}</span>
-        </tal:user>
-      </tal:for>
+      <tal:i18n i18n:translate="label_by_author">
+        by
+        <tal:for repeat="user_id creator_ids" i18n:name="author">
+          <tal:user define="
+                      url_path python: view.get_url_path(user_id);
+                      fullname python:view.get_fullname(user_id);
+                    ">
+            <a class="badge rounded-pill bg-light text-dark fw-normal fs-6"
+               href="${navigation_root_url}/${url_path}"
+               tal:condition="url_path"
+            >${fullname}</a>
+            <span class="badge rounded-pill bg-light text-dark fw-normal fs-6"
+                  tal:condition="not:url_path"
+            >${fullname}</span>
+          </tal:user>
+        </tal:for>
+      </tal:i18n>
     &mdash;
     </span>
   </tal:creators>
