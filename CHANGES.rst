@@ -8,6 +8,24 @@ Changelog
 
 .. towncrier release notes start
 
+5.0.3 (2025-09-05)
+------------------
+
+Breaking changes:
+
+
+- Officially support only Plone 6.1.
+  This was already the case, but we make it clearer in the package metadata.
+  Plone 6.0 already pins plone.app.layout to version 4.
+
+
+Internal:
+
+
+- Update configuration files.
+  [plone devs]
+
+
 5.0.2 (2025-03-21)
 ------------------
 
