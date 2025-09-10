@@ -8,6 +8,53 @@ Changelog
 
 .. towncrier release notes start
 
+6.0.0a1 (2025-09-10)
+--------------------
+
+Breaking changes:
+
+
+- Moved ``plone.locking.browser.info.LockInfoViewlet`` template to ``plone.app.layout.viewlets``.
+  [cihanandac] (#3953)
+- Provide a Classic UI specific template for the ``plone.protect`` ``@@confirm-action``  view.
+  [cihanandac] (#3995)
+- Depend on Plone 6.2.
+
+  Raise Plone compatibility to reflect the breaking changes.
+
+
+New features:
+
+
+- create directories for views
+  [1letter] (#387)
+- add IPloneAppLayout BrowserLayer
+  [MrTango] (#391)
+
+
+Bug fixes:
+
+
+- Generate a sitemap-index file and split the contents of the sitemap.xml.gz contents in several files
+  [erral] (#381)
+- The templates do not rely anymore on the toLocalizedTime skin script.
+  [ale-rt] (#396)
+- Drop `pkg_resources` usage @gforcada (#4126)
+
+
+Internal:
+
+
+- Update configuration files.
+  [plone devs]
+
+
+Tests:
+
+
+- Add tests for the installation profile
+
+
 5.0.1 (2024-09-24)
 ------------------
 

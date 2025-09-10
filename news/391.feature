@@ -1,2 +1,0 @@
-add IPloneAppLayout BrowserLayer
-[MrTango]
