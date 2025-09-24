@@ -49,7 +49,7 @@ setup(
         "plone.app.relationfield",
         "plone.app.uuid",
         "plone.app.viewletmanager >=1.2",
-        "plone.base >=1.0.4",
+        "plone.base >=4.0.0a1",
         "plone.dexterity",
         "plone.formwidget.namedfile",
         "plone.i18n",
