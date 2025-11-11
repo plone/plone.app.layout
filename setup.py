@@ -56,7 +56,6 @@ setup(
         "Products.GenericSetup",
         "Products.statusmessages",
         "Products.ZCatalog",
-        "setuptools",
         "Zope",
     ],
     extras_require=dict(
