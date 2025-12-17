@@ -1,13 +1,9 @@
 <tal:favicon>
-  <link rel="preload icon"
+  <link href="${python: view.favicon_path}"
+        rel="icon"
         type="${python: view.mimetype}"
-        tal:attributes="
-          href python: view.favicon_path;
-        "
   />
-  <link rel="mask-icon"
-        tal:attributes="
-          href python: view.favicon_path;
-        "
+  <link href="${python: view.favicon_path}"
+        rel="mask-icon"
   />
 </tal:favicon>
