@@ -8,6 +8,15 @@ Changelog
 
 .. towncrier release notes start
 
+6.0.0a5 (2025-12-18)
+--------------------
+
+Bug fixes:
+
+
+- ``preload`` and ``icon`` can not be combined in a single ``rel`` attribute (on favicon ``link``) [gforcada]
+
+
 6.0.0a4 (2025-11-19)
 --------------------
 
