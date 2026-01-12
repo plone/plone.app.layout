@@ -1,0 +1,1 @@
+Add ``metadata.xml`` with version 1000 for our default profile.  [maurits]
