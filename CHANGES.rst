@@ -8,6 +8,15 @@ Changelog
 
 .. towncrier release notes start
 
+6.0.0a6 (2026-01-14)
+--------------------
+
+Bug fixes:
+
+
+- Add ``metadata.xml`` with version 1000 for our default profile.  [maurits] (#23)
+
+
 6.0.0a5 (2025-12-18)
 --------------------
 
