@@ -13,7 +13,6 @@ from zope.component.hooks import getSite
 
 import logging
 
-
 logger = logging.getLogger("plone.app.layout")
 
 

@@ -19,7 +19,6 @@ from zope.component import queryAdapter
 from zope.component import queryMultiAdapter
 from zope.interface import implementer
 
-
 BLACKLISTED_PROVIDERS = ("portal_workflow",)
 BLACKLISTED_CATEGORIES = (
     "folder_buttons",
