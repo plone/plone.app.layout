@@ -32,7 +32,6 @@ from zope.viewlet.interfaces import IViewlet
 import json
 import zope.deferredimport
 
-
 zope.deferredimport.initialize()
 zope.deferredimport.deprecated(
     "Import from plone.app.portlets.browser.viewlets instead",

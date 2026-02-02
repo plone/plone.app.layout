@@ -17,7 +17,6 @@ from zope.component import providedBy
 from zope.component.hooks import getSite
 from zope.interface import implementer
 
-
 RIGHT_TO_LEFT = ["ar", "fa", "he", "ps"]
 
 

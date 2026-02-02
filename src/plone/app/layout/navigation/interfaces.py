@@ -2,7 +2,6 @@ from zope.deferredimport import deprecated
 from zope.interface import Attribute
 from zope.interface import Interface
 
-
 deprecated(
     "Import from plone.base.interfaces.siteroot instead (will be removed in Plone 7)",
     INavigationRoot="plone.base.interfaces.siteroot:INavigationRoot",

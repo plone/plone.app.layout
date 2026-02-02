@@ -4,7 +4,6 @@ from zope.interface import Interface
 import doctest
 import unittest
 
-
 optionflags = doctest.REPORT_ONLY_FIRST_FAILURE | doctest.ELLIPSIS
 
 # Used in tests

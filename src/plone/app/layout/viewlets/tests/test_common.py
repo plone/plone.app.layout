@@ -24,7 +24,6 @@ from zope.interface import noLongerProvides
 import json
 import transaction
 
-
 # Red pixel with filename pixel.png
 SITE_LOGO_BASE64 = (
     b"filenameb64:cGl4ZWwucG5n;datab64:iVBORw0KGgoAAAANSUhEUgA"

@@ -1,6 +1,5 @@
 from zope.deferredimport import deprecated
 
-
 deprecated(
     "Import as get_navigation_root from plone.base.navigationroot instead (will be removed in Plone 7)",
     getNavigationRoot="plone.base.navigationroot:get_navigation_root",

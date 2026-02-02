@@ -28,7 +28,6 @@ from zope.publisher.browser import BrowserView
 
 import json
 
-
 TEMPLATE_CLASSES = (
     ViewPageTemplateFile,
     ZopeViewPageTemplateFile,
