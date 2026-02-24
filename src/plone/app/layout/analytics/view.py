@@ -6,7 +6,6 @@ from zope.component import getUtility
 from zope.interface import implementer
 from zope.viewlet.interfaces import IViewlet
 
-
 UNWANTED_TAGS = ["base", "title"]
 
 
