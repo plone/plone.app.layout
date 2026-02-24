@@ -13,6 +13,7 @@ from plone.base.interfaces import ISiteSchema
 from plone.base.utils import safe_text
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
+from unittest.mock import patch
 from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.interface import alsoProvides
@@ -291,13 +292,14 @@ class SiteMapTestCase(unittest.TestCase):
             "<loc>http://nohost/plone/sitemap.xml.gz?page=2</loc>" not in xml
         )
 
+    @patch("plone.app.layout.sitemap.sitemap.SiteMapView.BATCH_SIZE", 10)
     def test_rendering_multiple_sitemaps(self):
         """test that when we have more than the batch size count items"""
         setRoles(self.portal, TEST_USER_ID, ["Manager"])
         login(self.portal, TEST_USER_NAME)
 
-        # Generate 5000 items to have at least 2 sitemap URLs generated in the index file
-        for count in range(5000):
+        # Generate 10 items to have at least 2 sitemap URLs generated in the index file
+        for count in range(10):
             self.portal.invokeFactory(id=f"private-{count}", type_name="Document")
 
         xml = self.uncompress(self.sitemap())
@@ -309,18 +311,19 @@ class SiteMapTestCase(unittest.TestCase):
             "<loc>http://nohost/plone/sitemap.xml.gz?page=3</loc>" not in xml
         )
 
+    @patch("plone.app.layout.sitemap.sitemap.SiteMapView.BATCH_SIZE", 10)
     def test_first_page_has_batch_size_count_items(self):
         setRoles(self.portal, TEST_USER_ID, ["Manager"])
         login(self.portal, TEST_USER_NAME)
 
-        # Generate 5000 items to have at least 2 sitemap URLs generated in the index file
-        for count in range(5000):
+        # Generate 10 items to have at least 2 sitemap URLs generated in the index file
+        for count in range(10):
             self.portal.invokeFactory(id=f"private-{count}", type_name="Document")
 
         self.portal.REQUEST["page"] = 1
 
         xml = self.uncompress(self.sitemap())
-        self.assertEqual(xml.count("<loc>"), 5000)
+        self.assertEqual(xml.count("<loc>"), 10)
 
         # Now we try the second batch
         self.portal.REQUEST["page"] = 2
