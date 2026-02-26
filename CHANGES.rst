@@ -8,6 +8,15 @@ Changelog
 
 .. towncrier release notes start
 
+6.0.0a7 (2026-02-26)
+--------------------
+
+Bug fixes:
+
+
+- Speed up two sitemaps tests from 6 minutes to few milliseconds [gforcada]
+
+
 6.0.0a6 (2026-01-14)
 --------------------
 
