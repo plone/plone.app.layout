@@ -42,6 +42,7 @@ setup(
     install_requires=[
         "plone.app.content",
         "plone.app.dexterity",
+        "plone.app.linkintegrity",
         "plone.app.relationfield",
         "plone.app.uuid",
         "plone.app.viewletmanager >=1.2",
@@ -61,13 +62,16 @@ setup(
     extras_require=dict(
         test=[
             "plone.app.contenttypes[test]",
+            "plone.app.linkintegrity",
             "plone.app.relationfield",
             "plone.app.testing",
+            "plone.app.textfield",
             "plone.browserlayer",
             "plone.dexterity",
             "plone.locking",
             "plone.testing",
             "z3c.relationfield",
+            "zc.relation",
             "zope.intid",
         ]
     ),
