@@ -62,13 +62,16 @@ setup(
     extras_require=dict(
         test=[
             "plone.app.contenttypes[test]",
+            "plone.app.linkintegrity",
             "plone.app.relationfield",
             "plone.app.testing",
+            "plone.app.textfield",
             "plone.browserlayer",
             "plone.dexterity",
             "plone.locking",
             "plone.testing",
             "z3c.relationfield",
+            "zc.relation",
             "zope.intid",
         ]
     ),
