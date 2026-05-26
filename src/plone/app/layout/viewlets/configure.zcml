@@ -148,6 +148,15 @@
       permission="zope2.View"
       />
 
+  <!-- The language selector -->
+  <browser:viewlet
+      name="plone.app.i18n.locales.languageselector"
+      manager="plone.app.layout.viewlets.interfaces.IPortalHeader"
+      class=".common.LanguageSelectorViewlet"
+      template="languageselector.pt"
+      permission="zope2.View"
+      />
+
   <!-- The search box -->
   <browser:viewlet
       name="plone.searchbox"
