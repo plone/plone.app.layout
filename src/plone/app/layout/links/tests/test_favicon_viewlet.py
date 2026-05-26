@@ -1,5 +1,5 @@
 from plone.app.layout.links.viewlets import FaviconViewlet
-from plone.app.layout.testing import FUNCTIONAL_TESTING
+from plone.app.layout.testing import PLONE_APP_LAYOUT_FUNCTIONAL_TESTING
 from plone.app.layout.viewlets.tests.base import ViewletsTestCase
 from plone.base.interfaces import ISiteSchema
 from plone.formwidget.namedfile.converter import b64encode_file
@@ -8,7 +8,7 @@ from zope.component import getUtility
 
 
 class TestFaviconViewletView(ViewletsTestCase, FaviconViewlet):
-    layer = FUNCTIONAL_TESTING
+    layer = PLONE_APP_LAYOUT_FUNCTIONAL_TESTING
 
     def setUp(self):
         self.portal = self.layer["portal"]

@@ -1,7 +1,7 @@
 from DateTime import DateTime
 from gzip import GzipFile
 from io import BytesIO
-from plone.app.layout.testing import INTEGRATION_TESTING
+from plone.app.layout.testing import PLONE_APP_LAYOUT_INTEGRATION_TESTING
 from plone.app.testing import login
 from plone.app.testing import logout
 from plone.app.testing import setRoles
@@ -25,7 +25,7 @@ import unittest
 class SiteMapTestCase(unittest.TestCase):
     """base test case with convenience methods for all sitemap tests"""
 
-    layer = INTEGRATION_TESTING
+    layer = PLONE_APP_LAYOUT_INTEGRATION_TESTING
 
     def setUp(self):
         self.portal = self.layer["portal"]

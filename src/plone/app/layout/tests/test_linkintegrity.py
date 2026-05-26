@@ -5,7 +5,7 @@ link integrity warnings (HTML). The underlying API logic (get_breaches etc.)
 is tested in plone.app.linkintegrity.
 """
 
-from plone.app.layout import testing
+from plone.app.layout.testing import PLONE_APP_LAYOUT_FUNCTIONAL_TESTING
 from plone.app.linkintegrity.testing import create
 from plone.app.linkintegrity.testing import GIF
 from plone.app.linkintegrity.utils import getIncomingLinks
@@ -37,7 +37,7 @@ def set_text(obj, text):
 class LinkIntegrityFunctionalTestCase(unittest.TestCase):
     """Functional tests for link integrity HTML rendering in delete confirmation."""
 
-    layer = testing.FUNCTIONAL_TESTING
+    layer = PLONE_APP_LAYOUT_FUNCTIONAL_TESTING
 
     def setUp(self):
         self.portal = self.layer["portal"]
