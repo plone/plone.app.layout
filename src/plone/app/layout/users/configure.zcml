@@ -3,4 +3,19 @@
     xmlns:browser="http://namespaces.zope.org/browser"
     >
 
+  <browser:page
+      name="member-fields"
+      for="*"
+      class=".schemaeditor.MemberSchemaContext"
+      allowed_interface="OFS.interfaces.IItem"
+      permission="plone.app.controlpanel.UsersAndGroups"
+      />
+
+  <browser:page
+      name="edit"
+      for="plone.app.users.schema.IMemberSchemaContext"
+      class=".schemaeditor.SchemaListingPage"
+      permission="plone.app.controlpanel.UsersAndGroups"
+      />
+
 </configure>
