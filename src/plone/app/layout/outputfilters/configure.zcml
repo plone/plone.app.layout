@@ -1,0 +1,28 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    >
+
+  <browser:page
+      name="plone.outputfilters_captioned_image"
+      for="*"
+      class=".captioned_image.CaptionedImageView"
+      template="captioned_image.pt"
+      permission="zope.Public"
+      />
+
+
+  <adapter
+      factory=".caption_filter.CaptionFilter"
+      provides="plone.outputfilters.interfaces.IFilter"
+      for="*
+           *"
+      name="resolveuid_and_caption"
+      />
+
+  <utility
+      factory=".caption_filter.ImageCaptioningEnabler"
+      name="image-captioning-enabler"
+      />
+
+</configure>
