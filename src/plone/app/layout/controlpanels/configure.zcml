@@ -16,8 +16,9 @@
       name="updateLinkIntegrityInformation"
       for="plone.base.interfaces.IPloneSiteRoot"
       class=".linkintegrity.UpdateView"
-      template="linkintegrity_update.pt"
+      template="templates/linkintegrity_update.pt"
       permission="cmf.ManagePortal"
+      layer="plone.app.layout.interfaces.IPloneAppLayoutLayer"
       />
 
 </configure>

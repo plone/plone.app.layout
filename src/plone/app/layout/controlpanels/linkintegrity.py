@@ -21,29 +21,7 @@ logger = logging.getLogger(__name__)
 
 
 class DeleteConfirmationInfo(DeleteConfirmationInfoAPI):
-    template = ViewPageTemplateFile("linkintegrity_delete_confirmation_info.pt")
-    breach_count = {}
-
-    def __init__(self, context, request):
-        self.linkintegrity_enabled = linkintegrity_enabled()
-        self.context = context
-        self.request = request
-
-    def __call__(self, items=None):
-        if not self.linkintegrity_enabled:
-            return
-        if items is None:
-            if IPloneSiteRoot.providedBy(self.context):
-                # Checking the portal for breaches makes no sense.
-                return
-            else:
-                items = [self.context]
-        self.breaches = self.get_breaches(items)
-        return self.template()
-
-    def objects(self):
-        return [_("Objects in all"), _("Folders"), _("Published objects")]
-
+    template = ViewPageTemplateFile("templates/linkintegrity_delete_confirmation_info.pt")
 
 class UpdateView(BrowserView):
     """Iterate over all catalogued items and update linkintegrity-information."""
