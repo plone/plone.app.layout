@@ -1,0 +1,2 @@
+Move ImageCaptioning from plone.outputfilters to plone.app.layout
+[agitator]
