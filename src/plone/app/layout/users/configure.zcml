@@ -3,6 +3,7 @@
     xmlns:browser="http://namespaces.zope.org/browser"
     >
 
+  <include package="plone.autoform" />
   <browser:page
       name="member-fields"
       for="*"
