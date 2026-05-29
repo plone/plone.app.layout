@@ -81,6 +81,13 @@
       permission="plone.app.controlpanel.UsersAndGroups"
       />
 
+  <browser:page
+      name="member-search"
+      for="*"
+      class=".membersearch.MemberSearchForm"
+      permission="zope2.View"
+      />
+
   <adapter
       factory="plone.app.users.browser.personalpreferences.PersonalPreferencesPanelAdapter"
       provides=".personalpreferences.IPersonalPreferences"

@@ -59,6 +59,7 @@ setup(
         "plone.portlets",
         "plone.protect",
         "plone.schemaeditor",
+        "plone.supermodel",
         "plone.z3cform",
         "Products.CMFEditions >=1.2.2",
         "Products.GenericSetup",
