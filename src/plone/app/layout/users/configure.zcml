@@ -4,6 +4,33 @@
     >
 
   <include package="plone.autoform" />
+  <include
+      package="Products.CMFPlone.controlpanel"
+      file="permissions.zcml"
+      />
+
+  <browser:page
+      name="register"
+      for="plone.base.interfaces.INavigationRoot"
+      class=".register.RegistrationForm"
+      permission="cmf.AddPortalMember"
+      />
+
+  <browser:page
+      name="registered"
+      for="plone.base.interfaces.INavigationRoot"
+      class=".register.RegisteredView"
+      template="registered.pt"
+      permission="cmf.AddPortalMember"
+      />
+
+  <browser:page
+      name="new-user"
+      for="plone.base.interfaces.INavigationRoot"
+      class=".register.AddUserForm"
+      permission="plone.app.controlpanel.UsersAndGroups"
+      />
+
   <browser:page
       name="member-fields"
       for="*"
