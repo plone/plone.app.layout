@@ -32,6 +32,13 @@
       />
 
   <browser:page
+      name="change-password"
+      for="plone.base.interfaces.INavigationRoot"
+      class=".passwordpanel.PasswordPanel"
+      permission="cmf.SetOwnPassword"
+      />
+
+  <browser:page
       name="member-fields"
       for="*"
       class=".schemaeditor.MemberSchemaContext"
@@ -44,6 +51,12 @@
       for="plone.app.users.schema.IMemberSchemaContext"
       class=".schemaeditor.SchemaListingPage"
       permission="plone.app.controlpanel.UsersAndGroups"
+      />
+
+  <adapter
+      factory=".passwordpanel.PasswordPanelAdapter"
+      provides=".passwordpanel.IPasswordSchema"
+      for="plone.base.interfaces.INavigationRoot"
       />
 
 </configure>
