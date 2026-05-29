@@ -39,6 +39,34 @@
       />
 
   <browser:page
+      name="personal-preferences"
+      for="plone.base.interfaces.INavigationRoot"
+      class=".personalpreferences.PersonalPreferencesPanel"
+      permission="cmf.SetOwnProperties"
+      />
+
+  <browser:page
+      name="user-preferences"
+      for="plone.base.interfaces.INavigationRoot"
+      class=".personalpreferences.PersonalPreferencesConfiglet"
+      permission="plone.app.controlpanel.UsersAndGroups"
+      />
+
+  <browser:page
+      name="personal-information"
+      for="plone.base.interfaces.INavigationRoot"
+      class=".userdatapanel.UserDataPanel"
+      permission="cmf.SetOwnProperties"
+      />
+
+  <browser:page
+      name="user-information"
+      for="plone.base.interfaces.INavigationRoot"
+      class=".userdatapanel.UserDataConfiglet"
+      permission="plone.app.controlpanel.UsersAndGroups"
+      />
+
+  <browser:page
       name="member-fields"
       for="*"
       class=".schemaeditor.MemberSchemaContext"
@@ -51,6 +79,12 @@
       for="plone.app.users.schema.IMemberSchemaContext"
       class=".schemaeditor.SchemaListingPage"
       permission="plone.app.controlpanel.UsersAndGroups"
+      />
+
+  <adapter
+      factory="plone.app.users.browser.personalpreferences.PersonalPreferencesPanelAdapter"
+      provides=".personalpreferences.IPersonalPreferences"
+      for="plone.base.interfaces.INavigationRoot"
       />
 
   <adapter
