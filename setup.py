@@ -41,6 +41,7 @@ setup(
     python_requires=">=3.10",
     install_requires=[
         "plone.app.content",
+        "plone.app.contenttypes",
         "plone.app.dexterity",
         "plone.app.relationfield",
         "plone.app.uuid",
