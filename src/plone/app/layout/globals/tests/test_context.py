@@ -1,4 +1,4 @@
-from plone.app.layout.testing import INTEGRATION_TESTING
+from plone.app.layout.testing import PLONE_APP_LAYOUT_INTEGRATION_TESTING
 from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
 from plone.app.testing.helpers import logout
@@ -16,7 +16,7 @@ import unittest
 class TestContextStateView(unittest.TestCase):
     """Ensure that the basic redirector setup is successful."""
 
-    layer = INTEGRATION_TESTING
+    layer = PLONE_APP_LAYOUT_INTEGRATION_TESTING
 
     def setUp(self):
         self.app = self.layer["app"]

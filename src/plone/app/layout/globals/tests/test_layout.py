@@ -1,4 +1,4 @@
-from plone.app.layout.testing import INTEGRATION_TESTING
+from plone.app.layout.testing import PLONE_APP_LAYOUT_INTEGRATION_TESTING
 from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
 from plone.app.testing.helpers import logout
@@ -17,7 +17,7 @@ import zope.interface
 class TestLayoutView(unittest.TestCase):
     """Tests the global layout view."""
 
-    layer = INTEGRATION_TESTING
+    layer = PLONE_APP_LAYOUT_INTEGRATION_TESTING
 
     def setUp(self):
         self.portal = self.layer["portal"]
@@ -196,7 +196,7 @@ class TestLayoutView(unittest.TestCase):
 class TestLayoutViewXHR(unittest.TestCase):
     """Tests the global layout view with it's XHR utilities."""
 
-    layer = INTEGRATION_TESTING
+    layer = PLONE_APP_LAYOUT_INTEGRATION_TESTING
 
     def setUp(self):
         self.portal = self.layer["portal"]
