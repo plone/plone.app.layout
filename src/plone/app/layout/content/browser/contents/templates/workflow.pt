@@ -1,0 +1,26 @@
+<fieldset i18n:domain="plone">
+  <div class="mb-2">
+    <label class="form-label" i18n:translate="label_comments">Comments</label>
+    <textarea class="form-control" rows="2" name="comments"></textarea>
+  </div>
+
+  <div class="mb-2">
+    <label class="form-label" i18n:translate="label_change_status">Change State</label>
+    <select class="form-select" name="transition">
+      <% if(data.transitions){
+        _.each(data.transitions, function(transition){
+          %><option value="<%= transition.id %>"><%= transition.title %></option>
+          <%
+        });
+      } %>
+    </select>
+    <p class="form-text" i18n:translate="help_change_status_action">Select the transition to be used for modifying the items state.</p>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" name="recurse" value="yes" id="fcWorkflowRecurse" />
+    <label class="form-check-label" for="fcWorkflowRecurse" i18n:translate="label_include_contained_objects">Include contained items</label>
+    <p class="form-text" i18n:translate="help_include_contained_objects">
+    If checked, this will attempt to modify the status of all content in any selected folders and their subfolders.
+    </p>
+  </div>
+</fieldset>

@@ -1,0 +1,73 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      xml:lang="en"
+      i18n:domain="plone"
+>
+
+  <metal:block fill-slot="top_slot"
+               tal:define="
+                 dummy python:request.set('disable_border',1);
+               "
+  />
+
+  <body>
+
+    <metal:main fill-slot="main"
+                tal:define="
+                  useSelf python:context_state.is_structural_folder() and not context_state.is_default_page();
+                  folder_warning python:useSelf and context.portal_type != 'Topic';
+                  number_of_objects_to_delete python:folder_warning and view.items_to_delete;
+                "
+    >
+
+      <h1 class="documentFirstHeading"
+          tal:condition="view/is_locked"
+          i18n:translate="alert_deleting_locked_item"
+      >
+            This item can not be deleted because it is currently locked by another user.
+      </h1>
+
+      <tal:block condition="not:view/is_locked">
+        <h1 class="documentFirstHeading"
+            tal:condition="folder_warning"
+        >
+          <span i18n:translate="alert_really_delete_folder">
+                    Do you really want to delete this folder and all its contents?
+          </span>
+          <span tal:condition="python:number_of_objects_to_delete>1"
+                i18n:translate="alert_deleting_x_number_of_items"
+          >
+                    (This will delete a total of
+            <span tal:content="python:number_of_objects_to_delete"
+                  i18n:name="number_of_items_to_delete"
+            >22</span>
+             items.)
+          </span>
+        </h1>
+
+        <h1 class="documentFirstHeading"
+            tal:condition="not:folder_warning"
+            i18n:translate="alert_really_delete"
+        >
+                Do you really want to delete this item?
+        </h1>
+      </tal:block>
+
+      <div id="content-core">
+        <tal:block replace="structure view/more_info">
+        </tal:block>
+
+        <ul>
+          <li tal:content="context/@@plone_context_state/object_title">The item title (ID)</li>
+        </ul>
+
+        <form metal:use-macro="context/@@ploneform-macros/titlelessform"></form>
+      </div>
+
+    </metal:main>
+  </body>
+</html>

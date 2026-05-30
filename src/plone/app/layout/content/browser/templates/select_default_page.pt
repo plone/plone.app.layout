@@ -1,0 +1,123 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      xml:lang="en"
+      i18n:domain="plone"
+>
+
+  <metal:block fill-slot="top_slot"
+               tal:define="
+                 dummy python:request.set('disable_border',1);
+               "
+  />
+
+  <body>
+
+    <metal:main fill-slot="main">
+      <h1 class="documentFirstHeading"
+          i18n:translate="heading_select_default_page"
+      >Select default page</h1>
+
+      <div class="documentDescription"
+           i18n:translate="description_select_default_page"
+      >
+        Please select item which will be displayed as the default page of the
+        folder.
+      </div>
+      <div id="content-core">
+        <form method="post"
+              name="default_page_form"
+              tal:attributes="
+                action string:${context/absolute_url}/select_default_page;
+              "
+        >
+
+          <input name="form.submitted"
+                 type="hidden"
+                 value="1"
+          />
+
+          <tal:items define="
+                       items view/get_selectable_items;
+                       cur_page context/getDefaultPage|nothing;
+                     ">
+            <tal:hasitems define="
+                            n_items python:len(items);
+                          "
+                          condition="items"
+            >
+              <dl>
+                <tal:item repeat="item items">
+                  <dt tal:define="
+                        normalized_type python:plone_view.normalizeString(item.portal_type);
+                      ">
+                    <input name="objectId"
+                           type="radio"
+                           value=""
+                           tal:attributes="
+                             value item/getId;
+                             id item/getId;
+                             checked python: (n_items==1 or item.getId==cur_page) and 'checked' or None;
+                           "
+                    />
+                    <label tal:content="string:${item/pretty_title_or_id}"
+                           tal:attributes="
+                             for item/getId;
+                             class string:contenttype-${normalized_type};
+                           "
+                    >
+                                Item title
+                    </label>
+                  </dt>
+                  <dd tal:content="item/Description">
+                            Item Description
+                  </dd>
+                </tal:item>
+
+              </dl>
+
+              <div class="formControls mb-3">
+                <button class="context btn btn-primary"
+                        name="form.buttons.Save"
+                        type="submit"
+                        value="Save"
+                        i18n:attributes="value label_save;"
+                        i18n:translate="label_save"
+                >Save</button>
+                <button class="btn btn-secondary"
+                        name="form.buttons.Cancel"
+                        type="submit"
+                        value="Cancel"
+                        i18n:attributes="value label_cancel;"
+                        i18n:translate="label_cancel"
+                >Cancel</button>
+              </div>
+
+            </tal:hasitems>
+            <tal:noitems condition="not:nocall:items">
+              <div i18n:translate="help_no_selectable_default_pages">
+                 There are no items in this folder that can be selected as
+                 a default view page.
+              </div>
+              <div class="formControls mb-3">
+                <button class="context btn btn-primary"
+                        name="form.button.Cancel"
+                        type="submit"
+                        value="Ok"
+                        i18n:attributes="value label_ok;"
+                        i18n:translate="label_ok"
+                >Ok</button>
+              </div>
+            </tal:noitems>
+          </tal:items>
+
+        </form>
+      </div>
+
+    </metal:main>
+
+  </body>
+</html>

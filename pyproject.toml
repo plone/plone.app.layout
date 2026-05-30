@@ -40,6 +40,7 @@ dependencies = [
     "Products.CMFEditions",
     "Products.GenericSetup",
     "Products.MimetypesRegistry",
+    "Products.PortalTransforms",
     "Products.ZCatalog",
     "Products.statusmessages",
     "Zope",
@@ -48,26 +49,33 @@ dependencies = [
     "plone.app.contentmenu",
     "plone.app.dexterity",
     "plone.app.linkintegrity",
+    "plone.app.querystring",
     "plone.app.registry",
     "plone.app.relationfield",
     "plone.app.uuid",
     "plone.app.viewletmanager",
     "plone.app.vocabularies",
     "plone.app.workflow",
+    "plone.app.z3cform",
     "plone.autoform",
     "plone.base >=4.0.0a1",
+    "plone.batching",
     "plone.behavior",
     "plone.dexterity",
     "plone.event",
+    "plone.folder",
     "plone.formwidget.namedfile",
     "plone.i18n",
+    "plone.locking",
     "plone.memoize",
     "plone.namedfile",
     "plone.portlets",
     "plone.protect",
     "plone.schemaeditor",
     "plone.supermodel",
+    "plone.uuid",
     "plone.z3cform",
+    "zope.annotation",
     "z3c.form",
 ]
 keywords = ["plone", "layout", "viewlet"]
@@ -76,14 +84,10 @@ keywords = ["plone", "layout", "viewlet"]
 test = [
     "plone.app.contenttypes[test]",
     "plone.app.linkintegrity",
-    "plone.app.relationfield",
     "plone.app.robotframework",
     "plone.app.testing",
     "plone.app.textfield",
-    "plone.app.z3cform",
     "plone.browserlayer",
-    "plone.dexterity",
-    "plone.locking",
     "plone.testing",
     "robotsuite",
     "z3c.relationfield",
@@ -216,7 +220,7 @@ Zope = [
 ]
 python-dateutil = ['dateutil']
 pytest-plone = ['pytest', 'zope.pytestlayer', 'plone.testing', 'plone.app.testing']
-ignore-packages = ['plone.app.contenttypes', 'plone.app.relationfield', 'plone.app.multilingual', 'plone.app.users', 'Products.CMFPlone']
+ignore-packages = ['plone.app.contenttypes', 'plone.app.relationfield', 'plone.app.multilingual', 'plone.app.users', 'Products.CMFPlone', 'tus']
 
 ##
 # Add extra configuration options in .meta.toml:
