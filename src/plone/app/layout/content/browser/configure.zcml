@@ -1,0 +1,213 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:five="http://namespaces.zope.org/five"
+    >
+
+  <!-- Adding view -->
+  <browser:view
+      name="+"
+      for="Products.CMFCore.interfaces.IFolderish"
+      class=".adding.CMFAdding"
+      permission="cmf.AddPortalContent"
+      />
+
+  <!-- Folder contents -->
+  <include package=".contents" />
+
+  <!-- Review list -->
+  <browser:page
+      name="full_review_list"
+      for="*"
+      class=".reviewlist.FullReviewListView"
+      template="full_review_list.pt"
+      permission="cmf.ReviewPortalContent"
+      />
+
+  <browser:page
+      name="reviewlist_get_table"
+      for="*"
+      class=".reviewlist.ReviewListBrowserView"
+      attribute="update_table"
+      permission="cmf.ReviewPortalContent"
+      />
+
+  <!-- Content status history -->
+  <browser:page
+      name="content_status_history"
+      for="*"
+      class=".content_status_history.ContentStatusHistoryView"
+      permission="cmf.ModifyPortalContent"
+      />
+
+  <browser:page
+      name="folder_publish"
+      for="*"
+      class=".folder_publish.FolderPublishView"
+      permission="cmf.ModifyPortalContent"
+      />
+
+  <browser:page
+      name="content_status_modify"
+      for="*"
+      class=".content_status_modify.ContentStatusModifyView"
+      permission="zope2.View"
+      />
+
+  <!-- Folder factories -->
+  <browser:page
+      name="folder_factories"
+      for="*"
+      class=".folderfactories.FolderFactoriesView"
+      template="folderfactories.pt"
+      permission="cmf.AddPortalContent"
+      />
+
+  <!-- Constrain container allowed content types -->
+  <permission
+      id="plone.ModifyConstrainTypes"
+      title="Modify constrain types"
+      />
+  <browser:page
+      name="folder_constraintypes_form"
+      for="Products.CMFCore.interfaces.IFolderish"
+      class=".constraintypes.ConstrainsFormView"
+      permission="plone.ModifyConstrainTypes"
+      />
+  <utility
+      name="plone.app.content.ValidAddableTypes"
+      component=".constraintypes.ValidTypesFactory"
+      />
+
+  <!-- Required for cmf.ModifyViewTemplate -->
+  <include package="Products.CMFDynamicViewFTI" />
+
+  <!-- Select default view -->
+  <browser:page
+      name="select_default_view"
+      for="*"
+      class=".selection.DefaultViewSelectionView"
+      template="templates/select_default_view.pt"
+      permission="cmf.ModifyViewTemplate"
+      />
+
+  <browser:page
+      name="selectViewTemplate"
+      for="*"
+      class=".selection.DefaultViewSelectionView"
+      attribute="selectViewTemplate"
+      permission="cmf.ModifyViewTemplate"
+      />
+
+  <!-- Select default page view -->
+  <browser:page
+      name="select_default_page"
+      for="*"
+      class=".selection.DefaultPageSelectionView"
+      template="templates/select_default_page.pt"
+      permission="cmf.ModifyViewTemplate"
+      />
+
+  <!-- Actions -->
+  <browser:page
+      name="delete_confirmation"
+      for="*"
+      class=".actions.DeleteConfirmationForm"
+      permission="zope2.DeleteObjects"
+      />
+
+  <browser:page
+      name="folder_rename"
+      for="*"
+      class=".actions.RenameForm"
+      permission="cmf.ModifyPortalContent"
+      />
+
+  <browser:page
+      name="object_rename"
+      for="*"
+      class=".actions.RenameForm"
+      permission="cmf.ModifyPortalContent"
+      />
+
+  <adapter
+      factory=".actions.default_new_id"
+      name="default"
+      />
+  <adapter
+      factory=".actions.default_new_title"
+      name="default"
+      />
+
+  <browser:page
+      name="object_cut"
+      for="*"
+      class=".actions.ObjectCutView"
+      permission="zope2.DeleteObjects"
+      />
+
+  <browser:page
+      name="object_copy"
+      for="*"
+      class=".actions.ObjectCopyView"
+      permission="zope2.CopyOrMove"
+      />
+
+  <browser:page
+      name="object_paste"
+      for="*"
+      class=".actions.ObjectPasteView"
+      permission="cmf.AddPortalContent"
+      />
+
+  <browser:page
+      name="object_delete"
+      for="*"
+      class=".actions.ObjectDeleteView"
+      permission="zope2.DeleteObjects"
+      />
+
+
+  <browser:page
+      name="getVocabulary"
+      for="*"
+      class=".vocabulary.VocabularyView"
+      permission="zope2.View"
+      />
+
+  <browser:page
+      name="getSource"
+      for="z3c.form.interfaces.IWidget"
+      class=".vocabulary.SourceView"
+      permission="zope.Public"
+      />
+
+  <browser:page
+      name="fileUpload"
+      for="Products.CMFCore.interfaces._content.IFolderish"
+      class=".file.FileUploadView"
+      permission="zope2.View"
+      />
+
+  <browser:page
+      name="qsOptions"
+      for="plone.base.interfaces.siteroot.INavigationRoot"
+      class=".query.QueryStringIndexOptions"
+      permission="zope2.View"
+      />
+
+  <browser:view
+      name="plonejsi18n"
+      for="plone.base.interfaces.siteroot.INavigationRoot"
+      class=".i18n.i18njs"
+      permission="zope2.View"
+      />
+
+  <browser:page
+      name="allow_upload"
+      for="*"
+      class=".file.AllowUploadView"
+      permission="cmf.AddPortalContent"
+      />
+
+</configure>

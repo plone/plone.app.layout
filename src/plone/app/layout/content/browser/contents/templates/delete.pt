@@ -1,0 +1,6 @@
+<div i18n:domain="plone">
+  <% try{ %>
+    <%= data.html || '' %>
+  <% }catch(e){} %>
+  <label i18n:translate="confirm_delete_items">Are you certain you want to delete the selected items?</label>
+</div>

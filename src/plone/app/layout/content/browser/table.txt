@@ -1,0 +1,147 @@
+=====
+Table
+=====
+
+The table class can render a table like used in the folder contents view. It is
+abstracted into a separate class for reuse with other views like the review
+list.
+
+A table can be parameterized at creation time.
+
+  >>> from plone.app.layout.content.browser.tableview import Table
+  >>> view_url = 'http://plone/view'
+  >>> base_url = 'http://plone'
+  >>> table = Table(request={}, base_url=base_url, view_url=view_url,
+  ...               items=[], show_sort_column=False, buttons=[])
+
+The most important argument is items. This must provide a list of dictionaries
+because the table will add more information to them for rendering.
+
+
+Batching and selecting
+----------------------
+
+One of the table's main virtues is that it batches. A template can use the
+`batch` attribute for accessing the current batch.
+
+  >>> items = [{'id': i} for i in range(100)]
+  >>> table = Table({}, base_url, view_url, items=items)
+  >>> from plone.batching.interfaces import IBatch
+  >>> IBatch.providedBy(table.batch)
+  True
+
+The table automatically adds keys for making layout easier. One of these is
+indication whether an item is `checked`.
+
+  >>> list(table.batch)[0]['checked']
+
+Whether or not an item is checked depends on request variables. If either the
+whole batch or the current screen is selected the item we be marked as checked.
+Below we will demonstrate this by selecting the items on screen.
+
+  >>> table = Table({'select': 'screen'}, base_url, view_url, items=items)
+  >>> list(table.batch)[0]['checked']
+  'checked'
+
+Another is the `table_row_class`. The table will append `selected` to it if it
+already exists, otherwise it will create it.
+
+  >>> items = [{'id': i} for i in range(100)]
+  >>> table = Table({}, base_url, view_url, items=items)
+  >>> list(table.batch)[0]['table_row_class']
+  ''
+
+If the row is `checked` this will also be reflected in the row class.
+
+  >>> table = Table({'select': 'screen'}, base_url, view_url, items=items)
+  >>> list(table.batch)[0]['table_row_class']
+  ' selected'
+
+The table will indicate in which selection mode it is in. You can use two
+interlinked variables for this. The `selectcurrentbatch` attribute will be true
+in case the current screen is selected or the whole batch is selected.
+
+  >>> table = Table({}, base_url, view_url, items=items)
+  >>> table.selectcurrentbatch
+  False
+
+  >>> table = Table({'select': 'screen'}, base_url, view_url, items=items)
+  >>> table.selectcurrentbatch
+  True
+
+  >>> table = Table({'select': 'all'}, base_url, view_url, items=items)
+  >>> table.selectcurrentbatch
+  True
+
+You can also check specifically if the whole batch has been selected.
+
+  >>> table = Table({}, base_url, view_url, items=items)
+  >>> table.selectall
+  False
+
+  >>> table = Table({'select': 'all'}, base_url, view_url, items=items)
+  >>> table.selectall
+  True
+
+When you select all items on the screen and there are no further pages it will
+set both the whole `selectcurrentbatch` and `selectall` properties.
+
+  >>> small_numnber_of_items = [{'id': i} for i in range(3)]
+  >>> table = Table({'select': 'screen'}, base_url, view_url, items=small_numnber_of_items)
+  >>> table.selectcurrentbatch
+  True
+  >>> table.selectall
+  True
+
+
+Sort column
+-----------
+
+Some tables may be made sortable by indicating so at table creation time. This
+will toggle a boolean which will be read by the rendering template. By default
+sorting is turned off.
+
+  >>> table = Table({}, base_url, view_url, items=items)
+  >>> table.show_sort_column
+  False
+
+  >>> table = Table({}, base_url, view_url, items=items, show_sort_column=True)
+  >>> table.show_sort_column
+  True
+
+Selection urls
+--------------
+
+The table provides the template with urls for selecting or deselecting items in
+the batch. These urls are based on the url passed in at creation time.
+
+  >>> table.selectnone_url
+  'http://plone/view?pagenumber=1&pagesize=20'
+
+You can see how it automatically adds the current page to the url.
+
+  >>> table.selectscreen_url
+  'http://plone/view?pagenumber=1&pagesize=20&select=screen'
+
+The same goes for selecting the screen and the whole batch.
+
+  >>> table.selectall_url
+  'http://plone/view?pagenumber=1&pagesize=20&select=all'
+
+A template may want to display only one of these urls at the same time.
+Therefore the table has a boolean property to query whether or not to show the
+select all option. The display of this depends on whether the whole batch is
+selected (don't show) or the screen has not been selected (don't show then).
+
+  >>> table = Table({}, base_url, view_url, items=items)
+  >>> table.show_select_all_items
+  False
+
+  >>> table = Table({'select': 'screen'}, base_url, view_url, items=items)
+  >>> table.show_select_all_items
+  True
+
+  >>> table = Table({'select': 'all'}, base_url, view_url, items=items)
+  >>> table.show_select_all_items
+  False
+
