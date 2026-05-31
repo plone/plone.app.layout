@@ -1,4 +1,4 @@
-from plone.app.layout.testing import INTEGRATION_TESTING
+from plone.app.layout.testing import PLONE_APP_LAYOUT_INTEGRATION_TESTING
 from plone.app.testing import login
 from zope.component import getMultiAdapter
 
@@ -6,7 +6,7 @@ import unittest
 
 
 class TestSharingView(unittest.TestCase):
-    layer = INTEGRATION_TESTING
+    layer = PLONE_APP_LAYOUT_INTEGRATION_TESTING
 
     def setUp(self):
         self.portal = self.layer["portal"]
