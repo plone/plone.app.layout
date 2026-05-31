@@ -1,13 +1,15 @@
 from plone.app.contenttypes.testing import PLONE_APP_CONTENTTYPES_FIXTURE
+from plone.app.robotframework.testing import REMOTE_LIBRARY_BUNDLE_FIXTURE
 from plone.app.testing import applyProfile
 from plone.app.testing import FunctionalTesting
 from plone.app.testing import IntegrationTesting
 from plone.app.testing import PloneSandboxLayer
 from plone.app.testing import TEST_USER_ID
 from plone.base.utils import unrestricted_construct_instance
+from plone.testing import zope
 
 
-class Fixture(PloneSandboxLayer):
+class PloneAppLayoutFixture(PloneSandboxLayer):
     defaultBases = (PLONE_APP_CONTENTTYPES_FIXTURE,)
 
     def setUpZope(self, app, configurationContext):
@@ -27,12 +29,21 @@ class Fixture(PloneSandboxLayer):
         applyProfile(portal, "plone.app.layout:default")
 
 
-FIXTURE = Fixture()
-INTEGRATION_TESTING = IntegrationTesting(
-    bases=(FIXTURE,),
+class PloneAppLayoutRemoteFixture(PloneAppLayoutFixture):
+    defaultBases = (REMOTE_LIBRARY_BUNDLE_FIXTURE,)
+
+
+PLONE_APP_LAYOUT_FIXTURE = PloneAppLayoutFixture()
+PLONE_APP_LAYOUT_INTEGRATION_TESTING = IntegrationTesting(
+    bases=(PLONE_APP_LAYOUT_FIXTURE,),
     name="plone.app.layout:Integration",
 )
-FUNCTIONAL_TESTING = FunctionalTesting(
-    bases=(FIXTURE,),
+PLONE_APP_LAYOUT_FUNCTIONAL_TESTING = FunctionalTesting(
+    bases=(PLONE_APP_LAYOUT_FIXTURE,),
     name="plone.app.layout:Functional",
+)
+PLONE_APP_LAYOUT_ROBOT_FIXTURE = PloneAppLayoutRemoteFixture()
+PLONE_APP_LAYOUT_ROBOT_TESTING = FunctionalTesting(
+    bases=(PLONE_APP_LAYOUT_ROBOT_FIXTURE, zope.WSGI_SERVER_FIXTURE),
+    name="plone.app.layout:Robot",
 )
