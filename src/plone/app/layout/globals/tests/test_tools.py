@@ -1,4 +1,4 @@
-from plone.app.layout.testing import INTEGRATION_TESTING
+from plone.app.layout.testing import PLONE_APP_LAYOUT_INTEGRATION_TESTING
 from Products.CMFCore.utils import getToolByName
 
 import unittest
@@ -7,7 +7,7 @@ import unittest
 class TestToolsView(unittest.TestCase):
     """Tests the global tools view."""
 
-    layer = INTEGRATION_TESTING
+    layer = PLONE_APP_LAYOUT_INTEGRATION_TESTING
 
     def setUp(self):
         self.portal = self.layer["portal"]

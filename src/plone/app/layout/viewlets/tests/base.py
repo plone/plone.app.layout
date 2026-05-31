@@ -1,12 +1,12 @@
-from plone.app.layout.testing import FUNCTIONAL_TESTING
-from plone.app.layout.testing import INTEGRATION_TESTING
+from plone.app.layout.testing import PLONE_APP_LAYOUT_FUNCTIONAL_TESTING
+from plone.app.layout.testing import PLONE_APP_LAYOUT_INTEGRATION_TESTING
 from plone.app.layout.testing import TEST_USER_ID
 
 import unittest
 
 
 class ViewletsTestCase(unittest.TestCase):
-    layer = INTEGRATION_TESTING
+    layer = PLONE_APP_LAYOUT_INTEGRATION_TESTING
 
     def setUp(self):
         self.portal = self.layer["portal"]
@@ -15,7 +15,7 @@ class ViewletsTestCase(unittest.TestCase):
 
 
 class ViewletsFunctionalTestCase(unittest.TestCase):
-    layer = FUNCTIONAL_TESTING
+    layer = PLONE_APP_LAYOUT_FUNCTIONAL_TESTING
 
     def setUp(self):
         self.portal = self.layer["portal"]
