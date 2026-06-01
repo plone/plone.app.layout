@@ -1,0 +1,72 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      xml:lang="en"
+      i18n:domain="plone.app.dexterity"
+>
+  <head>
+    <div metal:fill-slot="javascript_head_slot"
+         tal:omit-tag=""
+    >
+      <script type="text/javascript">
+              (function($){
+                // Custom form constraints for constrain form
+                $(document).ready(function(){
+                  var preferred = $(".current_prefer_form"),
+                      allowed = $(".current_allow_form"),
+                      constrain_mode = $(".constrain_types_mode_form"),
+                      preferred_field = preferred.parents('.field'),
+                      allowed_field = allowed.parents('.field'),
+                      ACQUIRE = -1,
+                      DISABLED = 0,
+                      ENABLED = 1;
+                  function updateVisibility(){
+                    var mode = constrain_mode.val();
+                    if(mode == ENABLED){
+                      preferred_field.show();
+                      allowed_field.show();
+                    }else{
+                      preferred_field.hide();
+                      allowed_field.hide();
+                    }
+                  }
+                  function updateSelectable(){
+                    preferred.each(function(){
+                      var allowed_id = this.id.replace('allowed', 'secondary'),
+                          allowed_item = allowed_field.find("#" + allowed_id);
+                      if (this.checked){
+                        allowed_item[0].disabled = false;
+                      }else{
+                        allowed_item[0].disabled = true;
+                        allowed_item[0].checked = false;
+                      }
+                    });
+                  }
+                  constrain_mode.change(updateVisibility);
+                  updateVisibility();
+                  preferred_field.change(updateSelectable);
+                  updateSelectable();
+                })
+              }(jQuery));
+      </script>
+    </div>
+
+  </head>
+  <body>
+
+    <metal:main fill-slot="main">
+      <tal:main-macro metal:define-macro="main">
+
+        <h1 class="documentFirstHeading"
+            tal:content="view/label"
+        >Title</h1>
+
+
+        <metal:block use-macro="context/@@ploneform-macros/titlelessform" />
+      </tal:main-macro>
+    </metal:main>
+  </body>
+</html>

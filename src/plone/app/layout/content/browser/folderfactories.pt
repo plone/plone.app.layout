@@ -1,0 +1,104 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      xml:lang="en"
+      i18n:domain="plone"
+>
+
+  <head>
+    <metal:block fill-slot="top_slot"
+                 tal:define="
+                   dummy python:request.set('disable_border',1);
+                   disable_column_one python:request.set('disable_plone.leftcolumn',1);
+                   disable_column_two python:request.set('disable_plone.rightcolumn',1);
+                 "
+    />
+  </head>
+
+  <body>
+
+    <metal:main metal:fill-slot="main">
+
+      <h1 class="documentFirstHeading"
+          i18n:translate="heading_add_new_item"
+      >Add new item</h1>
+
+      <div class="documentDescription"
+           i18n:translate="description_add_new_item"
+      >
+        Select the type of item you want to add to your folder.
+      </div>
+
+      <div id="content-core">
+        <p tal:condition="view/can_constrain_types">
+          <a href="#"
+             title="Configure which content types can be added here"
+             tal:define="
+               add_context view/add_context;
+             "
+             tal:attributes="
+               href string:${add_context/absolute_url}/folder_constraintypes_form;
+             "
+             i18n:attributes="title title_configure_addable_content_types;"
+             i18n:translate="folder_add_settings_long"
+          >
+                Click to configure what type of items can be added here&hellip;
+          </a>
+        </p>
+
+        <metal:addlist define-macro="addlist">
+
+          <form method="post"
+                name="quickAdd"
+                tal:attributes="
+                  action string:${context/absolute_url}/@@folder_factories;
+                "
+          >
+
+            <ul class="folder-factories">
+              <tal:typelist repeat="item view/addable_types">
+                <li>
+                  <input name="url"
+                         type="radio"
+                         tal:attributes="
+                           value item/action;
+                           id string:form-field-${item/extra/id};
+                         "
+                  />
+                  <label tal:attributes="
+                           class string:contenttype-${item/extra/id};
+                           for string:form-field-${item/extra/id};
+                         ">
+                    <img alt=""
+                         tal:attributes="
+                           src item/icon;
+                         "
+                    />
+                    <span tal:replace="item/title">Type title</span>
+                  </label>
+                  <span class="discreet"
+                        tal:content="item/description"
+                  >Type description</span>
+                </li>
+              </tal:typelist>
+            </ul>
+
+            <div class="formControls">
+              <input class="btn btn-primary"
+                     name="form.button.Add"
+                     type="submit"
+                     value="Add"
+                     i18n:attributes="value label_add"
+              />
+            </div>
+          </form>
+        </metal:addlist>
+      </div>
+
+    </metal:main>
+
+  </body>
+</html>

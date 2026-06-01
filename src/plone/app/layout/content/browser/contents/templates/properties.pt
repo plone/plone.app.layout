@@ -1,0 +1,65 @@
+<div i18n:domain="plone">
+
+  <div class="mb-2">
+    <label class="form-label" i18n:translate="publiciation_date">Publication Date</label>
+    <input class="form-control" name="effectiveDate" type="datetime-local" />
+  </div>
+
+  <div class="mb-2">
+    <label class="form-label" i18n:translate="expiration_date">Expiration Date</label>
+    <input class="form-control" name="expirationDate" type="datetime-local" />
+  </div>
+
+  <div class="mb-2">
+    <label class="form-label" i18n:translate="copyright">Copyright</label>
+    <textarea class="form-control" name="copyright"></textarea>
+  </div>
+
+  <div class="mb-2">
+    <label class="form-label" i18n:translate="creators">Creators</label>
+    <input name="creators" class="form-control"
+           class="pat-select2"
+           data-pat-select2="multiple: true;
+                             vocabularyUrl: ${python: options['vocabulary_url']}"/>
+  </div>
+
+  <div class="mb-2">
+    <label class="form-label" i18n:translate="contributors">Contributors</label>
+    <input name="contributors" class="form-control"
+           class="pat-select2"
+           data-pat-select2="multiple: true;
+                             vocabularyUrl: ${python: options['vocabulary_url']}"/>
+  </div>
+
+  <div class="mb-2">
+    <label class="form-label" for="fcSwitchExcludeFromNav" i18n:translate="exclude_from_nav">Exclude from navigation</label>
+    <div class="form-check">
+      <input class="form-check-input" type="radio" name="exclude-from-nav" id="fcSwitchExcludeFromNavYes" value="yes">
+      <label class="form-check-label" for="fcSwitchExcludeFromNavYes" i18n:translate="yes">Yes</label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="radio" name="exclude-from-nav" id="fcSwitchExcludeFromNavNo" value="no">
+      <label class="form-check-label" for="fcSwitchExcludeFromNavNo" i18n:translate="no">No</label>
+    </div>
+  </div>
+
+  <% if (data.languages) { %>
+  <div class="mb-2">
+    <label class="form-label" i18n:translate="label_language">Language</label>
+    <select class="form-select" name="language">
+      <% _.each(data.languages, function (lang) { %>
+        <option value="<%= lang.value %>"><%= lang.title %></option>
+      <% }); %>
+    </select>
+  </div>
+  <% } %>
+
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" name="recurse" value="yes" id="fcCheckRecurse" />
+    <label class="form-check-label" for="fcCheckRecurse" i18n:translate="label_include_contained_objects">Include contained items</label>
+    <p class="form-text" i18n:translate="help_include_contained_objects">
+    If checked, this will attempt to modify the status of all content in any selected folders and their subfolders.
+    </p>
+  </div>
+
+</div>

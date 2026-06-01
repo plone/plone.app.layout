@@ -1,0 +1,351 @@
+<div id="folderlisting-main-table"
+     i18n:domain="plone"
+>
+  <input name="sort_on"
+         type="hidden"
+         tal:attributes="
+           value request/sort_on|string:getObjPositionInParent;
+         "
+  />
+  <input name="pagenumber"
+         type="hidden"
+         tal:attributes="
+           value view/batch/pagenumber;
+         "
+  />
+  <input name="pagesize"
+         type="hidden"
+         tal:attributes="
+           value view/batch/pagesize;
+         "
+  />
+  <input name="show_all"
+         type="hidden"
+         tal:attributes="
+           value view/show_all;
+         "
+  />
+  <input name="orig_template"
+         type="hidden"
+         tal:attributes="
+           value view/viewname;
+         "
+  />
+  <tal:block condition="view/selectall">
+    <input name="paths:list"
+           type="hidden"
+           tal:repeat="item view/batch/items_not_on_page"
+           tal:attributes="
+             value item/path|item/id|item/getId;
+           "
+    />
+  </tal:block>
+
+  <p class="discreet"
+     tal:condition="not: view/batch"
+     i18n:translate="description_no_visible_items_add_paste"
+  >
+    This folder has no visible items. To add content, press the
+    add button, or paste content from another location.
+  </p>
+
+  <metal:listing define-macro="folder_listing"
+                 tal:define="
+                   nosortclass view/get_nosort_class;
+                 "
+  >
+
+    <div class="visualClear"
+         id="clear-space-before-navigation"
+    ><!-- --></div>
+
+    <div tal:condition="not:view/show_all"
+         tal:replace="structure view/batching"
+    ></div>
+    <table class="table"
+           id="listing-table"
+           summary="Content listing"
+           tal:condition="view/items"
+           i18n:attributes="summary summary_content_listing;"
+    >
+      <thead>
+        <tr tal:condition="python:view.show_select_column and not view.selectcurrentbatch">
+          <th class="nosort"
+              colspan="6"
+          ><span tal:omit-tag=""
+                  i18n:translate="label_select"
+            >Select:</span>
+            <a id="foldercontents-selectall"
+               tal:attributes="
+                 href view/selectscreen_url;
+               "
+               i18n:translate="label_all"
+            >All</a></th>
+        </tr>
+        <tr tal:condition="view/show_select_all_items">
+          <th class="nosort"
+              colspan="6"
+          >
+            <span tal:omit-tag=""
+                  i18n:translate="tableheading_all_items_selected"
+            >
+            All
+              <tal:block replace="view/batch/items_on_page"
+                         i18n:name="count"
+              />
+               items on this
+            page are selected.
+            </span>
+            <a id="foldercontents-selectall-completebatch"
+               tal:attributes="
+                 href view/selectall_url;
+               "
+               i18n:translate="tableheading_select_all_items"
+            >Select all
+              <tal:block replace="view/batch/sequence_length"
+                         i18n:name="count"
+              />
+              items in this folder.</a>
+          </th>
+        </tr>
+        <tr tal:condition="view/selectall">
+          <th class="nosort"
+              colspan="6"
+          >
+            <span tal:omit-tag=""
+                  i18n:translate="tableheading_all_items_selected_in_folder"
+            >
+            All
+              <tal:block replace="view/batch/sequence_length"
+                         i18n:name="count"
+              />
+               items in this folder
+            are selected.
+            </span>
+            <a id="foldercontents-clearselection"
+               tal:attributes="
+                 href view/selectnone_url;
+               "
+               i18n:translate="tableheading_clear_selection"
+            >Clear selection</a>
+          </th>
+        </tr>
+
+        <tr>
+          <th class="nosort column"
+              id="foldercontents-order-column"
+              tal:condition="view/show_sort_column"
+          >
+          </th>
+          <th class="nosort"
+              id="foldercontents-select-column"
+              tal:condition="view/show_select_column"
+          >&nbsp;</th>
+          <th class="nosort column"
+              id="foldercontents-title-column"
+          >&nbsp;<tal:title i18n:translate="listingheader_title">Title</tal:title>&nbsp;</th>
+          <th class="nosort column"
+              id="foldercontents-size-column"
+              tal:condition="view/show_size_column"
+          >&nbsp;<tal:size i18n:translate="listingheader_size">Size</tal:size>&nbsp;</th>
+          <th class="nosort column"
+              id="foldercontents-modified-column"
+              tal:condition="view/show_modified_column"
+          >&nbsp;<tal:modified i18n:translate="listingheader_modified">Modified</tal:modified>&nbsp;</th>
+          <th class="nosort column"
+              id="foldercontents-status-column"
+              tal:condition="view/show_status_column"
+          >&nbsp;<tal:state i18n:translate="listingheader_status">State</tal:state>&nbsp;</th>
+        </tr>
+      </thead>
+
+      <metal:block tal:condition="view/batch">
+        <tbody>
+          <tal:items tal:repeat="item view/batch">
+            <tr tal:define="
+                  id item/id|item/getId;
+                  title item/title|item/Title|item/title_or_id;
+                  title_or_id python:title or id;
+                "
+                tal:attributes="
+                  class item/table_row_class;
+                  id string:folder-contents-item-${id};
+                "
+            >
+
+              <td class="draggable"
+                  tal:condition="view/show_sort_column"
+              >
+                <tal:block tal:define="
+                             quoted_id python:view.quote_plus(id);
+                             quoted_id item/quoted_id|quoted_id;
+                           ">
+                  <a href=""
+                     title="Move item up"
+                     tal:attributes="
+                       href string:${view/base_url}/folder_position?position=up&amp;id=${quoted_id};
+                     "
+                     i18n:attributes="title title_move_item_up;"
+                  >
+                  &#9650;
+                  </a>
+                &nbsp;
+                  <a href=""
+                     title="Move item down"
+                     tal:attributes="
+                       href string:${view/base_url}/folder_position?position=down&amp;id=${quoted_id};
+                     "
+                     i18n:attributes="title title_move_item_down;"
+                  >
+                  &#9660;
+                  </a>
+                </tal:block>
+              </td>
+              <td class="notDraggable"
+                  tal:condition="view/show_select_column"
+              >
+                <input class="noborder"
+                       id="#"
+                       name="paths:list"
+                       type="checkbox"
+                       value="#"
+                       tal:attributes="
+                         value   item/path|id;
+                         id      string:cb_${id};
+                         checked item/checked;
+                         alt     python:view.msg_select_item(item);
+                         title   python:view.msg_select_item(item);
+                       "
+                />
+                <input name="selected_obj_paths:list"
+                       type="hidden"
+                       value="#"
+                       tal:attributes="
+                         value item/path|id;
+                       "
+                />
+                <label class="hiddenStructure"
+                       tal:content="title_or_id"
+                       tal:attributes="
+                         for string:cb_${id};
+                       "
+                >
+                  Item Title
+                </label>
+              </td>
+              <td>
+                <img tal:replace="structure item/icon|nothing" />
+                <a href="#"
+                   tal:define="
+                     state_class item/state_class|string:;
+                     type_class item/type_class|string:;
+                   "
+                   tal:attributes="
+                     href  item/view_url|string:${view/base_url}/${id};
+                     title item/url_href_title|nothing;
+                     class string: ${state_class} ${type_class};
+                   "
+                >
+                  <strong tal:content="title_or_id"
+                          tal:omit-tag="not: item/is_browser_default|nothing"
+                  ></strong>
+                  <span class="defaultView"
+                        style="color: #f00;"
+                        title="Default view for this folder"
+                        tal:condition="item/is_browser_default|nothing"
+                        i18n:attributes="title title_default_view_for_this_folder;"
+                  >
+                      &#x25a0;
+                  </span>
+                </a>
+
+                <span class="state-expired"
+                      tal:condition="item/is_expired|nothing"
+                      i18n:translate="time_expired"
+                >expired</span>
+              </td>
+
+              <td tal:condition="view/show_size_column">
+                <span tal:condition="not: item/size">
+                  &nbsp;
+                </span>
+                <span tal:condition="item/size"
+                      tal:content="item/size"
+                      tal:attributes="
+                        class item/state_class|nothing;
+                      "
+                >
+                  size
+                </span>
+              </td>
+              <td tal:define="
+                    state_class item/state_class|string:;
+                    modified_sortable item/modified_sortable|string:;
+                  "
+                  tal:condition="view/show_modified_column"
+                  tal:content="item/modified"
+                  tal:attributes="
+                    class string:${state_class} ${modified_sortable};
+                  "
+              >
+                08/19/2001 03:01 AM
+              </td>
+              <td tal:condition="view/show_status_column">
+                <span tal:condition="item/state_title|nothing"
+                      tal:content="item/state_title"
+                      tal:attributes="
+                        class item/state_class|nothing;
+                      "
+                      i18n:translate=""
+                ></span>
+                <span tal:condition="not: item/state_title|nothing">&nbsp;</span>
+              </td>
+            </tr>
+          </tal:items>
+        </tbody>
+        <tfoot tal:condition="not:view/within_batch_size">
+          <tr tal:condition="not:view/show_all">
+            <th class="nosort"
+                colspan="6"
+            >
+              <a id="foldercontents-show-all"
+                 tal:attributes="
+                   href view/show_all_url;
+                 "
+                 i18n:translate="label_show_all"
+              >Show all items</a>
+            </th>
+          </tr>
+          <tr tal:condition="view/show_all">
+            <th class="nosort"
+                colspan="6"
+            >
+              <a id="foldercontents-show-batched"
+                 tal:attributes="
+                   href view/view_url;
+                 "
+                 i18n:translate="label_show_batched"
+              >Show batched</a>
+            </th>
+          </tr>
+        </tfoot>
+      </metal:block>
+    </table>
+    <div tal:condition="not:view/show_all"
+         tal:replace="structure view/batching"
+    ></div>
+    <tal:buttons tal:repeat="button view/buttons">
+      <input class="btn btn-primary"
+             name=""
+             type="submit"
+             value=""
+             tal:attributes="
+               value button/title;
+               name button/url;
+               class button/cssclass|nothing;
+             "
+             i18n:attributes="value"
+      />
+    </tal:buttons>
+  </metal:listing>
+</div>
