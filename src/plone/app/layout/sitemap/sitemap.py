@@ -24,7 +24,8 @@ def _render_cachekey(fun, self):
     url = self.context.absolute_url()
     catalog = getToolByName(self.context, "portal_catalog")
     counter = catalog.getCounter()
-    return f"{url}/{self.filename}/{counter}"
+    page = self.request.get("page", 0)
+    return f"{url}/{self.filename}/{counter}/{page}"
 
 
 class SiteMapView(BrowserView):
