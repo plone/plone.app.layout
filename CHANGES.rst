@@ -8,6 +8,16 @@ Changelog
 
 .. towncrier release notes start
 
+7.0.0a1 (2026-05-27)
+--------------------
+
+Breaking changes:
+
+
+- Moved plone.app.i18n.browser.languageselector template to plone.app.layout.viewlets
+  [agitator] (#3953)
+
+
 6.0.1 (2026-05-07)
 ------------------
 

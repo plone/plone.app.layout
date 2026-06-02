@@ -1,0 +1,43 @@
+<tal:language tal:condition="view/available">
+  <ul id="portal-languageselector"
+      tal:define="
+        showFlags view/showFlags;
+        languages view/languages;
+        here_url context/@@plone_context_state/view_url;
+        portal_url view/portal_url;
+        icons python:context.restrictedTraverse('@@iconresolver');
+      "
+  >
+    <tal:language repeat="lang languages">
+      <li tal:define="
+            code lang/code;
+            selected lang/selected;
+            codeclass string:language-${code};
+            current python: selected and 'currentLanguage ' or '';
+          "
+          tal:attributes="
+            class string:${current}${codeclass};
+          "
+      >
+        <a href=""
+           tal:define="
+             flag lang/flag|nothing;
+             name lang/native|lang/name;
+             showflag python:showFlags and flag;
+           "
+           tal:attributes="
+             href string:${here_url}?set_language=${code};
+             title name;
+           "
+        >
+          <tal:flag condition="showflag">
+            <img tal:replace="structure python:icons.tag(flag, tag_class='plone-icon-flag')" />
+          </tal:flag>
+          <tal:nonflag condition="not: showflag"
+                       replace="name"
+          >language name</tal:nonflag>
+        </a>
+      </li>
+    </tal:language>
+  </ul>
+</tal:language>

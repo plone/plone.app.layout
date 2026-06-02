@@ -1,4 +1,4 @@
-from plone.app.layout.testing import FUNCTIONAL_TESTING
+from plone.app.layout.testing import PLONE_APP_LAYOUT_FUNCTIONAL_TESTING
 from plone.testing import layered
 
 import doctest
@@ -22,7 +22,7 @@ def test_suite():
                     test,
                     optionflags=OPTIONFLAGS,
                 ),
-                layer=FUNCTIONAL_TESTING,
+                layer=PLONE_APP_LAYOUT_FUNCTIONAL_TESTING,
             )
             for test in normal_testfiles
         ]

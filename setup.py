@@ -1,7 +1,7 @@
 from pathlib import Path
 from setuptools import setup
 
-version = "6.0.2.dev0"
+version = "7.0.0a2.dev0"
 
 long_description = (
     f"{Path('README.rst').read_text()}\n{Path('CHANGES.rst').read_text()}"
@@ -42,6 +42,7 @@ setup(
     install_requires=[
         "plone.app.content",
         "plone.app.dexterity",
+        "plone.app.linkintegrity",
         "plone.app.relationfield",
         "plone.app.uuid",
         "plone.app.viewletmanager >=1.2",
@@ -61,13 +62,18 @@ setup(
     extras_require=dict(
         test=[
             "plone.app.contenttypes[test]",
+            "plone.app.linkintegrity",
             "plone.app.relationfield",
+            "plone.app.robotframework",
             "plone.app.testing",
+            "plone.app.textfield",
             "plone.browserlayer",
             "plone.dexterity",
             "plone.locking",
             "plone.testing",
+            "robotsuite",
             "z3c.relationfield",
+            "zc.relation",
             "zope.intid",
         ]
     ),
