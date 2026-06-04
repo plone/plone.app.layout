@@ -1,0 +1,65 @@
+Sharing view CSRF protection
+============================
+
+The Classic-UI ``@@sharing`` view lives in plone.app.layout and is registered
+on the ``IPloneAppLayoutLayer`` browser layer (installed by the
+``plone.app.layout:default`` profile).  Like the other write-enabled forms it
+must be protected against CSRF attacks.  This test used to live in
+``Products.CMFPlone/tests/csrf.txt`` and moved here together with the view.
+
+First we need a logged in user with manager rights:
+
+  >>> import transaction; transaction.commit()
+  >>> from plone.app.testing import SITE_OWNER_NAME
+  >>> from plone.app.testing import SITE_OWNER_PASSWORD
+  >>> from plone.testing.zope import Browser
+  >>> app = layer['app']
+  >>> portal = layer['portal']
+  >>> browser = Browser(app)
+  >>> browser.handleErrors = False
+  >>> browser.open('http://nohost/plone/login_form')
+  >>> browser.getControl(name='__ac_name').value = SITE_OWNER_NAME
+  >>> browser.getControl(name='__ac_password').value = SITE_OWNER_PASSWORD
+  >>> browser.getControl('Log in').click()
+
+Now we add a folder to share:
+
+  >>> browser.open('http://nohost/plone/')
+  >>> browser.getLink(url='++add++Folder').click()
+  >>> browser.getControl('Title').value = 'a folder'
+  >>> browser.getControl('Save').click()
+  >>> browser.url
+  'http://nohost/plone/a-folder/view'
+
+Reopen URL to clean up HTTP_REFERRER
+
+  >>> browser.open('http://nohost/plone/a-folder/')
+
+"Sharing" the item via the toolbar link:
+
+  >>> browser.getLink('Sharing').click()
+  >>> browser.url
+  'http://nohost/plone/a-folder/@@sharing?_auth...'
+  >>> browser.getControl(name='entries.role_Editor:records').value
+  []
+
+Change the value of the second _authenticator and check for Exception
+
+  >>> browser.getControl(name='_authenticator', index=1).value = 'invalid!'
+  >>> browser.getControl(name='entries.role_Editor:records').value = ['True']
+  >>> browser.getControl('Save').click()
+  Traceback (most recent call last):
+  ...
+  zExceptions.Forbidden
+
+With a valid authenticator the change goes through:
+
+  >>> browser.getLink('Sharing').click()
+  >>> browser.getControl(name='entries.role_Editor:records').value = ['True']
+  >>> browser.getControl('Save').click()
+  >>> browser.url
+  'http://nohost/plone/a-folder/@@sharing'
+  >>> browser.contents
+  '...Info...Changes saved...'
+  >>> browser.getControl(name='entries.role_Editor:records').value
+  ['True']
