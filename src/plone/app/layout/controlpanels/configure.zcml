@@ -33,4 +33,46 @@
       layer="plone.app.layout.interfaces.IPloneAppLayoutLayer"
       />
 
+  <!-- Registry -->
+  <include package="plone.app.registry" />
+
+  <browser:defaultView
+      name="configuration_registry"
+      for="plone.registry.interfaces.IRegistry"
+      />
+
+  <browser:page
+      name="configuration_registry"
+      for="plone.registry.interfaces.IRegistry"
+      class=".registry.RecordsControlPanel"
+      permission="cmf.ManagePortal"
+      layer="plone.app.layout.interfaces.IPloneAppLayoutLayer"
+      />
+
+  <browser:page
+      name="edit"
+      for="plone.registry.interfaces.IRegistry"
+      class=".registry.RecordEditView"
+      template="templates/registry_edit_layout.pt"
+      permission="cmf.ManagePortal"
+      layer="plone.app.layout.interfaces.IPloneAppLayoutLayer"
+      />
+
+  <browser:page
+      name="delete-record"
+      for="plone.registry.interfaces.IRegistry"
+      class=".registry.RecordDeleteView"
+      template="templates/registry_delete_layout.pt"
+      permission="cmf.ManagePortal"
+      layer="plone.app.layout.interfaces.IPloneAppLayoutLayer"
+      />
+
+  <browser:page
+      name="configuration_registry_export_xml"
+      for="plone.registry.interfaces.IRegistry"
+      class=".registry.RegistryExporterView"
+      permission="cmf.ManagePortal"
+      layer="plone.app.layout.interfaces.IPloneAppLayoutLayer"
+      />
+
 </configure>
