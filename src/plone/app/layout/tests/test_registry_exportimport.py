@@ -10,7 +10,6 @@ from plone.registry import Record
 from plone.registry.interfaces import IFieldRef
 from plone.registry.interfaces import IInterfaceAwareRecord
 from plone.registry.interfaces import IRegistry
-from plone.supermodel.utils import prettyXML
 from plone.testing import zca
 from Products.GenericSetup.tests.common import DummyExportContext
 from Products.GenericSetup.tests.common import (
@@ -74,12 +73,12 @@ class ExportImportTest(unittest.TestCase):
         if etree.tostring(expected_tree) != etree.tostring(actual_tree):
             print()
             print("Expected:")
-            print(prettyXML(expected_tree))
+            print(expected_tree)
             print()
 
             print()
             print("Actual:")
-            print(prettyXML(actual_tree))
+            print(actual_tree)
             print()
 
             raise AssertionError("XML mismatch")
