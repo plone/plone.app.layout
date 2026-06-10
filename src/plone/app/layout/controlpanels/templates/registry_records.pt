@@ -1,0 +1,255 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      lang="en"
+      metal:use-macro="context/@@prefs_main_template/macros/master"
+      xml:lang="en"
+      i18n:domain="plone"
+>
+
+  <metal:block fill-slot="top_slot">
+    <tal:defines tal:define="
+                   dummy python:request.set('disable_border', 1);
+                   disable_column_one python:request.set('disable_plone.leftcolumn', 1);
+                   disable_column_two python:request.set('disable_plone.rightcolumn', 1);
+                 " />
+  </metal:block>
+
+  <body>
+    <metal:main metal:fill-slot="prefs_configlet_main"
+                tal:define="
+                  records view/records;
+                "
+    >
+
+      <header>
+        <h1 class="documentFirstHeading"
+            i18n:translate="heading_registry"
+        >Configuration Registry</h1>
+
+        <p class="lead"
+           i18n:translate="description_registry"
+        >
+        The table below shows record currently managed by the configuration
+        registry. Click on a record to edit it.
+        </p>
+      </header>
+      <div id="content-core">
+        <div class="pat-autotoc autotabs"
+             data-pat-autotoc="section:.tab;levels:h2;"
+        >
+          <div class="tab"
+               id="recordsContainer"
+          >
+            <h2 i18n:translate="heading_records">Records</h2>
+            <div class="pat-registry"
+                 id="recordsTable"
+            >
+
+              <div id="searchrow">
+
+                <form id="registry-filter"
+                      tal:define="
+                        qp request/qp|nothing;
+                        q request/q|nothing;
+                      "
+                >
+
+                  <div class="mb-3">
+                    <div class="input-group">
+                      <input class="form-control"
+                             id="q"
+                             name="q"
+                             placeholder="filter by..."
+                             tal:attributes="
+                               value python: qp or q;
+                             "
+                             i18n:attributes="placeholder"
+                      />
+                      <div class="input-group-append">
+                        <button class="btn btn-primary"
+                                type="submit"
+                                value="Filter"
+                                i18n:attributes="value"
+                                i18n:translate=""
+                        >
+                          Filter
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row justify-content-between">
+                    <div class="mb-3 col-auto">
+                      <div class="input-group">
+                        <label class="col-form-label me-2"
+                               i18n:translate="or"
+                        >or</label>
+                        <select class="form-select"
+                                name="qp"
+                                tal:define="
+                                  prefixes python: sorted(view.prefixes.keys());
+                                "
+                        >
+                          <option value=""
+                                  i18n:translate="select_prefix"
+                          >Select Prefix</option>
+                          <tal:prefixes tal:repeat="prefix prefixes">
+                            <option tal:define="
+                                      value python: 'prefix:' + (view.prefixes[prefix] or '');
+                                    "
+                                    tal:content="prefix"
+                                    tal:attributes="
+                                      value value;
+                                    "
+                            ></option>
+                          </tal:prefixes>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="mb-3 col-auto">
+                      <form id="clear-filter">
+                        <button class="btn btn-secondary"
+                                type="reset"
+                                i18n:translate="clear_filter"
+                        >
+                              Clear filter
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+
+                </form>
+
+
+              </div>
+
+              <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                  <thead>
+                    <tr>
+                      <th i18n:translate="heading_name">Name</th>
+                      <th i18n:translate="heading_title">Title</th>
+                      <th i18n:translate="heading_description">Description</th>
+                      <th i18n:translate="heading_type">Type</th>
+                      <th i18n:translate="heading_value">Value</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tal:loop repeat="record records">
+                      <tr tal:define="
+                            oddrow repeat/record/odd;
+                            field record/field/originalField | record/field;
+                          "
+                          tal:attributes="
+                            class python:oddrow and 'odd' or 'even';
+                          "
+                      >
+                        <td data-label="Name">
+                          <a class="recordsEditLink"
+                             tal:content="python:record.__name__.replace('.', ' ')"
+                             tal:attributes="
+                               href string:${context/absolute_url}/edit/${record/__name__};
+                             "
+                          ></a>
+                        </td>
+                        <td data-label="Title"
+                            tal:content="field/title"
+                        ></td>
+                        <td data-label="Description"
+                            tal:content="structure field/description"
+                        ></td>
+                        <td data-label="Type"
+                            tal:content="field/__class__/__name__"
+                        ></td>
+                        <td data-label="Value">
+                          <span class="value"
+                                tal:content="record/value|nothing"
+                                tal:on-error="string:?"
+                          ></span>
+                          <tal:non-iface tal:condition="not: record/interfaceName|nothing">
+                            <br />
+                            (<a class="recordsDeleteLink"
+                               href="${context/absolute_url}/@@delete-record?name=${record/__name__}"
+                               i18n:translate=""
+                            >
+                                 Delete record
+                            </a>)
+                          </tal:non-iface>
+                        </td>
+                      </tr>
+                    </tal:loop>
+                  </tbody>
+                  <tfoot tal:condition="python: records.numpages > 1">
+                    <tr>
+                      <th colspan="5"
+                          tal:define="
+                            batch records;
+                          "
+                      >
+                        <div metal:use-macro="here/batch_macros/macros/navigation"></div>
+                      </th>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="tab">
+            <h2 i18n:translate="export">Export</h2>
+            <p i18n:translate="registry_export_text">Will export the entire registry into a single XML file.</p>
+            <form method="POST">
+              <input name="button.exportregistry"
+                     type="hidden"
+                     value="true"
+              />
+              <div class="formControls">
+                <button class="btn btn-primary"
+                        type="submit"
+                        i18n:translate="export_button"
+                >Export Now</button>
+              </div>
+            </form>
+            <hr />
+            <div tal:replace="structure python:context.restrictedTraverse('@@configuration_registry_export_xml')()"></div>
+          </div>
+          <div class="tab">
+            <h2 i18n:translate="import">Import</h2>
+            <form enctype="multipart/form-data"
+                  method="POST"
+            >
+              <div class="mb-3 field">
+                <label class="form-label"
+                       for="exportFile"
+                       i18n:translate=""
+                >Registry XML File</label>
+                <input class="form-control"
+                       id="exportFile"
+                       name="file"
+                       type="file"
+                />
+              </div>
+              <input name="button.importregistry"
+                     type="hidden"
+                     value="true"
+              />
+              <div class="formControls mt-3">
+                <button class="btn btn-primary"
+                        type="submit"
+                        i18n:translate="import_button"
+                >Import File</button>
+              </div>
+            </form>
+          </div>
+          <div class="tab">
+            <h2 i18n:translate="registry_add_record_label">Add new record</h2>
+            <p i18n:translate="registry_add_record_text"></p>
+            <metal:block use-macro="context/@@ploneform-macros/titlelessform">
+            </metal:block>
+          </div>
+        </div>
+      </div>
+    </metal:main>
+  </body>
+</html>
