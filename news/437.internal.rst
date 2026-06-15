@@ -1,3 +1,0 @@
-Added Classic-UI control panel views and templates for ``plone.app.registry``,
-including record listing, edit, delete, and XML export views, along with
-their full test suite.
