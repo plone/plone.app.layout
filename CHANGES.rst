@@ -8,6 +8,15 @@ Changelog
 
 .. towncrier release notes start
 
+6.0.2 (2026-06-23)
+------------------
+
+Bug fixes:
+
+
+- Take into account the value of request parameter page for caching the generated sitemap @erral
+
+
 6.0.1 (2026-05-07)
 ------------------
 
