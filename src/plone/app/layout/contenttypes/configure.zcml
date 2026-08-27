@@ -1,0 +1,226 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:z3c="http://namespaces.zope.org/z3c"
+    xmlns:zcml="http://namespaces.zope.org/zcml"
+    i18n_domain="plone"
+    >
+
+  <include package="plone.app.contentmenu" />
+
+  <!-- VIEWS FOR PLONE SITE ROOT -->
+  <browser:pages
+      for="plone.base.interfaces.IPloneSiteRoot"
+      class=".folder.FolderView"
+      permission="zope2.View"
+      >
+    <browser:page
+        name="listing_view"
+        template="templates/listing.pt"
+        menu="plone_displayviews"
+        title="Standard view"
+        />
+    <browser:page
+        name="summary_view"
+        template="templates/listing_summary.pt"
+        menu="plone_displayviews"
+        title="Summary view"
+        />
+    <browser:page
+        name="tabular_view"
+        template="templates/listing_tabular.pt"
+        menu="plone_displayviews"
+        title="Tabular view"
+        />
+    <browser:page
+        name="full_view"
+        template="templates/full_view.pt"
+        menu="plone_displayviews"
+        title="All content"
+        />
+    <browser:page
+        name="album_view"
+        template="templates/listing_album.pt"
+        menu="plone_displayviews"
+        title="Album view"
+        />
+  </browser:pages>
+
+
+  <!-- VIEWS FOR FOLDERS -->
+  <browser:pages
+      for="plone.dexterity.interfaces.IDexterityContainer"
+      class=".folder.FolderView"
+      permission="zope2.View"
+      >
+    <browser:page
+        name="listing_view"
+        template="templates/listing.pt"
+        menu="plone_displayviews"
+        title="Standard view"
+        />
+    <browser:page
+        name="summary_view"
+        template="templates/listing_summary.pt"
+        menu="plone_displayviews"
+        title="Summary view"
+        />
+    <browser:page
+        name="tabular_view"
+        template="templates/listing_tabular.pt"
+        menu="plone_displayviews"
+        title="Tabular view"
+        />
+    <browser:page
+        name="full_view"
+        template="templates/full_view.pt"
+        menu="plone_displayviews"
+        title="All content"
+        />
+    <browser:page
+        name="album_view"
+        template="templates/listing_album.pt"
+        menu="plone_displayviews"
+        title="Album view"
+        />
+  </browser:pages>
+
+
+  <!-- VIEWS FOR COLLECTION ITEM -->
+  <browser:page
+      name="listing_view"
+      for="plone.app.contenttypes.interfaces.ICollection"
+      class=".collection.CollectionView"
+      template="templates/listing.pt"
+      permission="zope2.View"
+      />
+
+  <!-- VIEWS FOR ANYTHING WITH THE COLLECTION BEHAVIOR.
+       Note that these ignore other fields, but integrators should
+       create other templates if they want that.  Or improve the
+       query view widget.  -->
+  <browser:pages
+      for="plone.app.contenttypes.behaviors.collection.ISyndicatableCollection"
+      class=".collection.CollectionView"
+      permission="zope2.View"
+      >
+    <browser:page
+        name="listing_view"
+        template="templates/listing.pt"
+        menu="plone_displayviews"
+        title="Standard view"
+        />
+    <browser:page
+        name="summary_view"
+        template="templates/listing_summary.pt"
+        menu="plone_displayviews"
+        title="Summary view"
+        />
+    <browser:page
+        name="tabular_view"
+        template="templates/listing_tabular.pt"
+        menu="plone_displayviews"
+        title="Tabular view"
+        />
+    <browser:page
+        name="full_view"
+        template="templates/full_view.pt"
+        menu="plone_displayviews"
+        title="All content"
+        />
+    <browser:page
+        name="album_view"
+        template="templates/listing_album.pt"
+        menu="plone_displayviews"
+        title="Album view"
+        />
+  </browser:pages>
+
+
+  <!-- OTHER VIEWS -->
+  <browser:page
+      name="full_view_item"
+      for="*"
+      class=".full_view.FullViewItem"
+      template="templates/full_view_item.pt"
+      permission="zope2.View"
+      layer="plone.app.contenttypes.interfaces.IPloneAppContenttypesLayer"
+      />
+  <browser:page
+      name="document_view"
+      template="templates/document.pt"
+      permission="zope2.View"
+      layer="plone.app.contenttypes.interfaces.IPloneAppContenttypesLayer"
+      menu="plone_displayviews"
+      title="View Document"
+      />
+  <browser:page
+      name="file_view"
+      for="plone.app.contenttypes.interfaces.IFile"
+      class=".file.FileView"
+      template="templates/file.pt"
+      permission="zope2.View"
+      layer="plone.app.contenttypes.interfaces.IPloneAppContenttypesLayer"
+      menu="plone_displayviews"
+      title="View File"
+      />
+  <browser:page
+      name="image_view"
+      for="plone.app.contenttypes.interfaces.IImage"
+      template="templates/image.pt"
+      permission="zope2.View"
+      layer="plone.app.contenttypes.interfaces.IPloneAppContenttypesLayer"
+      menu="plone_displayviews"
+      title="View Image"
+      />
+  <browser:page
+      name="image_view_fullscreen"
+      for="plone.app.contenttypes.interfaces.IImage"
+      template="templates/image_view_fullscreen.pt"
+      permission="zope2.View"
+      layer="plone.app.contenttypes.interfaces.IPloneAppContenttypesLayer"
+      menu="plone_displayviews"
+      title="View Image Fullscreen"
+      />
+  <browser:page
+      name="link_redirect_view"
+      for="plone.app.contenttypes.interfaces.ILink"
+      class=".link_redirect_view.LinkRedirectView"
+      permission="zope2.View"
+      layer="plone.app.contenttypes.interfaces.IPloneAppContenttypesLayer"
+      menu="plone_displayviews"
+      title="View Link"
+      />
+  <browser:page
+      name="newsitem_view"
+      for="plone.app.contenttypes.interfaces.INewsItem"
+      template="templates/newsitem.pt"
+      permission="zope2.View"
+      layer="plone.app.contenttypes.interfaces.IPloneAppContenttypesLayer"
+      menu="plone_displayviews"
+      title="View News Item"
+      />
+  <browser:page
+      name="contenttype_utils"
+      for="*"
+      class=".utils.Utils"
+      allowed_interface="plone.app.layout.contenttypes.utils.IUtils"
+      permission="zope2.View"
+      layer="plone.app.contenttypes.interfaces.IPloneAppContenttypesLayer"
+      />
+
+  <browser:page
+      name="base_class_migrator_form"
+      for="plone.base.interfaces.IPloneSiteRoot"
+      class="plone.app.layout.contenttypes.migration.BaseClassMigrator"
+      permission="cmf.ManagePortal"
+      layer="plone.app.contenttypes.interfaces.IPloneAppContenttypesLayer"
+      />
+
+  <utility
+      factory="plone.app.layout.contenttypes.migration.ChangedBaseClasses"
+      provides="zope.schema.interfaces.IVocabularyFactory"
+      name="plone.app.contenttypes.migration.changed_base_classes"
+      />
+
+</configure>

@@ -42,6 +42,7 @@ setup(
     install_requires=[
         "lxml",
         "plone.app.content",
+        "plone.app.contenttypes",
         "plone.app.dexterity",
         "plone.app.linkintegrity",
         "plone.app.registry",
