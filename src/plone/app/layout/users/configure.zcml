@@ -1,7 +1,103 @@
 <configure
     xmlns="http://namespaces.zope.org/zope"
     xmlns:browser="http://namespaces.zope.org/browser"
-    xmlns:zcml="http://namespaces.zope.org/zcml"
     >
+
+  <include package="plone.autoform" />
+  <include
+      package="Products.CMFPlone.controlpanel"
+      file="permissions.zcml"
+      />
+
+  <browser:page
+      name="register"
+      for="plone.base.interfaces.INavigationRoot"
+      class=".register.RegistrationForm"
+      permission="cmf.AddPortalMember"
+      />
+
+  <browser:page
+      name="registered"
+      for="plone.base.interfaces.INavigationRoot"
+      class=".register.RegisteredView"
+      template="registered.pt"
+      permission="cmf.AddPortalMember"
+      />
+
+  <browser:page
+      name="new-user"
+      for="plone.base.interfaces.INavigationRoot"
+      class=".register.AddUserForm"
+      permission="plone.app.controlpanel.UsersAndGroups"
+      />
+
+  <browser:page
+      name="change-password"
+      for="plone.base.interfaces.INavigationRoot"
+      class=".passwordpanel.PasswordPanel"
+      permission="cmf.SetOwnPassword"
+      />
+
+  <browser:page
+      name="personal-preferences"
+      for="plone.base.interfaces.INavigationRoot"
+      class=".personalpreferences.PersonalPreferencesPanel"
+      permission="cmf.SetOwnProperties"
+      />
+
+  <browser:page
+      name="user-preferences"
+      for="plone.base.interfaces.INavigationRoot"
+      class=".personalpreferences.PersonalPreferencesConfiglet"
+      permission="plone.app.controlpanel.UsersAndGroups"
+      />
+
+  <browser:page
+      name="personal-information"
+      for="plone.base.interfaces.INavigationRoot"
+      class=".userdatapanel.UserDataPanel"
+      permission="cmf.SetOwnProperties"
+      />
+
+  <browser:page
+      name="user-information"
+      for="plone.base.interfaces.INavigationRoot"
+      class=".userdatapanel.UserDataConfiglet"
+      permission="plone.app.controlpanel.UsersAndGroups"
+      />
+
+  <browser:page
+      name="member-fields"
+      for="*"
+      class=".schemaeditor.MemberSchemaContext"
+      allowed_interface="OFS.interfaces.IItem"
+      permission="plone.app.controlpanel.UsersAndGroups"
+      />
+
+  <browser:page
+      name="edit"
+      for="plone.app.users.schema.IMemberSchemaContext"
+      class=".schemaeditor.SchemaListingPage"
+      permission="plone.app.controlpanel.UsersAndGroups"
+      />
+
+  <browser:page
+      name="member-search"
+      for="*"
+      class=".membersearch.MemberSearchForm"
+      permission="zope2.View"
+      />
+
+  <adapter
+      factory="plone.app.users.browser.personalpreferences.PersonalPreferencesPanelAdapter"
+      provides=".personalpreferences.IPersonalPreferences"
+      for="plone.base.interfaces.INavigationRoot"
+      />
+
+  <adapter
+      factory=".passwordpanel.PasswordPanelAdapter"
+      provides=".passwordpanel.IPasswordSchema"
+      for="plone.base.interfaces.INavigationRoot"
+      />
 
 </configure>
