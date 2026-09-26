@@ -1,2 +1,0 @@
-Move ``plone.app.registry`` Classic-UI browser templates and control panel
-views to ``plone.app.layout.controlpanels.registry``.
