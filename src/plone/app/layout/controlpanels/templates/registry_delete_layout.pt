@@ -1,0 +1,63 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      lang="en"
+      metal:use-macro="context/@@prefs_main_template/macros/master"
+      xml:lang="en"
+      i18n:domain="plone"
+>
+
+  <metal:block fill-slot="top_slot"
+               tal:define="
+                 dummy python:request.set('disable_border',1);
+               "
+  />
+
+  <body>
+    <div id="content"
+         metal:fill-slot="prefs_configlet_content"
+    >
+
+      <h1 class="documentFirstHeading"
+          i18n:translate=""
+      >Delete Record</h1>
+
+      <p class="documentDescription"
+         i18n:translate="description_record_delete"
+      >
+        Are you certain you want to delete this record? This can not be undone
+        and can be potentially harmful if you don't know what you are doing.
+      </p>
+
+      <b i18n:translate="">Record</b>
+      <span tal:omit-tag=""
+            i18n:ignore="true"
+      >: ${request/form/name}</span>
+
+      <form method="POST">
+        <input name="name"
+               type="hidden"
+               value="${request/form/name}"
+        />
+        <div class="formControls">
+          <input class="submit-widget button-field btn btn-danger"
+                 id="form-buttons-delete"
+                 name="form.buttons.delete"
+                 type="submit"
+                 value="Yes, delete"
+                 i18n:attributes="value"
+          />
+          <input class="submit-widget button-field btn btn-secondary"
+                 id="form-buttons-cancel"
+                 name="form.buttons.cancel"
+                 type="submit"
+                 value="Cancel"
+                 i18n:attributes="value"
+          />
+        </div>
+      </form>
+
+    </div>
+  </body>
+</html>
