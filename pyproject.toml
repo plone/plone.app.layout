@@ -39,6 +39,7 @@ maintainers = [
 dependencies = [
     "Products.CMFEditions",
     "Products.GenericSetup",
+    "Products.MailHost",
     "Products.ZCatalog",
     "Products.statusmessages",
     "Zope",
