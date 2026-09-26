@@ -1,0 +1,306 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      xml:lang="en"
+      i18n:domain="cmfeditions"
+>
+
+  <tal:block metal:fill-slot="head_slot">
+    <link href="compare.css"
+          rel="stylesheet"
+          type="text/css"
+          tal:attributes="
+            href string:${portal_url}/compare.css;
+          "
+    />
+  </tal:block>
+
+  <tal:block metal:fill-slot="javascript_head_slot">
+    <script type="text/javascript">
+    (function($) {
+      update_display = function() {
+          var style = $(this).attr('value');
+          if (! this.checked) {
+              return;
+          }
+
+          $(".fieldDiff").hide();
+
+          if (style=="visual") {
+              $(".inline-diff").show();
+          }
+          else {
+              $(".code-diff").show();
+          }
+      }
+
+      $(document).ready(function() {
+          $(".jsOnly").show();
+
+          $("#versionSelector select").change(function() { this.form.submit(); });
+          $("#diffTypeSelector input").click(update_display);
+      });
+    })(jQuery);
+
+    </script>
+  </tal:block>
+
+  <body>
+    <metal:main fill-slot="main">
+      <h1 tal:content="context/title_or_id">
+        My Important Document
+      </h1>
+
+      <div id="content-core">
+        <p class="text-muted"
+           tal:condition="not:view/history"
+           i18n:translate="no_history"
+        >
+            This object has no revision information.
+        </p>
+
+        <tal:block condition="view/history">
+          <form id="versionSelector"
+                action="#"
+                tal:define="
+                  toLocalizedTime nocall:context/@@plone/toLocalizedTime;
+                "
+                tal:attributes="
+                  action string:${context/absolute_url}/@@history;
+                "
+          >
+            <fieldset>
+              <legend i18n:translate="legend_revisions">Revisions</legend>
+
+              <div class="form-floating">
+                <select class="form-select"
+                        id="two"
+                        name="two"
+                        tal:define="
+                          rev request/two|string:current;
+                        "
+                >
+                  <option value="current"
+                          tal:attributes="
+                            selected python:rev=='current' and 'yes' or None;
+                          "
+                          i18n:translate="label_current"
+                  >Current</option>
+                  <option tal:repeat="version view/history"
+                          tal:attributes="
+                            value version/version_id;
+                            selected python:str(rev)==str(version['version_id']) and 'yes' or None;
+                          "
+                          i18n:translate="label_history_version"
+                  ><tal:version content="version/version_id"
+                                 i18n:name="version"
+                    >1</tal:version>
+                    (<tal:date content="python:toLocalizedTime(version['sys_metadata']['timestamp'])"
+                              i18n:name="date"
+                    >1975-12-24</tal:date>)</option>
+                </select>
+                <label for="two"
+                       i18n:translate=""
+                >First revision</label>
+              </div>
+
+              <div class="form-floating">
+                <select class="form-select"
+                        id="one"
+                        name="one"
+                        tal:define="
+                          rev request/one|string:current;
+                        "
+                >
+                  <option value="current"
+                          tal:attributes="
+                            selected python:rev=='current' and 'yes' or None;
+                          "
+                          i18n:translate="label_current"
+                  >Current</option>
+                  <option tal:repeat="version view/history"
+                          tal:attributes="
+                            value version/version_id;
+                            selected python:str(rev)==str(version['version_id']) and 'yes' or None;
+                          "
+                          i18n:translate="label_history_version"
+                  ><tal:version content="version/version_id"
+                                 i18n:name="version"
+                    >1</tal:version>
+                    (<tal:date content="python:toLocalizedTime(version['sys_metadata']['timestamp'])"
+                              i18n:name="date"
+                    >1975-12-24</tal:date>)</option>
+                </select>
+                <label for="one"
+                       i18n:translate=""
+                >Second revision</label>
+              </div>
+            </fieldset>
+
+            <noscript>
+              <input type="submit"
+                     value="Update"
+                     i18n:attributes="value label_update"
+              />
+            </noscript>
+          </form>
+
+          <div metal:use-macro="context/@@diff_legend/macros/diff_legend"></div>
+
+          <p tal:condition="not:view/changes"
+             i18n:translate=""
+          >
+              There are no changes between the selected revisions.
+          </p>
+
+          <tal:changes condition="view/changes">
+            <form class="mt-3"
+                  id="diffTypeSelector"
+                  action=""
+                  method="post"
+            >
+              <label class="jsOnly"
+                     for="diffstyle"
+                     style="display: none"
+                     i18n:translate=""
+              >Show differences</label>
+              <div class="form-check">
+                <input class="form-check-input"
+                       id="diffstylevisual"
+                       checked="checked"
+                       name="diffstyle"
+                       type="radio"
+                       value="visual"
+                />
+                <label class="form-check-label"
+                       for="diffstylevisual"
+                       i18n:translate=""
+                >inline</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input"
+                       id="diffstylecode"
+                       name="diffstyle"
+                       type="radio"
+                       value="code"
+                />
+                <label class="form-check-label"
+                       for="diffstylecode"
+                       i18n:translate=""
+                >as code</label>
+              </div>
+            </form>
+
+            <fieldset class="mt-3 bg-light border border-dark p-3"
+                      tal:repeat="diff view/changes"
+            >
+              <legend tal:content="diff/label">Body text</legend>
+
+              <div class="fieldDiff inline-diff"
+                   tal:condition="exists:diff/inline_diff"
+                   tal:content="structure python:diff.inline_diff()"
+              >
+                  Inline changes
+              </div>
+
+              <p class="fieldDiff inline-diff"
+                 tal:condition="not:exists:diff/inline_diff"
+                 i18n:translate=""
+              >
+                  This field has no inline difference view.
+              </p>
+
+              <div class="fieldDiff code-diff"
+                   style="display: none"
+                   tal:define="
+                     exists_html_diff exists:diff/html_diff;
+                     html_diff python:diff.html_diff(wrapcolumn=80) if exists_html_diff else '';
+                     has_html_diff python:bool(html_diff);
+                   "
+              >
+                <pre tal:condition="has_html_diff"
+                     tal:content="structure html_diff"
+                >
+                    HTML formatted differences
+                  </pre>
+
+                <tal:block condition="not:has_html_diff">
+                  <tal:block define="
+                               exists_ndiff exists:diff/ndiff;
+                               ndiff python:diff.ndiff() if exists_ndiff else '';
+                               has_ndiff python:bool(ndiff);
+                             ">
+                    <pre class="fieldDiff code-diff"
+                         tal:condition="has_ndiff"
+                         tal:content="ndiff"
+                    >
+                        ndiff formatted differences
+                      </pre>
+                    <p class="fieldDiff"
+                       tal:condition="not:has_ndiff"
+                       i18n:translate=""
+                    >
+                        This field has no code difference view.
+                    </p>
+                  </tal:block>
+                </tal:block>
+              </div>
+            </fieldset>
+
+            <tal:block tal:condition="view/changeset/recursive">
+
+
+              <tal:changed define="
+                             subdiffs view/changeset/getSubDiffs;
+                             subdiffs python:[c for c in subdiffs if not c.same if c.id];
+                           "
+                           condition="subdiffs"
+              >
+
+                <h2 i18n:translate="">Changed files</h2>
+
+                <ul tal:condition="subdiffs">
+                  <li tal:repeat="cs subdiffs">
+                    <a tal:content="cs/id"
+                       tal:attributes="
+                         href cs/id;
+                       "
+                    >[filename]</a>
+                  </li>
+                </ul>
+
+              </tal:changed>
+
+              <tal:changed condition="view/changeset/getRemovedItems">
+                <h2 i18n:translate="">Removed files</h2>
+                <ul>
+                  <li tal:repeat="id view/changeset/getRemovedItems"
+                      tal:content="id"
+                  >[filename]</li>
+                </ul>
+              </tal:changed>
+
+              <tal:changed condition="view/changeset/getAddedItems">
+                <h2 i18n:translate="">Added files</h2>
+                <ul tal:condition="view/changeset/getAddedItems">
+                  <li tal:repeat="id view/changeset/getAddedItems"><a tal:content="id"
+                       tal:attributes="
+                         href id;
+                       "
+                    >[filename]</a></li>
+                </ul>
+              </tal:changed>
+
+            </tal:block>
+
+          </tal:changes>
+        </tal:block>
+      </div>
+    </metal:main>
+  </body>
+</html>

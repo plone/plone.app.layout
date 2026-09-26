@@ -1,0 +1,75 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    >
+
+  <browser:page
+      name="history"
+      for="*"
+      class=".diff.DiffView"
+      template="templates/diff.pt"
+      permission="CMFEditions.AccessPreviousVersions"
+      layer="plone.app.layout.interfaces.IPloneAppLayoutLayer"
+      />
+
+  <browser:page
+      name="get_macros"
+      for="*"
+      class=".utils.GetMacros"
+      attribute="get_macros"
+      permission="zope2.View"
+      layer="plone.app.layout.interfaces.IPloneAppLayoutLayer"
+      />
+
+  <browser:page
+      name="version_file_view"
+      for="*"
+      template="templates/version_file_view.pt"
+      permission="zope2.View"
+      layer="plone.app.layout.interfaces.IPloneAppLayoutLayer"
+      />
+
+  <browser:page
+      name="version_image_view"
+      for="*"
+      template="templates/version_image_view.pt"
+      permission="zope2.View"
+      layer="plone.app.layout.interfaces.IPloneAppLayoutLayer"
+      />
+
+  <browser:page
+      name="version_metadata_view"
+      for="*"
+      template="templates/version_metadata_view.pt"
+      permission="zope2.View"
+      layer="plone.app.layout.interfaces.IPloneAppLayoutLayer"
+      />
+
+  <!-- Note: this is also used by plone.app.iterate -->
+  <browser:page
+      name="diff_legend"
+      for="*"
+      template="templates/diff_legend.pt"
+      permission="zope2.View"
+      layer="plone.app.layout.interfaces.IPloneAppLayoutLayer"
+      />
+
+  <browser:page
+      name="versions_history_form"
+      for="*"
+      class=".views.VersionsHistoryForm"
+      template="templates/versions_history_form.pt"
+      permission="zope2.View"
+      layer="plone.app.layout.interfaces.IPloneAppLayoutLayer"
+      />
+
+  <!-- Note: this is also used by plone.app.iterate -->
+  <browser:page
+      name="compare.css"
+      for="*"
+      class=".views.CompareCSS"
+      permission="zope2.View"
+      layer="plone.app.layout.interfaces.IPloneAppLayoutLayer"
+      />
+
+</configure>

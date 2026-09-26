@@ -1,0 +1,36 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      lang="en-US"
+      xml:lang="en-US"
+      i18n:domain="cmfeditions"
+>
+
+  <body>
+    <div id="diff-legend"
+         metal:define-macro="diff_legend"
+    >
+      <table id="diff-table"
+             cellpadding="2"
+             summary="DiffLegend"
+      >
+        <tr><th class="diff-legend-label"
+              i18n:translate="label_diff_legend"
+          >Legend</th>
+          <td class="diff_add"
+              i18n:translate="label_diff_added"
+          >(+) Added</td>
+          <td class="diff_sub"
+              i18n:translate="label_diff_deleted"
+          >(-) Deleted</td></tr>
+        <tr><td class="diff_chg"
+              i18n:translate="label_diff_changed"
+          >Changed</td>
+          <td class="tagInsert"
+              i18n:translate="label_diff_tag_added"
+          >Tag Added</td>
+          <td class="tagDelete"
+              i18n:translate="label_diff_tag_deleted"
+          >Tag Deleted</td></tr>
+      </table>
+    </div>
+  </body>
+</html>

@@ -30,6 +30,7 @@
   <include package=".links" />
   <include package=".sitemap" />
   <include package=".analytics" />
+  <include package=".cmfeditions" />
   <include package=".controlpanels" />
   <include package=".views" />
   <include package=".users" />

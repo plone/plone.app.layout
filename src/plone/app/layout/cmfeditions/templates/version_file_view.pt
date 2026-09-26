@@ -1,0 +1,93 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      xml:lang="en"
+      i18n:domain="cmfeditions"
+>
+
+  <body>
+
+    <metal:main fill-slot="main">
+      <tal:main-macro metal:define-macro="main"
+                      tal:define="
+                        size_value context/get_size;
+                        size_label python:size_value and view.human_readable_size(size_value) or None;
+                        content_type context/get_content_type|context/Format;
+                      "
+      >
+
+        <div id="content-core">
+          <p tal:condition="size_value">
+            <a href=""
+               tal:define="
+                 here_url context/absolute_url;
+               "
+               tal:attributes="
+                 href string:$here_url/file_download_version?version_id=${version_id};
+               "
+            >
+              <img alt=""
+                   src=""
+                   tal:attributes="
+                     src string:${portal_url}/file_icon.gif;
+                   "
+              />
+              <tal:block i18n:translate="label_click_to_get_file">
+                    Click here to get the file
+              </tal:block>
+            </a>
+          </p>
+
+          <small class="discreet">
+
+            <span tal:condition="not:size_value"
+                  i18n:translate="no_file_uploaded"
+            >
+                  (No file has been uploaded yet)
+            </span>
+
+            <tal:fileinfo condition="size_value">
+              <span i18n:domain="plone"
+                    i18n:translate="label_size"
+              >
+                Size
+              </span>
+
+              <span tal:condition="size_value"
+                    tal:content="size_label"
+              >
+                257 KB
+              </span>
+
+                -
+
+              <span i18n:translate="label_file_type">
+                File type
+              </span>
+
+              <span tal:content="content_type">
+                Content type
+              </span>
+            </tal:fileinfo>
+          </small>
+
+          <div class="row"
+               tal:condition="python:test(size_value and content_type.find('text')&gt;-1, 1,0)"
+          >
+
+            <h2 i18n:domain="plone"
+                i18n:translate="heading_file_contents"
+            >File contents</h2>
+
+            <pre tal:content="context/get_data|context/data|nothing">
+                    </pre>
+
+          </div>
+        </div>
+
+      </tal:main-macro>
+    </metal:main>
+
+  </body>
+
+</html>
