@@ -2,8 +2,8 @@ from collections import Counter
 from copy import deepcopy
 from operator import attrgetter
 from plone.app.dexterity import _
-from plone.app.layout.dexterity.layout import TypeFormLayout
 from plone.app.dexterity.interfaces import ITypeSchemaContext
+from plone.app.layout.dexterity.layout import TypeFormLayout
 from plone.base.utils import safe_text
 from plone.behavior.interfaces import IBehavior
 from plone.behavior.registration import BehaviorRegistrationNotFound

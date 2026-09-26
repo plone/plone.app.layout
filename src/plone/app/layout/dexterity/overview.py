@@ -1,6 +1,6 @@
 from plone.app.dexterity import _
-from plone.app.layout.dexterity.layout import TypeFormLayout
 from plone.app.dexterity.interfaces import ITypeSettings
+from plone.app.layout.dexterity.layout import TypeFormLayout
 from Products.CMFCore.interfaces import IFolderish
 from z3c.form import field
 from z3c.form import form
