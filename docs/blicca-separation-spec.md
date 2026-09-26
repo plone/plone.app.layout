@@ -7,7 +7,7 @@ Sep 26, 2026 · @Kombinat Media Gestalter GmbH
 Plone 7 core packages contain no Blicca (Classic UI) templates, viewlets, portlets or view logic; all of it lives in `plone.app.layout` or in core-addons. This separation is the precondition for a headless Plone, but completing the headless stack is out of scope (D6). Tracked in [PLIP #3953](https://github.com/plone/Products.CMFPlone/issues/3953).
 
 - **In scope:** page templates (`.pt`), `browser:page` / `browser:view` / viewlet / viewlet manager / menu registrations, and the Python view classes behind them, in every package that `Products.CMFPlone` or `plone.distribution` pulls in.
-- **Also in scope:** `install_requires` of core packages, so that a headless install no longer pulls in Blicca packages.
+- **Documented only (D9):** `install_requires` of core packages: the edges that pull in Blicca packages are recorded, but removing them is out of scope.
 - **Out of scope:** ZMI templates (Zope, PAS, GenericSetup, CMFCore, ZCatalog, …), generic frameworks (`z3c.form`, `zope.viewlet`), API views used by `plone.restapi` or by Zope traversal (`@@images`, `@@download`).
 
 ## Locked decisions
@@ -36,7 +36,7 @@ Every package in the headless dependency closure gets exactly one category. The 
 | **Core-addon** | Optional package with its own template layer (D3, D4) | Keep their templates, nothing moves | The `Plone` meta package or the integrator; never `plone.classicui` or a core package |
 | **Out of scope** | ZMI-only templates and generic frameworks | Unchanged | Anyone |
 
-Rule of thumb: after the PLIP, `pip install Products.CMFPlone plone.distribution plone.restapi` must not install any package in the *Blicca* or *Core-addon* category.
+Rule of thumb: after the PLIP, a core package contains no Blicca template or view outside the allowlist; its `install_requires` stay unchanged (D9).
 
 ## Package inventory
 
