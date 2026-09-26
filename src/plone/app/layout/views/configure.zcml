@@ -29,4 +29,12 @@
       layer="plone.app.layout.interfaces.IPloneAppLayoutLayer"
       />
 
+  <browser:page
+      name="colophon"
+      for="*"
+      template="templates/colophon.pt"
+      permission="zope.Public"
+      layer="plone.app.layout.interfaces.IPloneAppLayoutLayer"
+      />
+
 </configure>
