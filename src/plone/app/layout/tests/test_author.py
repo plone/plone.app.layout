@@ -8,7 +8,6 @@ from zope.component import getMultiAdapter
 from zope.component import getUtility
 
 import unittest
-import warnings
 
 
 class TestAuthorView(unittest.TestCase):
@@ -25,9 +24,7 @@ class TestAuthorView(unittest.TestCase):
     def test_using_correct_template(self):
         """Ensure that the author view uses the template from plone.app.layout."""
         view = getMultiAdapter((self.portal, self.request), name="author")
-        self.assertIn(
-            "plone/app/layout/views/templates/author.pt", view.index.filename
-        )
+        self.assertIn("plone/app/layout/views/templates/author.pt", view.index.filename)
 
     def test_render(self):
         view = self.get_view()
@@ -45,20 +42,3 @@ class TestAuthorView(unittest.TestCase):
         view = self.get_view()
         with self.assertRaises(Unauthorized):
             view()
-
-
-class TestAuthorDeprecatedImports(unittest.TestCase):
-    def test_old_imports(self):
-        """The old imports from Products.CMFPlone still work."""
-        from plone.app.layout.views import author
-        from plone.app.layout.views import interfaces
-
-        with warnings.catch_warnings():
-            warnings.simplefilter("ignore", DeprecationWarning)
-            from Products.CMFPlone.browser.author import AuthorFeedbackForm
-            from Products.CMFPlone.browser.author import AuthorView
-            from Products.CMFPlone.browser.interfaces import IAuthorFeedbackForm
-
-        self.assertIs(AuthorView, author.AuthorView)
-        self.assertIs(AuthorFeedbackForm, author.AuthorFeedbackForm)
-        self.assertIs(IAuthorFeedbackForm, interfaces.IAuthorFeedbackForm)

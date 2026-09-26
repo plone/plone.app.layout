@@ -15,9 +15,7 @@ class TestFooterView(unittest.TestCase):
     def test_using_correct_template(self):
         """Ensure that the footer view uses the template from plone.app.layout."""
         view = getMultiAdapter((self.portal, self.request), name="footer")
-        self.assertIn(
-            "plone/app/layout/views/templates/footer.pt", view.index.filename
-        )
+        self.assertIn("plone/app/layout/views/templates/footer.pt", view.index.filename)
 
     def test_render(self):
         view = getMultiAdapter((self.portal, self.request), name="footer")

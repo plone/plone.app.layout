@@ -13,7 +13,7 @@ extra_lines = """
         exclude: .*/tests/.*.pt
 """
 zpretty_extra_lines = """
-        exclude: .*/templates/contact-info-email.pt
+        exclude: .*/templates/(contact-info-email|author_feedback_template).pt
 """
 
 [tox]
