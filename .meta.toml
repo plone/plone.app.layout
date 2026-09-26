@@ -12,6 +12,9 @@ dependencies_ignores = "['plone.app.relationfield', 'plone.app.multilingual', 'P
 extra_lines = """
         exclude: .*/tests/.*.pt
 """
+zpretty_extra_lines = """
+        exclude: .*/templates/contact-info-email.pt
+"""
 
 [tox]
 test_matrix = { "6.3" = ["*"] }

@@ -59,6 +59,8 @@ dependencies = [
     "plone.memoize",
     "plone.portlets",
     "plone.protect",
+    "plone.registry",
+    "plone.schema",
     "z3c.form",
 ]
 keywords = ["plone", "layout", "viewlet"]

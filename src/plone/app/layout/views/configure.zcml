@@ -13,4 +13,20 @@
       layer="plone.app.layout.interfaces.IPloneAppLayoutLayer"
       />
 
+  <browser:page
+      name="contact-info"
+      for="*"
+      class=".contact_info.ContactForm"
+      permission="zope.Public"
+      layer="plone.app.layout.interfaces.IPloneAppLayoutLayer"
+      />
+
+  <browser:page
+      name="contact-info-email"
+      for="*"
+      template="templates/contact-info-email.pt"
+      permission="zope.Public"
+      layer="plone.app.layout.interfaces.IPloneAppLayoutLayer"
+      />
+
 </configure>
