@@ -53,4 +53,13 @@
       layer="plone.app.layout.interfaces.IPloneAppLayoutLayer"
       />
 
+  <browser:page
+      name="author"
+      for="plone.base.interfaces.IPloneSiteRoot"
+      class=".author.AuthorView"
+      template="templates/author.pt"
+      permission="zope.Public"
+      layer="plone.app.layout.interfaces.IPloneAppLayoutLayer"
+      />
+
 </configure>
