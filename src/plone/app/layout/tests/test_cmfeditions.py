@@ -11,7 +11,6 @@ from zope.publisher.interfaces.browser import IBrowserView
 
 import unittest
 
-
 _TEXT_INITIAL = "Initial text."
 _TEXT_NEW = "New text."
 
