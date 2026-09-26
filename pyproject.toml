@@ -39,6 +39,7 @@ maintainers = [
 dependencies = [
     "Products.CMFEditions",
     "Products.GenericSetup",
+    "Products.MailHost",
     "Products.ZCatalog",
     "Products.statusmessages",
     "Zope",
@@ -59,6 +60,8 @@ dependencies = [
     "plone.memoize",
     "plone.portlets",
     "plone.protect",
+    "plone.registry",
+    "plone.schema",
     "z3c.form",
 ]
 keywords = ["plone", "layout", "viewlet"]

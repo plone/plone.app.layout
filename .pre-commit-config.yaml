@@ -23,6 +23,7 @@ repos:
     rev: 4.0.3
     hooks:
     -   id: zpretty
+        exclude: .*/templates/(contact-info-email|author_feedback_template).pt
 
 ##
 # Add extra configuration options in .meta.toml:

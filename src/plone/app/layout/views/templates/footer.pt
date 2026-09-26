@@ -1,0 +1,66 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      lang="en"
+      xml:lang="en"
+      tal:omit-tag=""
+      i18n:domain="plone"
+>
+
+  <div class="card card-classic"
+       id="portal-footer-signature"
+       metal:define-macro="portlet"
+  >
+
+    <div class="card-body">
+      <span tal:omit-tag=""
+            i18n:translate="description_copyright"
+      >
+      The
+        <span tal:omit-tag=""
+              i18n:name="plonecms"
+        >
+          <a href="http://plone.org"
+             i18n:translate="label_plone_cms"
+          >Plone<sup>&reg;</sup>
+            Open Source CMS/WCM</a>
+        </span>
+      is
+        <abbr title="Copyright"
+              i18n:attributes="title title_copyright;"
+              i18n:name="copyright"
+        >&copy;</abbr>
+        2000-<tal:year tal:define="
+                    DateTime nocall:modules/DateTime.DateTime;
+                    myTime python:DateTime();
+                  "
+                  tal:content="python:myTime.year()"
+                  i18n:name="current_year"
+        />
+      by the
+        <span tal:omit-tag=""
+              i18n:name="plonefoundation"
+        >
+          <a href="http://plone.org/foundation"
+             i18n:translate="label_plone_foundation"
+          >Plone Foundation</a></span>
+      and friends.
+      </span>
+
+      <span tal:omit-tag=""
+            i18n:translate="description_license"
+      >
+      Distributed under the
+        <span tal:omit-tag=""
+              i18n:name="license"
+        >
+          <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html"
+             i18n:translate="label_gnu_gpl_licence"
+          >GNU GPL license</a></span>.
+      </span>
+    </div>
+
+  </div>
+
+</html>
