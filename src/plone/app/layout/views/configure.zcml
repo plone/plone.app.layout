@@ -62,4 +62,12 @@
       layer="plone.app.layout.interfaces.IPloneAppLayoutLayer"
       />
 
+  <browser:page
+      name="footer"
+      for="*"
+      template="templates/footer.pt"
+      permission="zope.Public"
+      layer="plone.app.layout.interfaces.IPloneAppLayoutLayer"
+      />
+
 </configure>
