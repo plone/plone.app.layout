@@ -1,0 +1,36 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      lang="en"
+      metal:use-macro="context/@@prefs_main_template/macros/master"
+      xml:lang="en"
+      i18n:domain="plone"
+>
+
+  <body>
+    <tal:main metal:fill-slot="prefs_configlet_main">
+
+      <header>
+
+        <h1 tal:content="view/label">View Title</h1>
+        <p class="lead"
+           tal:condition="view/description | nothing"
+           tal:content="structure view/description"
+        >View Description</p>
+
+      </header>
+
+      <div metal:use-macro="context/@@global_statusmessage/macros/portal_message">
+    Portal status message
+      </div>
+
+      <div id="content-core">
+        <div id="layout-contents">
+          <span tal:replace="structure view/contents"></span>
+        </div>
+      </div>
+
+    </tal:main>
+  </body>
+</html>

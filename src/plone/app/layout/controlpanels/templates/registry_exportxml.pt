@@ -1,0 +1,36 @@
+<tal>
+  <h3 i18n:translate="registry_export_parts_heading">Export parts</h3>
+  <p i18n:translate="registry_export_parts_text">
+      Download of a XML-file optimized to be used in a GenericSetup profile of an add-on or policy profile.
+      It contains only the selected parts.
+  </p>
+
+  <div class="pat-autotoc autotabs"
+       data-pat-autotoc="levels: h3; section: div.exporttab; className: autotabs"
+  >
+    <div class="exporttab"
+         id="export-section-interfaces"
+    >
+      <h3 id="h3-interfaces"
+          i18n:translate="registry_export_parts_label_iface"
+      >by Interface</h3>
+      <ul class="collapse_interfaces">
+        <li tal:repeat="prefix python:view.interfaces()"><a href="${python:prefix[1]}"
+             target="_blank"
+          >${python:prefix[0]}</a></li>
+      </ul>
+    </div>
+    <div class="exporttab"
+         id="export-section-prefixes"
+    >
+      <h3 id="h3-prefixes"
+          i18n:translate="registry_export_parts_label_prefix"
+      >by Prefix</h3>
+      <ul>
+        <li tal:repeat="prefix python:view.prefixes()"><a href="${python:prefix[1]}"
+             target="_blank"
+          >${python:prefix[0]}</a></li>
+      </ul>
+    </div>
+  </div>
+</tal>

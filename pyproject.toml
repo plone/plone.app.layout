@@ -4,7 +4,91 @@
 [build-system]
 requires = ["setuptools>=68.2,<83", "wheel"]
 
+# START-MARKER-MANUAL-CONFIG
+# Anything from here until END-MARKER-MANUAL-CONFIG
+# will be kept by plone.meta
 
+[project]
+name = "plone.app.layout"
+version = "7.0.0a3.dev0"
+description = "Layout mechanisms for Plone"
+classifiers = [
+    "Development Status :: 6 - Mature",
+    "Environment :: Web Environment",
+    "Framework :: Plone",
+    "Framework :: Plone :: 6.2",
+    "Framework :: Plone :: Core",
+    "Framework :: Zope :: 5",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+]
+license = "GPL-2.0-only"
+dynamic = ["readme"]
+requires-python = ">=3.10"
+authors = [
+    {name = "Plone Foundation",email = "plone-developers@lists.sourceforge.net"},
+]
+maintainers = [
+    {name = "Plone Foundation and contributors",email = "plone-developers@lists.sourceforge.net"},
+]
+dependencies = [
+    "Products.CMFEditions",
+    "Products.GenericSetup",
+    "Products.ZCatalog",
+    "Products.statusmessages",
+    "Zope",
+    "lxml",
+    "plone.app.content",
+    "plone.app.dexterity",
+    "plone.app.linkintegrity",
+    "plone.app.registry",
+    "plone.app.relationfield",
+    "plone.app.uuid",
+    "plone.app.viewletmanager",
+    "plone.app.workflow",
+    "plone.autoform",
+    "plone.base >=4.0.0a1",
+    "plone.dexterity",
+    "plone.formwidget.namedfile",
+    "plone.i18n",
+    "plone.memoize",
+    "plone.portlets",
+    "plone.protect",
+    "z3c.form",
+]
+keywords = ["plone", "layout", "viewlet"]
+
+[project.optional-dependencies]
+test = [
+    "plone.app.contenttypes[test]",
+    "plone.app.linkintegrity",
+    "plone.app.relationfield",
+    "plone.app.robotframework",
+    "plone.app.testing",
+    "plone.app.textfield",
+    "plone.browserlayer",
+    "plone.dexterity",
+    "plone.locking",
+    "plone.testing",
+    "robotsuite",
+    "z3c.relationfield",
+    "zc.relation",
+    "zope.intid",
+]
+
+[project.urls]
+Source = "https://github.com/plone/plone.app.layout"
+Issues = "https://github.com/plone/Products.CMFPlone/issues"
+Changelog = "https://github.com/plone/plone.app.layout/blob/master/CHANGES.rst"
+
+[tool.setuptools.dynamic]
+readme = {file = ["README.rst", "CHANGES.rst"]}
+# END-MARKER-MANUAL-CONFIG
 
 [tool.towncrier]
 directory = "news/"

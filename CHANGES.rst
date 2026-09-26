@@ -8,6 +8,48 @@ Changelog
 
 .. towncrier release notes start
 
+7.0.0a2 (2026-06-15)
+--------------------
+
+Breaking changes:
+
+
+- Move ``plone.app.registry`` Classic-UI browser templates and control panel
+  views to ``plone.app.layout.controlpanels.registry``. (#437)
+- Move ``plone.app.linkintegrity`` template/views to ``plone.app.layout.views.linkintegrity``
+  [petschki] (#3953)
+
+
+New features:
+
+
+- move UI related code and template of sharing view from plone.app.workflow to plone.app.layout
+  [MrTango] (#390)
+
+
+Bug fixes:
+
+
+- Take into account the value of request parameter page for caching the generated sitemap @erral
+
+
+Internal:
+
+
+- Added Classic-UI control panel views and templates for ``plone.app.registry``,
+  including record listing, edit, delete, and XML export views, along with
+  their full test suite. (#437)
+- Update configuration files.
+  [plone devs]
+
+
+Tests:
+
+
+- Add ``sharing_csrf.txt`` functional doctest, moved here from ``Products.CMFPlone`` together with the Classic-UI ``@@sharing`` view.
+  [MrTango] (#3953)
+
+
 7.0.0a1 (2026-05-27)
 --------------------
 
