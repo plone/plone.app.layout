@@ -1,14 +1,10 @@
+from html import escape
 from plone.app.layout.users.account import AccountPanelForm
 from plone.app.users.browser.userdatapanel import getUserDataSchema
 from plone.base import PloneMessageFactory as _
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zExceptions import NotFound
-
-try:
-    from html import escape
-except ImportError:
-    from cgi import escape
 
 
 class UserDataPanel(AccountPanelForm):

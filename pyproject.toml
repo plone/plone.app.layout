@@ -48,7 +48,6 @@ dependencies = [
     "plone.app.linkintegrity",
     "plone.app.registry",
     "plone.app.relationfield",
-    "plone.app.users",
     "plone.app.uuid",
     "plone.app.viewletmanager",
     "plone.app.workflow",
@@ -210,7 +209,7 @@ Zope = [
 ]
 python-dateutil = ['dateutil']
 pytest-plone = ['pytest', 'zope.pytestlayer', 'plone.testing', 'plone.app.testing']
-ignore-packages = ['plone.app.relationfield', 'plone.app.multilingual', 'Products.CMFPlone']
+ignore-packages = ['plone.app.relationfield', 'plone.app.multilingual', 'plone.app.users', 'Products.CMFPlone']
 
 ##
 # Add extra configuration options in .meta.toml:
