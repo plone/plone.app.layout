@@ -37,4 +37,12 @@
       layer="plone.app.layout.interfaces.IPloneAppLayoutLayer"
       />
 
+  <browser:page
+      name="accessibility-info"
+      for="plone.base.interfaces.INavigationRoot"
+      template="templates/accessibility-info.pt"
+      permission="zope.Public"
+      layer="plone.app.layout.interfaces.IPloneAppLayoutLayer"
+      />
+
 </configure>
