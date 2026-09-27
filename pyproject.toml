@@ -39,21 +39,25 @@ maintainers = [
 dependencies = [
     "Products.CMFEditions",
     "Products.GenericSetup",
+    "Products.MimetypesRegistry",
     "Products.ZCatalog",
     "Products.statusmessages",
     "Zope",
     "lxml",
     "plone.app.content",
+    "plone.app.contentmenu",
     "plone.app.dexterity",
     "plone.app.linkintegrity",
     "plone.app.registry",
     "plone.app.relationfield",
     "plone.app.uuid",
     "plone.app.viewletmanager",
+    "plone.app.vocabularies",
     "plone.app.workflow",
     "plone.autoform",
     "plone.base >=4.0.0a1",
     "plone.dexterity",
+    "plone.event",
     "plone.formwidget.namedfile",
     "plone.i18n",
     "plone.memoize",
@@ -71,6 +75,7 @@ test = [
     "plone.app.robotframework",
     "plone.app.testing",
     "plone.app.textfield",
+    "plone.app.z3cform",
     "plone.browserlayer",
     "plone.dexterity",
     "plone.locking",
@@ -206,7 +211,7 @@ Zope = [
 ]
 python-dateutil = ['dateutil']
 pytest-plone = ['pytest', 'zope.pytestlayer', 'plone.testing', 'plone.app.testing']
-ignore-packages = ['plone.app.relationfield', 'plone.app.multilingual', 'Products.CMFPlone']
+ignore-packages = ['plone.app.contenttypes', 'plone.app.relationfield', 'plone.app.multilingual', 'Products.CMFPlone']
 
 ##
 # Add extra configuration options in .meta.toml:
