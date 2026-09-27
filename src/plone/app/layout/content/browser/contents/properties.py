@@ -1,7 +1,7 @@
 from DateTime import DateTime
-from plone.app.layout.content.browser.contents import ContentsBaseAction
 from plone.app.content.interfaces import IStructureAction
 from plone.app.dexterity.behaviors.metadata import ICategorization
+from plone.app.layout.content.browser.contents import ContentsBaseAction
 from plone.app.z3cform.widgets.datetime import get_date_options
 from plone.base import PloneMessageFactory as _
 from plone.base.defaultpage import check_default_page_via_view

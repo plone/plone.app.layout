@@ -1,11 +1,11 @@
 from AccessControl import Unauthorized
 from Acquisition import aq_inner
 from Acquisition import aq_parent
-from plone.app.layout.content.browser.file import TUS_ENABLED
-from plone.app.layout.content.browser.interfaces import IFolderContentsView
 from plone.app.content.interfaces import IStructureAction
 from plone.app.content.utils import json_dumps
 from plone.app.content.utils import json_loads
+from plone.app.layout.content.browser.file import TUS_ENABLED
+from plone.app.layout.content.browser.interfaces import IFolderContentsView
 from plone.app.uuid.utils import uuidToCatalogBrain
 from plone.base import PloneMessageFactory as _
 from plone.base import utils

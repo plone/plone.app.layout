@@ -45,7 +45,8 @@ class ContentsCopyTests(unittest.TestCase):
         setRoles(self.portal, TEST_USER_ID, ["Manager"])
 
     @mock.patch(
-        "plone.app.layout.content.browser.contents.ContentsBaseAction.protect", lambda x: True
+        "plone.app.layout.content.browser.contents.ContentsBaseAction.protect",
+        lambda x: True,
     )  # noqa
     def test_keep_selection_order(self):
         """Keep the order of items the same as they were selected."""
@@ -88,7 +89,8 @@ class ContentsDeleteTests(unittest.TestCase):
         setRoles(self.portal, TEST_USER_ID, ["Manager"])
 
     @mock.patch(
-        "plone.app.layout.content.browser.contents.ContentsBaseAction.protect", lambda x: True
+        "plone.app.layout.content.browser.contents.ContentsBaseAction.protect",
+        lambda x: True,
     )  # noqa
     def test_delete_success_with_private_ancestor(self):
         """Delete content item from a folder with private ancestor"""
@@ -119,7 +121,8 @@ class ContentsDeleteTests(unittest.TestCase):
         self.assertEqual(len(self.portal.it1.it2.contentIds()), 0)
 
     @mock.patch(
-        "plone.app.layout.content.browser.contents.ContentsBaseAction.protect", lambda x: True
+        "plone.app.layout.content.browser.contents.ContentsBaseAction.protect",
+        lambda x: True,
     )  # noqa
     def test_delete_success_on_inactive_content(self):
         """Delete an expired content item from a folder."""
@@ -173,7 +176,8 @@ class ContentsPasteTests(unittest.TestCase):
         self.portal.invokeFactory("type1", id="it1", title="Item 1")
 
     @mock.patch(
-        "plone.app.layout.content.browser.contents.ContentsBaseAction.protect", lambda x: True
+        "plone.app.layout.content.browser.contents.ContentsBaseAction.protect",
+        lambda x: True,
     )  # noqa
     def test_paste_success(self):
         """Copy content item and paste in portal root."""
@@ -191,7 +195,8 @@ class ContentsPasteTests(unittest.TestCase):
         self.assertEqual(len(self.portal.contentIds()), 2)
 
     @mock.patch(
-        "plone.app.layout.content.browser.contents.ContentsBaseAction.protect", lambda x: True
+        "plone.app.layout.content.browser.contents.ContentsBaseAction.protect",
+        lambda x: True,
     )  # noqa
     def test_paste_success_paste_in_itself(self):
         """Copy content item and paste in itself. Because we can."""
@@ -204,7 +209,8 @@ class ContentsPasteTests(unittest.TestCase):
         self.assertEqual(len(self.portal.it1.contentIds()), 1)
 
     @mock.patch(
-        "plone.app.layout.content.browser.contents.ContentsBaseAction.protect", lambda x: True
+        "plone.app.layout.content.browser.contents.ContentsBaseAction.protect",
+        lambda x: True,
     )  # noqa
     def test_paste_fail_constraint(self):
         """Fail pasting content item in itself when folder constraints don't
@@ -220,7 +226,8 @@ class ContentsPasteTests(unittest.TestCase):
         self.assertEqual(len(self.portal.it1.contentIds()), 0)
 
     @mock.patch(
-        "plone.app.layout.content.browser.contents.ContentsBaseAction.protect", lambda x: True
+        "plone.app.layout.content.browser.contents.ContentsBaseAction.protect",
+        lambda x: True,
     )  # noqa
     def test_paste_success_with_private_ancestor(self):
         """Copy content item and paste into a folder with private ancestor"""
@@ -272,7 +279,8 @@ class ContentsRenameTests(unittest.TestCase):
         setRoles(self.portal, TEST_USER_ID, ["Manager"])
 
     @mock.patch(
-        "plone.app.layout.content.browser.contents.ContentsBaseAction.protect", lambda x: True
+        "plone.app.layout.content.browser.contents.ContentsBaseAction.protect",
+        lambda x: True,
     )  # noqa
     def test_rename_success_with_private_ancestor(self):
         """Rename content item from a folder with private ancestor"""
@@ -304,7 +312,8 @@ class ContentsRenameTests(unittest.TestCase):
         self.assertEqual(self.portal.it1.it2.it3bak.title, "Item 3 BAK")
 
     @mock.patch(
-        "plone.app.layout.content.browser.contents.ContentsBaseAction.protect", lambda x: True
+        "plone.app.layout.content.browser.contents.ContentsBaseAction.protect",
+        lambda x: True,
     )  # noqa
     def test_rename_success_on_inactive_content(self):
         """Rename an expired content item from a folder."""

@@ -1,6 +1,6 @@
 from AccessControl import Unauthorized
-from plone.app.layout.content.browser.contents import ContentsBaseAction
 from plone.app.content.interfaces import IStructureAction
+from plone.app.layout.content.browser.contents import ContentsBaseAction
 from plone.base import PloneMessageFactory as _
 from ZODB.POSException import ConflictError
 from zope.i18n import translate

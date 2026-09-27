@@ -1,6 +1,6 @@
 from OFS.interfaces import IOrderedContainer
-from plone.app.layout.content.browser.contents import ContentsBaseAction
 from plone.app.content.utils import json_loads
+from plone.app.layout.content.browser.contents import ContentsBaseAction
 from plone.base import PloneMessageFactory as _
 from plone.base.interfaces import IPloneSiteRoot
 from plone.folder.interfaces import IExplicitOrdering

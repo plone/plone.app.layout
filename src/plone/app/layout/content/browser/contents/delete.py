@@ -1,7 +1,7 @@
 from AccessControl import Unauthorized
 from AccessControl.Permissions import delete_objects
-from plone.app.layout.content.browser.contents import ContentsBaseAction
 from plone.app.content.interfaces import IStructureAction
+from plone.app.layout.content.browser.contents import ContentsBaseAction
 from plone.base import PloneMessageFactory as _
 from plone.locking.interfaces import ILockable
 from Products.CMFCore.utils import getToolByName

@@ -564,7 +564,9 @@ class FolderFactoriesTest(unittest.TestCase):
         setRoles(self.portal, TEST_USER_ID, ["Manager"])
 
     def test_folder_factories_regression(self):
-        from plone.app.layout.content.browser.folderfactories import FolderFactoriesView as FFV
+        from plone.app.layout.content.browser.folderfactories import (
+            FolderFactoriesView as FFV,
+        )
 
         view = FFV(self.portal, self.request)
         self.request.form.update(
@@ -576,7 +578,9 @@ class FolderFactoriesTest(unittest.TestCase):
         )
 
     def test_folder_factories(self):
-        from plone.app.layout.content.browser.folderfactories import FolderFactoriesView as FFV
+        from plone.app.layout.content.browser.folderfactories import (
+            FolderFactoriesView as FFV,
+        )
 
         view = FFV(self.portal, self.request)
         self.request.form.update(

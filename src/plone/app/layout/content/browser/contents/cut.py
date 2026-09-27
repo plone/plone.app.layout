@@ -1,8 +1,8 @@
 from OFS.CopySupport import _cb_encode
 from OFS.CopySupport import cookie_path
 from OFS.Moniker import Moniker
-from plone.app.layout.content.browser.contents import ContentsBaseAction
 from plone.app.content.interfaces import IStructureAction
+from plone.app.layout.content.browser.contents import ContentsBaseAction
 from plone.base import PloneMessageFactory as _
 from plone.locking.interfaces import ILockable
 from zope.i18n import translate

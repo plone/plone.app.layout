@@ -1,5 +1,5 @@
-from plone.app.layout.content.browser.contents import ContentsBaseAction
 from plone.app.content.interfaces import IStructureAction
+from plone.app.layout.content.browser.contents import ContentsBaseAction
 from plone.base import PloneMessageFactory as _
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope.component.hooks import getSite
