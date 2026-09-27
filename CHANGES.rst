@@ -8,6 +8,23 @@ Changelog
 
 .. towncrier release notes start
 
+7.0.0a3 (2026-09-27)
+--------------------
+
+Breaking changes:
+
+
+- Move ``plone.app.users`` template/views to ``plone.app.layout.views.users``
+  [tlotze] (#3953)
+
+
+Internal:
+
+
+- Move package metadata from ``setup.py`` to ``pyproject.toml``.
+  [plone devs]
+
+
 7.0.0a2 (2026-06-15)
 --------------------
 

@@ -10,7 +10,7 @@ requires = ["setuptools>=68.2,<83", "wheel"]
 
 [project]
 name = "plone.app.layout"
-version = "7.0.0a3.dev0"
+version = "7.0.0a4.dev0"
 description = "Layout mechanisms for Plone"
 classifiers = [
     "Development Status :: 6 - Mature",
@@ -59,6 +59,9 @@ dependencies = [
     "plone.memoize",
     "plone.portlets",
     "plone.protect",
+    "plone.schemaeditor",
+    "plone.supermodel",
+    "plone.z3cform",
     "z3c.form",
 ]
 keywords = ["plone", "layout", "viewlet"]
@@ -206,7 +209,7 @@ Zope = [
 ]
 python-dateutil = ['dateutil']
 pytest-plone = ['pytest', 'zope.pytestlayer', 'plone.testing', 'plone.app.testing']
-ignore-packages = ['plone.app.relationfield', 'plone.app.multilingual', 'Products.CMFPlone']
+ignore-packages = ['plone.app.relationfield', 'plone.app.multilingual', 'plone.app.users', 'Products.CMFPlone']
 
 ##
 # Add extra configuration options in .meta.toml:
