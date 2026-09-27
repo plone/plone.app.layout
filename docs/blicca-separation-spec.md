@@ -47,7 +47,7 @@ Rule of thumb: after the PLIP, a core package contains no Blicca template or vie
 
 | Package | Category | Templates / pages | Action | In PLIP | Status |
 | --- | --- | --- | --- | --- | --- |
-| Products.CMFPlone | Core | 77 / 110 | Move all Blicca views to `plone.app.layout` | yes |  |
+| Products.CMFPlone | Core | 77 / 110 | Move all Blicca views to `plone.app.layout`; 10 templates moved in the draft PRs, 66 templates / 100 pages left (see breakdown below) | yes | In progress |
 | plone.app.content | Core | 15 / 35 | Move templates; decide on the JSON views used by mockup (`@@getVocabulary`, `fc-*`) | yes |  |
 | plone.app.contenttypes | Core | 14 / 26 | Move listing and content views | yes |  |
 | Products.CMFEditions | Core | 25 (19 ZMI) / 12 | Move the 6 non-ZMI templates | yes |  |
@@ -70,6 +70,24 @@ Rule of thumb: after the PLIP, a core package contains no Blicca template or vie
 | plone.app.vocabularies | Core (split) | 1 / 0 | Core, because `plone.restapi` uses its vocabularies (`@types`, `@vocabularies`); move `searchabletextsource.pt` to `plone.app.layout` | optional | Not needed |
 | plone.app.redirector | Core | 0 / 1 | `plone_redirector_view` only serves the Blicca 404 page | no | Todo |
 | plone.app.contentlisting | Core | 0 / 3 | Check whether `contentlisting` / `folderListing` are only used by Blicca templates | no | Todo |
+
+### Products.CMFPlone breakdown
+
+The draft PRs [Products.CMFPlone#4378](https://github.com/plone/Products.CMFPlone/pull/4378) / [plone.app.layout#461](https://github.com/plone/plone.app.layout/pull/461) move 10 templates; 66 non-test templates and 100 active page registrations are still in CMFPlone. Scan of the PR branch on 2026-09-27; commented-out ZCML is not counted. Each area is a candidate for its own PR pair.
+
+Already moved: accessibility-info, author, author\_feedback\_template, colophon, contact-info (+ mail template), footer, recently\_modified, recently\_published, toolbar.
+
+| Area | Templates | Pages | Contents | Action |
+| --- | --: | --: | --- | --- |
+| Page frame and rendering | 15 | 17 | `main_template` (+ ajax / five), `title`, `description`, `global_statusmessage`, error view `index.html` for `Exception` (+ 2 error templates), `sitemap`, `search`, `ajax-search`, `sendto_form`, `test-rendering*` (4), `plone`, `iconresolver`, `plone_patterns_settings` | Move to `plone.app.layout` |
+| Login and password | 17 | 18 | `login`, `login_form`, `failsafe_login`, `login-help`, `logged-out`, `insufficient-privileges`, `require_login`, `logout`, password reset (`mail_password*`, `pwreset_*`, `passwordreset`), `forced-password-change`, `initial-login-password-change`, `registered_notify_template` | Split (D5): `plone.restapi` uses the `login` view (`@login`); `require_login` is the PAS challenge target |
+| Control panels | 21 | 43 | All `*-controlpanel` pages, users and groups, error log, add-ons (`prefs_install_products_form`, …), `redirection-controlpanel` / `manage-aliases`, `inspect-relations` / `rebuild-relations`, actions, `resourceregistry` | Split (D5): `plone.restapi` uses `overview-controlpanel`, `prefs_install_products_form`, `RedirectsControlPanel`, `RedirectionSet`, `absolutize_path` |
+| Syndication | 7 | 8 | `rss.xml`, `atom.xml`, `RSS`, `itunes.xml`, `newsml.xml`, `search_rss`, `synPropertiesForm`, `syndication-util` | Open question |
+| Zope root admin | 5 | 7 | `plone-overview`, `plone-addsite`, `plone-upgrade`, `plone-frontpage-setup`, `plone-root-login` / `plone-root-logout` | Open question |
+| API and helper views | – | 8 | `breadcrumbs_view`, `portal_tabs_view`, `sitemap_builder_view`, `robots.txt`, `ok`, `favicon.ico`, `site-logo`, `default_page` | Stay; navigation logic stays as API (REST API split) |
+| Resource viewlets | – | 2 viewlets | `plone.resourceregistries.scripts`, `plone.resourceregistries.styles` | Move to `plone.app.layout` |
+| ZMI (`www/`) | 4 | – | `addConfigletForm.pt` + 3 DTML | Out of scope |
+| CMF skin layers (`skins/`, `profiles/default/skins.xml`) | 1 | – | `plone_wysiwyg/wysiwyg_support.pt`, 8 skin scripts in `plone_scripts` (`browserDefault`, `pretty_title_or_id`, `toLocalizedTime`, `translate`, `utranslate`, `unique`, `external_edit`, `externalEditorEnabled`), 53 images in `plone_images` | Open question; not covered by the acceptance scans |
 
 ### Packages that keep their templates
 
@@ -207,3 +225,6 @@ Checks 1 and 2 can run as a script inside the Jenkins job (proposal: `tools/blic
 - [ ] Do the mockup JSON views in `plone.app.content` (`@@getVocabulary`, `fc-*`) move to `plone.app.layout`, or stay as API?
 - [ ] Does `plone_redirector_view` move to `plone.app.layout`, or does the redirect logic stay in `plone.app.redirector` as API?
 - [ ] Six core packages depend on `plone.app.z3cform` for their forms. Do those forms move completely to `plone.app.layout`?
+- [ ] Are the CMFPlone syndication views (RSS, Atom, iTunes, NewsML feeds) Blicca, or output formats that stay in core?
+- [ ] Do the Zope root admin views of CMFPlone (`plone-overview`, `plone-addsite`, `plone-upgrade`, …) stay, move, or give way to the `plone.distribution` versions?
+- [ ] Are the CMF skin layers in CMFPlone (`skins/`, `skins.xml`) in scope? If yes, the acceptance scans need to cover skin scripts and skin templates too.
