@@ -23,6 +23,7 @@ These decisions are fixed. Changes need agreement in the PLIP.
 7. **D7 – Versioning:** removing templates from a source package requires a new major version of that package. The work targets Plone 6.3 and later.
 8. **D8 – Target branch:** `plone.app.layout` `master` (currently in 7.0 alpha) is the target for all moved views.
 9. **D9 – Dependencies:** the dependency restructuring is documented in this spec, but its implementation is out of scope.
+10. **D10 – Widget templates:** widget templates of core packages move to `plone.app.z3cform`, the widget template layer (D4), not to `plone.app.layout`. First case: `plone.schema` (`email_display.pt`, `uri_display.pt`).
 
 ## Package categories
 
@@ -52,7 +53,7 @@ Rule of thumb: after the PLIP, a core package contains no Blicca template or vie
 | Products.CMFEditions | Core | 25 (19 ZMI) / 12 | Move the 6 non-ZMI templates | yes |  |
 | plone.app.dexterity | Core | 10 / 15 | Move templates and views | yes |  |
 | plone.app.users | Core | 8 / 11 | Move templates; drop the dependency on `plone.app.event` | yes |  |
-| plone.schema | Core | 2 / 0 | Move widget templates to `plone.app.z3cform` | yes |  |
+| plone.schema | Core | 2 / 0 | Move `email_display.pt` and `uri_display.pt` to `plone.app.z3cform` (D10): [plone.schema#71](https://github.com/plone/plone.schema/pull/71), [plone.app.z3cform#290](https://github.com/plone/plone.app.z3cform/pull/290) | yes | In progress |
 | plone.protect | Core | 1 / 2 | Move the `confirm.pt` view | yes |  |
 | plone.app.registry | Core | 0 / 0 | – | yes | Done |
 | plone.app.i18n | Core | 0 / 0 | – | yes | Done |
@@ -75,7 +76,7 @@ Rule of thumb: after the PLIP, a core package contains no Blicca template or vie
 | Package | Category | Templates | Note |
 | --- | --- | --- | --- |
 | plone.app.layout | Blicca (target) | 49 | Receives all moved views (D2) |
-| plone.app.z3cform | Core-addon (D4) | 29 | Template layer for `plone.z3cform` |
+| plone.app.z3cform | Core-addon (D4) | 29 | Template layer for `plone.z3cform`; receives the `plone.schema` widget templates (D10) |
 | plone.app.event | Core-addon (D4) | 7 | Template layer for `plone.event`; brings `plone.formwidget.recurrence` |
 | plone.app.portlets | Core-addon (D4) | 30 | Together with `plone.portlets`, `plone.portlet.static`, `plone.portlet.collection` |
 | plone.app.theming, plone.resourceeditor, plonetheme.barceloneta, plone.staticresources | Blicca | 4 | Theming stack |
@@ -150,6 +151,7 @@ The PLIP description is the single checklist (D1): one checkbox per package, wit
 
 - Every PR references the PLIP: `Refs plone/Products.CMFPlone#3953`.
 - A move always has two PRs: the source package and `plone.app.layout` `master` (D8). Both link each other and are merged together.
+- Widget templates are the exception (D10): their counterpart PR goes to `plone.app.z3cform` instead of `plone.app.layout`.
 - The source package PR removes the templates and bumps the major version (D7); it targets Plone 6.3 and later.
 - REST API splits get a third PR in `plone.restapi` that switches to the new API.
 - All PRs of one package are tested together in one jenkins.plone.org PR job before merging.
