@@ -8,6 +8,16 @@ Changelog
 
 .. towncrier release notes start
 
+7.0.0a4 (2026-09-27)
+--------------------
+
+Breaking changes:
+
+
+- Move plone.app.contenttypes views to plone.app.layout
+  [frapell] (#3953)
+
+
 7.0.0a3 (2026-09-27)
 --------------------
 
