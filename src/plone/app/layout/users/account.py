@@ -34,6 +34,7 @@ class AccountPanelForm(AutoExtensibleForm, form.Form, AccountPanelValidation):
         mtool = getToolByName(self.context, "portal_membership")
         if self.request.get("userid"):
             return mtool.getMemberById(self.request.get("userid"))
+        return mtool.getAuthenticatedMember()
 
     @property
     def label(self):
