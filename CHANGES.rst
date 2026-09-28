@@ -8,6 +8,16 @@ Changelog
 
 .. towncrier release notes start
 
+7.0.0a5 (2026-09-28)
+--------------------
+
+Breaking changes:
+
+
+- Move plone.app.dexterity views to plone.app.layout
+  [frapell] (#3953)
+
+
 7.0.0a4 (2026-09-27)
 --------------------
 
