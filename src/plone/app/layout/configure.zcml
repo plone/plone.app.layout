@@ -21,6 +21,7 @@
       directory="profiles/uninstall"
       />
 
+  <include package=".contenttypes" />
   <include package=".globals" />
   <include package=".navigation" />
   <include package=".viewlets" />
