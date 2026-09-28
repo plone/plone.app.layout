@@ -8,6 +8,15 @@ Changelog
 
 .. towncrier release notes start
 
+7.0.0a6 (2026-09-28)
+--------------------
+
+Internal:
+
+
+- Rerelease, as the previous release does not show up on PyPI.
+
+
 7.0.0a5 (2026-09-28)
 --------------------
 
