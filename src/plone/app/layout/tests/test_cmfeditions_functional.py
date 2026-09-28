@@ -39,7 +39,7 @@ class TestVersionsHistoryFormFunctional(unittest.TestCase):
         self.browser.getControl(name="form.buttons.save").click()
 
         self.browser.open(
-            "{}/versions_history_form?version_id=0".format(self.doc.absolute_url())
+            f"{self.doc.absolute_url()}/versions_history_form?version_id=0"
         )
         self.assertIn("Current revision", self.browser.contents)
         self.assertIn("/doc/versions_history_form?version_id=0", self.browser.contents)

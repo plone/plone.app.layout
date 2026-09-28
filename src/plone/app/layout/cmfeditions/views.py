@@ -1,4 +1,6 @@
-from Products.CMFEditions.browser.views import VersionsHistoryForm as ApiVersionsHistoryForm
+from Products.CMFEditions.browser.views import (
+    VersionsHistoryForm as ApiVersionsHistoryForm,
+)
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
