@@ -1,0 +1,127 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      xml:lang="en"
+      i18n:domain="plone"
+>
+
+  <body>
+
+    <metal:main fill-slot="main">
+      <tal:main-macro metal:define-macro="main">
+
+        <metal:metadata define-macro="metadata">
+
+          <h1 class="documentFirstHeading"
+              i18n:translate=""
+          >
+                Metadata
+          </h1>
+          <div id="content-core">
+            <ul>
+
+              <li>
+                <label for="predefined_subjects"
+                       i18n:translate="label_existing_categories"
+                >
+                          Existing categories
+                </label>:
+
+                <span tal:content="python: ', '.join(here.Subject())"
+                      tal:on-error="nothing"
+                >Keywords</span>
+              </li>
+
+              <li>
+                <label for="format"
+                       i18n:translate="label_format"
+                >
+                        Format
+                </label>:
+
+                <span tal:content="here/Format">text/plain</span>
+              </li>
+
+              <li>
+                <label for="effective_date"
+                       i18n:translate="label_effective_date"
+                >
+                          Effective Date
+                </label>:
+
+                <span tal:content="python:here.toLocalizedTime(here.EffectiveDate())"
+                      tal:on-error="nothing"
+                >2005/01/01</span>
+              </li>
+
+              <li>
+                <label for="expiration_date"
+                       i18n:translate="label_expiration_date"
+                >
+                          Expiration Date
+                </label>:
+
+                <span tal:content="python:here.toLocalizedTime(here.ExpirationDate())"
+                      tal:on-error="nothing"
+                >2005/01/01</span>
+              </li>
+
+              <li>
+                <label for="language"
+                       i18n:translate="label_language"
+                >
+                          Language
+                </label>:
+
+                <span tal:define="
+                        language python:[name for (id,name) in here.availableLanguages() if id == here.Language()][0];
+                      "
+                      tal:content="language"
+                      tal:on-error="nothing"
+                >English</span>
+              </li>
+
+              <li>
+                <label for="description"
+                       i18n:translate="label_description"
+                >
+                          Description
+                </label>:
+
+                <span tal:content="here/Description"
+                      tal:on-error="string: "
+                ></span>
+              </li>
+
+              <li>
+                <label for="rights"
+                       i18n:translate="label_copyrights"
+                >
+                          Copyrights
+                </label>:
+
+                <span tal:content="here/Rights"
+                      tal:on-error="nothing"
+                ></span>
+              </li>
+
+              <li>
+                <label for="contributors"
+                       i18n:translate="label_contributors"
+                >
+                          Contributors
+                </label>:
+
+                <span tal:content="python:','.join(here.Contributors())"
+                      tal:on-error="nothing"
+                ></span>
+              </li>
+            </ul>
+          </div>
+
+        </metal:metadata>
+
+      </tal:main-macro>
+    </metal:main>
+  </body>
+</html>
