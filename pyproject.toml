@@ -10,7 +10,7 @@ requires = ["setuptools>=68.2,<83", "wheel"]
 
 [project]
 name = "plone.app.layout"
-version = "7.0.0a5.dev0"
+version = "7.0.0a6.dev0"
 description = "Layout mechanisms for Plone"
 classifiers = [
     "Development Status :: 6 - Mature",
@@ -56,11 +56,13 @@ dependencies = [
     "plone.app.workflow",
     "plone.autoform",
     "plone.base >=4.0.0a1",
+    "plone.behavior",
     "plone.dexterity",
     "plone.event",
     "plone.formwidget.namedfile",
     "plone.i18n",
     "plone.memoize",
+    "plone.namedfile",
     "plone.portlets",
     "plone.protect",
     "plone.schemaeditor",

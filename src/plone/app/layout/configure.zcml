@@ -22,6 +22,7 @@
       />
 
   <include package=".contenttypes" />
+  <include package=".dexterity" />
   <include package=".globals" />
   <include package=".navigation" />
   <include package=".viewlets" />
