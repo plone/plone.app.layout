@@ -51,7 +51,7 @@ Rule of thumb: after the PLIP, a core package contains no Blicca template or vie
 | plone.app.content | Core | 15 / 35 | Move templates; decide on the JSON views used by mockup (`@@getVocabulary`, `fc-*`) | yes |  |
 | plone.app.contenttypes | Core | 14 / 26 | Move listing and content views | yes |  |
 | Products.CMFEditions | Core | 25 (19 ZMI) / 12 | Move the 6 non-ZMI templates | yes |  |
-| plone.app.dexterity | Core | 10 / 15 | Move templates and views | yes |  |
+| plone.app.dexterity | Core | 10 / 15 | Move templates and views: [plone.app.dexterity#431](https://github.com/plone/plone.app.dexterity/pull/431), [plone.app.layout#441](https://github.com/plone/plone.app.layout/pull/441); follow-up: the control panel schemas and the configlet (see [below](#plonedexterity-and-ploneappdexterity)) | yes | In progress |
 | plone.app.users | Core | 8 / 11 | Move templates; drop the dependency on `plone.app.event` | yes |  |
 | plone.schema | Core | 2 / 0 | Move `email_display.pt` and `uri_display.pt` to `plone.app.z3cform` (D10): [plone.schema#71](https://github.com/plone/plone.schema/pull/71), [plone.app.z3cform#290](https://github.com/plone/plone.app.z3cform/pull/290) | yes | In progress |
 | plone.protect | Core | 1 / 2 | Move the `confirm.pt` view | yes |  |
@@ -60,7 +60,7 @@ Rule of thumb: after the PLIP, a core package contains no Blicca template or vie
 | plone.app.workflow | Core | 0 / 1 | Check that the remaining page is API | yes |  |
 | plone.app.linkintegrity | Core | 0 / 1 | Check that the remaining page is API | yes |  |
 | plone.locking | Core | 0 / 3 | Check that the remaining pages are API | yes |  |
-| plone.dexterity | Core | 4 / 5 | Move the default `view`, `edit`, `content-core` templates and registrations | no | Todo |
+| plone.dexterity | Core | 4 / 5 | Move the default `view`, `edit`, `add`, `content-core` views and their 3 templates; `plone.dexterity.fti` (`fti.pt`) is the ZMI add form and stays | no | Todo |
 | plone.schemaeditor | Core (split) | 3 / 8 | Keep the schema logic used by `@types`; move the TTW editor UI | no | Todo |
 | plone.app.querystring | Core (split) | 1 / 5 | Keep `querybuilderresults`, `querybuilderjsonconfig`; move `results.pt`, `querybuilder_html_results`, `display_query_results` | no | Todo |
 | plone.batching | Core (split) | 3 / 2 | Keep `Batch`; move `batchnavigation`, `batch_macros` | no | Todo |
@@ -107,6 +107,29 @@ Already moved: accessibility-info, author, author\_feedback\_template, colophon,
 | z3c.form, plone.z3cform, zope.viewlet | Out of scope | – | Generic frameworks |
 | Zope, PAS, GenericSetup, CMFCore, DCWorkflow, ZCatalog, PortalTransforms, MimetypesRegistry, PlonePAS, CMFDynamicViewFTI, … | Out of scope | – | ZMI templates only |
 
+### plone.dexterity and plone.app.dexterity
+
+Checked on 2026-09-28 while preparing the plone.app.dexterity PR pair. Question: can `plone.app.dexterity` be dissolved into `plone.dexterity` once its views are gone? Answer: not without breaking D4, so both packages stay; their roles are sharpened instead.
+
+**What stays in `plone.app.dexterity` after the move** (6.0.0, PR branch): the 13 standard behaviors (`plone.basic`, `plone.dublincore`, `plone.publication`, `plone.ownership`, `plone.namefromtitle`, `plone.namefromfilename`, `plone.navigationroot`, `plone.excludefromnavigation`, `plone.nextprevioustoggle`, `plone.nextpreviousenabled`, `plone.constraintypes`, `plone.shortname`, `plone.categorization`), the `textindexer` (SearchableText behavior, converters, schema editor extender), `DXFileFactory`, the field permission checkers, `serialize`, the GenericSetup profiles `default` (configlet `dexterity-types`) and `testing`, 8 upgrade steps, and the control panel schemas `ITypeSettings`, `ITypeStats`, `ITypesContext`, `ITypeSchemaContext` with their validators. Its ZCML also declares `ILocalPortletAssignable`, `IRuleAssignable` and `IImageScaleTraversable` on `DexterityContent`.
+
+**`plone.dexterity`** (4.0.0) is the framework: FTI, content classes, schema handling, `plone.behavior` integration. It is not a pure backend either: it depends on `plone.base`, `z3c.form` and `Products.statusmessages`, and registers the default `view`, `edit`, `add` and `content-core` views with 3 templates (inventory row above). `fti.pt` is the ZMI add form (out of scope).
+
+**Why a merge is out**
+
+| Finding | Consequence |
+| --- | --- |
+| The metadata behaviors bind `AjaxSelectFieldWidget` and `Select2FieldWidget`, and `permissions.py` builds on `IFieldPermissionChecker`, both from `plone.app.z3cform` | `plone.dexterity` would gain a hard dependency on a core-addon (D4) |
+| `plone.namedfile` and `plone.app.relationfield` require `plone.dexterity`; `plone.app.dexterity` needs both (`DXFileFactory`, namedfile converter, `IRelatedItems`) | Two dependency cycles after a merge; today they are avoided because `plone.app.dexterity` sits above both |
+| Behavior dotted names (`plone.app.dexterity.behaviors.metadata.IDublinCore`, …) are persisted in every site's `portal_types`; the profile `plone.app.dexterity:default` is a dependency of other profiles (plone.api, plone.exportimport, …) | Permanent BBB aliases and a profile alias would be required |
+| 12 distributions require `plone.app.dexterity`; the most imported symbols are `IBasic`, the message factory `_`, `ICategorization`, `IPublication`, `INextPreviousProvider` and the `textindexer`. `plone.restapi` uses `IPublication`, `INextPreviousProvider` and the `textindexer`, `plone.volto` the message factory | Wide blast radius for a package rename |
+
+**Follow-ups within the PLIP**
+
+- Move `ITypeSettings`, `ITypeStats`, `ITypesContext`, `ITypeSchemaContext`, the validators and the configlet in `profiles/default/controlpanel.xml` to `plone.app.layout` with BBB aliases: they belong to the views moved in [plone.app.layout#441](https://github.com/plone/plone.app.layout/pull/441).
+- Move the `plone.dexterity` default views (inventory row).
+- The widget directives in the behaviors are the real coupling to `plone.app.z3cform`. Replacing them by `IFieldWidget` adapters registered in `plone.app.z3cform` would free `plone.app.dexterity` from the core-addon; this is outside the PLIP (D9 spirit: documented, not implemented).
+
 ## REST API split
 
 `plone.restapi` reuses view logic from 14 packages today and even lists `plone.app.layout` in its `install_requires`. Both block a headless install, so every reuse below is split per D5.
@@ -150,7 +173,7 @@ Today 9 core packages pull 21 Blicca or core-addon packages into a headless inst
 | Products.CMFPlone | `plone.app.layout`, `plone.app.theming`, `plonetheme.barceloneta`, `plone.staticresources`, `plone.app.portlets`, `plone.portlets`, `plone.portlet.static`, `plone.portlet.collection`, `plone.app.contentmenu`, `plone.app.viewletmanager`, `plone.app.customerize`, `five.customerize`, `plone.theme`, `plone.outputfilters`, `plone.app.contentrules`, `plone.app.z3cform`, `plone.formwidget.namedfile`, `plone.resource`, `webresource`, `plone.session` |
 | plone.restapi | `plone.app.layout` |
 | plone.app.contenttypes | `plone.app.layout`, `plone.app.contentmenu`, `plone.portlets`, `plone.app.z3cform` |
-| plone.app.dexterity | `plone.app.z3cform`, `plone.formwidget.namedfile`, `plone.portlets` |
+| plone.app.dexterity | `plone.app.z3cform`, `plone.formwidget.namedfile`, `plone.portlets`, `plone.contentrules` (interface declarations on `DexterityContent`) |
 | plone.app.users | `plone.app.event`, `plone.formwidget.namedfile` |
 | plone.app.content | `plone.app.z3cform` |
 | plone.app.registry | `plone.app.z3cform` |
@@ -216,6 +239,7 @@ Checks 1 and 2 can run as a script inside the Jenkins job (proposal: `tools/blic
 - [x] `plone.app.vocabularies` is core, because `plone.restapi` uses its vocabularies (`@types`, `@vocabularies`); its template is separated.
 - [x] *Dependency restructuring* stays as documentation; implementation is out of scope (D9). This includes the `plone.app.layout` dependency of `plone.restapi`.
 - [x] Releases: each source package gets a new major version, targeting Plone 6.3 and later (D7).
+- [x] `plone.app.dexterity` is not dissolved into `plone.dexterity`: the remaining code is the Plone integration layer with widget bindings to `plone.app.z3cform` (D4) and would create dependency cycles with `plone.namedfile` and `plone.app.relationfield`. See [plone.dexterity and plone.app.dexterity](#plonedexterity-and-ploneappdexterity).
 - [x] Acceptance criteria: only the template scan, the view scan and the no-regression check apply. Checks for a headless install, a headless site and the REST API without `plone.app.layout` are dropped (D9).
 
 **Open, re-scoped after D6**
