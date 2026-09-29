@@ -21,6 +21,7 @@
       directory="profiles/uninstall"
       />
 
+  <include package=".content" />
   <include package=".contenttypes" />
   <include package=".dexterity" />
   <include package=".globals" />

@@ -6,11 +6,14 @@ template = "default"
 commit-id = "2.11.1"
 
 [pyproject]
-dependencies_ignores = "['plone.app.contenttypes', 'plone.app.relationfield', 'plone.app.multilingual', 'plone.app.users', 'Products.CMFPlone']"
+dependencies_ignores = "['plone.app.contenttypes', 'plone.app.relationfield', 'plone.app.multilingual', 'plone.app.users', 'Products.CMFPlone', 'tus']"
 
 [pre_commit]
-extra_lines = """
-        exclude: .*/tests/.*.pt
+zpretty_extra_lines = """
+        exclude: plone/app/layout/content/browser/contents/templates
+"""
+i18ndude_extra_lines = """
+        exclude: plone/app/layout/content/browser/contents|.*/tests/.*.pt
 """
 
 [tox]

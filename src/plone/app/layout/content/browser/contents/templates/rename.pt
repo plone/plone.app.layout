@@ -1,0 +1,20 @@
+<div class="itemstoremove row row-cols-1" i18n:domain="plone">
+<% _.each(items, function(item, index) { %>
+  <div class="mb-3 pb-3 <% if (items.length > 1){%>border-bottom<% } %>">
+    <input name="UID_<%= index %>" type="hidden" value="<%- item.UID %>" />
+
+    <div class="mb-2">
+      <label class="form-label" i18n:translate="label_title">Title</label>
+      <input class="form-control" name="newtitle_<%= index %>" value="<%= item.Title %>" />
+    </div>
+
+    <div class="mb-2">
+      <label class="form-label" i18n:translate="label_short_name">Short name</label>
+      <input class="form-control" name="newid_<%= index %>" value="<%= item.id %>" />
+    </div>
+
+    <% if(item.getIcon ){ %><img class="thumb-thumb" src="<%= item.getURL %>/@@images/image/thumb"><% } %>
+
+  </div>
+<% }) %>
+</div>

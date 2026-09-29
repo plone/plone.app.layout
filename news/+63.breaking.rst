@@ -1,0 +1,4 @@
+Declare compatibility for Plone 6.3.
+
+All versions below 6.3 are not supported due to the template move changes.
+[thet]
