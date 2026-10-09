@@ -8,18 +8,56 @@
      i18n:domain="plone"
 >
   <div class="container">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="${python:view.navigation_root_url}"
+    <ol class="breadcrumb"
+        itemscope
+        itemtype="https://schema.org/BreadcrumbList"
+    >
+      <li class="breadcrumb-item"
+          itemprop="itemListElement"
+          itemscope
+          itemtype="https://schema.org/ListItem"
+      ><a href="${python:view.navigation_root_url}"
+           itemprop="item"
            i18n:translate="tabs_home"
-        >Home</a></li>
+        >Home</a>
+        <meta itemprop="name"
+              content="Home"
+              i18n:attributes="content tabs_home"
+        />
+        <meta itemprop="position"
+              content="1"
+        />
+      </li>
       <tal:loop tal:repeat="crumb breadcrumbs">
         <li class="breadcrumb-item"
+            itemprop="itemListElement"
+            itemscope
+            itemtype="https://schema.org/ListItem"
             tal:condition="not: repeat/crumb/end"
-        ><a href="${python:crumb['absolute_url']}">${python:crumb['Title']}</a></li>
+        ><a href="${python:crumb['absolute_url']}"
+             itemprop="item"
+          >${python:crumb['Title']}</a>
+          <meta itemprop="name"
+                content="${python:crumb['Title']}"
+          />
+          <meta itemprop="position"
+                content="${python:repeat['crumb'].index +2}"
+          />
+        </li>
         <li class="breadcrumb-item active"
             aria-current="page"
+            itemprop="itemListElement"
+            itemscope
+            itemtype="https://schema.org/ListItem"
             tal:condition="repeat/crumb/end"
-        >${python:crumb['Title']}</li>
+        >${python:crumb['Title']}
+          <meta itemprop="name"
+                content="${python:crumb['Title']}"
+          />
+          <meta itemprop="position"
+                content="${python:repeat['crumb'].index +2}"
+          />
+        </li>
       </tal:loop>
     </ol>
   </div>
