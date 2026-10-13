@@ -16,14 +16,14 @@
           itemprop="itemListElement"
           itemscope
           itemtype="https://schema.org/ListItem"
-      ><a href="${python:view.navigation_root_url}"
+      >
+        <a href="${python:view.navigation_root_url}"
            itemprop="item"
-           i18n:translate="tabs_home"
-        >Home</a>
-        <meta itemprop="name"
-              content="Home"
-              i18n:attributes="content tabs_home"
-        />
+        >
+          <span itemprop="name"
+                i18n:translate="tabs_home"
+          >Home</span>
+        </a>
         <meta itemprop="position"
               content="1"
         />
@@ -34,12 +34,12 @@
             itemscope
             itemtype="https://schema.org/ListItem"
             tal:condition="not: repeat/crumb/end"
-        ><a href="${python:crumb['absolute_url']}"
+        >
+          <a href="${python:crumb['absolute_url']}"
              itemprop="item"
-          >${python:crumb['Title']}</a>
-          <meta itemprop="name"
-                content="${python:crumb['Title']}"
-          />
+          >
+            <span itemprop="name">${python:crumb['Title']}</span>
+          </a>
           <meta itemprop="position"
                 content="${python:repeat['crumb'].index +2}"
           />
@@ -50,10 +50,8 @@
             itemscope
             itemtype="https://schema.org/ListItem"
             tal:condition="repeat/crumb/end"
-        >${python:crumb['Title']}
-          <meta itemprop="name"
-                content="${python:crumb['Title']}"
-          />
+        >
+          <span itemprop="name">${python:crumb['Title']}</span>
           <meta itemprop="position"
                 content="${python:repeat['crumb'].index +2}"
           />
