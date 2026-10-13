@@ -84,7 +84,6 @@ repos:
 #  """
 ##
 
-        exclude: .*/tests/.*.pt
 
 ##
 # Add extra configuration options in .meta.toml:

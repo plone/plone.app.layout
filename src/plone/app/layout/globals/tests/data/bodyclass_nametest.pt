@@ -1,1 +1,1 @@
-<html><body>foo</body></html>
+<html xmlns:i18n="http://xml.zope.org/namespaces/i18n"><body i18n:ignore="">foo</body></html>
