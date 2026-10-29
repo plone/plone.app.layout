@@ -8,5 +8,6 @@ commit-id = "2.11.1"
 [pyproject]
 dependencies_ignores = "['plone.app.contenttypes', 'plone.app.relationfield', 'plone.app.multilingual', 'plone.app.users', 'Products.CMFPlone']"
 
+
 [tox]
 test_matrix = { "6.3" = ["*"] }
