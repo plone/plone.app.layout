@@ -95,7 +95,7 @@ class InterfaceInformation(BrowserView):
         * methods with signature and trimmed doc string
         * attributes with trimemd doc string
         """
-        bases = [base for base in iface.getBases()]
+        bases = [*iface.getBases()]
 
         attributes = []
         methods = []

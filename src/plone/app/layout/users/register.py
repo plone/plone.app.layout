@@ -138,7 +138,7 @@ class BaseRegistrationForm(AutoExtensibleForm, form.Form):
 
         error_keys = [error.field.getName() for error in action.form.widgets.errors]
 
-        form_field_names = [f for f in self.fields]
+        form_field_names = [*self.fields]
 
         portal = getUtility(ISiteRoot)
 
