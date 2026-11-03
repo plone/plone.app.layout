@@ -66,21 +66,21 @@ class FolderViewIntegrationTest(unittest.TestCase):
 
         batch = view.batch()
         self.assertEqual(batch.length, 5)
-        self.assertEqual(len([item for item in batch]), 5)
+        self.assertEqual(len([*batch]), 5)
         self.assertFalse(batch.has_next)
 
         self.portal.invokeFactory("Document", "document5")
 
         batch = view.batch()
         self.assertEqual(batch.length, 6)
-        self.assertEqual(len([item for item in batch]), 6)
+        self.assertEqual(len([*batch]), 6)
         self.assertFalse(batch.has_next)
 
         self.portal.invokeFactory("Document", "document6")
 
         batch = view.batch()
         self.assertEqual(batch.length, 5)
-        self.assertEqual(len([item for item in batch]), 5)
+        self.assertEqual(len([*batch]), 5)
         self.assertTrue(batch.has_next)
         self.assertEqual(batch.next_item_count, 2)
 
