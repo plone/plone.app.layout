@@ -8,6 +8,21 @@ Changelog
 
 .. towncrier release notes start
 
+7.0.0a7 (2026-11-03)
+--------------------
+
+New features:
+
+
+- add microformat for the breadcrumb list @1letter (#466)
+
+
+Internal:
+
+
+- update config with plone.meta, remove pre_commit exclude rule @1letter
+
+
 7.0.0a6 (2026-09-28)
 --------------------
 
