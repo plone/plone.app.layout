@@ -1,0 +1,57 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      xml:lang="en"
+      i18n:domain="plone"
+>
+
+  <body>
+
+    <metal:main fill-slot="main">
+      <tal:main-macro metal:define-macro="main"
+                      tal:define="
+                        plone_view here/@@plone;
+                        size python:plone_view.human_readable_size(here.get_size());
+                        here_url context/absolute_url;
+                      "
+      >
+
+        <div id="content-core">
+          <a class="discreet"
+             href=""
+             tal:attributes="
+               href string:$here_url/file_download_version?version_id=${request/version_id};
+             "
+          >
+            <tal:block condition="size"
+                       replace="structure python: here.version_image_tag(here_url, version_id)"
+            />
+            <br />
+            <span class="visualNoPrint">
+              <img alt=""
+                   src=""
+                   tal:replace="structure here/search_icon.png"
+              />
+              <span i18n:translate="label_click_to_view_full_image">Click to view full-size image&hellip;</span>
+            </span>
+          </a>
+
+          <span class="discreet visualNoPrint">
+            &mdash;
+            <span i18n:translate="label_size">Size</span><tal:ignore i18n:ignore="true">:
+              ${size}</tal:ignore>
+            <span tal:condition="python:test(size, 0, 1)"
+                  i18n:translate="no_image_uploaded"
+            >
+                    (No image has been uploaded yet)
+            </span>
+          </span>
+        </div>
+
+      </tal:main-macro>
+
+    </metal:main>
+
+  </body>
+
+</html>
